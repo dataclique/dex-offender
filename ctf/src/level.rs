@@ -26,3 +26,45 @@ pub trait Exploit {
         offender: &Actor,
     ) -> eyre::Result<()>;
 }
+
+pub async fn check_exploit<E: Exploit>(
+    roles: &Roles,
+    exploit: E,
+) -> eyre::Result<()> {
+    let level = E::Target::from_file()?;
+
+    if level.check(roles).await? {
+        return Ok(());
+    }
+    println!("\n\n{}", level.name());
+
+    println!("Running the exploit...");
+    exploit.attack(&level, &roles.offender).await?;
+
+    println!("Checking the exploit...");
+    let solved = level.check(roles).await?;
+    if !solved {
+        return Err(eyre::eyre!(
+            "exploit for {} ran without error but the level check still fails",
+            level.name()
+        ));
+    }
+
+    println!(
+        "
+
+-------------------------------------
+//////     CONGRATULATIONS     //////
+
+$$$  Y O U  H A V E  S O L V E D  $$$
+$$$   T H E   C H A L L E N G E   $$$
+
+youpassedthelevelyoupassedthelevelyou
+passedthelevelyoupassedthelevelyoupas
+sedthelevelyoupassedthelevelyoupassed
+-------------------------------------
+"
+    );
+
+    Ok(())
+}

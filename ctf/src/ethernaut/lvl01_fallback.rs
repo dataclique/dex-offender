@@ -1,8 +1,19 @@
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 01 — Fallback.
+//!
+//! Take ownership of the Fallback contract and drain its balance: contribute
+//! below the threshold, trigger `receive()`, then `withdraw()` as the new
+//! owner.
 
-pub use crate::abi::fallback::Fallback;
-use crate::{roles::*, to_ether, Level};
+use crate::{Level, Roles, to_ether};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Fallback,
+    "abi/ethernaut/Fallback.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,61 +22,53 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level01)
-    }
-
     fn name(&self) -> &'static str {
         "Fallback"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level01.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the Fallback contract...");
-        let contract =
-            Fallback::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = Fallback::deploy(provider).await?;
 
-        let balance = contract.contributions(deployer.address()).await?;
+        let balance = contract.contributions(deployer.address()).call().await?;
         assert_eq!(balance, to_ether(1000));
 
-        let balance = contract.contributions(offender.address()).await?;
-        assert_eq!(balance, U256::from(0));
+        let balance =
+            contract.contributions(roles.offender.address()).call().await?;
+        assert_eq!(balance, U256::ZERO);
 
-        deployer
-            .send_transaction(
-                TransactionRequest::new()
-                    .to(contract.address())
-                    .value(to_ether(5)),
-                None,
-            )
-            .await?
-            .await?;
+        deployer.transfer(*contract.address(), to_ether(5)).await?;
 
         let contract_balance =
-            deployer.get_balance(contract.address(), None).await?;
+            provider.get_balance(*contract.address()).await?;
         assert_eq!(contract_balance, to_ether(5));
 
-        let owner = contract.owner().await?;
+        let owner = contract.owner().call().await?;
         assert_eq!(owner, deployer.address());
 
-        let target = Target { address: contract.address() };
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = Fallback::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Fallback::new(self.address, provider.clone());
 
         println!("Checking that you claimed ownership of the contract...");
-        let owner = contract.owner().await?;
-        let is_owner = owner == offender.address();
+        let owner = contract.owner().call().await?;
+        let is_owner = owner == roles.offender.address();
 
         println!("Checking that you reduced its balance to 0...");
-        let contract_balance = deployer.get_balance(self.address, None).await?;
-        let balance_reduced = contract_balance == U256::from(0);
+        let contract_balance = provider.get_balance(self.address).await?;
+        let balance_reduced = contract_balance == U256::ZERO;
 
         Ok(is_owner && balance_reduced)
     }

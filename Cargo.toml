@@ -3,14 +3,16 @@ members = ["attack", "ctf"]
 resolver = "2"
 
 [workspace.package]
-edition = "2021"
+edition = "2024"
 exclude = [".github/", "**/tests/", "**/contracts/", "**/cache/", "**/out/"]
 
 [workspace.dependencies]
 async-trait = "0.1.81"
-ethers = "2.0.14"
 eyre = "0.6"
 rand = "0.8.5"
 serde = "1.0.204"
 serde_json = "1.0.120"
 tokio = { version = "1.38", features = ["macros", "rt-multi-thread", "time"] }
+alloy = "2"
+alloy-sol-types = "1.7"
+reqwest = "0.13"
