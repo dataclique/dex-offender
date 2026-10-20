@@ -5,7 +5,7 @@
 use crate::{Level, Roles};
 
 pub mod lvl01_fallback;
-// pub mod lvl02_fallout;
+pub mod lvl02_fallout;
 // pub mod lvl03_coin_flip;
 // pub mod lvl04_telephone;
 // pub mod lvl05_token;
@@ -29,7 +29,7 @@ pub mod lvl01_fallback;
 // pub mod lvl23_dex_two;
 
 use lvl01_fallback as lvl01;
-// use lvl02_fallout as lvl02;
+use lvl02_fallout as lvl02;
 // use lvl03_coin_flip as lvl03;
 // use lvl04_telephone as lvl04;
 // use lvl05_token as lvl05;
@@ -55,7 +55,7 @@ use lvl01_fallback as lvl01;
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Ethernaut {
     pub level01: lvl01::Target,
-    // pub level02: lvl02::Target,
+    pub level02: lvl02::Target,
     // pub level03: lvl03::Target,
     // pub level04: lvl04::Target,
     // pub level05: lvl05::Target,
@@ -82,7 +82,7 @@ pub struct Ethernaut {
 pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
     println!("Deploying Ethernaut levels...");
     let level01 = lvl01::Target::set_up(roles).await?;
-    // let level02 = lvl02::Target::set_up(roles).await?;
+    let level02 = lvl02::Target::set_up(roles).await?;
     // let level03 = lvl03::Target::set_up(roles).await?;
     // let level04 = lvl04::Target::set_up(roles).await?;
     // let level05 = lvl05::Target::set_up(roles).await?;
@@ -107,7 +107,7 @@ pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
 
     Ok(Ethernaut {
         level01,
-        // level02,
+        level02,
         // level03,
         // level04,
         // level05,
