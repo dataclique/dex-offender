@@ -80,14 +80,20 @@ pub mod delegate {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Delegate<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Delegate<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Delegate<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Delegate<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Delegate<M> {
         fn fmt(
@@ -278,10 +284,14 @@ pub mod delegate {
         }
     }
     impl ::core::convert::From<OwnerCall> for DelegateCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<PwnCall> for DelegateCalls {
-        fn from(value: PwnCall) -> Self { Self::Pwn(value) }
+        fn from(value: PwnCall) -> Self {
+            Self::Pwn(value)
+        }
     }
     ///Container type for all return fields from the
     /// `owner` function with signature `owner()` and

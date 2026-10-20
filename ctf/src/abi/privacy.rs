@@ -116,14 +116,20 @@ pub mod privacy {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Privacy<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Privacy<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Privacy<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Privacy<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Privacy<M> {
         fn fmt(
@@ -355,13 +361,19 @@ pub mod privacy {
         }
     }
     impl ::core::convert::From<IdCall> for PrivacyCalls {
-        fn from(value: IdCall) -> Self { Self::Id(value) }
+        fn from(value: IdCall) -> Self {
+            Self::Id(value)
+        }
     }
     impl ::core::convert::From<LockedCall> for PrivacyCalls {
-        fn from(value: LockedCall) -> Self { Self::Locked(value) }
+        fn from(value: LockedCall) -> Self {
+            Self::Locked(value)
+        }
     }
     impl ::core::convert::From<UnlockCall> for PrivacyCalls {
-        fn from(value: UnlockCall) -> Self { Self::Unlock(value) }
+        fn from(value: UnlockCall) -> Self {
+            Self::Unlock(value)
+        }
     }
     ///Container type for all return fields from the `ID`
     /// function with signature `ID()` and selector

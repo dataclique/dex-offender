@@ -108,14 +108,20 @@ pub mod fixed_point_math_lib {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct FixedPointMathLib<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for FixedPointMathLib<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for FixedPointMathLib<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for FixedPointMathLib<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for FixedPointMathLib<M> {
         fn fmt(
@@ -537,16 +543,24 @@ pub mod fixed_point_math_lib {
         }
     }
     impl ::core::convert::From<::std::string::String> for FixedPointMathLibErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<DivFailed> for FixedPointMathLibErrors {
-        fn from(value: DivFailed) -> Self { Self::DivFailed(value) }
+        fn from(value: DivFailed) -> Self {
+            Self::DivFailed(value)
+        }
     }
     impl ::core::convert::From<DivWadFailed> for FixedPointMathLibErrors {
-        fn from(value: DivWadFailed) -> Self { Self::DivWadFailed(value) }
+        fn from(value: DivWadFailed) -> Self {
+            Self::DivWadFailed(value)
+        }
     }
     impl ::core::convert::From<ExpOverflow> for FixedPointMathLibErrors {
-        fn from(value: ExpOverflow) -> Self { Self::ExpOverflow(value) }
+        fn from(value: ExpOverflow) -> Self {
+            Self::ExpOverflow(value)
+        }
     }
     impl ::core::convert::From<FactorialOverflow> for FixedPointMathLibErrors {
         fn from(value: FactorialOverflow) -> Self {
@@ -559,15 +573,23 @@ pub mod fixed_point_math_lib {
         }
     }
     impl ::core::convert::From<LnWadUndefined> for FixedPointMathLibErrors {
-        fn from(value: LnWadUndefined) -> Self { Self::LnWadUndefined(value) }
+        fn from(value: LnWadUndefined) -> Self {
+            Self::LnWadUndefined(value)
+        }
     }
     impl ::core::convert::From<Log2Undefined> for FixedPointMathLibErrors {
-        fn from(value: Log2Undefined) -> Self { Self::Log2Undefined(value) }
+        fn from(value: Log2Undefined) -> Self {
+            Self::Log2Undefined(value)
+        }
     }
     impl ::core::convert::From<MulDivFailed> for FixedPointMathLibErrors {
-        fn from(value: MulDivFailed) -> Self { Self::MulDivFailed(value) }
+        fn from(value: MulDivFailed) -> Self {
+            Self::MulDivFailed(value)
+        }
     }
     impl ::core::convert::From<MulWadFailed> for FixedPointMathLibErrors {
-        fn from(value: MulWadFailed) -> Self { Self::MulWadFailed(value) }
+        fn from(value: MulWadFailed) -> Self {
+            Self::MulWadFailed(value)
+        }
     }
 }

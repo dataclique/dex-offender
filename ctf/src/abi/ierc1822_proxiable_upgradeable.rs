@@ -46,14 +46,20 @@ pub mod ierc1822_proxiable_upgradeable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IERC1822ProxiableUpgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IERC1822ProxiableUpgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IERC1822ProxiableUpgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IERC1822ProxiableUpgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IERC1822ProxiableUpgradeable<M> {
         fn fmt(

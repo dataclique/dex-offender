@@ -1009,14 +1009,20 @@ pub mod reward_token {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct RewardToken<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for RewardToken<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for RewardToken<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for RewardToken<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for RewardToken<M> {
         fn fmt(
@@ -1646,7 +1652,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<::std::string::String> for RewardTokenErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NewOwnerIsZeroAddress> for RewardTokenErrors {
         fn from(value: NewOwnerIsZeroAddress) -> Self {
@@ -1659,7 +1667,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<Unauthorized> for RewardTokenErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -1866,7 +1876,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for RewardTokenEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverCanceledFilter>
         for RewardTokenEvents
@@ -1893,7 +1905,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<TransferFilter> for RewardTokenEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `MINTER_ROLE` function with signature
@@ -2863,16 +2877,24 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<MinterRoleCall> for RewardTokenCalls {
-        fn from(value: MinterRoleCall) -> Self { Self::MinterRole(value) }
+        fn from(value: MinterRoleCall) -> Self {
+            Self::MinterRole(value)
+        }
     }
     impl ::core::convert::From<AllowanceCall> for RewardTokenCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for RewardTokenCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for RewardTokenCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<CancelOwnershipHandoverCall> for RewardTokenCalls {
         fn from(value: CancelOwnershipHandoverCall) -> Self {
@@ -2885,7 +2907,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<DecimalsCall> for RewardTokenCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall> for RewardTokenCalls {
         fn from(value: DecreaseAllowanceCall) -> Self {
@@ -2893,13 +2917,19 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<GrantRolesCall> for RewardTokenCalls {
-        fn from(value: GrantRolesCall) -> Self { Self::GrantRoles(value) }
+        fn from(value: GrantRolesCall) -> Self {
+            Self::GrantRoles(value)
+        }
     }
     impl ::core::convert::From<HasAllRolesCall> for RewardTokenCalls {
-        fn from(value: HasAllRolesCall) -> Self { Self::HasAllRoles(value) }
+        fn from(value: HasAllRolesCall) -> Self {
+            Self::HasAllRoles(value)
+        }
     }
     impl ::core::convert::From<HasAnyRoleCall> for RewardTokenCalls {
-        fn from(value: HasAnyRoleCall) -> Self { Self::HasAnyRole(value) }
+        fn from(value: HasAnyRoleCall) -> Self {
+            Self::HasAnyRole(value)
+        }
     }
     impl ::core::convert::From<IncreaseAllowanceCall> for RewardTokenCalls {
         fn from(value: IncreaseAllowanceCall) -> Self {
@@ -2907,10 +2937,14 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<MintCall> for RewardTokenCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<NameCall> for RewardTokenCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OrdinalsFromRolesCall> for RewardTokenCalls {
         fn from(value: OrdinalsFromRolesCall) -> Self {
@@ -2918,7 +2952,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<OwnerCall> for RewardTokenCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall>
         for RewardTokenCalls
@@ -2938,7 +2974,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<RenounceRolesCall> for RewardTokenCalls {
-        fn from(value: RenounceRolesCall) -> Self { Self::RenounceRoles(value) }
+        fn from(value: RenounceRolesCall) -> Self {
+            Self::RenounceRoles(value)
+        }
     }
     impl ::core::convert::From<RequestOwnershipHandoverCall> for RewardTokenCalls {
         fn from(value: RequestOwnershipHandoverCall) -> Self {
@@ -2946,7 +2984,9 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<RevokeRolesCall> for RewardTokenCalls {
-        fn from(value: RevokeRolesCall) -> Self { Self::RevokeRoles(value) }
+        fn from(value: RevokeRolesCall) -> Self {
+            Self::RevokeRoles(value)
+        }
     }
     impl ::core::convert::From<RolesFromOrdinalsCall> for RewardTokenCalls {
         fn from(value: RolesFromOrdinalsCall) -> Self {
@@ -2954,19 +2994,29 @@ pub mod reward_token {
         }
     }
     impl ::core::convert::From<RolesOfCall> for RewardTokenCalls {
-        fn from(value: RolesOfCall) -> Self { Self::RolesOf(value) }
+        fn from(value: RolesOfCall) -> Self {
+            Self::RolesOf(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for RewardTokenCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for RewardTokenCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for RewardTokenCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for RewardTokenCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for RewardTokenCalls {
         fn from(value: TransferOwnershipCall) -> Self {

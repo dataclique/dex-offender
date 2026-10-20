@@ -161,14 +161,20 @@ pub mod simple_token {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SimpleToken<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SimpleToken<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SimpleToken<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SimpleToken<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SimpleToken<M> {
         fn fmt(
@@ -449,16 +455,24 @@ pub mod simple_token {
         }
     }
     impl ::core::convert::From<BalancesCall> for SimpleTokenCalls {
-        fn from(value: BalancesCall) -> Self { Self::Balances(value) }
+        fn from(value: BalancesCall) -> Self {
+            Self::Balances(value)
+        }
     }
     impl ::core::convert::From<DestroyCall> for SimpleTokenCalls {
-        fn from(value: DestroyCall) -> Self { Self::Destroy(value) }
+        fn from(value: DestroyCall) -> Self {
+            Self::Destroy(value)
+        }
     }
     impl ::core::convert::From<NameCall> for SimpleTokenCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for SimpleTokenCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balances` function with signature

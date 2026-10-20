@@ -359,14 +359,20 @@ pub mod dex {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Dex<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Dex<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Dex<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Dex<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Dex<M> {
         fn fmt(
@@ -1001,19 +1007,29 @@ pub mod dex {
         }
     }
     impl ::core::convert::From<AddLiquidityCall> for DexCalls {
-        fn from(value: AddLiquidityCall) -> Self { Self::AddLiquidity(value) }
+        fn from(value: AddLiquidityCall) -> Self {
+            Self::AddLiquidity(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for DexCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for DexCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<GetSwapPriceCall> for DexCalls {
-        fn from(value: GetSwapPriceCall) -> Self { Self::GetSwapPrice(value) }
+        fn from(value: GetSwapPriceCall) -> Self {
+            Self::GetSwapPrice(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for DexCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for DexCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -1021,16 +1037,24 @@ pub mod dex {
         }
     }
     impl ::core::convert::From<SetTokensCall> for DexCalls {
-        fn from(value: SetTokensCall) -> Self { Self::SetTokens(value) }
+        fn from(value: SetTokensCall) -> Self {
+            Self::SetTokens(value)
+        }
     }
     impl ::core::convert::From<SwapCall> for DexCalls {
-        fn from(value: SwapCall) -> Self { Self::Swap(value) }
+        fn from(value: SwapCall) -> Self {
+            Self::Swap(value)
+        }
     }
     impl ::core::convert::From<Token1Call> for DexCalls {
-        fn from(value: Token1Call) -> Self { Self::Token1(value) }
+        fn from(value: Token1Call) -> Self {
+            Self::Token1(value)
+        }
     }
     impl ::core::convert::From<Token2Call> for DexCalls {
-        fn from(value: Token2Call) -> Self { Self::Token2(value) }
+        fn from(value: Token2Call) -> Self {
+            Self::Token2(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for DexCalls {
         fn from(value: TransferOwnershipCall) -> Self {

@@ -137,14 +137,20 @@ pub mod coin {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Coin<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Coin<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Coin<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Coin<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Coin<M> {
         fn fmt(
@@ -372,10 +378,14 @@ pub mod coin {
         }
     }
     impl ::core::convert::From<BalancesCall> for CoinCalls {
-        fn from(value: BalancesCall) -> Self { Self::Balances(value) }
+        fn from(value: BalancesCall) -> Self {
+            Self::Balances(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for CoinCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balances` function with signature

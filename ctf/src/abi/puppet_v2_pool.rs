@@ -193,14 +193,20 @@ pub mod puppet_v2_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PuppetV2Pool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PuppetV2Pool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for PuppetV2Pool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for PuppetV2Pool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for PuppetV2Pool<M> {
         fn fmt(
@@ -493,7 +499,9 @@ pub mod puppet_v2_pool {
         }
     }
     impl ::core::convert::From<BorrowCall> for PuppetV2PoolCalls {
-        fn from(value: BorrowCall) -> Self { Self::Borrow(value) }
+        fn from(value: BorrowCall) -> Self {
+            Self::Borrow(value)
+        }
     }
     impl ::core::convert::From<CalculateDepositOfWETHRequiredCall>
         for PuppetV2PoolCalls
@@ -503,7 +511,9 @@ pub mod puppet_v2_pool {
         }
     }
     impl ::core::convert::From<DepositsCall> for PuppetV2PoolCalls {
-        fn from(value: DepositsCall) -> Self { Self::Deposits(value) }
+        fn from(value: DepositsCall) -> Self {
+            Self::Deposits(value)
+        }
     }
     ///Container type for all return fields from the
     /// `calculateDepositOfWETHRequired` function with

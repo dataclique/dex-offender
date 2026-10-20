@@ -120,14 +120,20 @@ pub mod ownable_upgradeable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct OwnableUpgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for OwnableUpgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for OwnableUpgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for OwnableUpgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for OwnableUpgradeable<M> {
         fn fmt(
@@ -449,7 +455,9 @@ pub mod ownable_upgradeable {
         }
     }
     impl ::core::convert::From<OwnerCall> for OwnableUpgradeableCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for OwnableUpgradeableCalls {
         fn from(value: RenounceOwnershipCall) -> Self {

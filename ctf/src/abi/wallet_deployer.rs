@@ -265,14 +265,20 @@ pub mod wallet_deployer {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct WalletDeployer<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for WalletDeployer<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for WalletDeployer<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for WalletDeployer<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for WalletDeployer<M> {
         fn fmt(
@@ -759,31 +765,49 @@ pub mod wallet_deployer {
         }
     }
     impl ::core::convert::From<CanCall> for WalletDeployerCalls {
-        fn from(value: CanCall) -> Self { Self::Can(value) }
+        fn from(value: CanCall) -> Self {
+            Self::Can(value)
+        }
     }
     impl ::core::convert::From<ChiefCall> for WalletDeployerCalls {
-        fn from(value: ChiefCall) -> Self { Self::Chief(value) }
+        fn from(value: ChiefCall) -> Self {
+            Self::Chief(value)
+        }
     }
     impl ::core::convert::From<CopyCall> for WalletDeployerCalls {
-        fn from(value: CopyCall) -> Self { Self::Copy(value) }
+        fn from(value: CopyCall) -> Self {
+            Self::Copy(value)
+        }
     }
     impl ::core::convert::From<DropCall> for WalletDeployerCalls {
-        fn from(value: DropCall) -> Self { Self::Drop(value) }
+        fn from(value: DropCall) -> Self {
+            Self::Drop(value)
+        }
     }
     impl ::core::convert::From<FactCall> for WalletDeployerCalls {
-        fn from(value: FactCall) -> Self { Self::Fact(value) }
+        fn from(value: FactCall) -> Self {
+            Self::Fact(value)
+        }
     }
     impl ::core::convert::From<GemCall> for WalletDeployerCalls {
-        fn from(value: GemCall) -> Self { Self::Gem(value) }
+        fn from(value: GemCall) -> Self {
+            Self::Gem(value)
+        }
     }
     impl ::core::convert::From<MomCall> for WalletDeployerCalls {
-        fn from(value: MomCall) -> Self { Self::Mom(value) }
+        fn from(value: MomCall) -> Self {
+            Self::Mom(value)
+        }
     }
     impl ::core::convert::From<PayCall> for WalletDeployerCalls {
-        fn from(value: PayCall) -> Self { Self::Pay(value) }
+        fn from(value: PayCall) -> Self {
+            Self::Pay(value)
+        }
     }
     impl ::core::convert::From<RuleCall> for WalletDeployerCalls {
-        fn from(value: RuleCall) -> Self { Self::Rule(value) }
+        fn from(value: RuleCall) -> Self {
+            Self::Rule(value)
+        }
     }
     ///Container type for all return fields from the `can`
     /// function with signature `can(address,address)` and

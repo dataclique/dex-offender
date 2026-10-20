@@ -1000,14 +1000,20 @@ pub mod i_uniswap_v2_pair {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV2Pair<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV2Pair<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV2Pair<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV2Pair<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV2Pair<M> {
         fn fmt(
@@ -1626,22 +1632,34 @@ pub mod i_uniswap_v2_pair {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for IUniswapV2PairEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<BurnFilter> for IUniswapV2PairEvents {
-        fn from(value: BurnFilter) -> Self { Self::BurnFilter(value) }
+        fn from(value: BurnFilter) -> Self {
+            Self::BurnFilter(value)
+        }
     }
     impl ::core::convert::From<MintFilter> for IUniswapV2PairEvents {
-        fn from(value: MintFilter) -> Self { Self::MintFilter(value) }
+        fn from(value: MintFilter) -> Self {
+            Self::MintFilter(value)
+        }
     }
     impl ::core::convert::From<SwapFilter> for IUniswapV2PairEvents {
-        fn from(value: SwapFilter) -> Self { Self::SwapFilter(value) }
+        fn from(value: SwapFilter) -> Self {
+            Self::SwapFilter(value)
+        }
     }
     impl ::core::convert::From<SyncFilter> for IUniswapV2PairEvents {
-        fn from(value: SyncFilter) -> Self { Self::SyncFilter(value) }
+        fn from(value: SyncFilter) -> Self {
+            Self::SyncFilter(value)
+        }
     }
     impl ::core::convert::From<TransferFilter> for IUniswapV2PairEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `DOMAIN_SEPARATOR` function with signature
@@ -2514,43 +2532,69 @@ pub mod i_uniswap_v2_pair {
         }
     }
     impl ::core::convert::From<AllowanceCall> for IUniswapV2PairCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for IUniswapV2PairCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for IUniswapV2PairCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BurnCall> for IUniswapV2PairCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for IUniswapV2PairCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<FactoryCall> for IUniswapV2PairCalls {
-        fn from(value: FactoryCall) -> Self { Self::Factory(value) }
+        fn from(value: FactoryCall) -> Self {
+            Self::Factory(value)
+        }
     }
     impl ::core::convert::From<GetReservesCall> for IUniswapV2PairCalls {
-        fn from(value: GetReservesCall) -> Self { Self::GetReserves(value) }
+        fn from(value: GetReservesCall) -> Self {
+            Self::GetReserves(value)
+        }
     }
     impl ::core::convert::From<InitializeCall> for IUniswapV2PairCalls {
-        fn from(value: InitializeCall) -> Self { Self::Initialize(value) }
+        fn from(value: InitializeCall) -> Self {
+            Self::Initialize(value)
+        }
     }
     impl ::core::convert::From<KlastCall> for IUniswapV2PairCalls {
-        fn from(value: KlastCall) -> Self { Self::Klast(value) }
+        fn from(value: KlastCall) -> Self {
+            Self::Klast(value)
+        }
     }
     impl ::core::convert::From<MintCall> for IUniswapV2PairCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<NameCall> for IUniswapV2PairCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<NoncesCall> for IUniswapV2PairCalls {
-        fn from(value: NoncesCall) -> Self { Self::Nonces(value) }
+        fn from(value: NoncesCall) -> Self {
+            Self::Nonces(value)
+        }
     }
     impl ::core::convert::From<PermitCall> for IUniswapV2PairCalls {
-        fn from(value: PermitCall) -> Self { Self::Permit(value) }
+        fn from(value: PermitCall) -> Self {
+            Self::Permit(value)
+        }
     }
     impl ::core::convert::From<Price0CumulativeLastCall> for IUniswapV2PairCalls {
         fn from(value: Price0CumulativeLastCall) -> Self {
@@ -2563,31 +2607,49 @@ pub mod i_uniswap_v2_pair {
         }
     }
     impl ::core::convert::From<SkimCall> for IUniswapV2PairCalls {
-        fn from(value: SkimCall) -> Self { Self::Skim(value) }
+        fn from(value: SkimCall) -> Self {
+            Self::Skim(value)
+        }
     }
     impl ::core::convert::From<SwapCall> for IUniswapV2PairCalls {
-        fn from(value: SwapCall) -> Self { Self::Swap(value) }
+        fn from(value: SwapCall) -> Self {
+            Self::Swap(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for IUniswapV2PairCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<SyncCall> for IUniswapV2PairCalls {
-        fn from(value: SyncCall) -> Self { Self::Sync(value) }
+        fn from(value: SyncCall) -> Self {
+            Self::Sync(value)
+        }
     }
     impl ::core::convert::From<Token0Call> for IUniswapV2PairCalls {
-        fn from(value: Token0Call) -> Self { Self::Token0(value) }
+        fn from(value: Token0Call) -> Self {
+            Self::Token0(value)
+        }
     }
     impl ::core::convert::From<Token1Call> for IUniswapV2PairCalls {
-        fn from(value: Token1Call) -> Self { Self::Token1(value) }
+        fn from(value: Token1Call) -> Self {
+            Self::Token1(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for IUniswapV2PairCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for IUniswapV2PairCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for IUniswapV2PairCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `DOMAIN_SEPARATOR` function with signature

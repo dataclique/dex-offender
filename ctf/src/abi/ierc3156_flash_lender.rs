@@ -150,14 +150,20 @@ pub mod ierc3156_flash_lender {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IERC3156FlashLender<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IERC3156FlashLender<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IERC3156FlashLender<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IERC3156FlashLender<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IERC3156FlashLender<M> {
         fn fmt(
@@ -377,13 +383,19 @@ pub mod ierc3156_flash_lender {
         }
     }
     impl ::core::convert::From<FlashFeeCall> for IERC3156FlashLenderCalls {
-        fn from(value: FlashFeeCall) -> Self { Self::FlashFee(value) }
+        fn from(value: FlashFeeCall) -> Self {
+            Self::FlashFee(value)
+        }
     }
     impl ::core::convert::From<FlashLoanCall> for IERC3156FlashLenderCalls {
-        fn from(value: FlashLoanCall) -> Self { Self::FlashLoan(value) }
+        fn from(value: FlashLoanCall) -> Self {
+            Self::FlashLoan(value)
+        }
     }
     impl ::core::convert::From<MaxFlashLoanCall> for IERC3156FlashLenderCalls {
-        fn from(value: MaxFlashLoanCall) -> Self { Self::MaxFlashLoan(value) }
+        fn from(value: MaxFlashLoanCall) -> Self {
+            Self::MaxFlashLoan(value)
+        }
     }
     ///Container type for all return fields from the
     /// `flashFee` function with signature

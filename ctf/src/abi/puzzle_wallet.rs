@@ -274,14 +274,20 @@ pub mod puzzle_wallet {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PuzzleWallet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PuzzleWallet<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for PuzzleWallet<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for PuzzleWallet<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for PuzzleWallet<M> {
         fn fmt(
@@ -814,31 +820,49 @@ pub mod puzzle_wallet {
         }
     }
     impl ::core::convert::From<BalancesCall> for PuzzleWalletCalls {
-        fn from(value: BalancesCall) -> Self { Self::Balances(value) }
+        fn from(value: BalancesCall) -> Self {
+            Self::Balances(value)
+        }
     }
     impl ::core::convert::From<DepositCall> for PuzzleWalletCalls {
-        fn from(value: DepositCall) -> Self { Self::Deposit(value) }
+        fn from(value: DepositCall) -> Self {
+            Self::Deposit(value)
+        }
     }
     impl ::core::convert::From<ExecuteCall> for PuzzleWalletCalls {
-        fn from(value: ExecuteCall) -> Self { Self::Execute(value) }
+        fn from(value: ExecuteCall) -> Self {
+            Self::Execute(value)
+        }
     }
     impl ::core::convert::From<InitCall> for PuzzleWalletCalls {
-        fn from(value: InitCall) -> Self { Self::Init(value) }
+        fn from(value: InitCall) -> Self {
+            Self::Init(value)
+        }
     }
     impl ::core::convert::From<MaxBalanceCall> for PuzzleWalletCalls {
-        fn from(value: MaxBalanceCall) -> Self { Self::MaxBalance(value) }
+        fn from(value: MaxBalanceCall) -> Self {
+            Self::MaxBalance(value)
+        }
     }
     impl ::core::convert::From<MulticallCall> for PuzzleWalletCalls {
-        fn from(value: MulticallCall) -> Self { Self::Multicall(value) }
+        fn from(value: MulticallCall) -> Self {
+            Self::Multicall(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for PuzzleWalletCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<SetMaxBalanceCall> for PuzzleWalletCalls {
-        fn from(value: SetMaxBalanceCall) -> Self { Self::SetMaxBalance(value) }
+        fn from(value: SetMaxBalanceCall) -> Self {
+            Self::SetMaxBalance(value)
+        }
     }
     impl ::core::convert::From<WhitelistedCall> for PuzzleWalletCalls {
-        fn from(value: WhitelistedCall) -> Self { Self::Whitelisted(value) }
+        fn from(value: WhitelistedCall) -> Self {
+            Self::Whitelisted(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balances` function with signature

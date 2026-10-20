@@ -47,14 +47,20 @@ pub mod meaning_of_life {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct MeaningOfLife<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for MeaningOfLife<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for MeaningOfLife<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for MeaningOfLife<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for MeaningOfLife<M> {
         fn fmt(

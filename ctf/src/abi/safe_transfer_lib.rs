@@ -72,14 +72,20 @@ pub mod safe_transfer_lib {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SafeTransferLib<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SafeTransferLib<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SafeTransferLib<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SafeTransferLib<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SafeTransferLib<M> {
         fn fmt(
@@ -352,10 +358,14 @@ pub mod safe_transfer_lib {
         }
     }
     impl ::core::convert::From<::std::string::String> for SafeTransferLibErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<ApproveFailed> for SafeTransferLibErrors {
-        fn from(value: ApproveFailed) -> Self { Self::ApproveFailed(value) }
+        fn from(value: ApproveFailed) -> Self {
+            Self::ApproveFailed(value)
+        }
     }
     impl ::core::convert::From<ETHTransferFailed> for SafeTransferLibErrors {
         fn from(value: ETHTransferFailed) -> Self {
@@ -363,7 +373,9 @@ pub mod safe_transfer_lib {
         }
     }
     impl ::core::convert::From<TransferFailed> for SafeTransferLibErrors {
-        fn from(value: TransferFailed) -> Self { Self::TransferFailed(value) }
+        fn from(value: TransferFailed) -> Self {
+            Self::TransferFailed(value)
+        }
     }
     impl ::core::convert::From<TransferFromFailed> for SafeTransferLibErrors {
         fn from(value: TransferFromFailed) -> Self {

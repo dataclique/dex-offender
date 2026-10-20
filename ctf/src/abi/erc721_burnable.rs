@@ -524,14 +524,20 @@ pub mod erc721_burnable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct ERC721Burnable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for ERC721Burnable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for ERC721Burnable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for ERC721Burnable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for ERC721Burnable<M> {
         fn fmt(
@@ -883,7 +889,9 @@ pub mod erc721_burnable {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for ERC721BurnableEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<ApprovalForAllFilter> for ERC721BurnableEvents {
         fn from(value: ApprovalForAllFilter) -> Self {
@@ -891,7 +899,9 @@ pub mod erc721_burnable {
         }
     }
     impl ::core::convert::From<TransferFilter> for ERC721BurnableEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `approve` function with signature
@@ -1392,16 +1402,24 @@ pub mod erc721_burnable {
         }
     }
     impl ::core::convert::From<ApproveCall> for ERC721BurnableCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for ERC721BurnableCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BurnCall> for ERC721BurnableCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<GetApprovedCall> for ERC721BurnableCalls {
-        fn from(value: GetApprovedCall) -> Self { Self::GetApproved(value) }
+        fn from(value: GetApprovedCall) -> Self {
+            Self::GetApproved(value)
+        }
     }
     impl ::core::convert::From<IsApprovedForAllCall> for ERC721BurnableCalls {
         fn from(value: IsApprovedForAllCall) -> Self {
@@ -1409,10 +1427,14 @@ pub mod erc721_burnable {
         }
     }
     impl ::core::convert::From<NameCall> for ERC721BurnableCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OwnerOfCall> for ERC721BurnableCalls {
-        fn from(value: OwnerOfCall) -> Self { Self::OwnerOf(value) }
+        fn from(value: OwnerOfCall) -> Self {
+            Self::OwnerOf(value)
+        }
     }
     impl ::core::convert::From<SafeTransferFromCall> for ERC721BurnableCalls {
         fn from(value: SafeTransferFromCall) -> Self {
@@ -1437,13 +1459,19 @@ pub mod erc721_burnable {
         }
     }
     impl ::core::convert::From<SymbolCall> for ERC721BurnableCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TokenURICall> for ERC721BurnableCalls {
-        fn from(value: TokenURICall) -> Self { Self::TokenURI(value) }
+        fn from(value: TokenURICall) -> Self {
+            Self::TokenURI(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for ERC721BurnableCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balanceOf` function with signature

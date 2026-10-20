@@ -123,14 +123,20 @@ pub mod switch {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Switch<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Switch<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Switch<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Switch<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Switch<M> {
         fn fmt(
@@ -448,19 +454,29 @@ pub mod switch {
         }
     }
     impl ::core::convert::From<FlipSwitchCall> for SwitchCalls {
-        fn from(value: FlipSwitchCall) -> Self { Self::FlipSwitch(value) }
+        fn from(value: FlipSwitchCall) -> Self {
+            Self::FlipSwitch(value)
+        }
     }
     impl ::core::convert::From<OffSelectorCall> for SwitchCalls {
-        fn from(value: OffSelectorCall) -> Self { Self::OffSelector(value) }
+        fn from(value: OffSelectorCall) -> Self {
+            Self::OffSelector(value)
+        }
     }
     impl ::core::convert::From<SwitchOnCall> for SwitchCalls {
-        fn from(value: SwitchOnCall) -> Self { Self::SwitchOn(value) }
+        fn from(value: SwitchOnCall) -> Self {
+            Self::SwitchOn(value)
+        }
     }
     impl ::core::convert::From<TurnSwitchOffCall> for SwitchCalls {
-        fn from(value: TurnSwitchOffCall) -> Self { Self::TurnSwitchOff(value) }
+        fn from(value: TurnSwitchOffCall) -> Self {
+            Self::TurnSwitchOff(value)
+        }
     }
     impl ::core::convert::From<TurnSwitchOnCall> for SwitchCalls {
-        fn from(value: TurnSwitchOnCall) -> Self { Self::TurnSwitchOn(value) }
+        fn from(value: TurnSwitchOnCall) -> Self {
+            Self::TurnSwitchOn(value)
+        }
     }
     ///Container type for all return fields from the
     /// `offSelector` function with signature

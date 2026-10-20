@@ -43,14 +43,20 @@ pub mod i_beacon_upgradeable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IBeaconUpgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IBeaconUpgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IBeaconUpgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IBeaconUpgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IBeaconUpgradeable<M> {
         fn fmt(

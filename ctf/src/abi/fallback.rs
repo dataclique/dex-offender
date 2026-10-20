@@ -136,14 +136,20 @@ pub mod fallback {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Fallback<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Fallback<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Fallback<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Fallback<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Fallback<M> {
         fn fmt(
@@ -464,10 +470,14 @@ pub mod fallback {
         }
     }
     impl ::core::convert::From<ContributeCall> for FallbackCalls {
-        fn from(value: ContributeCall) -> Self { Self::Contribute(value) }
+        fn from(value: ContributeCall) -> Self {
+            Self::Contribute(value)
+        }
     }
     impl ::core::convert::From<ContributionsCall> for FallbackCalls {
-        fn from(value: ContributionsCall) -> Self { Self::Contributions(value) }
+        fn from(value: ContributionsCall) -> Self {
+            Self::Contributions(value)
+        }
     }
     impl ::core::convert::From<GetContributionCall> for FallbackCalls {
         fn from(value: GetContributionCall) -> Self {
@@ -475,10 +485,14 @@ pub mod fallback {
         }
     }
     impl ::core::convert::From<OwnerCall> for FallbackCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<WithdrawCall> for FallbackCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `contributions` function with signature

@@ -228,14 +228,20 @@ pub mod authorized_executor {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct AuthorizedExecutor<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AuthorizedExecutor<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AuthorizedExecutor<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AuthorizedExecutor<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AuthorizedExecutor<M> {
         fn fmt(
@@ -470,7 +476,9 @@ pub mod authorized_executor {
         }
     }
     impl ::core::convert::From<::std::string::String> for AuthorizedExecutorErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<AlreadyInitialized> for AuthorizedExecutorErrors {
         fn from(value: AlreadyInitialized) -> Self {
@@ -478,7 +486,9 @@ pub mod authorized_executor {
         }
     }
     impl ::core::convert::From<NotAllowed> for AuthorizedExecutorErrors {
-        fn from(value: NotAllowed) -> Self { Self::NotAllowed(value) }
+        fn from(value: NotAllowed) -> Self {
+            Self::NotAllowed(value)
+        }
     }
     #[derive(
         Clone,
@@ -700,16 +710,24 @@ pub mod authorized_executor {
         }
     }
     impl ::core::convert::From<ExecuteCall> for AuthorizedExecutorCalls {
-        fn from(value: ExecuteCall) -> Self { Self::Execute(value) }
+        fn from(value: ExecuteCall) -> Self {
+            Self::Execute(value)
+        }
     }
     impl ::core::convert::From<GetActionIdCall> for AuthorizedExecutorCalls {
-        fn from(value: GetActionIdCall) -> Self { Self::GetActionId(value) }
+        fn from(value: GetActionIdCall) -> Self {
+            Self::GetActionId(value)
+        }
     }
     impl ::core::convert::From<InitializedCall> for AuthorizedExecutorCalls {
-        fn from(value: InitializedCall) -> Self { Self::Initialized(value) }
+        fn from(value: InitializedCall) -> Self {
+            Self::Initialized(value)
+        }
     }
     impl ::core::convert::From<PermissionsCall> for AuthorizedExecutorCalls {
-        fn from(value: PermissionsCall) -> Self { Self::Permissions(value) }
+        fn from(value: PermissionsCall) -> Self {
+            Self::Permissions(value)
+        }
     }
     impl ::core::convert::From<SetPermissionsCall> for AuthorizedExecutorCalls {
         fn from(value: SetPermissionsCall) -> Self {

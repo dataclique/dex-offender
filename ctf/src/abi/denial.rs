@@ -131,14 +131,20 @@ pub mod denial {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Denial<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Denial<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Denial<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Denial<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Denial<M> {
         fn fmt(
@@ -463,10 +469,14 @@ pub mod denial {
         }
     }
     impl ::core::convert::From<OwnerCall> for DenialCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<PartnerCall> for DenialCalls {
-        fn from(value: PartnerCall) -> Self { Self::Partner(value) }
+        fn from(value: PartnerCall) -> Self {
+            Self::Partner(value)
+        }
     }
     impl ::core::convert::From<SetWithdrawPartnerCall> for DenialCalls {
         fn from(value: SetWithdrawPartnerCall) -> Self {
@@ -474,7 +484,9 @@ pub mod denial {
         }
     }
     impl ::core::convert::From<WithdrawCall> for DenialCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `contractBalance` function with signature

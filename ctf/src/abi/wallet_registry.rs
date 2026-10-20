@@ -604,14 +604,20 @@ pub mod wallet_registry {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct WalletRegistry<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for WalletRegistry<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for WalletRegistry<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for WalletRegistry<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for WalletRegistry<M> {
         fn fmt(
@@ -1340,7 +1346,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<::std::string::String> for WalletRegistryErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallerNotFactory> for WalletRegistryErrors {
         fn from(value: CallerNotFactory) -> Self {
@@ -1348,7 +1356,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<FakeMasterCopy> for WalletRegistryErrors {
-        fn from(value: FakeMasterCopy) -> Self { Self::FakeMasterCopy(value) }
+        fn from(value: FakeMasterCopy) -> Self {
+            Self::FakeMasterCopy(value)
+        }
     }
     impl ::core::convert::From<InvalidFallbackManager> for WalletRegistryErrors {
         fn from(value: InvalidFallbackManager) -> Self {
@@ -1381,7 +1391,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<NotEnoughFunds> for WalletRegistryErrors {
-        fn from(value: NotEnoughFunds) -> Self { Self::NotEnoughFunds(value) }
+        fn from(value: NotEnoughFunds) -> Self {
+            Self::NotEnoughFunds(value)
+        }
     }
     impl ::core::convert::From<OwnerIsNotABeneficiary> for WalletRegistryErrors {
         fn from(value: OwnerIsNotABeneficiary) -> Self {
@@ -1389,7 +1401,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<Unauthorized> for WalletRegistryErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -2056,7 +2070,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<BeneficiariesCall> for WalletRegistryCalls {
-        fn from(value: BeneficiariesCall) -> Self { Self::Beneficiaries(value) }
+        fn from(value: BeneficiariesCall) -> Self {
+            Self::Beneficiaries(value)
+        }
     }
     impl ::core::convert::From<CancelOwnershipHandoverCall>
         for WalletRegistryCalls
@@ -2073,10 +2089,14 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<MasterCopyCall> for WalletRegistryCalls {
-        fn from(value: MasterCopyCall) -> Self { Self::MasterCopy(value) }
+        fn from(value: MasterCopyCall) -> Self {
+            Self::MasterCopy(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for WalletRegistryCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall>
         for WalletRegistryCalls
@@ -2093,7 +2113,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<ProxyCreatedCall> for WalletRegistryCalls {
-        fn from(value: ProxyCreatedCall) -> Self { Self::ProxyCreated(value) }
+        fn from(value: ProxyCreatedCall) -> Self {
+            Self::ProxyCreated(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for WalletRegistryCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -2108,7 +2130,9 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<TokenCall> for WalletRegistryCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for WalletRegistryCalls {
         fn from(value: TransferOwnershipCall) -> Self {
@@ -2116,10 +2140,14 @@ pub mod wallet_registry {
         }
     }
     impl ::core::convert::From<WalletFactoryCall> for WalletRegistryCalls {
-        fn from(value: WalletFactoryCall) -> Self { Self::WalletFactory(value) }
+        fn from(value: WalletFactoryCall) -> Self {
+            Self::WalletFactory(value)
+        }
     }
     impl ::core::convert::From<WalletsCall> for WalletRegistryCalls {
-        fn from(value: WalletsCall) -> Self { Self::Wallets(value) }
+        fn from(value: WalletsCall) -> Self {
+            Self::Wallets(value)
+        }
     }
     ///Container type for all return fields from the
     /// `beneficiaries` function with signature

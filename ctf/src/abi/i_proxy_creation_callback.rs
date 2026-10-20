@@ -76,14 +76,20 @@ pub mod i_proxy_creation_callback {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IProxyCreationCallback<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IProxyCreationCallback<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IProxyCreationCallback<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IProxyCreationCallback<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IProxyCreationCallback<M> {
         fn fmt(

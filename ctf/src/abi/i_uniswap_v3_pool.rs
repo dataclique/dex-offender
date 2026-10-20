@@ -1476,14 +1476,20 @@ pub mod i_uniswap_v3_pool {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3Pool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3Pool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3Pool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3Pool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3Pool<M> {
         fn fmt(
@@ -2310,10 +2316,14 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<BurnFilter> for IUniswapV3PoolEvents {
-        fn from(value: BurnFilter) -> Self { Self::BurnFilter(value) }
+        fn from(value: BurnFilter) -> Self {
+            Self::BurnFilter(value)
+        }
     }
     impl ::core::convert::From<CollectFilter> for IUniswapV3PoolEvents {
-        fn from(value: CollectFilter) -> Self { Self::CollectFilter(value) }
+        fn from(value: CollectFilter) -> Self {
+            Self::CollectFilter(value)
+        }
     }
     impl ::core::convert::From<CollectProtocolFilter> for IUniswapV3PoolEvents {
         fn from(value: CollectProtocolFilter) -> Self {
@@ -2321,7 +2331,9 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<FlashFilter> for IUniswapV3PoolEvents {
-        fn from(value: FlashFilter) -> Self { Self::FlashFilter(value) }
+        fn from(value: FlashFilter) -> Self {
+            Self::FlashFilter(value)
+        }
     }
     impl ::core::convert::From<IncreaseObservationCardinalityNextFilter>
         for IUniswapV3PoolEvents
@@ -2336,7 +2348,9 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<MintFilter> for IUniswapV3PoolEvents {
-        fn from(value: MintFilter) -> Self { Self::MintFilter(value) }
+        fn from(value: MintFilter) -> Self {
+            Self::MintFilter(value)
+        }
     }
     impl ::core::convert::From<SetFeeProtocolFilter> for IUniswapV3PoolEvents {
         fn from(value: SetFeeProtocolFilter) -> Self {
@@ -2344,7 +2358,9 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<SwapFilter> for IUniswapV3PoolEvents {
-        fn from(value: SwapFilter) -> Self { Self::SwapFilter(value) }
+        fn from(value: SwapFilter) -> Self {
+            Self::SwapFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `burn` function with signature
@@ -3198,10 +3214,14 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<BurnCall> for IUniswapV3PoolCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<CollectCall> for IUniswapV3PoolCalls {
-        fn from(value: CollectCall) -> Self { Self::Collect(value) }
+        fn from(value: CollectCall) -> Self {
+            Self::Collect(value)
+        }
     }
     impl ::core::convert::From<CollectProtocolCall> for IUniswapV3PoolCalls {
         fn from(value: CollectProtocolCall) -> Self {
@@ -3209,10 +3229,14 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<FactoryCall> for IUniswapV3PoolCalls {
-        fn from(value: FactoryCall) -> Self { Self::Factory(value) }
+        fn from(value: FactoryCall) -> Self {
+            Self::Factory(value)
+        }
     }
     impl ::core::convert::From<FeeCall> for IUniswapV3PoolCalls {
-        fn from(value: FeeCall) -> Self { Self::Fee(value) }
+        fn from(value: FeeCall) -> Self {
+            Self::Fee(value)
+        }
     }
     impl ::core::convert::From<FeeGrowthGlobal0X128Call> for IUniswapV3PoolCalls {
         fn from(value: FeeGrowthGlobal0X128Call) -> Self {
@@ -3225,7 +3249,9 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<FlashCall> for IUniswapV3PoolCalls {
-        fn from(value: FlashCall) -> Self { Self::Flash(value) }
+        fn from(value: FlashCall) -> Self {
+            Self::Flash(value)
+        }
     }
     impl ::core::convert::From<IncreaseObservationCardinalityNextCall>
         for IUniswapV3PoolCalls
@@ -3235,10 +3261,14 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<InitializeCall> for IUniswapV3PoolCalls {
-        fn from(value: InitializeCall) -> Self { Self::Initialize(value) }
+        fn from(value: InitializeCall) -> Self {
+            Self::Initialize(value)
+        }
     }
     impl ::core::convert::From<LiquidityCall> for IUniswapV3PoolCalls {
-        fn from(value: LiquidityCall) -> Self { Self::Liquidity(value) }
+        fn from(value: LiquidityCall) -> Self {
+            Self::Liquidity(value)
+        }
     }
     impl ::core::convert::From<MaxLiquidityPerTickCall> for IUniswapV3PoolCalls {
         fn from(value: MaxLiquidityPerTickCall) -> Self {
@@ -3246,19 +3276,29 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<MintCall> for IUniswapV3PoolCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<ObservationsCall> for IUniswapV3PoolCalls {
-        fn from(value: ObservationsCall) -> Self { Self::Observations(value) }
+        fn from(value: ObservationsCall) -> Self {
+            Self::Observations(value)
+        }
     }
     impl ::core::convert::From<ObserveCall> for IUniswapV3PoolCalls {
-        fn from(value: ObserveCall) -> Self { Self::Observe(value) }
+        fn from(value: ObserveCall) -> Self {
+            Self::Observe(value)
+        }
     }
     impl ::core::convert::From<PositionsCall> for IUniswapV3PoolCalls {
-        fn from(value: PositionsCall) -> Self { Self::Positions(value) }
+        fn from(value: PositionsCall) -> Self {
+            Self::Positions(value)
+        }
     }
     impl ::core::convert::From<ProtocolFeesCall> for IUniswapV3PoolCalls {
-        fn from(value: ProtocolFeesCall) -> Self { Self::ProtocolFees(value) }
+        fn from(value: ProtocolFeesCall) -> Self {
+            Self::ProtocolFees(value)
+        }
     }
     impl ::core::convert::From<SetFeeProtocolCall> for IUniswapV3PoolCalls {
         fn from(value: SetFeeProtocolCall) -> Self {
@@ -3266,7 +3306,9 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<Slot0Call> for IUniswapV3PoolCalls {
-        fn from(value: Slot0Call) -> Self { Self::Slot0(value) }
+        fn from(value: Slot0Call) -> Self {
+            Self::Slot0(value)
+        }
     }
     impl ::core::convert::From<SnapshotCumulativesInsideCall>
         for IUniswapV3PoolCalls
@@ -3276,22 +3318,34 @@ pub mod i_uniswap_v3_pool {
         }
     }
     impl ::core::convert::From<SwapCall> for IUniswapV3PoolCalls {
-        fn from(value: SwapCall) -> Self { Self::Swap(value) }
+        fn from(value: SwapCall) -> Self {
+            Self::Swap(value)
+        }
     }
     impl ::core::convert::From<TickBitmapCall> for IUniswapV3PoolCalls {
-        fn from(value: TickBitmapCall) -> Self { Self::TickBitmap(value) }
+        fn from(value: TickBitmapCall) -> Self {
+            Self::TickBitmap(value)
+        }
     }
     impl ::core::convert::From<TickSpacingCall> for IUniswapV3PoolCalls {
-        fn from(value: TickSpacingCall) -> Self { Self::TickSpacing(value) }
+        fn from(value: TickSpacingCall) -> Self {
+            Self::TickSpacing(value)
+        }
     }
     impl ::core::convert::From<TicksCall> for IUniswapV3PoolCalls {
-        fn from(value: TicksCall) -> Self { Self::Ticks(value) }
+        fn from(value: TicksCall) -> Self {
+            Self::Ticks(value)
+        }
     }
     impl ::core::convert::From<Token0Call> for IUniswapV3PoolCalls {
-        fn from(value: Token0Call) -> Self { Self::Token0(value) }
+        fn from(value: Token0Call) -> Self {
+            Self::Token0(value)
+        }
     }
     impl ::core::convert::From<Token1Call> for IUniswapV3PoolCalls {
-        fn from(value: Token1Call) -> Self { Self::Token1(value) }
+        fn from(value: Token1Call) -> Self {
+            Self::Token1(value)
+        }
     }
     ///Container type for all return fields from the `burn`
     /// function with signature `burn(int24,int24,uint128)`

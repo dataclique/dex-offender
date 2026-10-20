@@ -486,14 +486,20 @@ pub mod climber_timelock_base {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct ClimberTimelockBase<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for ClimberTimelockBase<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for ClimberTimelockBase<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for ClimberTimelockBase<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for ClimberTimelockBase<M> {
         fn fmt(
@@ -1231,7 +1237,9 @@ pub mod climber_timelock_base {
         }
     }
     impl ::core::convert::From<DelayCall> for ClimberTimelockBaseCalls {
-        fn from(value: DelayCall) -> Self { Self::Delay(value) }
+        fn from(value: DelayCall) -> Self {
+            Self::Delay(value)
+        }
     }
     impl ::core::convert::From<GetOperationIdCall> for ClimberTimelockBaseCalls {
         fn from(value: GetOperationIdCall) -> Self {
@@ -1244,22 +1252,34 @@ pub mod climber_timelock_base {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for ClimberTimelockBaseCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GrantRoleCall> for ClimberTimelockBaseCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for ClimberTimelockBaseCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<OperationsCall> for ClimberTimelockBaseCalls {
-        fn from(value: OperationsCall) -> Self { Self::Operations(value) }
+        fn from(value: OperationsCall) -> Self {
+            Self::Operations(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for ClimberTimelockBaseCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for ClimberTimelockBaseCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     impl ::core::convert::From<SupportsInterfaceCall> for ClimberTimelockBaseCalls {
         fn from(value: SupportsInterfaceCall) -> Self {

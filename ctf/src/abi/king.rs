@@ -101,14 +101,20 @@ pub mod king {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct King<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for King<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for King<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for King<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for King<M> {
         fn fmt(
@@ -344,13 +350,19 @@ pub mod king {
         }
     }
     impl ::core::convert::From<KingCall> for KingCalls {
-        fn from(value: KingCall) -> Self { Self::King(value) }
+        fn from(value: KingCall) -> Self {
+            Self::King(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for KingCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<PrizeCall> for KingCalls {
-        fn from(value: PrizeCall) -> Self { Self::Prize(value) }
+        fn from(value: PrizeCall) -> Self {
+            Self::Prize(value)
+        }
     }
     ///Container type for all return fields from the
     /// `_king` function with signature `_king()` and

@@ -359,14 +359,20 @@ pub mod dex_two {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct DexTwo<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for DexTwo<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for DexTwo<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for DexTwo<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for DexTwo<M> {
         fn fmt(
@@ -1001,19 +1007,29 @@ pub mod dex_two {
         }
     }
     impl ::core::convert::From<AddLiquidityCall> for DexTwoCalls {
-        fn from(value: AddLiquidityCall) -> Self { Self::AddLiquidity(value) }
+        fn from(value: AddLiquidityCall) -> Self {
+            Self::AddLiquidity(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for DexTwoCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for DexTwoCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<GetSwapAmountCall> for DexTwoCalls {
-        fn from(value: GetSwapAmountCall) -> Self { Self::GetSwapAmount(value) }
+        fn from(value: GetSwapAmountCall) -> Self {
+            Self::GetSwapAmount(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for DexTwoCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for DexTwoCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -1021,16 +1037,24 @@ pub mod dex_two {
         }
     }
     impl ::core::convert::From<SetTokensCall> for DexTwoCalls {
-        fn from(value: SetTokensCall) -> Self { Self::SetTokens(value) }
+        fn from(value: SetTokensCall) -> Self {
+            Self::SetTokens(value)
+        }
     }
     impl ::core::convert::From<SwapCall> for DexTwoCalls {
-        fn from(value: SwapCall) -> Self { Self::Swap(value) }
+        fn from(value: SwapCall) -> Self {
+            Self::Swap(value)
+        }
     }
     impl ::core::convert::From<Token1Call> for DexTwoCalls {
-        fn from(value: Token1Call) -> Self { Self::Token1(value) }
+        fn from(value: Token1Call) -> Self {
+            Self::Token1(value)
+        }
     }
     impl ::core::convert::From<Token2Call> for DexTwoCalls {
-        fn from(value: Token2Call) -> Self { Self::Token2(value) }
+        fn from(value: Token2Call) -> Self {
+            Self::Token2(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for DexTwoCalls {
         fn from(value: TransferOwnershipCall) -> Self {

@@ -510,14 +510,20 @@ pub mod naught_coin {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct NaughtCoin<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for NaughtCoin<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for NaughtCoin<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for NaughtCoin<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for NaughtCoin<M> {
         fn fmt(
@@ -873,10 +879,14 @@ pub mod naught_coin {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for NaughtCoinEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<TransferFilter> for NaughtCoinEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `INITIAL_SUPPLY` function with signature
@@ -1355,19 +1365,29 @@ pub mod naught_coin {
         }
     }
     impl ::core::convert::From<InitialSupplyCall> for NaughtCoinCalls {
-        fn from(value: InitialSupplyCall) -> Self { Self::InitialSupply(value) }
+        fn from(value: InitialSupplyCall) -> Self {
+            Self::InitialSupply(value)
+        }
     }
     impl ::core::convert::From<AllowanceCall> for NaughtCoinCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for NaughtCoinCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for NaughtCoinCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for NaughtCoinCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall> for NaughtCoinCalls {
         fn from(value: DecreaseAllowanceCall) -> Self {
@@ -1380,25 +1400,39 @@ pub mod naught_coin {
         }
     }
     impl ::core::convert::From<NameCall> for NaughtCoinCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<PlayerCall> for NaughtCoinCalls {
-        fn from(value: PlayerCall) -> Self { Self::Player(value) }
+        fn from(value: PlayerCall) -> Self {
+            Self::Player(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for NaughtCoinCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TimeLockCall> for NaughtCoinCalls {
-        fn from(value: TimeLockCall) -> Self { Self::TimeLock(value) }
+        fn from(value: TimeLockCall) -> Self {
+            Self::TimeLock(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for NaughtCoinCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for NaughtCoinCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for NaughtCoinCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `INITIAL_SUPPLY` function with signature

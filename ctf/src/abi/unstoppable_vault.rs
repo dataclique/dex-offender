@@ -1462,14 +1462,20 @@ pub mod unstoppable_vault {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct UnstoppableVault<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for UnstoppableVault<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for UnstoppableVault<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for UnstoppableVault<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for UnstoppableVault<M> {
         fn fmt(
@@ -2284,16 +2290,24 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<::std::string::String> for UnstoppableVaultErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallbackFailed> for UnstoppableVaultErrors {
-        fn from(value: CallbackFailed) -> Self { Self::CallbackFailed(value) }
+        fn from(value: CallbackFailed) -> Self {
+            Self::CallbackFailed(value)
+        }
     }
     impl ::core::convert::From<InvalidAmount> for UnstoppableVaultErrors {
-        fn from(value: InvalidAmount) -> Self { Self::InvalidAmount(value) }
+        fn from(value: InvalidAmount) -> Self {
+            Self::InvalidAmount(value)
+        }
     }
     impl ::core::convert::From<InvalidBalance> for UnstoppableVaultErrors {
-        fn from(value: InvalidBalance) -> Self { Self::InvalidBalance(value) }
+        fn from(value: InvalidBalance) -> Self {
+            Self::InvalidBalance(value)
+        }
     }
     impl ::core::convert::From<UnsupportedCurrency> for UnstoppableVaultErrors {
         fn from(value: UnsupportedCurrency) -> Self {
@@ -2508,10 +2522,14 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for UnstoppableVaultEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<DepositFilter> for UnstoppableVaultEvents {
-        fn from(value: DepositFilter) -> Self { Self::DepositFilter(value) }
+        fn from(value: DepositFilter) -> Self {
+            Self::DepositFilter(value)
+        }
     }
     impl ::core::convert::From<FeeRecipientUpdatedFilter>
         for UnstoppableVaultEvents
@@ -2528,10 +2546,14 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<TransferFilter> for UnstoppableVaultEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     impl ::core::convert::From<WithdrawFilter> for UnstoppableVaultEvents {
-        fn from(value: WithdrawFilter) -> Self { Self::WithdrawFilter(value) }
+        fn from(value: WithdrawFilter) -> Self {
+            Self::WithdrawFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `DOMAIN_SEPARATOR` function with signature
@@ -3767,22 +3789,34 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<FeeFactorCall> for UnstoppableVaultCalls {
-        fn from(value: FeeFactorCall) -> Self { Self::FeeFactor(value) }
+        fn from(value: FeeFactorCall) -> Self {
+            Self::FeeFactor(value)
+        }
     }
     impl ::core::convert::From<GracePeriodCall> for UnstoppableVaultCalls {
-        fn from(value: GracePeriodCall) -> Self { Self::GracePeriod(value) }
+        fn from(value: GracePeriodCall) -> Self {
+            Self::GracePeriod(value)
+        }
     }
     impl ::core::convert::From<AllowanceCall> for UnstoppableVaultCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for UnstoppableVaultCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<AssetCall> for UnstoppableVaultCalls {
-        fn from(value: AssetCall) -> Self { Self::Asset(value) }
+        fn from(value: AssetCall) -> Self {
+            Self::Asset(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for UnstoppableVaultCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<ConvertToAssetsCall> for UnstoppableVaultCalls {
         fn from(value: ConvertToAssetsCall) -> Self {
@@ -3795,52 +3829,84 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<DecimalsCall> for UnstoppableVaultCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DepositCall> for UnstoppableVaultCalls {
-        fn from(value: DepositCall) -> Self { Self::Deposit(value) }
+        fn from(value: DepositCall) -> Self {
+            Self::Deposit(value)
+        }
     }
     impl ::core::convert::From<EndCall> for UnstoppableVaultCalls {
-        fn from(value: EndCall) -> Self { Self::End(value) }
+        fn from(value: EndCall) -> Self {
+            Self::End(value)
+        }
     }
     impl ::core::convert::From<FeeRecipientCall> for UnstoppableVaultCalls {
-        fn from(value: FeeRecipientCall) -> Self { Self::FeeRecipient(value) }
+        fn from(value: FeeRecipientCall) -> Self {
+            Self::FeeRecipient(value)
+        }
     }
     impl ::core::convert::From<FlashFeeCall> for UnstoppableVaultCalls {
-        fn from(value: FlashFeeCall) -> Self { Self::FlashFee(value) }
+        fn from(value: FlashFeeCall) -> Self {
+            Self::FlashFee(value)
+        }
     }
     impl ::core::convert::From<FlashLoanCall> for UnstoppableVaultCalls {
-        fn from(value: FlashLoanCall) -> Self { Self::FlashLoan(value) }
+        fn from(value: FlashLoanCall) -> Self {
+            Self::FlashLoan(value)
+        }
     }
     impl ::core::convert::From<MaxDepositCall> for UnstoppableVaultCalls {
-        fn from(value: MaxDepositCall) -> Self { Self::MaxDeposit(value) }
+        fn from(value: MaxDepositCall) -> Self {
+            Self::MaxDeposit(value)
+        }
     }
     impl ::core::convert::From<MaxFlashLoanCall> for UnstoppableVaultCalls {
-        fn from(value: MaxFlashLoanCall) -> Self { Self::MaxFlashLoan(value) }
+        fn from(value: MaxFlashLoanCall) -> Self {
+            Self::MaxFlashLoan(value)
+        }
     }
     impl ::core::convert::From<MaxMintCall> for UnstoppableVaultCalls {
-        fn from(value: MaxMintCall) -> Self { Self::MaxMint(value) }
+        fn from(value: MaxMintCall) -> Self {
+            Self::MaxMint(value)
+        }
     }
     impl ::core::convert::From<MaxRedeemCall> for UnstoppableVaultCalls {
-        fn from(value: MaxRedeemCall) -> Self { Self::MaxRedeem(value) }
+        fn from(value: MaxRedeemCall) -> Self {
+            Self::MaxRedeem(value)
+        }
     }
     impl ::core::convert::From<MaxWithdrawCall> for UnstoppableVaultCalls {
-        fn from(value: MaxWithdrawCall) -> Self { Self::MaxWithdraw(value) }
+        fn from(value: MaxWithdrawCall) -> Self {
+            Self::MaxWithdraw(value)
+        }
     }
     impl ::core::convert::From<MintCall> for UnstoppableVaultCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<NameCall> for UnstoppableVaultCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<NoncesCall> for UnstoppableVaultCalls {
-        fn from(value: NoncesCall) -> Self { Self::Nonces(value) }
+        fn from(value: NoncesCall) -> Self {
+            Self::Nonces(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for UnstoppableVaultCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<PermitCall> for UnstoppableVaultCalls {
-        fn from(value: PermitCall) -> Self { Self::Permit(value) }
+        fn from(value: PermitCall) -> Self {
+            Self::Permit(value)
+        }
     }
     impl ::core::convert::From<PreviewDepositCall> for UnstoppableVaultCalls {
         fn from(value: PreviewDepositCall) -> Self {
@@ -3848,10 +3914,14 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<PreviewMintCall> for UnstoppableVaultCalls {
-        fn from(value: PreviewMintCall) -> Self { Self::PreviewMint(value) }
+        fn from(value: PreviewMintCall) -> Self {
+            Self::PreviewMint(value)
+        }
     }
     impl ::core::convert::From<PreviewRedeemCall> for UnstoppableVaultCalls {
-        fn from(value: PreviewRedeemCall) -> Self { Self::PreviewRedeem(value) }
+        fn from(value: PreviewRedeemCall) -> Self {
+            Self::PreviewRedeem(value)
+        }
     }
     impl ::core::convert::From<PreviewWithdrawCall> for UnstoppableVaultCalls {
         fn from(value: PreviewWithdrawCall) -> Self {
@@ -3859,7 +3929,9 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<RedeemCall> for UnstoppableVaultCalls {
-        fn from(value: RedeemCall) -> Self { Self::Redeem(value) }
+        fn from(value: RedeemCall) -> Self {
+            Self::Redeem(value)
+        }
     }
     impl ::core::convert::From<SetFeeRecipientCall> for UnstoppableVaultCalls {
         fn from(value: SetFeeRecipientCall) -> Self {
@@ -3867,19 +3939,29 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<SymbolCall> for UnstoppableVaultCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalAssetsCall> for UnstoppableVaultCalls {
-        fn from(value: TotalAssetsCall) -> Self { Self::TotalAssets(value) }
+        fn from(value: TotalAssetsCall) -> Self {
+            Self::TotalAssets(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for UnstoppableVaultCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for UnstoppableVaultCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for UnstoppableVaultCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for UnstoppableVaultCalls {
         fn from(value: TransferOwnershipCall) -> Self {
@@ -3887,7 +3969,9 @@ pub mod unstoppable_vault {
         }
     }
     impl ::core::convert::From<WithdrawCall> for UnstoppableVaultCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `DOMAIN_SEPARATOR` function with signature

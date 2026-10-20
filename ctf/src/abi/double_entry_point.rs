@@ -667,14 +667,20 @@ pub mod double_entry_point {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct DoubleEntryPoint<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for DoubleEntryPoint<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for DoubleEntryPoint<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for DoubleEntryPoint<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for DoubleEntryPoint<M> {
         fn fmt(
@@ -1126,7 +1132,9 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for DoubleEntryPointEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<OwnershipTransferredFilter>
         for DoubleEntryPointEvents
@@ -1136,7 +1144,9 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<TransferFilter> for DoubleEntryPointEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `allowance` function with signature
@@ -1771,19 +1781,29 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<AllowanceCall> for DoubleEntryPointCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for DoubleEntryPointCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for DoubleEntryPointCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<CryptoVaultCall> for DoubleEntryPointCalls {
-        fn from(value: CryptoVaultCall) -> Self { Self::CryptoVault(value) }
+        fn from(value: CryptoVaultCall) -> Self {
+            Self::CryptoVault(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for DoubleEntryPointCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall> for DoubleEntryPointCalls {
         fn from(value: DecreaseAllowanceCall) -> Self {
@@ -1796,10 +1816,14 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<DelegatedFromCall> for DoubleEntryPointCalls {
-        fn from(value: DelegatedFromCall) -> Self { Self::DelegatedFrom(value) }
+        fn from(value: DelegatedFromCall) -> Self {
+            Self::DelegatedFrom(value)
+        }
     }
     impl ::core::convert::From<FortaCall> for DoubleEntryPointCalls {
-        fn from(value: FortaCall) -> Self { Self::Forta(value) }
+        fn from(value: FortaCall) -> Self {
+            Self::Forta(value)
+        }
     }
     impl ::core::convert::From<IncreaseAllowanceCall> for DoubleEntryPointCalls {
         fn from(value: IncreaseAllowanceCall) -> Self {
@@ -1807,13 +1831,19 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<NameCall> for DoubleEntryPointCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for DoubleEntryPointCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<PlayerCall> for DoubleEntryPointCalls {
-        fn from(value: PlayerCall) -> Self { Self::Player(value) }
+        fn from(value: PlayerCall) -> Self {
+            Self::Player(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for DoubleEntryPointCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -1821,16 +1851,24 @@ pub mod double_entry_point {
         }
     }
     impl ::core::convert::From<SymbolCall> for DoubleEntryPointCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for DoubleEntryPointCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for DoubleEntryPointCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for DoubleEntryPointCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for DoubleEntryPointCalls {
         fn from(value: TransferOwnershipCall) -> Self {

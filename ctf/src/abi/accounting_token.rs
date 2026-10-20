@@ -1202,14 +1202,20 @@ pub mod accounting_token {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct AccountingToken<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AccountingToken<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AccountingToken<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AccountingToken<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AccountingToken<M> {
         fn fmt(
@@ -1955,7 +1961,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<::std::string::String> for AccountingTokenErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NewOwnerIsZeroAddress> for AccountingTokenErrors {
         fn from(value: NewOwnerIsZeroAddress) -> Self {
@@ -1968,10 +1976,14 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<NotImplemented> for AccountingTokenErrors {
-        fn from(value: NotImplemented) -> Self { Self::NotImplemented(value) }
+        fn from(value: NotImplemented) -> Self {
+            Self::NotImplemented(value)
+        }
     }
     impl ::core::convert::From<Unauthorized> for AccountingTokenErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -2203,7 +2215,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for AccountingTokenEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverCanceledFilter>
         for AccountingTokenEvents
@@ -2232,10 +2246,14 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<SnapshotFilter> for AccountingTokenEvents {
-        fn from(value: SnapshotFilter) -> Self { Self::SnapshotFilter(value) }
+        fn from(value: SnapshotFilter) -> Self {
+            Self::SnapshotFilter(value)
+        }
     }
     impl ::core::convert::From<TransferFilter> for AccountingTokenEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `BURNER_ROLE` function with signature
@@ -3392,28 +3410,44 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<BurnerRoleCall> for AccountingTokenCalls {
-        fn from(value: BurnerRoleCall) -> Self { Self::BurnerRole(value) }
+        fn from(value: BurnerRoleCall) -> Self {
+            Self::BurnerRole(value)
+        }
     }
     impl ::core::convert::From<MinterRoleCall> for AccountingTokenCalls {
-        fn from(value: MinterRoleCall) -> Self { Self::MinterRole(value) }
+        fn from(value: MinterRoleCall) -> Self {
+            Self::MinterRole(value)
+        }
     }
     impl ::core::convert::From<SnapshotRoleCall> for AccountingTokenCalls {
-        fn from(value: SnapshotRoleCall) -> Self { Self::SnapshotRole(value) }
+        fn from(value: SnapshotRoleCall) -> Self {
+            Self::SnapshotRole(value)
+        }
     }
     impl ::core::convert::From<AllowanceCall> for AccountingTokenCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for AccountingTokenCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for AccountingTokenCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BalanceOfAtCall> for AccountingTokenCalls {
-        fn from(value: BalanceOfAtCall) -> Self { Self::BalanceOfAt(value) }
+        fn from(value: BalanceOfAtCall) -> Self {
+            Self::BalanceOfAt(value)
+        }
     }
     impl ::core::convert::From<BurnCall> for AccountingTokenCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<CancelOwnershipHandoverCall>
         for AccountingTokenCalls
@@ -3430,7 +3464,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<DecimalsCall> for AccountingTokenCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall> for AccountingTokenCalls {
         fn from(value: DecreaseAllowanceCall) -> Self {
@@ -3438,13 +3474,19 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<GrantRolesCall> for AccountingTokenCalls {
-        fn from(value: GrantRolesCall) -> Self { Self::GrantRoles(value) }
+        fn from(value: GrantRolesCall) -> Self {
+            Self::GrantRoles(value)
+        }
     }
     impl ::core::convert::From<HasAllRolesCall> for AccountingTokenCalls {
-        fn from(value: HasAllRolesCall) -> Self { Self::HasAllRoles(value) }
+        fn from(value: HasAllRolesCall) -> Self {
+            Self::HasAllRoles(value)
+        }
     }
     impl ::core::convert::From<HasAnyRoleCall> for AccountingTokenCalls {
-        fn from(value: HasAnyRoleCall) -> Self { Self::HasAnyRole(value) }
+        fn from(value: HasAnyRoleCall) -> Self {
+            Self::HasAnyRole(value)
+        }
     }
     impl ::core::convert::From<IncreaseAllowanceCall> for AccountingTokenCalls {
         fn from(value: IncreaseAllowanceCall) -> Self {
@@ -3452,10 +3494,14 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<MintCall> for AccountingTokenCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<NameCall> for AccountingTokenCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OrdinalsFromRolesCall> for AccountingTokenCalls {
         fn from(value: OrdinalsFromRolesCall) -> Self {
@@ -3463,7 +3509,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<OwnerCall> for AccountingTokenCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall>
         for AccountingTokenCalls
@@ -3485,7 +3533,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<RenounceRolesCall> for AccountingTokenCalls {
-        fn from(value: RenounceRolesCall) -> Self { Self::RenounceRoles(value) }
+        fn from(value: RenounceRolesCall) -> Self {
+            Self::RenounceRoles(value)
+        }
     }
     impl ::core::convert::From<RequestOwnershipHandoverCall>
         for AccountingTokenCalls
@@ -3495,7 +3545,9 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<RevokeRolesCall> for AccountingTokenCalls {
-        fn from(value: RevokeRolesCall) -> Self { Self::RevokeRoles(value) }
+        fn from(value: RevokeRolesCall) -> Self {
+            Self::RevokeRoles(value)
+        }
     }
     impl ::core::convert::From<RolesFromOrdinalsCall> for AccountingTokenCalls {
         fn from(value: RolesFromOrdinalsCall) -> Self {
@@ -3503,25 +3555,39 @@ pub mod accounting_token {
         }
     }
     impl ::core::convert::From<RolesOfCall> for AccountingTokenCalls {
-        fn from(value: RolesOfCall) -> Self { Self::RolesOf(value) }
+        fn from(value: RolesOfCall) -> Self {
+            Self::RolesOf(value)
+        }
     }
     impl ::core::convert::From<SnapshotCall> for AccountingTokenCalls {
-        fn from(value: SnapshotCall) -> Self { Self::Snapshot(value) }
+        fn from(value: SnapshotCall) -> Self {
+            Self::Snapshot(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for AccountingTokenCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for AccountingTokenCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyAtCall> for AccountingTokenCalls {
-        fn from(value: TotalSupplyAtCall) -> Self { Self::TotalSupplyAt(value) }
+        fn from(value: TotalSupplyAtCall) -> Self {
+            Self::TotalSupplyAt(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for AccountingTokenCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for AccountingTokenCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for AccountingTokenCalls {
         fn from(value: TransferOwnershipCall) -> Self {

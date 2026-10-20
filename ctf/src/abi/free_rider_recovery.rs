@@ -183,14 +183,20 @@ pub mod free_rider_recovery {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct FreeRiderRecovery<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for FreeRiderRecovery<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for FreeRiderRecovery<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for FreeRiderRecovery<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for FreeRiderRecovery<M> {
         fn fmt(
@@ -516,13 +522,19 @@ pub mod free_rider_recovery {
         }
     }
     impl ::core::convert::From<::std::string::String> for FreeRiderRecoveryErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallerNotNFT> for FreeRiderRecoveryErrors {
-        fn from(value: CallerNotNFT) -> Self { Self::CallerNotNFT(value) }
+        fn from(value: CallerNotNFT) -> Self {
+            Self::CallerNotNFT(value)
+        }
     }
     impl ::core::convert::From<InvalidTokenID> for FreeRiderRecoveryErrors {
-        fn from(value: InvalidTokenID) -> Self { Self::InvalidTokenID(value) }
+        fn from(value: InvalidTokenID) -> Self {
+            Self::InvalidTokenID(value)
+        }
     }
     impl ::core::convert::From<NotEnoughFunding> for FreeRiderRecoveryErrors {
         fn from(value: NotEnoughFunding) -> Self {

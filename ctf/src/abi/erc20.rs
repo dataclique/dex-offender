@@ -473,14 +473,20 @@ pub mod erc20 {
         ::ethers::contract::Lazy::new(__abi);
     pub struct ERC20<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for ERC20<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for ERC20<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for ERC20<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for ERC20<M> {
         fn fmt(
@@ -773,10 +779,14 @@ pub mod erc20 {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for ERC20Events {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<TransferFilter> for ERC20Events {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `DOMAIN_SEPARATOR` function with signature
@@ -1196,37 +1206,59 @@ pub mod erc20 {
         }
     }
     impl ::core::convert::From<AllowanceCall> for ERC20Calls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for ERC20Calls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for ERC20Calls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for ERC20Calls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<NameCall> for ERC20Calls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<NoncesCall> for ERC20Calls {
-        fn from(value: NoncesCall) -> Self { Self::Nonces(value) }
+        fn from(value: NoncesCall) -> Self {
+            Self::Nonces(value)
+        }
     }
     impl ::core::convert::From<PermitCall> for ERC20Calls {
-        fn from(value: PermitCall) -> Self { Self::Permit(value) }
+        fn from(value: PermitCall) -> Self {
+            Self::Permit(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for ERC20Calls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for ERC20Calls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for ERC20Calls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for ERC20Calls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `DOMAIN_SEPARATOR` function with signature

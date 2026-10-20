@@ -582,14 +582,20 @@ pub mod legacy_token {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct LegacyToken<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for LegacyToken<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for LegacyToken<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for LegacyToken<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for LegacyToken<M> {
         fn fmt(
@@ -1014,7 +1020,9 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for LegacyTokenEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<OwnershipTransferredFilter> for LegacyTokenEvents {
         fn from(value: OwnershipTransferredFilter) -> Self {
@@ -1022,7 +1030,9 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<TransferFilter> for LegacyTokenEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `allowance` function with signature
@@ -1596,16 +1606,24 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<AllowanceCall> for LegacyTokenCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for LegacyTokenCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for LegacyTokenCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for LegacyTokenCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall> for LegacyTokenCalls {
         fn from(value: DecreaseAllowanceCall) -> Self {
@@ -1613,7 +1631,9 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<DelegateCall> for LegacyTokenCalls {
-        fn from(value: DelegateCall) -> Self { Self::Delegate(value) }
+        fn from(value: DelegateCall) -> Self {
+            Self::Delegate(value)
+        }
     }
     impl ::core::convert::From<DelegateToNewContractCall> for LegacyTokenCalls {
         fn from(value: DelegateToNewContractCall) -> Self {
@@ -1626,13 +1646,19 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<MintCall> for LegacyTokenCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<NameCall> for LegacyTokenCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for LegacyTokenCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for LegacyTokenCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -1640,16 +1666,24 @@ pub mod legacy_token {
         }
     }
     impl ::core::convert::From<SymbolCall> for LegacyTokenCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for LegacyTokenCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for LegacyTokenCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for LegacyTokenCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for LegacyTokenCalls {
         fn from(value: TransferOwnershipCall) -> Self {

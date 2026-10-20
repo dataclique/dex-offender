@@ -130,14 +130,20 @@ pub mod crypto_vault {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct CryptoVault<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for CryptoVault<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for CryptoVault<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for CryptoVault<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for CryptoVault<M> {
         fn fmt(
@@ -422,10 +428,14 @@ pub mod crypto_vault {
         }
     }
     impl ::core::convert::From<SetUnderlyingCall> for CryptoVaultCalls {
-        fn from(value: SetUnderlyingCall) -> Self { Self::SetUnderlying(value) }
+        fn from(value: SetUnderlyingCall) -> Self {
+            Self::SetUnderlying(value)
+        }
     }
     impl ::core::convert::From<SweepTokenCall> for CryptoVaultCalls {
-        fn from(value: SweepTokenCall) -> Self { Self::SweepToken(value) }
+        fn from(value: SweepTokenCall) -> Self {
+            Self::SweepToken(value)
+        }
     }
     impl ::core::convert::From<SweptTokensRecipientCall> for CryptoVaultCalls {
         fn from(value: SweptTokensRecipientCall) -> Self {
@@ -433,7 +443,9 @@ pub mod crypto_vault {
         }
     }
     impl ::core::convert::From<UnderlyingCall> for CryptoVaultCalls {
-        fn from(value: UnderlyingCall) -> Self { Self::Underlying(value) }
+        fn from(value: UnderlyingCall) -> Self {
+            Self::Underlying(value)
+        }
     }
     ///Container type for all return fields from the
     /// `sweptTokensRecipient` function with signature

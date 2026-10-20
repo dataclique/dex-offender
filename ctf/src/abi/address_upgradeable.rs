@@ -38,14 +38,20 @@ pub mod address_upgradeable {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct AddressUpgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AddressUpgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AddressUpgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AddressUpgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AddressUpgradeable<M> {
         fn fmt(

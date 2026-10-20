@@ -447,14 +447,20 @@ pub mod i_uniswap_v3_pool_state {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3PoolState<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3PoolState<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3PoolState<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3PoolState<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3PoolState<M> {
         fn fmt(
@@ -932,25 +938,39 @@ pub mod i_uniswap_v3_pool_state {
         }
     }
     impl ::core::convert::From<LiquidityCall> for IUniswapV3PoolStateCalls {
-        fn from(value: LiquidityCall) -> Self { Self::Liquidity(value) }
+        fn from(value: LiquidityCall) -> Self {
+            Self::Liquidity(value)
+        }
     }
     impl ::core::convert::From<ObservationsCall> for IUniswapV3PoolStateCalls {
-        fn from(value: ObservationsCall) -> Self { Self::Observations(value) }
+        fn from(value: ObservationsCall) -> Self {
+            Self::Observations(value)
+        }
     }
     impl ::core::convert::From<PositionsCall> for IUniswapV3PoolStateCalls {
-        fn from(value: PositionsCall) -> Self { Self::Positions(value) }
+        fn from(value: PositionsCall) -> Self {
+            Self::Positions(value)
+        }
     }
     impl ::core::convert::From<ProtocolFeesCall> for IUniswapV3PoolStateCalls {
-        fn from(value: ProtocolFeesCall) -> Self { Self::ProtocolFees(value) }
+        fn from(value: ProtocolFeesCall) -> Self {
+            Self::ProtocolFees(value)
+        }
     }
     impl ::core::convert::From<Slot0Call> for IUniswapV3PoolStateCalls {
-        fn from(value: Slot0Call) -> Self { Self::Slot0(value) }
+        fn from(value: Slot0Call) -> Self {
+            Self::Slot0(value)
+        }
     }
     impl ::core::convert::From<TickBitmapCall> for IUniswapV3PoolStateCalls {
-        fn from(value: TickBitmapCall) -> Self { Self::TickBitmap(value) }
+        fn from(value: TickBitmapCall) -> Self {
+            Self::TickBitmap(value)
+        }
     }
     impl ::core::convert::From<TicksCall> for IUniswapV3PoolStateCalls {
-        fn from(value: TicksCall) -> Self { Self::Ticks(value) }
+        fn from(value: TicksCall) -> Self {
+            Self::Ticks(value)
+        }
     }
     ///Container type for all return fields from the
     /// `feeGrowthGlobal0X128` function with signature

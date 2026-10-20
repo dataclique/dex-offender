@@ -549,14 +549,20 @@ pub mod ownable_roles {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct OwnableRoles<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for OwnableRoles<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for OwnableRoles<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for OwnableRoles<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for OwnableRoles<M> {
         fn fmt(
@@ -973,7 +979,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<::std::string::String> for OwnableRolesErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NewOwnerIsZeroAddress> for OwnableRolesErrors {
         fn from(value: NewOwnerIsZeroAddress) -> Self {
@@ -986,7 +994,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<Unauthorized> for OwnableRolesErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -1733,13 +1743,19 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<GrantRolesCall> for OwnableRolesCalls {
-        fn from(value: GrantRolesCall) -> Self { Self::GrantRoles(value) }
+        fn from(value: GrantRolesCall) -> Self {
+            Self::GrantRoles(value)
+        }
     }
     impl ::core::convert::From<HasAllRolesCall> for OwnableRolesCalls {
-        fn from(value: HasAllRolesCall) -> Self { Self::HasAllRoles(value) }
+        fn from(value: HasAllRolesCall) -> Self {
+            Self::HasAllRoles(value)
+        }
     }
     impl ::core::convert::From<HasAnyRoleCall> for OwnableRolesCalls {
-        fn from(value: HasAnyRoleCall) -> Self { Self::HasAnyRole(value) }
+        fn from(value: HasAnyRoleCall) -> Self {
+            Self::HasAnyRole(value)
+        }
     }
     impl ::core::convert::From<OrdinalsFromRolesCall> for OwnableRolesCalls {
         fn from(value: OrdinalsFromRolesCall) -> Self {
@@ -1747,7 +1763,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<OwnerCall> for OwnableRolesCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall>
         for OwnableRolesCalls
@@ -1769,7 +1787,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<RenounceRolesCall> for OwnableRolesCalls {
-        fn from(value: RenounceRolesCall) -> Self { Self::RenounceRoles(value) }
+        fn from(value: RenounceRolesCall) -> Self {
+            Self::RenounceRoles(value)
+        }
     }
     impl ::core::convert::From<RequestOwnershipHandoverCall> for OwnableRolesCalls {
         fn from(value: RequestOwnershipHandoverCall) -> Self {
@@ -1777,7 +1797,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<RevokeRolesCall> for OwnableRolesCalls {
-        fn from(value: RevokeRolesCall) -> Self { Self::RevokeRoles(value) }
+        fn from(value: RevokeRolesCall) -> Self {
+            Self::RevokeRoles(value)
+        }
     }
     impl ::core::convert::From<RolesFromOrdinalsCall> for OwnableRolesCalls {
         fn from(value: RolesFromOrdinalsCall) -> Self {
@@ -1785,7 +1807,9 @@ pub mod ownable_roles {
         }
     }
     impl ::core::convert::From<RolesOfCall> for OwnableRolesCalls {
-        fn from(value: RolesOfCall) -> Self { Self::RolesOf(value) }
+        fn from(value: RolesOfCall) -> Self {
+            Self::RolesOf(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for OwnableRolesCalls {
         fn from(value: TransferOwnershipCall) -> Self {

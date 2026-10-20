@@ -126,14 +126,20 @@ pub mod flash_loaner_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct FlashLoanerPool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for FlashLoanerPool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for FlashLoanerPool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for FlashLoanerPool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for FlashLoanerPool<M> {
         fn fmt(
@@ -398,7 +404,9 @@ pub mod flash_loaner_pool {
         }
     }
     impl ::core::convert::From<::std::string::String> for FlashLoanerPoolErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallerIsNotContract> for FlashLoanerPoolErrors {
         fn from(value: CallerIsNotContract) -> Self {
@@ -515,7 +523,9 @@ pub mod flash_loaner_pool {
         }
     }
     impl ::core::convert::From<FlashLoanCall> for FlashLoanerPoolCalls {
-        fn from(value: FlashLoanCall) -> Self { Self::FlashLoan(value) }
+        fn from(value: FlashLoanCall) -> Self {
+            Self::FlashLoan(value)
+        }
     }
     impl ::core::convert::From<LiquidityTokenCall> for FlashLoanerPoolCalls {
         fn from(value: LiquidityTokenCall) -> Self {

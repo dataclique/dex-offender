@@ -80,14 +80,20 @@ pub mod magic_num {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct MagicNum<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for MagicNum<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for MagicNum<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for MagicNum<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for MagicNum<M> {
         fn fmt(
@@ -286,10 +292,14 @@ pub mod magic_num {
         }
     }
     impl ::core::convert::From<SetSolverCall> for MagicNumCalls {
-        fn from(value: SetSolverCall) -> Self { Self::SetSolver(value) }
+        fn from(value: SetSolverCall) -> Self {
+            Self::SetSolver(value)
+        }
     }
     impl ::core::convert::From<SolverCall> for MagicNumCalls {
-        fn from(value: SolverCall) -> Self { Self::Solver(value) }
+        fn from(value: SolverCall) -> Self {
+            Self::Solver(value)
+        }
     }
     ///Container type for all return fields from the
     /// `solver` function with signature `solver()` and

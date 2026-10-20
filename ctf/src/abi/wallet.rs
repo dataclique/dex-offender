@@ -158,14 +158,20 @@ pub mod wallet {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Wallet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Wallet<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Wallet<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Wallet<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Wallet<M> {
         fn fmt(
@@ -423,7 +429,9 @@ pub mod wallet {
         }
     }
     impl ::core::convert::From<::std::string::String> for WalletErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NotEnoughBalance> for WalletErrors {
         fn from(value: NotEnoughBalance) -> Self {
@@ -431,7 +439,9 @@ pub mod wallet {
         }
     }
     impl ::core::convert::From<OnlyOwner> for WalletErrors {
-        fn from(value: OnlyOwner) -> Self { Self::OnlyOwner(value) }
+        fn from(value: OnlyOwner) -> Self {
+            Self::OnlyOwner(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `coin` function with signature `coin()` and selector
@@ -617,16 +627,24 @@ pub mod wallet {
         }
     }
     impl ::core::convert::From<CoinCall> for WalletCalls {
-        fn from(value: CoinCall) -> Self { Self::Coin(value) }
+        fn from(value: CoinCall) -> Self {
+            Self::Coin(value)
+        }
     }
     impl ::core::convert::From<Donate10Call> for WalletCalls {
-        fn from(value: Donate10Call) -> Self { Self::Donate10(value) }
+        fn from(value: Donate10Call) -> Self {
+            Self::Donate10(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for WalletCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<SetCoinCall> for WalletCalls {
-        fn from(value: SetCoinCall) -> Self { Self::SetCoin(value) }
+        fn from(value: SetCoinCall) -> Self {
+            Self::SetCoin(value)
+        }
     }
     impl ::core::convert::From<TransferRemainderCall> for WalletCalls {
         fn from(value: TransferRemainderCall) -> Self {

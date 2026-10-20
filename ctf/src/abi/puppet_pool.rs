@@ -269,14 +269,20 @@ pub mod puppet_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PuppetPool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PuppetPool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for PuppetPool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for PuppetPool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for PuppetPool<M> {
         fn fmt(
@@ -577,7 +583,9 @@ pub mod puppet_pool {
         }
     }
     impl ::core::convert::From<::std::string::String> for PuppetPoolErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NotEnoughCollateral> for PuppetPoolErrors {
         fn from(value: NotEnoughCollateral) -> Self {
@@ -585,7 +593,9 @@ pub mod puppet_pool {
         }
     }
     impl ::core::convert::From<TransferFailed> for PuppetPoolErrors {
-        fn from(value: TransferFailed) -> Self { Self::TransferFailed(value) }
+        fn from(value: TransferFailed) -> Self {
+            Self::TransferFailed(value)
+        }
     }
     #[derive(
         Clone,
@@ -831,10 +841,14 @@ pub mod puppet_pool {
         }
     }
     impl ::core::convert::From<DepositFactorCall> for PuppetPoolCalls {
-        fn from(value: DepositFactorCall) -> Self { Self::DepositFactor(value) }
+        fn from(value: DepositFactorCall) -> Self {
+            Self::DepositFactor(value)
+        }
     }
     impl ::core::convert::From<BorrowCall> for PuppetPoolCalls {
-        fn from(value: BorrowCall) -> Self { Self::Borrow(value) }
+        fn from(value: BorrowCall) -> Self {
+            Self::Borrow(value)
+        }
     }
     impl ::core::convert::From<CalculateDepositRequiredCall> for PuppetPoolCalls {
         fn from(value: CalculateDepositRequiredCall) -> Self {
@@ -842,13 +856,19 @@ pub mod puppet_pool {
         }
     }
     impl ::core::convert::From<DepositsCall> for PuppetPoolCalls {
-        fn from(value: DepositsCall) -> Self { Self::Deposits(value) }
+        fn from(value: DepositsCall) -> Self {
+            Self::Deposits(value)
+        }
     }
     impl ::core::convert::From<TokenCall> for PuppetPoolCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     impl ::core::convert::From<UniswapPairCall> for PuppetPoolCalls {
-        fn from(value: UniswapPairCall) -> Self { Self::UniswapPair(value) }
+        fn from(value: UniswapPairCall) -> Self {
+            Self::UniswapPair(value)
+        }
     }
     ///Container type for all return fields from the
     /// `DEPOSIT_FACTOR` function with signature

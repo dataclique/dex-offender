@@ -80,14 +80,20 @@ pub mod telephone {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Telephone<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Telephone<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Telephone<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Telephone<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Telephone<M> {
         fn fmt(
@@ -288,10 +294,14 @@ pub mod telephone {
         }
     }
     impl ::core::convert::From<ChangeOwnerCall> for TelephoneCalls {
-        fn from(value: ChangeOwnerCall) -> Self { Self::ChangeOwner(value) }
+        fn from(value: ChangeOwnerCall) -> Self {
+            Self::ChangeOwner(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for TelephoneCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     ///Container type for all return fields from the
     /// `owner` function with signature `owner()` and

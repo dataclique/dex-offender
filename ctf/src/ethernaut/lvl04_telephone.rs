@@ -16,7 +16,9 @@ impl Level for Target {
         Ok(ctfs.ethernaut.level04)
     }
 
-    fn name(&self) -> &'static str { "Telephone" }
+    fn name(&self) -> &'static str {
+        "Telephone"
+    }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let Roles { deployer, .. } = roles;

@@ -1130,14 +1130,20 @@ pub mod damn_valuable_nft {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct DamnValuableNFT<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for DamnValuableNFT<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for DamnValuableNFT<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for DamnValuableNFT<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for DamnValuableNFT<M> {
         fn fmt(
@@ -1827,7 +1833,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<::std::string::String> for DamnValuableNFTErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NewOwnerIsZeroAddress> for DamnValuableNFTErrors {
         fn from(value: NewOwnerIsZeroAddress) -> Self {
@@ -1840,7 +1848,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<Unauthorized> for DamnValuableNFTErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -2083,7 +2093,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for DamnValuableNFTEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<ApprovalForAllFilter> for DamnValuableNFTEvents {
         fn from(value: ApprovalForAllFilter) -> Self {
@@ -2117,7 +2129,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<TransferFilter> for DamnValuableNFTEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `MINTER_ROLE` function with signature
@@ -3228,16 +3242,24 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<MinterRoleCall> for DamnValuableNFTCalls {
-        fn from(value: MinterRoleCall) -> Self { Self::MinterRole(value) }
+        fn from(value: MinterRoleCall) -> Self {
+            Self::MinterRole(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for DamnValuableNFTCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for DamnValuableNFTCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BurnCall> for DamnValuableNFTCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<CancelOwnershipHandoverCall>
         for DamnValuableNFTCalls
@@ -3254,16 +3276,24 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<GetApprovedCall> for DamnValuableNFTCalls {
-        fn from(value: GetApprovedCall) -> Self { Self::GetApproved(value) }
+        fn from(value: GetApprovedCall) -> Self {
+            Self::GetApproved(value)
+        }
     }
     impl ::core::convert::From<GrantRolesCall> for DamnValuableNFTCalls {
-        fn from(value: GrantRolesCall) -> Self { Self::GrantRoles(value) }
+        fn from(value: GrantRolesCall) -> Self {
+            Self::GrantRoles(value)
+        }
     }
     impl ::core::convert::From<HasAllRolesCall> for DamnValuableNFTCalls {
-        fn from(value: HasAllRolesCall) -> Self { Self::HasAllRoles(value) }
+        fn from(value: HasAllRolesCall) -> Self {
+            Self::HasAllRoles(value)
+        }
     }
     impl ::core::convert::From<HasAnyRoleCall> for DamnValuableNFTCalls {
-        fn from(value: HasAnyRoleCall) -> Self { Self::HasAnyRole(value) }
+        fn from(value: HasAnyRoleCall) -> Self {
+            Self::HasAnyRole(value)
+        }
     }
     impl ::core::convert::From<IsApprovedForAllCall> for DamnValuableNFTCalls {
         fn from(value: IsApprovedForAllCall) -> Self {
@@ -3271,7 +3301,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<NameCall> for DamnValuableNFTCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<OrdinalsFromRolesCall> for DamnValuableNFTCalls {
         fn from(value: OrdinalsFromRolesCall) -> Self {
@@ -3279,10 +3311,14 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<OwnerCall> for DamnValuableNFTCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnerOfCall> for DamnValuableNFTCalls {
-        fn from(value: OwnerOfCall) -> Self { Self::OwnerOf(value) }
+        fn from(value: OwnerOfCall) -> Self {
+            Self::OwnerOf(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall>
         for DamnValuableNFTCalls
@@ -3304,7 +3340,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<RenounceRolesCall> for DamnValuableNFTCalls {
-        fn from(value: RenounceRolesCall) -> Self { Self::RenounceRoles(value) }
+        fn from(value: RenounceRolesCall) -> Self {
+            Self::RenounceRoles(value)
+        }
     }
     impl ::core::convert::From<RequestOwnershipHandoverCall>
         for DamnValuableNFTCalls
@@ -3314,7 +3352,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<RevokeRolesCall> for DamnValuableNFTCalls {
-        fn from(value: RevokeRolesCall) -> Self { Self::RevokeRoles(value) }
+        fn from(value: RevokeRolesCall) -> Self {
+            Self::RevokeRoles(value)
+        }
     }
     impl ::core::convert::From<RolesFromOrdinalsCall> for DamnValuableNFTCalls {
         fn from(value: RolesFromOrdinalsCall) -> Self {
@@ -3322,10 +3362,14 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<RolesOfCall> for DamnValuableNFTCalls {
-        fn from(value: RolesOfCall) -> Self { Self::RolesOf(value) }
+        fn from(value: RolesOfCall) -> Self {
+            Self::RolesOf(value)
+        }
     }
     impl ::core::convert::From<SafeMintCall> for DamnValuableNFTCalls {
-        fn from(value: SafeMintCall) -> Self { Self::SafeMint(value) }
+        fn from(value: SafeMintCall) -> Self {
+            Self::SafeMint(value)
+        }
     }
     impl ::core::convert::From<SafeTransferFromCall> for DamnValuableNFTCalls {
         fn from(value: SafeTransferFromCall) -> Self {
@@ -3350,7 +3394,9 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<SymbolCall> for DamnValuableNFTCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TokenIdCounterCall> for DamnValuableNFTCalls {
         fn from(value: TokenIdCounterCall) -> Self {
@@ -3358,10 +3404,14 @@ pub mod damn_valuable_nft {
         }
     }
     impl ::core::convert::From<TokenURICall> for DamnValuableNFTCalls {
-        fn from(value: TokenURICall) -> Self { Self::TokenURI(value) }
+        fn from(value: TokenURICall) -> Self {
+            Self::TokenURI(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall> for DamnValuableNFTCalls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for DamnValuableNFTCalls {
         fn from(value: TransferOwnershipCall) -> Self {

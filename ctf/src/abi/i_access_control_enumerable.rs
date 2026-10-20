@@ -344,14 +344,20 @@ pub mod i_access_control_enumerable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IAccessControlEnumerable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IAccessControlEnumerable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IAccessControlEnumerable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IAccessControlEnumerable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IAccessControlEnumerable<M> {
         fn fmt(
@@ -928,12 +934,16 @@ pub mod i_access_control_enumerable {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for IAccessControlEnumerableCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCall>
         for IAccessControlEnumerableCalls
     {
-        fn from(value: GetRoleMemberCall) -> Self { Self::GetRoleMember(value) }
+        fn from(value: GetRoleMemberCall) -> Self {
+            Self::GetRoleMember(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCountCall>
         for IAccessControlEnumerableCalls
@@ -943,16 +953,24 @@ pub mod i_access_control_enumerable {
         }
     }
     impl ::core::convert::From<GrantRoleCall> for IAccessControlEnumerableCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for IAccessControlEnumerableCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for IAccessControlEnumerableCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for IAccessControlEnumerableCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     ///Container type for all return fields from the
     /// `getRoleAdmin` function with signature

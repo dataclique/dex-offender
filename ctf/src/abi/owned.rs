@@ -91,14 +91,20 @@ pub mod owned {
         ::ethers::contract::Lazy::new(__abi);
     pub struct Owned<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Owned<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Owned<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Owned<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Owned<M> {
         fn fmt(
@@ -295,7 +301,9 @@ pub mod owned {
         }
     }
     impl ::core::convert::From<OwnerCall> for OwnedCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for OwnedCalls {
         fn from(value: TransferOwnershipCall) -> Self {

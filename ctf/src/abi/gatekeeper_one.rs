@@ -88,14 +88,20 @@ pub mod gatekeeper_one {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct GatekeeperOne<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatekeeperOne<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for GatekeeperOne<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for GatekeeperOne<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for GatekeeperOne<M> {
         fn fmt(
@@ -292,10 +298,14 @@ pub mod gatekeeper_one {
         }
     }
     impl ::core::convert::From<EnterCall> for GatekeeperOneCalls {
-        fn from(value: EnterCall) -> Self { Self::Enter(value) }
+        fn from(value: EnterCall) -> Self {
+            Self::Enter(value)
+        }
     }
     impl ::core::convert::From<EntrantCall> for GatekeeperOneCalls {
-        fn from(value: EntrantCall) -> Self { Self::Entrant(value) }
+        fn from(value: EntrantCall) -> Self {
+            Self::Entrant(value)
+        }
     }
     ///Container type for all return fields from the
     /// `enter` function with signature `enter(bytes8)` and

@@ -118,14 +118,20 @@ pub mod engine {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Engine<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Engine<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Engine<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Engine<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Engine<M> {
         fn fmt(
@@ -413,10 +419,14 @@ pub mod engine {
         }
     }
     impl ::core::convert::From<HorsePowerCall> for EngineCalls {
-        fn from(value: HorsePowerCall) -> Self { Self::HorsePower(value) }
+        fn from(value: HorsePowerCall) -> Self {
+            Self::HorsePower(value)
+        }
     }
     impl ::core::convert::From<InitializeCall> for EngineCalls {
-        fn from(value: InitializeCall) -> Self { Self::Initialize(value) }
+        fn from(value: InitializeCall) -> Self {
+            Self::Initialize(value)
+        }
     }
     impl ::core::convert::From<UpgradeToAndCallCall> for EngineCalls {
         fn from(value: UpgradeToAndCallCall) -> Self {
@@ -424,7 +434,9 @@ pub mod engine {
         }
     }
     impl ::core::convert::From<UpgraderCall> for EngineCalls {
-        fn from(value: UpgraderCall) -> Self { Self::Upgrader(value) }
+        fn from(value: UpgraderCall) -> Self {
+            Self::Upgrader(value)
+        }
     }
     ///Container type for all return fields from the
     /// `horsePower` function with signature `horsePower()`

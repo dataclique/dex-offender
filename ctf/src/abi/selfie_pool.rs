@@ -304,14 +304,20 @@ pub mod selfie_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SelfiePool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SelfiePool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SelfiePool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SelfiePool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SelfiePool<M> {
         fn fmt(
@@ -681,10 +687,14 @@ pub mod selfie_pool {
         }
     }
     impl ::core::convert::From<::std::string::String> for SelfiePoolErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallbackFailed> for SelfiePoolErrors {
-        fn from(value: CallbackFailed) -> Self { Self::CallbackFailed(value) }
+        fn from(value: CallbackFailed) -> Self {
+            Self::CallbackFailed(value)
+        }
     }
     impl ::core::convert::From<CallerNotGovernance> for SelfiePoolErrors {
         fn from(value: CallerNotGovernance) -> Self {
@@ -692,7 +702,9 @@ pub mod selfie_pool {
         }
     }
     impl ::core::convert::From<RepayFailed> for SelfiePoolErrors {
-        fn from(value: RepayFailed) -> Self { Self::RepayFailed(value) }
+        fn from(value: RepayFailed) -> Self {
+            Self::RepayFailed(value)
+        }
     }
     impl ::core::convert::From<UnsupportedCurrency> for SelfiePoolErrors {
         fn from(value: UnsupportedCurrency) -> Self {
@@ -948,22 +960,34 @@ pub mod selfie_pool {
         }
     }
     impl ::core::convert::From<EmergencyExitCall> for SelfiePoolCalls {
-        fn from(value: EmergencyExitCall) -> Self { Self::EmergencyExit(value) }
+        fn from(value: EmergencyExitCall) -> Self {
+            Self::EmergencyExit(value)
+        }
     }
     impl ::core::convert::From<FlashFeeCall> for SelfiePoolCalls {
-        fn from(value: FlashFeeCall) -> Self { Self::FlashFee(value) }
+        fn from(value: FlashFeeCall) -> Self {
+            Self::FlashFee(value)
+        }
     }
     impl ::core::convert::From<FlashLoanCall> for SelfiePoolCalls {
-        fn from(value: FlashLoanCall) -> Self { Self::FlashLoan(value) }
+        fn from(value: FlashLoanCall) -> Self {
+            Self::FlashLoan(value)
+        }
     }
     impl ::core::convert::From<GovernanceCall> for SelfiePoolCalls {
-        fn from(value: GovernanceCall) -> Self { Self::Governance(value) }
+        fn from(value: GovernanceCall) -> Self {
+            Self::Governance(value)
+        }
     }
     impl ::core::convert::From<MaxFlashLoanCall> for SelfiePoolCalls {
-        fn from(value: MaxFlashLoanCall) -> Self { Self::MaxFlashLoan(value) }
+        fn from(value: MaxFlashLoanCall) -> Self {
+            Self::MaxFlashLoan(value)
+        }
     }
     impl ::core::convert::From<TokenCall> for SelfiePoolCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     ///Container type for all return fields from the
     /// `flashFee` function with signature

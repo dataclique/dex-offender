@@ -167,14 +167,20 @@ pub mod uups_upgradeable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct UUPSUpgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for UUPSUpgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for UUPSUpgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for UUPSUpgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for UUPSUpgradeable<M> {
         fn fmt(
@@ -432,7 +438,9 @@ pub mod uups_upgradeable {
         }
     }
     impl ::core::convert::From<UpgradedFilter> for UUPSUpgradeableEvents {
-        fn from(value: UpgradedFilter) -> Self { Self::UpgradedFilter(value) }
+        fn from(value: UpgradedFilter) -> Self {
+            Self::UpgradedFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `proxiableUUID` function with signature
@@ -572,10 +580,14 @@ pub mod uups_upgradeable {
         }
     }
     impl ::core::convert::From<ProxiableUUIDCall> for UUPSUpgradeableCalls {
-        fn from(value: ProxiableUUIDCall) -> Self { Self::ProxiableUUID(value) }
+        fn from(value: ProxiableUUIDCall) -> Self {
+            Self::ProxiableUUID(value)
+        }
     }
     impl ::core::convert::From<UpgradeToCall> for UUPSUpgradeableCalls {
-        fn from(value: UpgradeToCall) -> Self { Self::UpgradeTo(value) }
+        fn from(value: UpgradeToCall) -> Self {
+            Self::UpgradeTo(value)
+        }
     }
     impl ::core::convert::From<UpgradeToAndCallCall> for UUPSUpgradeableCalls {
         fn from(value: UpgradeToAndCallCall) -> Self {

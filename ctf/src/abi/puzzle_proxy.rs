@@ -181,14 +181,20 @@ pub mod puzzle_proxy {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PuzzleProxy<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PuzzleProxy<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for PuzzleProxy<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for PuzzleProxy<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for PuzzleProxy<M> {
         fn fmt(
@@ -554,7 +560,9 @@ pub mod puzzle_proxy {
         }
     }
     impl ::core::convert::From<AdminCall> for PuzzleProxyCalls {
-        fn from(value: AdminCall) -> Self { Self::Admin(value) }
+        fn from(value: AdminCall) -> Self {
+            Self::Admin(value)
+        }
     }
     impl ::core::convert::From<ApproveNewAdminCall> for PuzzleProxyCalls {
         fn from(value: ApproveNewAdminCall) -> Self {
@@ -562,7 +570,9 @@ pub mod puzzle_proxy {
         }
     }
     impl ::core::convert::From<PendingAdminCall> for PuzzleProxyCalls {
-        fn from(value: PendingAdminCall) -> Self { Self::PendingAdmin(value) }
+        fn from(value: PendingAdminCall) -> Self {
+            Self::PendingAdmin(value)
+        }
     }
     impl ::core::convert::From<ProposeNewAdminCall> for PuzzleProxyCalls {
         fn from(value: ProposeNewAdminCall) -> Self {
@@ -570,7 +580,9 @@ pub mod puzzle_proxy {
         }
     }
     impl ::core::convert::From<UpgradeToCall> for PuzzleProxyCalls {
-        fn from(value: UpgradeToCall) -> Self { Self::UpgradeTo(value) }
+        fn from(value: UpgradeToCall) -> Self {
+            Self::UpgradeTo(value)
+        }
     }
     ///Container type for all return fields from the
     /// `admin` function with signature `admin()` and

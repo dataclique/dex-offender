@@ -28,3 +28,36 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/ethernaut"]
+	path = lib/ethernaut
+	url = https://github.com/OpenZeppelin/ethernaut
+[submodule "lib/damn-vulnerable-defi"]
+	path = lib/damn-vulnerable-defi
+	url = https://github.com/theredguild/damn-vulnerable-defi
+[submodule "lib/paradigm-ctf-2021"]
+	path = lib/paradigm-ctf-2021
+	url = https://github.com/paradigmxyz/paradigm-ctf-2021
+[submodule "lib/paradigm-ctf-2022"]
+	path = lib/paradigm-ctf-2022
+	url = https://github.com/paradigmxyz/paradigm-ctf-2022
+[submodule "lib/paradigm-ctf-2023"]
+	path = lib/paradigm-ctf-2023
+	url = https://github.com/paradigmxyz/paradigm-ctf-2023
+[submodule "lib/mysten-ctf"]
+	path = lib/mysten-ctf
+	url = https://github.com/MystenLabs/CTF
+[submodule "lib/move-over-ctf"]
+	path = lib/move-over-ctf
+	url = https://github.com/OpenZeppelin/move_over_ctf
+[submodule "lib/lets-ctf"]
+	path = lib/lets-ctf
+	url = https://github.com/hoh-zone/lets-ctf
+[submodule "lib/solana-auditors-bootcamp"]
+	path = lib/solana-auditors-bootcamp
+	url = https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp
+[submodule "lib/neodyme-solana-ctf"]
+	path = lib/neodyme-solana-ctf
+	url = https://github.com/neodyme-labs/solana-ctf
+[submodule "lib/sealevel-attacks"]
+	path = lib/sealevel-attacks
+	url = https://github.com/coral-xyz/sealevel-attacks

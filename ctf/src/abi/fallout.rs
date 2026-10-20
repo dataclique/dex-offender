@@ -143,14 +143,20 @@ pub mod fallout {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Fallout<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Fallout<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Fallout<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Fallout<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Fallout<M> {
         fn fmt(
@@ -510,10 +516,14 @@ pub mod fallout {
         }
     }
     impl ::core::convert::From<Fal1OutCall> for FalloutCalls {
-        fn from(value: Fal1OutCall) -> Self { Self::Fal1Out(value) }
+        fn from(value: Fal1OutCall) -> Self {
+            Self::Fal1Out(value)
+        }
     }
     impl ::core::convert::From<AllocateCall> for FalloutCalls {
-        fn from(value: AllocateCall) -> Self { Self::Allocate(value) }
+        fn from(value: AllocateCall) -> Self {
+            Self::Allocate(value)
+        }
     }
     impl ::core::convert::From<AllocatorBalanceCall> for FalloutCalls {
         fn from(value: AllocatorBalanceCall) -> Self {
@@ -526,7 +536,9 @@ pub mod fallout {
         }
     }
     impl ::core::convert::From<OwnerCall> for FalloutCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<SendAllocationCall> for FalloutCalls {
         fn from(value: SendAllocationCall) -> Self {

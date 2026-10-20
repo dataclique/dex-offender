@@ -410,14 +410,20 @@ pub mod self_authorized_vault {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SelfAuthorizedVault<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SelfAuthorizedVault<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SelfAuthorizedVault<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SelfAuthorizedVault<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SelfAuthorizedVault<M> {
         fn fmt(
@@ -900,7 +906,9 @@ pub mod self_authorized_vault {
     impl ::core::convert::From<::std::string::String>
         for SelfAuthorizedVaultErrors
     {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<AlreadyInitialized> for SelfAuthorizedVaultErrors {
         fn from(value: AlreadyInitialized) -> Self {
@@ -920,7 +928,9 @@ pub mod self_authorized_vault {
         }
     }
     impl ::core::convert::From<NotAllowed> for SelfAuthorizedVaultErrors {
-        fn from(value: NotAllowed) -> Self { Self::NotAllowed(value) }
+        fn from(value: NotAllowed) -> Self {
+            Self::NotAllowed(value)
+        }
     }
     impl ::core::convert::From<TargetNotAllowed> for SelfAuthorizedVaultErrors {
         fn from(value: TargetNotAllowed) -> Self {
@@ -1316,7 +1326,9 @@ pub mod self_authorized_vault {
         }
     }
     impl ::core::convert::From<WaitingPeriodCall> for SelfAuthorizedVaultCalls {
-        fn from(value: WaitingPeriodCall) -> Self { Self::WaitingPeriod(value) }
+        fn from(value: WaitingPeriodCall) -> Self {
+            Self::WaitingPeriod(value)
+        }
     }
     impl ::core::convert::From<WithdrawalLimitCall> for SelfAuthorizedVaultCalls {
         fn from(value: WithdrawalLimitCall) -> Self {
@@ -1324,10 +1336,14 @@ pub mod self_authorized_vault {
         }
     }
     impl ::core::convert::From<ExecuteCall> for SelfAuthorizedVaultCalls {
-        fn from(value: ExecuteCall) -> Self { Self::Execute(value) }
+        fn from(value: ExecuteCall) -> Self {
+            Self::Execute(value)
+        }
     }
     impl ::core::convert::From<GetActionIdCall> for SelfAuthorizedVaultCalls {
-        fn from(value: GetActionIdCall) -> Self { Self::GetActionId(value) }
+        fn from(value: GetActionIdCall) -> Self {
+            Self::GetActionId(value)
+        }
     }
     impl ::core::convert::From<GetLastWithdrawalTimestampCall>
         for SelfAuthorizedVaultCalls
@@ -1337,10 +1353,14 @@ pub mod self_authorized_vault {
         }
     }
     impl ::core::convert::From<InitializedCall> for SelfAuthorizedVaultCalls {
-        fn from(value: InitializedCall) -> Self { Self::Initialized(value) }
+        fn from(value: InitializedCall) -> Self {
+            Self::Initialized(value)
+        }
     }
     impl ::core::convert::From<PermissionsCall> for SelfAuthorizedVaultCalls {
-        fn from(value: PermissionsCall) -> Self { Self::Permissions(value) }
+        fn from(value: PermissionsCall) -> Self {
+            Self::Permissions(value)
+        }
     }
     impl ::core::convert::From<SetPermissionsCall> for SelfAuthorizedVaultCalls {
         fn from(value: SetPermissionsCall) -> Self {
@@ -1348,10 +1368,14 @@ pub mod self_authorized_vault {
         }
     }
     impl ::core::convert::From<SweepFundsCall> for SelfAuthorizedVaultCalls {
-        fn from(value: SweepFundsCall) -> Self { Self::SweepFunds(value) }
+        fn from(value: SweepFundsCall) -> Self {
+            Self::SweepFunds(value)
+        }
     }
     impl ::core::convert::From<WithdrawCall> for SelfAuthorizedVaultCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `WAITING_PERIOD` function with signature

@@ -286,14 +286,20 @@ pub mod owner_manager {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct OwnerManager<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for OwnerManager<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for OwnerManager<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for OwnerManager<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for OwnerManager<M> {
         fn fmt(
@@ -892,19 +898,29 @@ pub mod owner_manager {
         }
     }
     impl ::core::convert::From<GetOwnersCall> for OwnerManagerCalls {
-        fn from(value: GetOwnersCall) -> Self { Self::GetOwners(value) }
+        fn from(value: GetOwnersCall) -> Self {
+            Self::GetOwners(value)
+        }
     }
     impl ::core::convert::From<GetThresholdCall> for OwnerManagerCalls {
-        fn from(value: GetThresholdCall) -> Self { Self::GetThreshold(value) }
+        fn from(value: GetThresholdCall) -> Self {
+            Self::GetThreshold(value)
+        }
     }
     impl ::core::convert::From<IsOwnerCall> for OwnerManagerCalls {
-        fn from(value: IsOwnerCall) -> Self { Self::IsOwner(value) }
+        fn from(value: IsOwnerCall) -> Self {
+            Self::IsOwner(value)
+        }
     }
     impl ::core::convert::From<RemoveOwnerCall> for OwnerManagerCalls {
-        fn from(value: RemoveOwnerCall) -> Self { Self::RemoveOwner(value) }
+        fn from(value: RemoveOwnerCall) -> Self {
+            Self::RemoveOwner(value)
+        }
     }
     impl ::core::convert::From<SwapOwnerCall> for OwnerManagerCalls {
-        fn from(value: SwapOwnerCall) -> Self { Self::SwapOwner(value) }
+        fn from(value: SwapOwnerCall) -> Self {
+            Self::SwapOwner(value)
+        }
     }
     ///Container type for all return fields from the
     /// `getOwners` function with signature `getOwners()`

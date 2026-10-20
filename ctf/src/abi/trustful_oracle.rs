@@ -716,14 +716,20 @@ pub mod trustful_oracle {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct TrustfulOracle<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for TrustfulOracle<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for TrustfulOracle<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for TrustfulOracle<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for TrustfulOracle<M> {
         fn fmt(
@@ -1846,7 +1852,9 @@ pub mod trustful_oracle {
         }
     }
     impl ::core::convert::From<MinSourcesCall> for TrustfulOracleCalls {
-        fn from(value: MinSourcesCall) -> Self { Self::MinSources(value) }
+        fn from(value: MinSourcesCall) -> Self {
+            Self::MinSources(value)
+        }
     }
     impl ::core::convert::From<TrustedSourceRoleCall> for TrustfulOracleCalls {
         fn from(value: TrustedSourceRoleCall) -> Self {
@@ -1869,10 +1877,14 @@ pub mod trustful_oracle {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for TrustfulOracleCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCall> for TrustfulOracleCalls {
-        fn from(value: GetRoleMemberCall) -> Self { Self::GetRoleMember(value) }
+        fn from(value: GetRoleMemberCall) -> Self {
+            Self::GetRoleMember(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCountCall> for TrustfulOracleCalls {
         fn from(value: GetRoleMemberCountCall) -> Self {
@@ -1880,19 +1892,29 @@ pub mod trustful_oracle {
         }
     }
     impl ::core::convert::From<GrantRoleCall> for TrustfulOracleCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for TrustfulOracleCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<PostPriceCall> for TrustfulOracleCalls {
-        fn from(value: PostPriceCall) -> Self { Self::PostPrice(value) }
+        fn from(value: PostPriceCall) -> Self {
+            Self::PostPrice(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for TrustfulOracleCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for TrustfulOracleCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     impl ::core::convert::From<SetupInitialPricesCall> for TrustfulOracleCalls {
         fn from(value: SetupInitialPricesCall) -> Self {

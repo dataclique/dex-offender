@@ -100,14 +100,20 @@ pub mod good_samaritan {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct GoodSamaritan<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GoodSamaritan<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for GoodSamaritan<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for GoodSamaritan<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for GoodSamaritan<M> {
         fn fmt(
@@ -344,7 +350,9 @@ pub mod good_samaritan {
         }
     }
     impl ::core::convert::From<CoinCall> for GoodSamaritanCalls {
-        fn from(value: CoinCall) -> Self { Self::Coin(value) }
+        fn from(value: CoinCall) -> Self {
+            Self::Coin(value)
+        }
     }
     impl ::core::convert::From<RequestDonationCall> for GoodSamaritanCalls {
         fn from(value: RequestDonationCall) -> Self {
@@ -352,7 +360,9 @@ pub mod good_samaritan {
         }
     }
     impl ::core::convert::From<WalletCall> for GoodSamaritanCalls {
-        fn from(value: WalletCall) -> Self { Self::Wallet(value) }
+        fn from(value: WalletCall) -> Self {
+            Self::Wallet(value)
+        }
     }
     ///Container type for all return fields from the `coin`
     /// function with signature `coin()` and selector

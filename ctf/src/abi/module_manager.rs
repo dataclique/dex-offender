@@ -347,14 +347,20 @@ pub mod module_manager {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct ModuleManager<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for ModuleManager<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for ModuleManager<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for ModuleManager<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for ModuleManager<M> {
         fn fmt(
@@ -985,10 +991,14 @@ pub mod module_manager {
         }
     }
     impl ::core::convert::From<DisableModuleCall> for ModuleManagerCalls {
-        fn from(value: DisableModuleCall) -> Self { Self::DisableModule(value) }
+        fn from(value: DisableModuleCall) -> Self {
+            Self::DisableModule(value)
+        }
     }
     impl ::core::convert::From<EnableModuleCall> for ModuleManagerCalls {
-        fn from(value: EnableModuleCall) -> Self { Self::EnableModule(value) }
+        fn from(value: EnableModuleCall) -> Self {
+            Self::EnableModule(value)
+        }
     }
     impl ::core::convert::From<ExecTransactionFromModuleCall>
         for ModuleManagerCalls

@@ -273,14 +273,20 @@ pub mod i_access_control {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IAccessControl<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IAccessControl<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IAccessControl<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IAccessControl<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IAccessControl<M> {
         fn fmt(
@@ -751,19 +757,29 @@ pub mod i_access_control {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for IAccessControlCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GrantRoleCall> for IAccessControlCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for IAccessControlCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for IAccessControlCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for IAccessControlCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     ///Container type for all return fields from the
     /// `getRoleAdmin` function with signature

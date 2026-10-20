@@ -324,14 +324,20 @@ pub mod the_rewarder_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct TheRewarderPool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for TheRewarderPool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for TheRewarderPool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for TheRewarderPool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for TheRewarderPool<M> {
         fn fmt(
@@ -962,7 +968,9 @@ pub mod the_rewarder_pool {
         }
     }
     impl ::core::convert::From<RewardsCall> for TheRewarderPoolCalls {
-        fn from(value: RewardsCall) -> Self { Self::Rewards(value) }
+        fn from(value: RewardsCall) -> Self {
+            Self::Rewards(value)
+        }
     }
     impl ::core::convert::From<AccountingTokenCall> for TheRewarderPoolCalls {
         fn from(value: AccountingTokenCall) -> Self {
@@ -970,7 +978,9 @@ pub mod the_rewarder_pool {
         }
     }
     impl ::core::convert::From<DepositCall> for TheRewarderPoolCalls {
-        fn from(value: DepositCall) -> Self { Self::Deposit(value) }
+        fn from(value: DepositCall) -> Self {
+            Self::Deposit(value)
+        }
     }
     impl ::core::convert::From<DistributeRewardsCall> for TheRewarderPoolCalls {
         fn from(value: DistributeRewardsCall) -> Self {
@@ -1007,13 +1017,19 @@ pub mod the_rewarder_pool {
         }
     }
     impl ::core::convert::From<RewardTokenCall> for TheRewarderPoolCalls {
-        fn from(value: RewardTokenCall) -> Self { Self::RewardToken(value) }
+        fn from(value: RewardTokenCall) -> Self {
+            Self::RewardToken(value)
+        }
     }
     impl ::core::convert::From<RoundNumberCall> for TheRewarderPoolCalls {
-        fn from(value: RoundNumberCall) -> Self { Self::RoundNumber(value) }
+        fn from(value: RoundNumberCall) -> Self {
+            Self::RoundNumber(value)
+        }
     }
     impl ::core::convert::From<WithdrawCall> for TheRewarderPoolCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `REWARDS` function with signature `REWARDS()` and

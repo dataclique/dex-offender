@@ -301,14 +301,20 @@ pub mod free_rider_nft_marketplace {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct FreeRiderNFTMarketplace<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for FreeRiderNFTMarketplace<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for FreeRiderNFTMarketplace<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for FreeRiderNFTMarketplace<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for FreeRiderNFTMarketplace<M> {
         fn fmt(
@@ -765,10 +771,14 @@ pub mod free_rider_nft_marketplace {
     impl ::core::convert::From<::std::string::String>
         for FreeRiderNFTMarketplaceErrors
     {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<CallerNotOwner> for FreeRiderNFTMarketplaceErrors {
-        fn from(value: CallerNotOwner) -> Self { Self::CallerNotOwner(value) }
+        fn from(value: CallerNotOwner) -> Self {
+            Self::CallerNotOwner(value)
+        }
     }
     impl ::core::convert::From<InsufficientPayment>
         for FreeRiderNFTMarketplaceErrors
@@ -778,10 +788,14 @@ pub mod free_rider_nft_marketplace {
         }
     }
     impl ::core::convert::From<InvalidApproval> for FreeRiderNFTMarketplaceErrors {
-        fn from(value: InvalidApproval) -> Self { Self::InvalidApproval(value) }
+        fn from(value: InvalidApproval) -> Self {
+            Self::InvalidApproval(value)
+        }
     }
     impl ::core::convert::From<InvalidPrice> for FreeRiderNFTMarketplaceErrors {
-        fn from(value: InvalidPrice) -> Self { Self::InvalidPrice(value) }
+        fn from(value: InvalidPrice) -> Self {
+            Self::InvalidPrice(value)
+        }
     }
     impl ::core::convert::From<InvalidPricesAmount>
         for FreeRiderNFTMarketplaceErrors
@@ -798,7 +812,9 @@ pub mod free_rider_nft_marketplace {
         }
     }
     impl ::core::convert::From<TokenNotOffered> for FreeRiderNFTMarketplaceErrors {
-        fn from(value: TokenNotOffered) -> Self { Self::TokenNotOffered(value) }
+        fn from(value: TokenNotOffered) -> Self {
+            Self::TokenNotOffered(value)
+        }
     }
     #[derive(
         Clone,
@@ -889,7 +905,9 @@ pub mod free_rider_nft_marketplace {
         }
     }
     impl ::core::convert::From<NftboughtFilter> for FreeRiderNFTMarketplaceEvents {
-        fn from(value: NftboughtFilter) -> Self { Self::NftboughtFilter(value) }
+        fn from(value: NftboughtFilter) -> Self {
+            Self::NftboughtFilter(value)
+        }
     }
     impl ::core::convert::From<NftofferedFilter> for FreeRiderNFTMarketplaceEvents {
         fn from(value: NftofferedFilter) -> Self {
@@ -1054,16 +1072,24 @@ pub mod free_rider_nft_marketplace {
         }
     }
     impl ::core::convert::From<BuyManyCall> for FreeRiderNFTMarketplaceCalls {
-        fn from(value: BuyManyCall) -> Self { Self::BuyMany(value) }
+        fn from(value: BuyManyCall) -> Self {
+            Self::BuyMany(value)
+        }
     }
     impl ::core::convert::From<OfferManyCall> for FreeRiderNFTMarketplaceCalls {
-        fn from(value: OfferManyCall) -> Self { Self::OfferMany(value) }
+        fn from(value: OfferManyCall) -> Self {
+            Self::OfferMany(value)
+        }
     }
     impl ::core::convert::From<OffersCountCall> for FreeRiderNFTMarketplaceCalls {
-        fn from(value: OffersCountCall) -> Self { Self::OffersCount(value) }
+        fn from(value: OffersCountCall) -> Self {
+            Self::OffersCount(value)
+        }
     }
     impl ::core::convert::From<TokenCall> for FreeRiderNFTMarketplaceCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     ///Container type for all return fields from the
     /// `offersCount` function with signature

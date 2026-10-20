@@ -1589,14 +1589,20 @@ pub mod gnosis_safe {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct GnosisSafe<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GnosisSafe<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for GnosisSafe<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for GnosisSafe<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for GnosisSafe<M> {
         fn fmt(
@@ -2794,10 +2800,14 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<SafeSetupFilter> for GnosisSafeEvents {
-        fn from(value: SafeSetupFilter) -> Self { Self::SafeSetupFilter(value) }
+        fn from(value: SafeSetupFilter) -> Self {
+            Self::SafeSetupFilter(value)
+        }
     }
     impl ::core::convert::From<SignMsgFilter> for GnosisSafeEvents {
-        fn from(value: SignMsgFilter) -> Self { Self::SignMsgFilter(value) }
+        fn from(value: SignMsgFilter) -> Self {
+            Self::SignMsgFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `VERSION` function with signature `VERSION()` and
@@ -3931,7 +3941,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<VersionCall> for GnosisSafeCalls {
-        fn from(value: VersionCall) -> Self { Self::Version(value) }
+        fn from(value: VersionCall) -> Self {
+            Self::Version(value)
+        }
     }
     impl ::core::convert::From<AddOwnerWithThresholdCall> for GnosisSafeCalls {
         fn from(value: AddOwnerWithThresholdCall) -> Self {
@@ -3939,7 +3951,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<ApproveHashCall> for GnosisSafeCalls {
-        fn from(value: ApproveHashCall) -> Self { Self::ApproveHash(value) }
+        fn from(value: ApproveHashCall) -> Self {
+            Self::ApproveHash(value)
+        }
     }
     impl ::core::convert::From<ApprovedHashesCall> for GnosisSafeCalls {
         fn from(value: ApprovedHashesCall) -> Self {
@@ -3962,7 +3976,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<DisableModuleCall> for GnosisSafeCalls {
-        fn from(value: DisableModuleCall) -> Self { Self::DisableModule(value) }
+        fn from(value: DisableModuleCall) -> Self {
+            Self::DisableModule(value)
+        }
     }
     impl ::core::convert::From<DomainSeparatorCall> for GnosisSafeCalls {
         fn from(value: DomainSeparatorCall) -> Self {
@@ -3970,7 +3986,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<EnableModuleCall> for GnosisSafeCalls {
-        fn from(value: EnableModuleCall) -> Self { Self::EnableModule(value) }
+        fn from(value: EnableModuleCall) -> Self {
+            Self::EnableModule(value)
+        }
     }
     impl ::core::convert::From<EncodeTransactionDataCall> for GnosisSafeCalls {
         fn from(value: EncodeTransactionDataCall) -> Self {
@@ -3995,7 +4013,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<GetChainIdCall> for GnosisSafeCalls {
-        fn from(value: GetChainIdCall) -> Self { Self::GetChainId(value) }
+        fn from(value: GetChainIdCall) -> Self {
+            Self::GetChainId(value)
+        }
     }
     impl ::core::convert::From<GetModulesPaginatedCall> for GnosisSafeCalls {
         fn from(value: GetModulesPaginatedCall) -> Self {
@@ -4003,13 +4023,19 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<GetOwnersCall> for GnosisSafeCalls {
-        fn from(value: GetOwnersCall) -> Self { Self::GetOwners(value) }
+        fn from(value: GetOwnersCall) -> Self {
+            Self::GetOwners(value)
+        }
     }
     impl ::core::convert::From<GetStorageAtCall> for GnosisSafeCalls {
-        fn from(value: GetStorageAtCall) -> Self { Self::GetStorageAt(value) }
+        fn from(value: GetStorageAtCall) -> Self {
+            Self::GetStorageAt(value)
+        }
     }
     impl ::core::convert::From<GetThresholdCall> for GnosisSafeCalls {
-        fn from(value: GetThresholdCall) -> Self { Self::GetThreshold(value) }
+        fn from(value: GetThresholdCall) -> Self {
+            Self::GetThreshold(value)
+        }
     }
     impl ::core::convert::From<GetTransactionHashCall> for GnosisSafeCalls {
         fn from(value: GetTransactionHashCall) -> Self {
@@ -4022,16 +4048,24 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<IsOwnerCall> for GnosisSafeCalls {
-        fn from(value: IsOwnerCall) -> Self { Self::IsOwner(value) }
+        fn from(value: IsOwnerCall) -> Self {
+            Self::IsOwner(value)
+        }
     }
     impl ::core::convert::From<NonceCall> for GnosisSafeCalls {
-        fn from(value: NonceCall) -> Self { Self::Nonce(value) }
+        fn from(value: NonceCall) -> Self {
+            Self::Nonce(value)
+        }
     }
     impl ::core::convert::From<RemoveOwnerCall> for GnosisSafeCalls {
-        fn from(value: RemoveOwnerCall) -> Self { Self::RemoveOwner(value) }
+        fn from(value: RemoveOwnerCall) -> Self {
+            Self::RemoveOwner(value)
+        }
     }
     impl ::core::convert::From<RequiredTxGasCall> for GnosisSafeCalls {
-        fn from(value: RequiredTxGasCall) -> Self { Self::RequiredTxGas(value) }
+        fn from(value: RequiredTxGasCall) -> Self {
+            Self::RequiredTxGas(value)
+        }
     }
     impl ::core::convert::From<SetFallbackHandlerCall> for GnosisSafeCalls {
         fn from(value: SetFallbackHandlerCall) -> Self {
@@ -4039,10 +4073,14 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<SetGuardCall> for GnosisSafeCalls {
-        fn from(value: SetGuardCall) -> Self { Self::SetGuard(value) }
+        fn from(value: SetGuardCall) -> Self {
+            Self::SetGuard(value)
+        }
     }
     impl ::core::convert::From<SetupCall> for GnosisSafeCalls {
-        fn from(value: SetupCall) -> Self { Self::Setup(value) }
+        fn from(value: SetupCall) -> Self {
+            Self::Setup(value)
+        }
     }
     impl ::core::convert::From<SignedMessagesCall> for GnosisSafeCalls {
         fn from(value: SignedMessagesCall) -> Self {
@@ -4055,7 +4093,9 @@ pub mod gnosis_safe {
         }
     }
     impl ::core::convert::From<SwapOwnerCall> for GnosisSafeCalls {
-        fn from(value: SwapOwnerCall) -> Self { Self::SwapOwner(value) }
+        fn from(value: SwapOwnerCall) -> Self {
+            Self::SwapOwner(value)
+        }
     }
     ///Container type for all return fields from the
     /// `VERSION` function with signature `VERSION()` and

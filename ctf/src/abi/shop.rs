@@ -91,14 +91,20 @@ pub mod shop {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Shop<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Shop<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Shop<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Shop<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Shop<M> {
         fn fmt(
@@ -325,13 +331,19 @@ pub mod shop {
         }
     }
     impl ::core::convert::From<BuyCall> for ShopCalls {
-        fn from(value: BuyCall) -> Self { Self::Buy(value) }
+        fn from(value: BuyCall) -> Self {
+            Self::Buy(value)
+        }
     }
     impl ::core::convert::From<IsSoldCall> for ShopCalls {
-        fn from(value: IsSoldCall) -> Self { Self::IsSold(value) }
+        fn from(value: IsSoldCall) -> Self {
+            Self::IsSold(value)
+        }
     }
     impl ::core::convert::From<PriceCall> for ShopCalls {
-        fn from(value: PriceCall) -> Self { Self::Price(value) }
+        fn from(value: PriceCall) -> Self {
+            Self::Price(value)
+        }
     }
     ///Container type for all return fields from the
     /// `isSold` function with signature `isSold()` and

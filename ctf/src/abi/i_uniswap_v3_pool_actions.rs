@@ -381,14 +381,20 @@ pub mod i_uniswap_v3_pool_actions {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3PoolActions<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3PoolActions<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3PoolActions<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3PoolActions<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3PoolActions<M> {
         fn fmt(
@@ -824,13 +830,19 @@ pub mod i_uniswap_v3_pool_actions {
         }
     }
     impl ::core::convert::From<BurnCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: BurnCall) -> Self { Self::Burn(value) }
+        fn from(value: BurnCall) -> Self {
+            Self::Burn(value)
+        }
     }
     impl ::core::convert::From<CollectCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: CollectCall) -> Self { Self::Collect(value) }
+        fn from(value: CollectCall) -> Self {
+            Self::Collect(value)
+        }
     }
     impl ::core::convert::From<FlashCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: FlashCall) -> Self { Self::Flash(value) }
+        fn from(value: FlashCall) -> Self {
+            Self::Flash(value)
+        }
     }
     impl ::core::convert::From<IncreaseObservationCardinalityNextCall>
         for IUniswapV3PoolActionsCalls
@@ -840,13 +852,19 @@ pub mod i_uniswap_v3_pool_actions {
         }
     }
     impl ::core::convert::From<InitializeCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: InitializeCall) -> Self { Self::Initialize(value) }
+        fn from(value: InitializeCall) -> Self {
+            Self::Initialize(value)
+        }
     }
     impl ::core::convert::From<MintCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: MintCall) -> Self { Self::Mint(value) }
+        fn from(value: MintCall) -> Self {
+            Self::Mint(value)
+        }
     }
     impl ::core::convert::From<SwapCall> for IUniswapV3PoolActionsCalls {
-        fn from(value: SwapCall) -> Self { Self::Swap(value) }
+        fn from(value: SwapCall) -> Self {
+            Self::Swap(value)
+        }
     }
     ///Container type for all return fields from the `burn`
     /// function with signature `burn(int24,int24,uint128)`

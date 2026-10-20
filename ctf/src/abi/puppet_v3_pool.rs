@@ -281,14 +281,20 @@ pub mod puppet_v3_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PuppetV3Pool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PuppetV3Pool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for PuppetV3Pool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for PuppetV3Pool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for PuppetV3Pool<M> {
         fn fmt(
@@ -779,13 +785,19 @@ pub mod puppet_v3_pool {
         }
     }
     impl ::core::convert::From<DepositFactorCall> for PuppetV3PoolCalls {
-        fn from(value: DepositFactorCall) -> Self { Self::DepositFactor(value) }
+        fn from(value: DepositFactorCall) -> Self {
+            Self::DepositFactor(value)
+        }
     }
     impl ::core::convert::From<TwapPeriodCall> for PuppetV3PoolCalls {
-        fn from(value: TwapPeriodCall) -> Self { Self::TwapPeriod(value) }
+        fn from(value: TwapPeriodCall) -> Self {
+            Self::TwapPeriod(value)
+        }
     }
     impl ::core::convert::From<BorrowCall> for PuppetV3PoolCalls {
-        fn from(value: BorrowCall) -> Self { Self::Borrow(value) }
+        fn from(value: BorrowCall) -> Self {
+            Self::Borrow(value)
+        }
     }
     impl ::core::convert::From<CalculateDepositOfWETHRequiredCall>
         for PuppetV3PoolCalls
@@ -795,16 +807,24 @@ pub mod puppet_v3_pool {
         }
     }
     impl ::core::convert::From<DepositsCall> for PuppetV3PoolCalls {
-        fn from(value: DepositsCall) -> Self { Self::Deposits(value) }
+        fn from(value: DepositsCall) -> Self {
+            Self::Deposits(value)
+        }
     }
     impl ::core::convert::From<TokenCall> for PuppetV3PoolCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     impl ::core::convert::From<UniswapV3PoolCall> for PuppetV3PoolCalls {
-        fn from(value: UniswapV3PoolCall) -> Self { Self::UniswapV3Pool(value) }
+        fn from(value: UniswapV3PoolCall) -> Self {
+            Self::UniswapV3Pool(value)
+        }
     }
     impl ::core::convert::From<WethCall> for PuppetV3PoolCalls {
-        fn from(value: WethCall) -> Self { Self::Weth(value) }
+        fn from(value: WethCall) -> Self {
+            Self::Weth(value)
+        }
     }
     ///Container type for all return fields from the
     /// `DEPOSIT_FACTOR` function with signature

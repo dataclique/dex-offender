@@ -134,14 +134,20 @@ pub mod i_uniswap_v3_pool_derived_state {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3PoolDerivedState<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3PoolDerivedState<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3PoolDerivedState<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3PoolDerivedState<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3PoolDerivedState<M> {
         fn fmt(
@@ -310,7 +316,9 @@ pub mod i_uniswap_v3_pool_derived_state {
         }
     }
     impl ::core::convert::From<ObserveCall> for IUniswapV3PoolDerivedStateCalls {
-        fn from(value: ObserveCall) -> Self { Self::Observe(value) }
+        fn from(value: ObserveCall) -> Self {
+            Self::Observe(value)
+        }
     }
     impl ::core::convert::From<SnapshotCumulativesInsideCall>
         for IUniswapV3PoolDerivedStateCalls

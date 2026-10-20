@@ -431,14 +431,20 @@ pub mod ierc721 {
         ::ethers::contract::Lazy::new(__abi);
     pub struct IERC721<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IERC721<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IERC721<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IERC721<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IERC721<M> {
         fn fmt(
@@ -749,7 +755,9 @@ pub mod ierc721 {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for IERC721Events {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<ApprovalForAllFilter> for IERC721Events {
         fn from(value: ApprovalForAllFilter) -> Self {
@@ -757,7 +765,9 @@ pub mod ierc721 {
         }
     }
     impl ::core::convert::From<TransferFilter> for IERC721Events {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `approve` function with signature
@@ -1144,13 +1154,19 @@ pub mod ierc721 {
         }
     }
     impl ::core::convert::From<ApproveCall> for IERC721Calls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for IERC721Calls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<GetApprovedCall> for IERC721Calls {
-        fn from(value: GetApprovedCall) -> Self { Self::GetApproved(value) }
+        fn from(value: GetApprovedCall) -> Self {
+            Self::GetApproved(value)
+        }
     }
     impl ::core::convert::From<IsApprovedForAllCall> for IERC721Calls {
         fn from(value: IsApprovedForAllCall) -> Self {
@@ -1158,7 +1174,9 @@ pub mod ierc721 {
         }
     }
     impl ::core::convert::From<OwnerOfCall> for IERC721Calls {
-        fn from(value: OwnerOfCall) -> Self { Self::OwnerOf(value) }
+        fn from(value: OwnerOfCall) -> Self {
+            Self::OwnerOf(value)
+        }
     }
     impl ::core::convert::From<SafeTransferFromCall> for IERC721Calls {
         fn from(value: SafeTransferFromCall) -> Self {
@@ -1183,7 +1201,9 @@ pub mod ierc721 {
         }
     }
     impl ::core::convert::From<TransferFromCall> for IERC721Calls {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balanceOf` function with signature

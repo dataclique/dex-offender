@@ -176,14 +176,20 @@ pub mod gatekeeper_three {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct GatekeeperThree<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatekeeperThree<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for GatekeeperThree<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for GatekeeperThree<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for GatekeeperThree<M> {
         fn fmt(
@@ -618,28 +624,44 @@ pub mod gatekeeper_three {
         }
     }
     impl ::core::convert::From<AllowEntranceCall> for GatekeeperThreeCalls {
-        fn from(value: AllowEntranceCall) -> Self { Self::AllowEntrance(value) }
+        fn from(value: AllowEntranceCall) -> Self {
+            Self::AllowEntrance(value)
+        }
     }
     impl ::core::convert::From<Construct0RCall> for GatekeeperThreeCalls {
-        fn from(value: Construct0RCall) -> Self { Self::Construct0R(value) }
+        fn from(value: Construct0RCall) -> Self {
+            Self::Construct0R(value)
+        }
     }
     impl ::core::convert::From<CreateTrickCall> for GatekeeperThreeCalls {
-        fn from(value: CreateTrickCall) -> Self { Self::CreateTrick(value) }
+        fn from(value: CreateTrickCall) -> Self {
+            Self::CreateTrick(value)
+        }
     }
     impl ::core::convert::From<EnterCall> for GatekeeperThreeCalls {
-        fn from(value: EnterCall) -> Self { Self::Enter(value) }
+        fn from(value: EnterCall) -> Self {
+            Self::Enter(value)
+        }
     }
     impl ::core::convert::From<EntrantCall> for GatekeeperThreeCalls {
-        fn from(value: EntrantCall) -> Self { Self::Entrant(value) }
+        fn from(value: EntrantCall) -> Self {
+            Self::Entrant(value)
+        }
     }
     impl ::core::convert::From<GetAllowanceCall> for GatekeeperThreeCalls {
-        fn from(value: GetAllowanceCall) -> Self { Self::GetAllowance(value) }
+        fn from(value: GetAllowanceCall) -> Self {
+            Self::GetAllowance(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for GatekeeperThreeCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<TrickCall> for GatekeeperThreeCalls {
-        fn from(value: TrickCall) -> Self { Self::Trick(value) }
+        fn from(value: TrickCall) -> Self {
+            Self::Trick(value)
+        }
     }
     ///Container type for all return fields from the
     /// `allowEntrance` function with signature

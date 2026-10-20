@@ -263,14 +263,20 @@ pub mod alien_codex {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct AlienCodex<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AlienCodex<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AlienCodex<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AlienCodex<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AlienCodex<M> {
         fn fmt(
@@ -816,22 +822,34 @@ pub mod alien_codex {
         }
     }
     impl ::core::convert::From<CodexCall> for AlienCodexCalls {
-        fn from(value: CodexCall) -> Self { Self::Codex(value) }
+        fn from(value: CodexCall) -> Self {
+            Self::Codex(value)
+        }
     }
     impl ::core::convert::From<ContactCall> for AlienCodexCalls {
-        fn from(value: ContactCall) -> Self { Self::Contact(value) }
+        fn from(value: ContactCall) -> Self {
+            Self::Contact(value)
+        }
     }
     impl ::core::convert::From<IsOwnerCall> for AlienCodexCalls {
-        fn from(value: IsOwnerCall) -> Self { Self::IsOwner(value) }
+        fn from(value: IsOwnerCall) -> Self {
+            Self::IsOwner(value)
+        }
     }
     impl ::core::convert::From<MakeContactCall> for AlienCodexCalls {
-        fn from(value: MakeContactCall) -> Self { Self::MakeContact(value) }
+        fn from(value: MakeContactCall) -> Self {
+            Self::MakeContact(value)
+        }
     }
     impl ::core::convert::From<OwnerCall> for AlienCodexCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<RecordCall> for AlienCodexCalls {
-        fn from(value: RecordCall) -> Self { Self::Record(value) }
+        fn from(value: RecordCall) -> Self {
+            Self::Record(value)
+        }
     }
     impl ::core::convert::From<RenounceOwnershipCall> for AlienCodexCalls {
         fn from(value: RenounceOwnershipCall) -> Self {
@@ -839,10 +857,14 @@ pub mod alien_codex {
         }
     }
     impl ::core::convert::From<RetractCall> for AlienCodexCalls {
-        fn from(value: RetractCall) -> Self { Self::Retract(value) }
+        fn from(value: RetractCall) -> Self {
+            Self::Retract(value)
+        }
     }
     impl ::core::convert::From<ReviseCall> for AlienCodexCalls {
-        fn from(value: ReviseCall) -> Self { Self::Revise(value) }
+        fn from(value: ReviseCall) -> Self {
+            Self::Revise(value)
+        }
     }
     impl ::core::convert::From<TransferOwnershipCall> for AlienCodexCalls {
         fn from(value: TransferOwnershipCall) -> Self {

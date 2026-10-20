@@ -351,14 +351,20 @@ pub mod simple_governance {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SimpleGovernance<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SimpleGovernance<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SimpleGovernance<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SimpleGovernance<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SimpleGovernance<M> {
         fn fmt(
@@ -771,19 +777,29 @@ pub mod simple_governance {
         }
     }
     impl ::core::convert::From<::std::string::String> for SimpleGovernanceErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<ActionFailed> for SimpleGovernanceErrors {
-        fn from(value: ActionFailed) -> Self { Self::ActionFailed(value) }
+        fn from(value: ActionFailed) -> Self {
+            Self::ActionFailed(value)
+        }
     }
     impl ::core::convert::From<CannotExecute> for SimpleGovernanceErrors {
-        fn from(value: CannotExecute) -> Self { Self::CannotExecute(value) }
+        fn from(value: CannotExecute) -> Self {
+            Self::CannotExecute(value)
+        }
     }
     impl ::core::convert::From<InvalidTarget> for SimpleGovernanceErrors {
-        fn from(value: InvalidTarget) -> Self { Self::InvalidTarget(value) }
+        fn from(value: InvalidTarget) -> Self {
+            Self::InvalidTarget(value)
+        }
     }
     impl ::core::convert::From<NotEnoughVotes> for SimpleGovernanceErrors {
-        fn from(value: NotEnoughVotes) -> Self { Self::NotEnoughVotes(value) }
+        fn from(value: NotEnoughVotes) -> Self {
+            Self::NotEnoughVotes(value)
+        }
     }
     impl ::core::convert::From<TargetMustHaveCode> for SimpleGovernanceErrors {
         fn from(value: TargetMustHaveCode) -> Self {
@@ -1113,10 +1129,14 @@ pub mod simple_governance {
         }
     }
     impl ::core::convert::From<ExecuteActionCall> for SimpleGovernanceCalls {
-        fn from(value: ExecuteActionCall) -> Self { Self::ExecuteAction(value) }
+        fn from(value: ExecuteActionCall) -> Self {
+            Self::ExecuteAction(value)
+        }
     }
     impl ::core::convert::From<GetActionCall> for SimpleGovernanceCalls {
-        fn from(value: GetActionCall) -> Self { Self::GetAction(value) }
+        fn from(value: GetActionCall) -> Self {
+            Self::GetAction(value)
+        }
     }
     impl ::core::convert::From<GetActionCounterCall> for SimpleGovernanceCalls {
         fn from(value: GetActionCounterCall) -> Self {
@@ -1134,7 +1154,9 @@ pub mod simple_governance {
         }
     }
     impl ::core::convert::From<QueueActionCall> for SimpleGovernanceCalls {
-        fn from(value: QueueActionCall) -> Self { Self::QueueAction(value) }
+        fn from(value: QueueActionCall) -> Self {
+            Self::QueueAction(value)
+        }
     }
     ///Container type for all return fields from the
     /// `executeAction` function with signature

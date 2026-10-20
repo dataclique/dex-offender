@@ -67,14 +67,20 @@ pub mod guard_manager {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct GuardManager<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GuardManager<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for GuardManager<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for GuardManager<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for GuardManager<M> {
         fn fmt(

@@ -152,14 +152,20 @@ pub mod i_uniswap_v3_pool_immutables {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3PoolImmutables<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3PoolImmutables<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3PoolImmutables<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3PoolImmutables<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3PoolImmutables<M> {
         fn fmt(
@@ -462,10 +468,14 @@ pub mod i_uniswap_v3_pool_immutables {
         }
     }
     impl ::core::convert::From<FactoryCall> for IUniswapV3PoolImmutablesCalls {
-        fn from(value: FactoryCall) -> Self { Self::Factory(value) }
+        fn from(value: FactoryCall) -> Self {
+            Self::Factory(value)
+        }
     }
     impl ::core::convert::From<FeeCall> for IUniswapV3PoolImmutablesCalls {
-        fn from(value: FeeCall) -> Self { Self::Fee(value) }
+        fn from(value: FeeCall) -> Self {
+            Self::Fee(value)
+        }
     }
     impl ::core::convert::From<MaxLiquidityPerTickCall>
         for IUniswapV3PoolImmutablesCalls
@@ -475,13 +485,19 @@ pub mod i_uniswap_v3_pool_immutables {
         }
     }
     impl ::core::convert::From<TickSpacingCall> for IUniswapV3PoolImmutablesCalls {
-        fn from(value: TickSpacingCall) -> Self { Self::TickSpacing(value) }
+        fn from(value: TickSpacingCall) -> Self {
+            Self::TickSpacing(value)
+        }
     }
     impl ::core::convert::From<Token0Call> for IUniswapV3PoolImmutablesCalls {
-        fn from(value: Token0Call) -> Self { Self::Token0(value) }
+        fn from(value: Token0Call) -> Self {
+            Self::Token0(value)
+        }
     }
     impl ::core::convert::From<Token1Call> for IUniswapV3PoolImmutablesCalls {
-        fn from(value: Token1Call) -> Self { Self::Token1(value) }
+        fn from(value: Token1Call) -> Self {
+            Self::Token1(value)
+        }
     }
     ///Container type for all return fields from the
     /// `factory` function with signature `factory()` and

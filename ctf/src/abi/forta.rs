@@ -164,14 +164,20 @@ pub mod forta {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Forta<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Forta<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Forta<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Forta<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Forta<M> {
         fn fmt(
@@ -507,10 +513,14 @@ pub mod forta {
         }
     }
     impl ::core::convert::From<NotifyCall> for FortaCalls {
-        fn from(value: NotifyCall) -> Self { Self::Notify(value) }
+        fn from(value: NotifyCall) -> Self {
+            Self::Notify(value)
+        }
     }
     impl ::core::convert::From<RaiseAlertCall> for FortaCalls {
-        fn from(value: RaiseAlertCall) -> Self { Self::RaiseAlert(value) }
+        fn from(value: RaiseAlertCall) -> Self {
+            Self::RaiseAlert(value)
+        }
     }
     impl ::core::convert::From<SetDetectionBotCall> for FortaCalls {
         fn from(value: SetDetectionBotCall) -> Self {

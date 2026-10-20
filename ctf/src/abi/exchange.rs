@@ -242,14 +242,20 @@ pub mod exchange {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Exchange<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Exchange<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Exchange<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Exchange<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Exchange<M> {
         fn fmt(
@@ -599,16 +605,24 @@ pub mod exchange {
         }
     }
     impl ::core::convert::From<::std::string::String> for ExchangeErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<InvalidPayment> for ExchangeErrors {
-        fn from(value: InvalidPayment) -> Self { Self::InvalidPayment(value) }
+        fn from(value: InvalidPayment) -> Self {
+            Self::InvalidPayment(value)
+        }
     }
     impl ::core::convert::From<NotEnoughFunds> for ExchangeErrors {
-        fn from(value: NotEnoughFunds) -> Self { Self::NotEnoughFunds(value) }
+        fn from(value: NotEnoughFunds) -> Self {
+            Self::NotEnoughFunds(value)
+        }
     }
     impl ::core::convert::From<SellerNotOwner> for ExchangeErrors {
-        fn from(value: SellerNotOwner) -> Self { Self::SellerNotOwner(value) }
+        fn from(value: SellerNotOwner) -> Self {
+            Self::SellerNotOwner(value)
+        }
     }
     impl ::core::convert::From<TransferNotApproved> for ExchangeErrors {
         fn from(value: TransferNotApproved) -> Self {
@@ -705,7 +719,9 @@ pub mod exchange {
         }
     }
     impl ::core::convert::From<TokenSoldFilter> for ExchangeEvents {
-        fn from(value: TokenSoldFilter) -> Self { Self::TokenSoldFilter(value) }
+        fn from(value: TokenSoldFilter) -> Self {
+            Self::TokenSoldFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `buyOne` function with signature `buyOne()` and
@@ -855,16 +871,24 @@ pub mod exchange {
         }
     }
     impl ::core::convert::From<BuyOneCall> for ExchangeCalls {
-        fn from(value: BuyOneCall) -> Self { Self::BuyOne(value) }
+        fn from(value: BuyOneCall) -> Self {
+            Self::BuyOne(value)
+        }
     }
     impl ::core::convert::From<OracleCall> for ExchangeCalls {
-        fn from(value: OracleCall) -> Self { Self::Oracle(value) }
+        fn from(value: OracleCall) -> Self {
+            Self::Oracle(value)
+        }
     }
     impl ::core::convert::From<SellOneCall> for ExchangeCalls {
-        fn from(value: SellOneCall) -> Self { Self::SellOne(value) }
+        fn from(value: SellOneCall) -> Self {
+            Self::SellOne(value)
+        }
     }
     impl ::core::convert::From<TokenCall> for ExchangeCalls {
-        fn from(value: TokenCall) -> Self { Self::Token(value) }
+        fn from(value: TokenCall) -> Self {
+            Self::Token(value)
+        }
     }
     ///Container type for all return fields from the
     /// `buyOne` function with signature `buyOne()` and

@@ -325,14 +325,20 @@ pub mod access_control {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct AccessControl<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AccessControl<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AccessControl<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AccessControl<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AccessControl<M> {
         fn fmt(
@@ -890,19 +896,29 @@ pub mod access_control {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for AccessControlCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GrantRoleCall> for AccessControlCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for AccessControlCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for AccessControlCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for AccessControlCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     impl ::core::convert::From<SupportsInterfaceCall> for AccessControlCalls {
         fn from(value: SupportsInterfaceCall) -> Self {

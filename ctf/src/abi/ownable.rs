@@ -273,14 +273,20 @@ pub mod ownable {
         ::ethers::contract::Lazy::new(__abi);
     pub struct Ownable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Ownable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Ownable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Ownable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Ownable<M> {
         fn fmt(
@@ -596,7 +602,9 @@ pub mod ownable {
         }
     }
     impl ::core::convert::From<::std::string::String> for OwnableErrors {
-        fn from(value: String) -> Self { Self::RevertString(value) }
+        fn from(value: String) -> Self {
+            Self::RevertString(value)
+        }
     }
     impl ::core::convert::From<NewOwnerIsZeroAddress> for OwnableErrors {
         fn from(value: NewOwnerIsZeroAddress) -> Self {
@@ -609,7 +617,9 @@ pub mod ownable {
         }
     }
     impl ::core::convert::From<Unauthorized> for OwnableErrors {
-        fn from(value: Unauthorized) -> Self { Self::Unauthorized(value) }
+        fn from(value: Unauthorized) -> Self {
+            Self::Unauthorized(value)
+        }
     }
     #[derive(
         Clone,
@@ -1051,7 +1061,9 @@ pub mod ownable {
         }
     }
     impl ::core::convert::From<OwnerCall> for OwnableCalls {
-        fn from(value: OwnerCall) -> Self { Self::Owner(value) }
+        fn from(value: OwnerCall) -> Self {
+            Self::Owner(value)
+        }
     }
     impl ::core::convert::From<OwnershipHandoverExpiresAtCall> for OwnableCalls {
         fn from(value: OwnershipHandoverExpiresAtCall) -> Self {

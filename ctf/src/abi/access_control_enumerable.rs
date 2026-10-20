@@ -396,14 +396,20 @@ pub mod access_control_enumerable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct AccessControlEnumerable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for AccessControlEnumerable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for AccessControlEnumerable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for AccessControlEnumerable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for AccessControlEnumerable<M> {
         fn fmt(
@@ -1069,10 +1075,14 @@ pub mod access_control_enumerable {
         }
     }
     impl ::core::convert::From<GetRoleAdminCall> for AccessControlEnumerableCalls {
-        fn from(value: GetRoleAdminCall) -> Self { Self::GetRoleAdmin(value) }
+        fn from(value: GetRoleAdminCall) -> Self {
+            Self::GetRoleAdmin(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCall> for AccessControlEnumerableCalls {
-        fn from(value: GetRoleMemberCall) -> Self { Self::GetRoleMember(value) }
+        fn from(value: GetRoleMemberCall) -> Self {
+            Self::GetRoleMember(value)
+        }
     }
     impl ::core::convert::From<GetRoleMemberCountCall>
         for AccessControlEnumerableCalls
@@ -1082,16 +1092,24 @@ pub mod access_control_enumerable {
         }
     }
     impl ::core::convert::From<GrantRoleCall> for AccessControlEnumerableCalls {
-        fn from(value: GrantRoleCall) -> Self { Self::GrantRole(value) }
+        fn from(value: GrantRoleCall) -> Self {
+            Self::GrantRole(value)
+        }
     }
     impl ::core::convert::From<HasRoleCall> for AccessControlEnumerableCalls {
-        fn from(value: HasRoleCall) -> Self { Self::HasRole(value) }
+        fn from(value: HasRoleCall) -> Self {
+            Self::HasRole(value)
+        }
     }
     impl ::core::convert::From<RenounceRoleCall> for AccessControlEnumerableCalls {
-        fn from(value: RenounceRoleCall) -> Self { Self::RenounceRole(value) }
+        fn from(value: RenounceRoleCall) -> Self {
+            Self::RenounceRole(value)
+        }
     }
     impl ::core::convert::From<RevokeRoleCall> for AccessControlEnumerableCalls {
-        fn from(value: RevokeRoleCall) -> Self { Self::RevokeRole(value) }
+        fn from(value: RevokeRoleCall) -> Self {
+            Self::RevokeRole(value)
+        }
     }
     impl ::core::convert::From<SupportsInterfaceCall>
         for AccessControlEnumerableCalls

@@ -389,14 +389,20 @@ pub mod i_uniswap_v3_pool_events {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IUniswapV3PoolEvents<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IUniswapV3PoolEvents<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IUniswapV3PoolEvents<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IUniswapV3PoolEvents<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IUniswapV3PoolEvents<M> {
         fn fmt(
@@ -858,10 +864,14 @@ pub mod i_uniswap_v3_pool_events {
         }
     }
     impl ::core::convert::From<BurnFilter> for IUniswapV3PoolEventsEvents {
-        fn from(value: BurnFilter) -> Self { Self::BurnFilter(value) }
+        fn from(value: BurnFilter) -> Self {
+            Self::BurnFilter(value)
+        }
     }
     impl ::core::convert::From<CollectFilter> for IUniswapV3PoolEventsEvents {
-        fn from(value: CollectFilter) -> Self { Self::CollectFilter(value) }
+        fn from(value: CollectFilter) -> Self {
+            Self::CollectFilter(value)
+        }
     }
     impl ::core::convert::From<CollectProtocolFilter>
         for IUniswapV3PoolEventsEvents
@@ -871,7 +881,9 @@ pub mod i_uniswap_v3_pool_events {
         }
     }
     impl ::core::convert::From<FlashFilter> for IUniswapV3PoolEventsEvents {
-        fn from(value: FlashFilter) -> Self { Self::FlashFilter(value) }
+        fn from(value: FlashFilter) -> Self {
+            Self::FlashFilter(value)
+        }
     }
     impl ::core::convert::From<IncreaseObservationCardinalityNextFilter>
         for IUniswapV3PoolEventsEvents
@@ -886,7 +898,9 @@ pub mod i_uniswap_v3_pool_events {
         }
     }
     impl ::core::convert::From<MintFilter> for IUniswapV3PoolEventsEvents {
-        fn from(value: MintFilter) -> Self { Self::MintFilter(value) }
+        fn from(value: MintFilter) -> Self {
+            Self::MintFilter(value)
+        }
     }
     impl ::core::convert::From<SetFeeProtocolFilter>
         for IUniswapV3PoolEventsEvents
@@ -896,6 +910,8 @@ pub mod i_uniswap_v3_pool_events {
         }
     }
     impl ::core::convert::From<SwapFilter> for IUniswapV3PoolEventsEvents {
-        fn from(value: SwapFilter) -> Self { Self::SwapFilter(value) }
+        fn from(value: SwapFilter) -> Self {
+            Self::SwapFilter(value)
+        }
     }
 }

@@ -142,14 +142,20 @@ pub mod simple_trick {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SimpleTrick<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SimpleTrick<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SimpleTrick<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SimpleTrick<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SimpleTrick<M> {
         fn fmt(
@@ -467,19 +473,29 @@ pub mod simple_trick {
         }
     }
     impl ::core::convert::From<CheckPasswordCall> for SimpleTrickCalls {
-        fn from(value: CheckPasswordCall) -> Self { Self::CheckPassword(value) }
+        fn from(value: CheckPasswordCall) -> Self {
+            Self::CheckPassword(value)
+        }
     }
     impl ::core::convert::From<TargetCall> for SimpleTrickCalls {
-        fn from(value: TargetCall) -> Self { Self::Target(value) }
+        fn from(value: TargetCall) -> Self {
+            Self::Target(value)
+        }
     }
     impl ::core::convert::From<TrickCall> for SimpleTrickCalls {
-        fn from(value: TrickCall) -> Self { Self::Trick(value) }
+        fn from(value: TrickCall) -> Self {
+            Self::Trick(value)
+        }
     }
     impl ::core::convert::From<TrickInitCall> for SimpleTrickCalls {
-        fn from(value: TrickInitCall) -> Self { Self::TrickInit(value) }
+        fn from(value: TrickInitCall) -> Self {
+            Self::TrickInit(value)
+        }
     }
     impl ::core::convert::From<TrickyTrickCall> for SimpleTrickCalls {
-        fn from(value: TrickyTrickCall) -> Self { Self::TrickyTrick(value) }
+        fn from(value: TrickyTrickCall) -> Self {
+            Self::TrickyTrick(value)
+        }
     }
     ///Container type for all return fields from the
     /// `checkPassword` function with signature

@@ -140,14 +140,20 @@ pub mod reentrance {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Reentrance<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Reentrance<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Reentrance<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Reentrance<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Reentrance<M> {
         fn fmt(
@@ -432,16 +438,24 @@ pub mod reentrance {
         }
     }
     impl ::core::convert::From<BalanceOfCall> for ReentranceCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BalancesCall> for ReentranceCalls {
-        fn from(value: BalancesCall) -> Self { Self::Balances(value) }
+        fn from(value: BalancesCall) -> Self {
+            Self::Balances(value)
+        }
     }
     impl ::core::convert::From<DonateCall> for ReentranceCalls {
-        fn from(value: DonateCall) -> Self { Self::Donate(value) }
+        fn from(value: DonateCall) -> Self {
+            Self::Donate(value)
+        }
     }
     impl ::core::convert::From<WithdrawCall> for ReentranceCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
     ///Container type for all return fields from the
     /// `balanceOf` function with signature

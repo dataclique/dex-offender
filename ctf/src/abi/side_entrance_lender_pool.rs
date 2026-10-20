@@ -142,14 +142,20 @@ pub mod side_entrance_lender_pool {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct SideEntranceLenderPool<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SideEntranceLenderPool<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for SideEntranceLenderPool<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for SideEntranceLenderPool<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for SideEntranceLenderPool<M> {
         fn fmt(
@@ -389,10 +395,14 @@ pub mod side_entrance_lender_pool {
         }
     }
     impl ::core::convert::From<DepositFilter> for SideEntranceLenderPoolEvents {
-        fn from(value: DepositFilter) -> Self { Self::DepositFilter(value) }
+        fn from(value: DepositFilter) -> Self {
+            Self::DepositFilter(value)
+        }
     }
     impl ::core::convert::From<WithdrawFilter> for SideEntranceLenderPoolEvents {
-        fn from(value: WithdrawFilter) -> Self { Self::WithdrawFilter(value) }
+        fn from(value: WithdrawFilter) -> Self {
+            Self::WithdrawFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `deposit` function with signature `deposit()` and
@@ -519,12 +529,18 @@ pub mod side_entrance_lender_pool {
         }
     }
     impl ::core::convert::From<DepositCall> for SideEntranceLenderPoolCalls {
-        fn from(value: DepositCall) -> Self { Self::Deposit(value) }
+        fn from(value: DepositCall) -> Self {
+            Self::Deposit(value)
+        }
     }
     impl ::core::convert::From<FlashLoanCall> for SideEntranceLenderPoolCalls {
-        fn from(value: FlashLoanCall) -> Self { Self::FlashLoan(value) }
+        fn from(value: FlashLoanCall) -> Self {
+            Self::FlashLoan(value)
+        }
     }
     impl ::core::convert::From<WithdrawCall> for SideEntranceLenderPoolCalls {
-        fn from(value: WithdrawCall) -> Self { Self::Withdraw(value) }
+        fn from(value: WithdrawCall) -> Self {
+            Self::Withdraw(value)
+        }
     }
 }

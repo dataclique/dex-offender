@@ -96,14 +96,20 @@ pub mod i_forta {
         ::ethers::contract::Lazy::new(__abi);
     pub struct IForta<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IForta<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IForta<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IForta<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IForta<M> {
         fn fmt(
@@ -301,10 +307,14 @@ pub mod i_forta {
         }
     }
     impl ::core::convert::From<NotifyCall> for IFortaCalls {
-        fn from(value: NotifyCall) -> Self { Self::Notify(value) }
+        fn from(value: NotifyCall) -> Self {
+            Self::Notify(value)
+        }
     }
     impl ::core::convert::From<RaiseAlertCall> for IFortaCalls {
-        fn from(value: RaiseAlertCall) -> Self { Self::RaiseAlert(value) }
+        fn from(value: RaiseAlertCall) -> Self {
+            Self::RaiseAlert(value)
+        }
     }
     impl ::core::convert::From<SetDetectionBotCall> for IFortaCalls {
         fn from(value: SetDetectionBotCall) -> Self {

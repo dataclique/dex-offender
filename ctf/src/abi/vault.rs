@@ -91,14 +91,20 @@ pub mod vault {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Vault<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Vault<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Vault<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Vault<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Vault<M> {
         fn fmt(
@@ -292,10 +298,14 @@ pub mod vault {
         }
     }
     impl ::core::convert::From<LockedCall> for VaultCalls {
-        fn from(value: LockedCall) -> Self { Self::Locked(value) }
+        fn from(value: LockedCall) -> Self {
+            Self::Locked(value)
+        }
     }
     impl ::core::convert::From<UnlockCall> for VaultCalls {
-        fn from(value: UnlockCall) -> Self { Self::Unlock(value) }
+        fn from(value: UnlockCall) -> Self {
+            Self::Unlock(value)
+        }
     }
     ///Container type for all return fields from the
     /// `locked` function with signature `locked()` and

@@ -615,14 +615,20 @@ pub mod damn_valuable_token_snapshot {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct DamnValuableTokenSnapshot<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for DamnValuableTokenSnapshot<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for DamnValuableTokenSnapshot<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for DamnValuableTokenSnapshot<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for DamnValuableTokenSnapshot<M> {
         fn fmt(
@@ -1046,13 +1052,19 @@ pub mod damn_valuable_token_snapshot {
         }
     }
     impl ::core::convert::From<ApprovalFilter> for DamnValuableTokenSnapshotEvents {
-        fn from(value: ApprovalFilter) -> Self { Self::ApprovalFilter(value) }
+        fn from(value: ApprovalFilter) -> Self {
+            Self::ApprovalFilter(value)
+        }
     }
     impl ::core::convert::From<SnapshotFilter> for DamnValuableTokenSnapshotEvents {
-        fn from(value: SnapshotFilter) -> Self { Self::SnapshotFilter(value) }
+        fn from(value: SnapshotFilter) -> Self {
+            Self::SnapshotFilter(value)
+        }
     }
     impl ::core::convert::From<TransferFilter> for DamnValuableTokenSnapshotEvents {
-        fn from(value: TransferFilter) -> Self { Self::TransferFilter(value) }
+        fn from(value: TransferFilter) -> Self {
+            Self::TransferFilter(value)
+        }
     }
     ///Container type for all input parameters for the
     /// `allowance` function with signature
@@ -1609,19 +1621,29 @@ pub mod damn_valuable_token_snapshot {
         }
     }
     impl ::core::convert::From<AllowanceCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: AllowanceCall) -> Self { Self::Allowance(value) }
+        fn from(value: AllowanceCall) -> Self {
+            Self::Allowance(value)
+        }
     }
     impl ::core::convert::From<ApproveCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: ApproveCall) -> Self { Self::Approve(value) }
+        fn from(value: ApproveCall) -> Self {
+            Self::Approve(value)
+        }
     }
     impl ::core::convert::From<BalanceOfCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: BalanceOfCall) -> Self { Self::BalanceOf(value) }
+        fn from(value: BalanceOfCall) -> Self {
+            Self::BalanceOf(value)
+        }
     }
     impl ::core::convert::From<BalanceOfAtCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: BalanceOfAtCall) -> Self { Self::BalanceOfAt(value) }
+        fn from(value: BalanceOfAtCall) -> Self {
+            Self::BalanceOfAt(value)
+        }
     }
     impl ::core::convert::From<DecimalsCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: DecimalsCall) -> Self { Self::Decimals(value) }
+        fn from(value: DecimalsCall) -> Self {
+            Self::Decimals(value)
+        }
     }
     impl ::core::convert::From<DecreaseAllowanceCall>
         for DamnValuableTokenSnapshotCalls
@@ -1652,29 +1674,43 @@ pub mod damn_valuable_token_snapshot {
         }
     }
     impl ::core::convert::From<NameCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: NameCall) -> Self { Self::Name(value) }
+        fn from(value: NameCall) -> Self {
+            Self::Name(value)
+        }
     }
     impl ::core::convert::From<SnapshotCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: SnapshotCall) -> Self { Self::Snapshot(value) }
+        fn from(value: SnapshotCall) -> Self {
+            Self::Snapshot(value)
+        }
     }
     impl ::core::convert::From<SymbolCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: SymbolCall) -> Self { Self::Symbol(value) }
+        fn from(value: SymbolCall) -> Self {
+            Self::Symbol(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: TotalSupplyCall) -> Self { Self::TotalSupply(value) }
+        fn from(value: TotalSupplyCall) -> Self {
+            Self::TotalSupply(value)
+        }
     }
     impl ::core::convert::From<TotalSupplyAtCall>
         for DamnValuableTokenSnapshotCalls
     {
-        fn from(value: TotalSupplyAtCall) -> Self { Self::TotalSupplyAt(value) }
+        fn from(value: TotalSupplyAtCall) -> Self {
+            Self::TotalSupplyAt(value)
+        }
     }
     impl ::core::convert::From<TransferCall> for DamnValuableTokenSnapshotCalls {
-        fn from(value: TransferCall) -> Self { Self::Transfer(value) }
+        fn from(value: TransferCall) -> Self {
+            Self::Transfer(value)
+        }
     }
     impl ::core::convert::From<TransferFromCall>
         for DamnValuableTokenSnapshotCalls
     {
-        fn from(value: TransferFromCall) -> Self { Self::TransferFrom(value) }
+        fn from(value: TransferFromCall) -> Self {
+            Self::TransferFrom(value)
+        }
     }
     ///Container type for all return fields from the
     /// `allowance` function with signature

@@ -81,14 +81,20 @@ pub mod ierc1967_upgradeable {
     > = ::ethers::contract::Lazy::new(__abi);
     pub struct IERC1967Upgradeable<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IERC1967Upgradeable<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for IERC1967Upgradeable<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for IERC1967Upgradeable<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for IERC1967Upgradeable<M> {
         fn fmt(
@@ -280,6 +286,8 @@ pub mod ierc1967_upgradeable {
         }
     }
     impl ::core::convert::From<UpgradedFilter> for IERC1967UpgradeableEvents {
-        fn from(value: UpgradedFilter) -> Self { Self::UpgradedFilter(value) }
+        fn from(value: UpgradedFilter) -> Self {
+            Self::UpgradedFilter(value)
+        }
     }
 }

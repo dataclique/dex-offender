@@ -102,14 +102,20 @@ pub mod elevator {
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct Elevator<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Elevator<M> {
-        fn clone(&self) -> Self { Self(::core::clone::Clone::clone(&self.0)) }
+        fn clone(&self) -> Self {
+            Self(::core::clone::Clone::clone(&self.0))
+        }
     }
     impl<M> ::core::ops::Deref for Elevator<M> {
         type Target = ::ethers::contract::Contract<M>;
-        fn deref(&self) -> &Self::Target { &self.0 }
+        fn deref(&self) -> &Self::Target {
+            &self.0
+        }
     }
     impl<M> ::core::ops::DerefMut for Elevator<M> {
-        fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut self.0
+        }
     }
     impl<M> ::core::fmt::Debug for Elevator<M> {
         fn fmt(
@@ -341,13 +347,19 @@ pub mod elevator {
         }
     }
     impl ::core::convert::From<FloorCall> for ElevatorCalls {
-        fn from(value: FloorCall) -> Self { Self::Floor(value) }
+        fn from(value: FloorCall) -> Self {
+            Self::Floor(value)
+        }
     }
     impl ::core::convert::From<GoToCall> for ElevatorCalls {
-        fn from(value: GoToCall) -> Self { Self::GoTo(value) }
+        fn from(value: GoToCall) -> Self {
+            Self::GoTo(value)
+        }
     }
     impl ::core::convert::From<TopCall> for ElevatorCalls {
-        fn from(value: TopCall) -> Self { Self::Top(value) }
+        fn from(value: TopCall) -> Self {
+            Self::Top(value)
+        }
     }
     ///Container type for all return fields from the
     /// `floor` function with signature `floor()` and
