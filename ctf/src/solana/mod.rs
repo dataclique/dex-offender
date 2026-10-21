@@ -14,6 +14,8 @@ use std::sync::{Arc, Mutex};
 
 pub use litesvm;
 
+pub mod bootcamp;
+
 /// Abstraction over the Solana execution environment.
 /// Default impl wraps `litesvm::LiteSVM` (in-process, no binary needed).
 pub trait SolChain: Send + Sync {
