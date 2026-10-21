@@ -1,0 +1,531 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "tokenAddress",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "uniswapPairAddress",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "DEPOSIT_FACTOR",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "borrow",
+      "inputs": [
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "recipient",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "calculateDepositRequired",
+      "inputs": [
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "deposits",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "token",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "contract DamnValuableToken"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "uniswapPair",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "event",
+      "name": "Borrowed",
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "depositRequired",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "borrowAmount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "error",
+      "name": "FailedCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientBalance",
+      "inputs": [
+        {
+          "name": "balance",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "needed",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotEnoughCollateral",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ReentrancyGuardReentrantCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "TransferFailed",
+      "inputs": []
+    }
+  ],
+  "bytecode": {
+    "object": "0x60c060405234801561000f575f80fd5b506040516106a83803806106a883398101604081905261002e91610064565b60015f556001600160a01b0391821660a05216608052610095565b80516001600160a01b038116811461005f575f80fd5b919050565b5f8060408385031215610075575f80fd5b61007e83610049565b915061008c60208401610049565b90509250929050565b60805160a0516105d76100d15f395f818161010f015281816101df01526103f701525f818160c4015281816103cd015261046f01526105d75ff3fe608060405260043610610054575f3560e01c80634b3fd148146100585780635d48e2551461006d578063bc554c2814610094578063c816841b146100b3578063fc0c546a146100fe578063fc7e286d14610131575b5f80fd5b61006b6100663660046104f1565b61015c565b005b348015610078575f80fd5b50610081600281565b6040519081526020015b60405180910390f35b34801561009f575f80fd5b506100816100ae36600461051b565b6102c0565b3480156100be575f80fd5b506100e67f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161008b565b348015610109575f80fd5b506100e67f000000000000000000000000000000000000000000000000000000000000000081565b34801561013c575f80fd5b5061008161014b366004610532565b60016020525f908152604090205481565b6101646102f8565b5f61016e836102c0565b9050803410156101905760405162d11df360e61b815260040160405180910390fd5b803411156101a5576101a53334839003610320565b335f90815260016020526040908190208054830190555163a9059cbb60e01b81526001600160a01b038381166004830152602482018590527f0000000000000000000000000000000000000000000000000000000000000000169063a9059cbb906044016020604051808303815f875af1158015610225573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906102499190610552565b610266576040516312171d8360e31b815260040160405180910390fd5b604080516001600160a01b03841681526020810183905290810184905233907fc14e9e6b4d98a542b05a0f6b64acd5f4cbdb914be88432d87486b664e97071a79060600160405180910390a2506102bc60015f55565b5050565b5f670de0b6b3a764000060026102d46103b6565b6102de9085610571565b6102e89190610571565b6102f29190610594565b92915050565b60025f540361031a57604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b8047101561034e5760405163cf47918160e01b81524760048201526024810182905260440160405180910390fd5b5f80836001600160a01b0316836040515f6040518083038185875af1925050503d805f8114610398576040519150601f19603f3d011682016040523d82523d5f602084013e61039d565b606091505b5091509150816103b0576103b0816104ad565b50505050565b6040516370a0823160e01b81526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811660048301525f917f0000000000000000000000000000000000000000000000000000000000000000909116906370a0823190602401602060405180830381865afa15801561043e573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061046291906105b3565b61049e6001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001631670de0b6b3a7640000610571565b6104a89190610594565b905090565b8051156104bd5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b80356001600160a01b03811681146104ec575f80fd5b919050565b5f8060408385031215610502575f80fd5b82359150610512602084016104d6565b90509250929050565b5f6020828403121561052b575f80fd5b5035919050565b5f60208284031215610542575f80fd5b61054b826104d6565b9392505050565b5f60208284031215610562575f80fd5b8151801515811461054b575f80fd5b80820281158282048414176102f257634e487b7160e01b5f52601160045260245ffd5b5f826105ae57634e487b7160e01b5f52601260045260245ffd5b500490565b5f602082840312156105c3575f80fd5b505191905056fea164736f6c6343000819000a",
+    "sourceMap": "329:1839:199:-:0;;;776:160;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1857:1:93;2061:7;:21;-1:-1:-1;;;;;848:39:199;;;;;897:32;;;329:1839;;14:177:240;93:13;;-1:-1:-1;;;;;135:31:240;;125:42;;115:70;;181:1;178;171:12;115:70;14:177;;;:::o;196:293::-;275:6;283;336:2;324:9;315:7;311:23;307:32;304:52;;;352:1;349;342:12;304:52;375:40;405:9;375:40;:::i;:::-;365:50;;434:49;479:2;468:9;464:18;434:49;:::i;:::-;424:59;;196:293;;;;;:::o;:::-;329:1839:199;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405260043610610054575f3560e01c80634b3fd148146100585780635d48e2551461006d578063bc554c2814610094578063c816841b146100b3578063fc0c546a146100fe578063fc7e286d14610131575b5f80fd5b61006b6100663660046104f1565b61015c565b005b348015610078575f80fd5b50610081600281565b6040519081526020015b60405180910390f35b34801561009f575f80fd5b506100816100ae36600461051b565b6102c0565b3480156100be575f80fd5b506100e67f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161008b565b348015610109575f80fd5b506100e67f000000000000000000000000000000000000000000000000000000000000000081565b34801561013c575f80fd5b5061008161014b366004610532565b60016020525f908152604090205481565b6101646102f8565b5f61016e836102c0565b9050803410156101905760405162d11df360e61b815260040160405180910390fd5b803411156101a5576101a53334839003610320565b335f90815260016020526040908190208054830190555163a9059cbb60e01b81526001600160a01b038381166004830152602482018590527f0000000000000000000000000000000000000000000000000000000000000000169063a9059cbb906044016020604051808303815f875af1158015610225573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906102499190610552565b610266576040516312171d8360e31b815260040160405180910390fd5b604080516001600160a01b03841681526020810183905290810184905233907fc14e9e6b4d98a542b05a0f6b64acd5f4cbdb914be88432d87486b664e97071a79060600160405180910390a2506102bc60015f55565b5050565b5f670de0b6b3a764000060026102d46103b6565b6102de9085610571565b6102e89190610571565b6102f29190610594565b92915050565b60025f540361031a57604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b8047101561034e5760405163cf47918160e01b81524760048201526024810182905260440160405180910390fd5b5f80836001600160a01b0316836040515f6040518083038185875af1925050503d805f8114610398576040519150601f19603f3d011682016040523d82523d5f602084013e61039d565b606091505b5091509150816103b0576103b0816104ad565b50505050565b6040516370a0823160e01b81526001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000811660048301525f917f0000000000000000000000000000000000000000000000000000000000000000909116906370a0823190602401602060405180830381865afa15801561043e573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061046291906105b3565b61049e6001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001631670de0b6b3a7640000610571565b6104a89190610594565b905090565b8051156104bd5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b80356001600160a01b03811681146104ec575f80fd5b919050565b5f8060408385031215610502575f80fd5b82359150610512602084016104d6565b90509250929050565b5f6020828403121561052b575f80fd5b5035919050565b5f60208284031215610542575f80fd5b61054b826104d6565b9392505050565b5f60208284031215610562575f80fd5b8151801515811461054b575f80fd5b80820281158282048414176102f257634e487b7160e01b5f52601160045260245ffd5b5f826105ae57634e487b7160e01b5f52601260045260245ffd5b500490565b5f602082840312156105c3575f80fd5b505191905056fea164736f6c6343000819000a",
+    "sourceMap": "329:1839:199:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1022:743;;;;;;:::i;:::-;;:::i;:::-;;414:42;;;;;;;;;;;;455:1;414:42;;;;;597:25:240;;;585:2;570:18;414:42:199;;;;;;;;1771:162;;;;;;;;;;-1:-1:-1;1771:162:199;;;;;:::i;:::-;;:::i;463:36::-;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;982:32:240;;;964:51;;952:2;937:18;463:36:199;818:203:240;505:40:199;;;;;;;;;;;;;;;552:43;;;;;;;;;;-1:-1:-1;552:43:199;;;;;:::i;:::-;;;;;;;;;;;;;;1022:743;2500:21:93;:19;:21::i;:::-;1113:23:199::1;1139:32;1164:6;1139:24;:32::i;:::-;1113:58;;1198:15;1186:9;:27;1182:86;;;1236:21;;-1:-1:-1::0;;;1236:21:199::1;;;;;;;;;;;1182:86;1294:15;1282:9;:27;1278:158;;;1353:58;1361:10;1383:9;:27:::0;;::::1;1353:29;:58::i;:::-;1479:10;1470:20;::::0;;;:8:::1;:20;::::0;;;;;;:39;;;::::1;::::0;;1604:33;-1:-1:-1;;;1604:33:199;;-1:-1:-1;;;;;1644:32:240;;;1604:33:199::1;::::0;::::1;1626:51:240::0;1693:18;;;1686:34;;;1604:5:199::1;:14;::::0;::::1;::::0;1599:18:240;;1604:33:199::1;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1599:88;;1660:16;;-1:-1:-1::0;;;1660:16:199::1;;;;;;;;;;;1599:88;1702:56;::::0;;-1:-1:-1;;;;;2233:32:240;;2215:51;;2297:2;2282:18;;2275:34;;;2325:18;;;2318:34;;;1711:10:199::1;::::0;1702:56:::1;::::0;2203:2:240;2188:18;1702:56:199::1;;;;;;;1103:662;2542:20:93::0;1857:1;3068:7;:21;2888:208;2542:20;1022:743:199;;:::o;1771:162::-;1842:7;1918:8;455:1;1877:21;:19;:21::i;:::-;1868:30;;:6;:30;:::i;:::-;:47;;;;:::i;:::-;:58;;;;:::i;:::-;1861:65;1771:162;-1:-1:-1;;1771:162:199:o;2575:307:93:-;1899:1;2702:7;;:18;2698:86;;2743:30;;-1:-1:-1;;;2743:30:93;;;;;;;;;;;2698:86;1899:1;2858:7;:17;2575:307::o;1290:365:84:-;1399:6;1375:21;:30;1371:125;;;1428:57;;-1:-1:-1;;;1428:57:84;;1455:21;1428:57;;;3029:25:240;3070:18;;;3063:34;;;3002:18;;1428:57:84;;;;;;;1371:125;1507:12;1521:23;1548:9;-1:-1:-1;;;;;1548:14:84;1570:6;1548:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1506:75;;;;1596:7;1591:58;;1619:19;1627:10;1619:7;:19::i;:::-;1361:294;;1290:365;;:::o;1939:227:199:-;2131:28;;-1:-1:-1;;;2131:28:199;;-1:-1:-1;;;;;2147:11:199;982:32:240;;2131:28:199;;;964:51:240;-1:-1:-1;;2131:5:199;:15;;;;;;937:18:240;;2131:28:199;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;2096:32;-1:-1:-1;;;;;2096:11:199;:19;;2119:8;2096:32;:::i;:::-;:63;;;;:::i;:::-;2089:70;;1939:227;:::o;5559:487:84:-;5690:17;;:21;5686:354;;5887:10;5881:17;5943:15;5930:10;5926:2;5922:19;5915:44;5686:354;6010:19;;-1:-1:-1;;;6010:19:84;;;;;;;;;;;14:173:240;82:20;;-1:-1:-1;;;;;131:31:240;;121:42;;111:70;;177:1;174;167:12;111:70;14:173;;;:::o;192:254::-;260:6;268;321:2;309:9;300:7;296:23;292:32;289:52;;;337:1;334;327:12;289:52;373:9;360:23;350:33;;402:38;436:2;425:9;421:18;402:38;:::i;:::-;392:48;;192:254;;;;;:::o;633:180::-;692:6;745:2;733:9;724:7;720:23;716:32;713:52;;;761:1;758;751:12;713:52;-1:-1:-1;784:23:240;;633:180;-1:-1:-1;633:180:240:o;1261:186::-;1320:6;1373:2;1361:9;1352:7;1348:23;1344:32;1341:52;;;1389:1;1386;1379:12;1341:52;1412:29;1431:9;1412:29;:::i;:::-;1402:39;1261:186;-1:-1:-1;;;1261:186:240:o;1731:277::-;1798:6;1851:2;1839:9;1830:7;1826:23;1822:32;1819:52;;;1867:1;1864;1857:12;1819:52;1899:9;1893:16;1952:5;1945:13;1938:21;1931:5;1928:32;1918:60;;1974:1;1971;1964:12;2363:265;2436:9;;;2467;;2484:15;;;2478:22;;2464:37;2454:168;;2544:10;2539:3;2535:20;2532:1;2525:31;2579:4;2576:1;2569:15;2607:4;2604:1;2597:15;2633:217;2673:1;2699;2689:132;;2743:10;2738:3;2734:20;2731:1;2724:31;2778:4;2775:1;2768:15;2806:4;2803:1;2796:15;2689:132;-1:-1:-1;2835:9:240;;2633:217::o;3318:184::-;3388:6;3441:2;3429:9;3420:7;3416:23;3412:32;3409:52;;;3457:1;3454;3447:12;3409:52;-1:-1:-1;3480:16:240;;3318:184;-1:-1:-1;3318:184:240:o",
+    "linkReferences": {},
+    "immutableReferences": {
+      "77027": [
+        {
+          "start": 196,
+          "length": 32
+        },
+        {
+          "start": 973,
+          "length": 32
+        },
+        {
+          "start": 1135,
+          "length": 32
+        }
+      ],
+      "77030": [
+        {
+          "start": 271,
+          "length": 32
+        },
+        {
+          "start": 479,
+          "length": 32
+        },
+        {
+          "start": 1015,
+          "length": 32
+        }
+      ]
+    }
+  },
+  "methodIdentifiers": {
+    "DEPOSIT_FACTOR()": "5d48e255",
+    "borrow(uint256,address)": "4b3fd148",
+    "calculateDepositRequired(uint256)": "bc554c28",
+    "deposits(address)": "fc7e286d",
+    "token()": "fc0c546a",
+    "uniswapPair()": "c816841b"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.25+commit.b61c2a91\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"uniswapPairAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"FailedCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"needed\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotEnoughCollateral\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"TransferFailed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"depositRequired\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"borrowAmount\",\"type\":\"uint256\"}],\"name\":\"Borrowed\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEPOSIT_FACTOR\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"borrow\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"calculateDepositRequired\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"deposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"internalType\":\"contract DamnValuableToken\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"uniswapPair\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"FailedCall()\":[{\"details\":\"A call to an address target failed. The target may have reverted.\"}],\"InsufficientBalance(uint256,uint256)\":[{\"details\":\"The ETH balance of the account is not enough to perform the operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/puppet/PuppetPool.sol\":\"PuppetPool\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\",\":@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/\",\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@safe-global/safe-smart-account/=lib/safe-smart-account/\",\":@uniswap/v2-core/=lib/v2-core/\",\":@uniswap/v2-periphery/=lib/v2-periphery/\",\":@uniswap/v3-core/=lib/v3-core/\",\":@uniswap/v3-periphery/=lib/v3-periphery/\",\":ds-test/=lib/solmate/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\":multicall/=lib/multicall/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":permit2/=lib/permit2/src/\",\":safe-smart-account/=lib/safe-smart-account/\",\":solady/=lib/solady/src/\",\":solmate/=lib/solmate/src/\",\":v2-core/=lib/v2-core/contracts/\",\":v2-periphery/=lib/v2-periphery/contracts/\",\":v3-core/=lib/v3-core/contracts/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\"lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e\",\"dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR\"]},\"lib/openzeppelin-contracts/contracts/utils/Errors.sol\":{\"keccak256\":\"0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf\",\"dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB\"]},\"lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a\",\"dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA\"]},\"lib/solmate/src/tokens/ERC20.sol\":{\"keccak256\":\"0xcdfd8db76b2a3415620e4d18cc5545f3d50de792dbf2c3dd5adb40cbe6f94b10\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://57b3ab70cde374af1cf2c9888636e8de6cf660f087b1c9abd805e9271e19fa35\",\"dweb:/ipfs/QmNrLDBAHYFjpjSd12jerm1AdBkDqEYUUaXgnT854BUZ97\"]},\"src/DamnValuableToken.sol\":{\"keccak256\":\"0x0c12e31ea19ca2fe49e121e04629ccf63ebe69f0fcf30c983a601bea6541c253\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a9e27242f3659a017cd5f287f8c9920adda972d23e5535f61b6ca763cb081333\",\"dweb:/ipfs/QmThXgGZSPk8T5JjXva7zcEaL9yjp3ZrPCdWUfpswUAgXG\"]},\"src/puppet/PuppetPool.sol\":{\"keccak256\":\"0x9d702f60bea179a45341b70ae58acbf65e540873e5fd46b7774b022dfebbf657\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cf4bf9167926e9a062aeda25a27aeec9a1b47a94efd7479a447a7c6b0092f241\",\"dweb:/ipfs/QmTSGGaNMJUa8m5ak48oRP1ifaucT5waXWPG41JaM9tcju\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.25+commit.b61c2a91"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "uniswapPairAddress",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "FailedCall"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "needed",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "InsufficientBalance"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "NotEnoughCollateral"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ReentrancyGuardReentrantCall"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "TransferFailed"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "depositRequired",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowAmount",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Borrowed",
+          "anonymous": false
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "DEPOSIT_FACTOR",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "borrow"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "calculateDepositRequired",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "deposits",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "token",
+          "outputs": [
+            {
+              "internalType": "contract DamnValuableToken",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "uniswapPair",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/",
+        "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@safe-global/safe-smart-account/=lib/safe-smart-account/",
+        "@uniswap/v2-core/=lib/v2-core/",
+        "@uniswap/v2-periphery/=lib/v2-periphery/",
+        "@uniswap/v3-core/=lib/v3-core/",
+        "@uniswap/v3-periphery/=lib/v3-periphery/",
+        "ds-test/=lib/solmate/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "multicall/=lib/multicall/src/",
+        "murky/=lib/murky/src/",
+        "openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "permit2/=lib/permit2/src/",
+        "safe-smart-account/=lib/safe-smart-account/",
+        "solady/=lib/solady/src/",
+        "solmate/=lib/solmate/src/",
+        "v2-core/=lib/v2-core/contracts/",
+        "v2-periphery/=lib/v2-periphery/contracts/",
+        "v3-core/=lib/v3-core/contracts/",
+        "v3-periphery/=lib/v3-periphery/contracts/",
+        "lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "none"
+      },
+      "compilationTarget": {
+        "src/puppet/PuppetPool.sol": "PuppetPool"
+      },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+        "urls": [
+          "bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+          "dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Errors.sol": {
+        "keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+        "urls": [
+          "bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+          "dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol": {
+        "keccak256": "0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3",
+        "urls": [
+          "bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a",
+          "dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA"
+        ],
+        "license": "MIT"
+      },
+      "lib/solmate/src/tokens/ERC20.sol": {
+        "keccak256": "0xcdfd8db76b2a3415620e4d18cc5545f3d50de792dbf2c3dd5adb40cbe6f94b10",
+        "urls": [
+          "bzz-raw://57b3ab70cde374af1cf2c9888636e8de6cf660f087b1c9abd805e9271e19fa35",
+          "dweb:/ipfs/QmNrLDBAHYFjpjSd12jerm1AdBkDqEYUUaXgnT854BUZ97"
+        ],
+        "license": "AGPL-3.0-only"
+      },
+      "src/DamnValuableToken.sol": {
+        "keccak256": "0x0c12e31ea19ca2fe49e121e04629ccf63ebe69f0fcf30c983a601bea6541c253",
+        "urls": [
+          "bzz-raw://a9e27242f3659a017cd5f287f8c9920adda972d23e5535f61b6ca763cb081333",
+          "dweb:/ipfs/QmThXgGZSPk8T5JjXva7zcEaL9yjp3ZrPCdWUfpswUAgXG"
+        ],
+        "license": "MIT"
+      },
+      "src/puppet/PuppetPool.sol": {
+        "keccak256": "0x9d702f60bea179a45341b70ae58acbf65e540873e5fd46b7774b022dfebbf657",
+        "urls": [
+          "bzz-raw://cf4bf9167926e9a062aeda25a27aeec9a1b47a94efd7479a447a7c6b0092f241",
+          "dweb:/ipfs/QmTSGGaNMJUa8m5ak48oRP1ifaucT5waXWPG41JaM9tcju"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 199
+}

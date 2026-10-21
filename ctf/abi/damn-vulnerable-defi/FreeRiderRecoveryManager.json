@@ -1,0 +1,419 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "_beneficiary",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "_nft",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "owner",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "_bounty",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "onERC721Received",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "_tokenId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "_data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes4",
+          "internalType": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "error",
+      "name": "CallerNotNFT",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "FailedCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientBalance",
+      "inputs": [
+        {
+          "name": "balance",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "needed",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "InvalidTokenID",
+      "inputs": [
+        {
+          "name": "tokenId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "NotEnoughFunds",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "OriginNotBeneficiary",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ReentrancyGuardReentrantCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "StillNotOwningToken",
+      "inputs": [
+        {
+          "name": "tokenId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    }
+  ],
+  "bytecode": {
+    "object": "0x60e06040526040516105de3803806105de833981016040819052610022916100d8565b60015f5534811461004657604051631036b5ad60e31b815260040160405180910390fd5b60808190526001600160a01b0384811660a05283811660c081905260405163a22cb46560e01b81529184166004830152600160248301529063a22cb465906044015f604051808303815f87803b15801561009e575f80fd5b505af11580156100b0573d5f803e3d5ffd5b5050505050505050610120565b80516001600160a01b03811681146100d3575f80fd5b919050565b5f805f80608085870312156100eb575f80fd5b6100f4856100bd565b9350610102602086016100bd565b9250610110604086016100bd565b6060959095015193969295505050565b60805160a05160c05161048f61014f5f395f81816071015261014201525f60ba01525f610215015261048f5ff3fe608060405234801561000f575f80fd5b5060043610610029575f3560e01c8063150b7a021461002d575b5f80fd5b61004061003b366004610363565b61005d565b6040516001600160e01b0319909116815260200160405180910390f35b5f610066610255565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100af576040516371283f6b60e11b815260040160405180910390fd5b326001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100f857604051635e1b674760e11b815260040160405180910390fd5b60058311156101225760405163b7c882eb60e01b8152600481018490526024015b60405180910390fd5b6040516331a9108f60e11b81526004810184905230906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690636352211e90602401602060405180830381865afa158015610187573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906101ab919061043c565b6001600160a01b0316146101d557604051634a12c54560e11b815260048101849052602401610119565b60015f81546101e39061045e565b918290555060060361023b575f82806020019051810190610204919061043c565b90506102396001600160a01b0382167f000000000000000000000000000000000000000000000000000000000000000061027d565b505b50630a85bd0160e11b61024d60015f55565b949350505050565b60025f540361027757604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b804710156102a75760405163cf47918160e01b815247600482015260248101829052604401610119565b5f80836001600160a01b0316836040515f6040518083038185875af1925050503d805f81146102f1576040519150601f19603f3d011682016040523d82523d5f602084013e6102f6565b606091505b509150915081610309576103098161030f565b50505050565b80511561031f5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b50565b6001600160a01b0381168114610338575f80fd5b634e487b7160e01b5f52604160045260245ffd5b5f805f8060808587031215610376575f80fd5b84356103818161033b565b935060208501356103918161033b565b925060408501359150606085013567ffffffffffffffff808211156103b4575f80fd5b818701915087601f8301126103c7575f80fd5b8135818111156103d9576103d961034f565b604051601f8201601f19908116603f011681019083821181831017156104015761040161034f565b816040528281528a6020848701011115610419575f80fd5b826020860160208301375f60208483010152809550505050505092959194509250565b5f6020828403121561044c575f80fd5b81516104578161033b565b9392505050565b5f6001820161047b57634e487b7160e01b5f52601160045260245ffd5b506001019056fea164736f6c6343000819000a",
+    "sourceMap": "433:1622:188:-:0;;;876:323;;;;;;;;;;;;;;;;;;:::i;:::-;1857:1:93;2061:7;:21;978:9:188;:20;;974:74;;1021:16;;-1:-1:-1;;;1021:16:188;;;;;;;;;;;974:74;1057:16;;;;-1:-1:-1;;;;;1083:26:188;;;;;1119:19;;;;;;;1148:44;;-1:-1:-1;;;1148:44:188;;827:32:240;;;1148:44:188;;;809:51:240;1187:4:188;876:18:240;;;869:50;1119:19:188;1148:31;;782:18:240;;1148:44:188;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;876:323;;;;433:1622;;14:177:240;93:13;;-1:-1:-1;;;;;135:31:240;;125:42;;115:70;;181:1;178;171:12;115:70;14:177;;;:::o;196:440::-;293:6;301;309;317;370:3;358:9;349:7;345:23;341:33;338:53;;;387:1;384;377:12;338:53;410:40;440:9;410:40;:::i;:::-;400:50;;469:49;514:2;503:9;499:18;469:49;:::i;:::-;459:59;;537:49;582:2;571:9;567:18;537:49;:::i;:::-;626:2;611:18;;;;605:25;196:440;;;;-1:-1:-1;;;196:440:240:o;641:284::-;433:1622:188;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561000f575f80fd5b5060043610610029575f3560e01c8063150b7a021461002d575b5f80fd5b61004061003b366004610363565b61005d565b6040516001600160e01b0319909116815260200160405180910390f35b5f610066610255565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100af576040516371283f6b60e11b815260040160405180910390fd5b326001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100f857604051635e1b674760e11b815260040160405180910390fd5b60058311156101225760405163b7c882eb60e01b8152600481018490526024015b60405180910390fd5b6040516331a9108f60e11b81526004810184905230906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001690636352211e90602401602060405180830381865afa158015610187573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906101ab919061043c565b6001600160a01b0316146101d557604051634a12c54560e11b815260048101849052602401610119565b60015f81546101e39061045e565b918290555060060361023b575f82806020019051810190610204919061043c565b90506102396001600160a01b0382167f000000000000000000000000000000000000000000000000000000000000000061027d565b505b50630a85bd0160e11b61024d60015f55565b949350505050565b60025f540361027757604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b804710156102a75760405163cf47918160e01b815247600482015260248101829052604401610119565b5f80836001600160a01b0316836040515f6040518083038185875af1925050503d805f81146102f1576040519150601f19603f3d011682016040523d82523d5f602084013e6102f6565b606091505b509150915081610309576103098161030f565b50505050565b80511561031f5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b50565b6001600160a01b0381168114610338575f80fd5b634e487b7160e01b5f52604160045260245ffd5b5f805f8060808587031215610376575f80fd5b84356103818161033b565b935060208501356103918161033b565b925060408501359150606085013567ffffffffffffffff808211156103b4575f80fd5b818701915087601f8301126103c7575f80fd5b8135818111156103d9576103d961034f565b604051601f8201601f19908116603f011681019083821181831017156104015761040161034f565b816040528281528a6020848701011115610419575f80fd5b826020860160208301375f60208483010152809550505050505092959194509250565b5f6020828403121561044c575f80fd5b81516104578161033b565b9392505050565b5f6001820161047b57634e487b7160e01b5f52601160045260245ffd5b506001019056fea164736f6c6343000819000a",
+    "sourceMap": "433:1622:188:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1287:766;;;;;;:::i;:::-;;:::i;:::-;;;-1:-1:-1;;;;;;1715:33:240;;;1697:52;;1685:2;1670:18;1287:766:188;;;;;;;;1441:6;2500:21:93;:19;:21::i;:::-;1467:10:188::1;-1:-1:-1::0;;;;;1489:3:188::1;1467:26;;1463:78;;1516:14;;-1:-1:-1::0;;;1516:14:188::1;;;;;;;;;;;1463:78;1555:9;-1:-1:-1::0;;;;;1568:11:188::1;1555:24;;1551:84;;1602:22;;-1:-1:-1::0;;;1602:22:188::1;;;;;;;;;;;1551:84;1660:1;1649:8;:12;1645:74;;;1684:24;::::0;-1:-1:-1;;;1684:24:188;;::::1;::::0;::::1;1906:25:240::0;;;1879:18;;1684:24:188::1;;;;;;;;1645:74;1733:21;::::0;-1:-1:-1;;;1733:21:188;;::::1;::::0;::::1;1906:25:240::0;;;1766:4:188::1;::::0;-1:-1:-1;;;;;1733:3:188::1;:11;::::0;::::1;::::0;1879:18:240;;1733:21:188::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;-1:-1:-1::0;;;;;1733:38:188::1;;1729:105;;1794:29;::::0;-1:-1:-1;;;1794:29:188;;::::1;::::0;::::1;1906:25:240::0;;;1879:18;;1794:29:188::1;1760:177:240::0;1729:105:188::1;1850:8;;1848:10;;;;;:::i;:::-;::::0;;;;-1:-1:-1;1862:1:188::1;1848:15:::0;1844:144:::1;;1879:17;1910:5;1899:28;;;;;;;;;;;;:::i;:::-;1879:48:::0;-1:-1:-1;1941:36:188::1;-1:-1:-1::0;;;;;1941:28:188;::::1;1970:6;1941:28;:36::i;:::-;1865:123;1844:144;-1:-1:-1::0;;;;2542:20:93;1857:1;3068:7;:21;2888:208;2542:20;1287:766:188;;;;;;:::o;2575:307:93:-;1899:1;2702:7;;:18;2698:86;;2743:30;;-1:-1:-1;;;2743:30:93;;;;;;;;;;;2698:86;1899:1;2858:7;:17;2575:307::o;1290:365:84:-;1399:6;1375:21;:30;1371:125;;;1428:57;;-1:-1:-1;;;1428:57:84;;1455:21;1428:57;;;2873:25:240;2914:18;;;2907:34;;;2846:18;;1428:57:84;2699:248:240;1371:125:84;1507:12;1521:23;1548:9;-1:-1:-1;;;;;1548:14:84;1570:6;1548:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1506:75;;;;1596:7;1591:58;;1619:19;1627:10;1619:7;:19::i;:::-;1361:294;;1290:365;;:::o;5559:487::-;5690:17;;:21;5686:354;;5887:10;5881:17;5943:15;5930:10;5926:2;5922:19;5915:44;5686:354;6010:19;;-1:-1:-1;;;6010:19:84;;;;;;;;;;;5686:354;5559:487;:::o;14:131:240:-;-1:-1:-1;;;;;89:31:240;;79:42;;69:70;;135:1;132;125:12;150:127;211:10;206:3;202:20;199:1;192:31;242:4;239:1;232:15;266:4;263:1;256:15;282:1266;377:6;385;393;401;454:3;442:9;433:7;429:23;425:33;422:53;;;471:1;468;461:12;422:53;510:9;497:23;529:31;554:5;529:31;:::i;:::-;579:5;-1:-1:-1;636:2:240;621:18;;608:32;649:33;608:32;649:33;:::i;:::-;701:7;-1:-1:-1;755:2:240;740:18;;727:32;;-1:-1:-1;810:2:240;795:18;;782:32;833:18;863:14;;;860:34;;;890:1;887;880:12;860:34;928:6;917:9;913:22;903:32;;973:7;966:4;962:2;958:13;954:27;944:55;;995:1;992;985:12;944:55;1031:2;1018:16;1053:2;1049;1046:10;1043:36;;;1059:18;;:::i;:::-;1134:2;1128:9;1102:2;1188:13;;-1:-1:-1;;1184:22:240;;;1208:2;1180:31;1176:40;1164:53;;;1232:18;;;1252:22;;;1229:46;1226:72;;;1278:18;;:::i;:::-;1318:10;1314:2;1307:22;1353:2;1345:6;1338:18;1393:7;1388:2;1383;1379;1375:11;1371:20;1368:33;1365:53;;;1414:1;1411;1404:12;1365:53;1470:2;1465;1461;1457:11;1452:2;1444:6;1440:15;1427:46;1515:1;1510:2;1505;1497:6;1493:15;1489:24;1482:35;1536:6;1526:16;;;;;;;282:1266;;;;;;;:::o;1942:251::-;2012:6;2065:2;2053:9;2044:7;2040:23;2036:32;2033:52;;;2081:1;2078;2071:12;2033:52;2113:9;2107:16;2132:31;2157:5;2132:31;:::i;:::-;2182:5;1942:251;-1:-1:-1;;;1942:251:240:o;2198:232::-;2237:3;2258:17;;;2255:140;;2317:10;2312:3;2308:20;2305:1;2298:31;2352:4;2349:1;2342:15;2380:4;2377:1;2370:15;2255:140;-1:-1:-1;2422:1:240;2411:13;;2198:232::o",
+    "linkReferences": {},
+    "immutableReferences": {
+      "74388": [
+        {
+          "start": 533,
+          "length": 32
+        }
+      ],
+      "74390": [
+        {
+          "start": 186,
+          "length": 32
+        }
+      ],
+      "74393": [
+        {
+          "start": 113,
+          "length": 32
+        },
+        {
+          "start": 322,
+          "length": 32
+        }
+      ]
+    }
+  },
+  "methodIdentifiers": {
+    "onERC721Received(address,address,uint256,bytes)": "150b7a02"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.25+commit.b61c2a91\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_beneficiary\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_nft\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_bounty\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"CallerNotNFT\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"needed\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"InvalidTokenID\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotEnoughFunds\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"OriginNotBeneficiary\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"StillNotOwningToken\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"FailedCall()\":[{\"details\":\"A call to an address target failed. The target may have reverted.\"}],\"InsufficientBalance(uint256,uint256)\":[{\"details\":\"The ETH balance of the account is not enough to perform the operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/free-rider/FreeRiderRecoveryManager.sol\":\"FreeRiderRecoveryManager\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\",\":@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/\",\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@safe-global/safe-smart-account/=lib/safe-smart-account/\",\":@uniswap/v2-core/=lib/v2-core/\",\":@uniswap/v2-periphery/=lib/v2-periphery/\",\":@uniswap/v3-core/=lib/v3-core/\",\":@uniswap/v3-periphery/=lib/v3-periphery/\",\":ds-test/=lib/solmate/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\":multicall/=lib/multicall/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":permit2/=lib/permit2/src/\",\":safe-smart-account/=lib/safe-smart-account/\",\":solady/=lib/solady/src/\",\":solmate/=lib/solmate/src/\",\":v2-core/=lib/v2-core/contracts/\",\":v2-periphery/=lib/v2-periphery/contracts/\",\":v3-core/=lib/v3-core/contracts/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\"lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0x5dc63d1c6a12fe1b17793e1745877b2fcbe1964c3edfd0a482fac21ca8f18261\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6b7f97c5960a50fd1822cb298551ffc908e37b7893a68d6d08bce18a11cb0f11\",\"dweb:/ipfs/QmQQvxBytoY1eBt3pRQDmvH2hZ2yjhs12YqVfzGm7KSURq\"]},\"lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol\":{\"keccak256\":\"0xb5afb8e8eebc4d1c6404df2f5e1e6d2c3d24fd01e5dfc855314951ecfaae462d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://78586466c424f076c6a2a551d848cfbe3f7c49e723830807598484a1047b3b34\",\"dweb:/ipfs/Qmb717ovcFxm7qgNKEShiV6M9SPR3v1qnNpAGH84D6w29p\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e\",\"dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR\"]},\"lib/openzeppelin-contracts/contracts/utils/Errors.sol\":{\"keccak256\":\"0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf\",\"dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB\"]},\"lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a\",\"dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA\"]},\"lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621\",\"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL\"]},\"src/free-rider/FreeRiderRecoveryManager.sol\":{\"keccak256\":\"0x47f1bc5a9f70b49054eb721bbfa97c66c093e89568314d97195ae8804b5ad684\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://712fc61ecb8a9c2fb16e7da38c5a8198fb13e788a58aa609370ba246b6aa820b\",\"dweb:/ipfs/QmUcvHbya1YYK6SLbquYVvbPx6cf968JYZFtMuUs2poWuQ\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.25+commit.b61c2a91"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_beneficiary",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_nft",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_bounty",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "CallerNotNFT"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "FailedCall"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "needed",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "InsufficientBalance"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "tokenId",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "InvalidTokenID"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "NotEnoughFunds"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "OriginNotBeneficiary"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ReentrancyGuardReentrantCall"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "tokenId",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "StillNotOwningToken"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_tokenId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "onERC721Received",
+          "outputs": [
+            {
+              "internalType": "bytes4",
+              "name": "",
+              "type": "bytes4"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/",
+        "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@safe-global/safe-smart-account/=lib/safe-smart-account/",
+        "@uniswap/v2-core/=lib/v2-core/",
+        "@uniswap/v2-periphery/=lib/v2-periphery/",
+        "@uniswap/v3-core/=lib/v3-core/",
+        "@uniswap/v3-periphery/=lib/v3-periphery/",
+        "ds-test/=lib/solmate/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "multicall/=lib/multicall/src/",
+        "murky/=lib/murky/src/",
+        "openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "permit2/=lib/permit2/src/",
+        "safe-smart-account/=lib/safe-smart-account/",
+        "solady/=lib/solady/src/",
+        "solmate/=lib/solmate/src/",
+        "v2-core/=lib/v2-core/contracts/",
+        "v2-periphery/=lib/v2-periphery/contracts/",
+        "v3-core/=lib/v3-core/contracts/",
+        "v3-periphery/=lib/v3-periphery/contracts/",
+        "lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "none"
+      },
+      "compilationTarget": {
+        "src/free-rider/FreeRiderRecoveryManager.sol": "FreeRiderRecoveryManager"
+      },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol": {
+        "keccak256": "0x5dc63d1c6a12fe1b17793e1745877b2fcbe1964c3edfd0a482fac21ca8f18261",
+        "urls": [
+          "bzz-raw://6b7f97c5960a50fd1822cb298551ffc908e37b7893a68d6d08bce18a11cb0f11",
+          "dweb:/ipfs/QmQQvxBytoY1eBt3pRQDmvH2hZ2yjhs12YqVfzGm7KSURq"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol": {
+        "keccak256": "0xb5afb8e8eebc4d1c6404df2f5e1e6d2c3d24fd01e5dfc855314951ecfaae462d",
+        "urls": [
+          "bzz-raw://78586466c424f076c6a2a551d848cfbe3f7c49e723830807598484a1047b3b34",
+          "dweb:/ipfs/Qmb717ovcFxm7qgNKEShiV6M9SPR3v1qnNpAGH84D6w29p"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+        "urls": [
+          "bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+          "dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Errors.sol": {
+        "keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+        "urls": [
+          "bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+          "dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol": {
+        "keccak256": "0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3",
+        "urls": [
+          "bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a",
+          "dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol": {
+        "keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+        "urls": [
+          "bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+          "dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+        ],
+        "license": "MIT"
+      },
+      "src/free-rider/FreeRiderRecoveryManager.sol": {
+        "keccak256": "0x47f1bc5a9f70b49054eb721bbfa97c66c093e89568314d97195ae8804b5ad684",
+        "urls": [
+          "bzz-raw://712fc61ecb8a9c2fb16e7da38c5a8198fb13e788a58aa609370ba246b6aa820b",
+          "dweb:/ipfs/QmUcvHbya1YYK6SLbquYVvbPx6cf968JYZFtMuUs2poWuQ"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 188
+}

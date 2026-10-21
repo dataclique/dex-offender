@@ -86,16 +86,17 @@ def main [] {
     error make {msg: 'forge build failed for lib/damn-vulnerable-defi'}
   }
   let dvd_levels = [
-    UnstoppableVault ReceiverUnstoppable NaiveReceiverLenderPool
-    FlashLoanReceiver TrusterLenderPool SideEntranceLenderPool
-    TheRewarderPool RewardToken AccountingToken FlashLoanerPool SelfiePool
-    SimpleGovernance DamnValuableTokenSnapshot TrustfulOracle Exchange
-    PuppetPool PuppetV2Pool FreeRiderNFTMarketplace FreeRiderRecovery
-    WalletRegistry ClimberTimelock ClimberTimelockBase ClimberVault
-    AuthorizerUpgradeable WalletDeployer PuppetV3Pool AuthorizedExecutor
-    SelfAuthorizedExecutor ShardsNFTMarketplace ShardsFeeVault
-    CurvyPuppetLending L1Gateway L1Forwarder L2Handler L2MessageStore
-    TokenBridge DamnValuableStaking DamnValuableToken DamnValuableNFT
+    UnstoppableVault NaiveReceiverPool FlashLoanReceiver
+    TrusterLenderPool SideEntranceLenderPool TheRewarderDistributor
+    SelfiePool SimpleGovernance TrustfulOracle TrustfulOracleInitializer
+    Exchange PuppetPool PuppetV2Pool FreeRiderNFTMarketplace
+    FreeRiderRecoveryManager WalletRegistry SafeProxyFactory Safe
+    ClimberTimelock ClimberTimelockBase SelfAuthorized SelfAuthorizedVault
+    AuthorizerUpgradeable AuthorizerFactory WalletDeployer PuppetV3Pool
+    AuthorizedExecutor ShardsNFTMarketplace
+    CurvyPuppetLending CurvyPuppetOracle L1Gateway L1Forwarder L2Handler
+    L2MessageStore TokenBridge DamnValuableStaking DamnValuableToken
+    DamnValuableNFT DamnValuableVotes WETH BasicForwarder
   ]
   extract-game lib/damn-vulnerable-defi damn-vulnerable-defi $dvd_levels
 }

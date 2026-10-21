@@ -1,0 +1,362 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "_token",
+          "type": "address",
+          "internalType": "contract DamnValuableToken"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "flashLoan",
+      "inputs": [
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "borrower",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "target",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "token",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "contract DamnValuableToken"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "error",
+      "name": "AddressEmptyCode",
+      "inputs": [
+        {
+          "name": "target",
+          "type": "address",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "FailedCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InsufficientBalance",
+      "inputs": [
+        {
+          "name": "balance",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "needed",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "ReentrancyGuardReentrantCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "RepayFailed",
+      "inputs": []
+    }
+  ],
+  "bytecode": {
+    "object": "0x60a0604052348015600e575f80fd5b506040516105d03803806105d0833981016040819052602b91603f565b60015f556001600160a01b0316608052606a565b5f60208284031215604e575f80fd5b81516001600160a01b03811681146063575f80fd5b9392505050565b60805161053b6100955f395f818160650152818160bf015281816101590152610227015261053b5ff3fe608060405234801561000f575f80fd5b5060043610610034575f3560e01c8063ab19e0c014610038578063fc0c546a14610060575b5f80fd5b61004b61004636600461044f565b61009f565b60405190151581526020015b60405180910390f35b6100877f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610057565b5f6100a86102ce565b6040516370a0823160e01b81523060048201525f907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906370a0823190602401602060405180830381865afa15801561010c573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061013091906104e2565b60405163a9059cbb60e01b81526001600160a01b038881166004830152602482018a90529192507f00000000000000000000000000000000000000000000000000000000000000009091169063a9059cbb906044016020604051808303815f875af11580156101a1573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906101c591906104f9565b5061020f84848080601f0160208091040260200160405190810160405280939291908181526020018383808284375f92019190915250506001600160a01b038916929150506102f6565b506040516370a0823160e01b815230600482015281907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906370a0823190602401602060405180830381865afa158015610274573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061029891906104e2565b10156102b757604051639e703a0560e01b815260040160405180910390fd5b60019150506102c560015f55565b95945050505050565b60025f54036102f057604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b606061030383835f61030a565b9392505050565b60608147101561033b5760405163cf47918160e01b8152476004820152602481018390526044015b60405180910390fd5b5f80856001600160a01b031684866040516103569190610518565b5f6040518083038185875af1925050503d805f8114610390576040519150601f19603f3d011682016040523d82523d5f602084013e610395565b606091505b50915091506103a58683836103af565b9695505050505050565b6060826103c4576103bf8261040b565b610303565b81511580156103db57506001600160a01b0384163b155b1561040457604051639996b31560e01b81526001600160a01b0385166004820152602401610332565b5080610303565b80511561041b5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b80356001600160a01b038116811461044a575f80fd5b919050565b5f805f805f60808688031215610463575f80fd5b8535945061047360208701610434565b935061048160408701610434565b9250606086013567ffffffffffffffff8082111561049d575f80fd5b818801915088601f8301126104b0575f80fd5b8135818111156104be575f80fd5b8960208285010111156104cf575f80fd5b9699959850939650602001949392505050565b5f602082840312156104f2575f80fd5b5051919050565b5f60208284031215610509575f80fd5b81518015158114610303575f80fd5b5f82518060208501845e5f92019182525091905056fea164736f6c6343000819000a",
+    "sourceMap": "329:667:208:-:0;;;486:69;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1857:1:93;2061:7;:21;-1:-1:-1;;;;;534:14:208;;;329:667;;14:317:240;111:6;164:2;152:9;143:7;139:23;135:32;132:52;;;180:1;177;170:12;132:52;206:16;;-1:-1:-1;;;;;251:31:240;;241:42;;231:70;;297:1;294;287:12;231:70;320:5;14:317;-1:-1:-1;;;14:317:240:o;:::-;329:667:208;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561000f575f80fd5b5060043610610034575f3560e01c8063ab19e0c014610038578063fc0c546a14610060575b5f80fd5b61004b61004636600461044f565b61009f565b60405190151581526020015b60405180910390f35b6100877f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610057565b5f6100a86102ce565b6040516370a0823160e01b81523060048201525f907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906370a0823190602401602060405180830381865afa15801561010c573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061013091906104e2565b60405163a9059cbb60e01b81526001600160a01b038881166004830152602482018a90529192507f00000000000000000000000000000000000000000000000000000000000000009091169063a9059cbb906044016020604051808303815f875af11580156101a1573d5f803e3d5ffd5b505050506040513d601f19601f820116820180604052508101906101c591906104f9565b5061020f84848080601f0160208091040260200160405190810160405280939291908181526020018383808284375f92019190915250506001600160a01b038916929150506102f6565b506040516370a0823160e01b815230600482015281907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906370a0823190602401602060405180830381865afa158015610274573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061029891906104e2565b10156102b757604051639e703a0560e01b815260040160405180910390fd5b60019150506102c560015f55565b95945050505050565b60025f54036102f057604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b606061030383835f61030a565b9392505050565b60608147101561033b5760405163cf47918160e01b8152476004820152602481018390526044015b60405180910390fd5b5f80856001600160a01b031684866040516103569190610518565b5f6040518083038185875af1925050503d805f8114610390576040519150601f19603f3d011682016040523d82523d5f602084013e610395565b606091505b50915091506103a58683836103af565b9695505050505050565b6060826103c4576103bf8261040b565b610303565b81511580156103db57506001600160a01b0384163b155b1561040457604051639996b31560e01b81526001600160a01b0385166004820152602401610332565b5080610303565b80511561041b5780518082602001fd5b60405163d6bda27560e01b815260040160405180910390fd5b80356001600160a01b038116811461044a575f80fd5b919050565b5f805f805f60808688031215610463575f80fd5b8535945061047360208701610434565b935061048160408701610434565b9250606086013567ffffffffffffffff8082111561049d575f80fd5b818801915088601f8301126104b0575f80fd5b8135818111156104be575f80fd5b8960208285010111156104cf575f80fd5b9699959850939650602001949392505050565b5f602082840312156104f2575f80fd5b5051919050565b5f60208284031215610509575f80fd5b81518015158114610303575f80fd5b5f82518060208501845e5f92019182525091905056fea164736f6c6343000819000a",
+    "sourceMap": "329:667:208:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;561:433;;;;;;:::i;:::-;;:::i;:::-;;;1170:14:240;;1163:22;1145:41;;1133:2;1118:18;561:433:208;;;;;;;;413:40;;;;;;;;-1:-1:-1;;;;;1388:32:240;;;1370:51;;1358:2;1343:18;413:40:208;1197:230:240;561:433:208;706:4;2500:21:93;:19;:21::i;:::-;750:30:208::1;::::0;-1:-1:-1;;;750:30:208;;774:4:::1;750:30;::::0;::::1;1370:51:240::0;726:21:208::1;::::0;750:5:::1;-1:-1:-1::0;;;;;750:15:208::1;::::0;::::1;::::0;1343:18:240;;750:30:208::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;791:32;::::0;-1:-1:-1;;;791:32:208;;-1:-1:-1;;;;;2021:32:240;;;791::208::1;::::0;::::1;2003:51:240::0;2070:18;;;2063:34;;;726:54:208;;-1:-1:-1;791:5:208::1;:14:::0;;::::1;::::0;::::1;::::0;1976:18:240;;791:32:208::1;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;833:25;853:4;;833:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;::::0;::::1;::::0;;;;-1:-1:-1;;;;;;;833:19:208;::::1;::::0;:25;-1:-1:-1;;833:19:208::1;:25::i;:::-;-1:-1:-1::0;873:30:208::1;::::0;-1:-1:-1;;;873:30:208;;897:4:::1;873:30;::::0;::::1;1370:51:240::0;906:13:208;;873:5:::1;-1:-1:-1::0;;;;;873:15:208::1;::::0;::::1;::::0;1343:18:240;;873:30:208::1;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;:46;869:97;;;942:13;;-1:-1:-1::0;;;942:13:208::1;;;;;;;;;;;869:97;983:4;976:11;;;2542:20:93::0;1857:1;3068:7;:21;2888:208;2542:20;561:433:208;;;;;;;:::o;2575:307:93:-;1899:1;2702:7;;:18;2698:86;;2743:30;;-1:-1:-1;;;2743:30:93;;;;;;;;;;;2698:86;1899:1;2858:7;:17;2575:307::o;2500:151:84:-;2575:12;2606:38;2628:6;2636:4;2642:1;2606:21;:38::i;:::-;2599:45;2500:151;-1:-1:-1;;;2500:151:84:o;2975:407::-;3074:12;3126:5;3102:21;:29;3098:123;;;3154:56;;-1:-1:-1;;;3154:56:84;;3181:21;3154:56;;;2564:25:240;2605:18;;;2598:34;;;2537:18;;3154:56:84;;;;;;;;3098:123;3231:12;3245:23;3272:6;-1:-1:-1;;;;;3272:11:84;3291:5;3298:4;3272:31;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3230:73;;;;3320:55;3347:6;3355:7;3364:10;3320:26;:55::i;:::-;3313:62;2975:407;-1:-1:-1;;;;;;2975:407:84:o;4437:582::-;4581:12;4610:7;4605:408;;4633:19;4641:10;4633:7;:19::i;:::-;4605:408;;;4857:17;;:22;:49;;;;-1:-1:-1;;;;;;4883:18:84;;;:23;4857:49;4853:119;;;4933:24;;-1:-1:-1;;;4933:24:84;;-1:-1:-1;;;;;1388:32:240;;4933:24:84;;;1370:51:240;1343:18;;4933:24:84;1197:230:240;4853:119:84;-1:-1:-1;4992:10:84;4985:17;;5559:487;5690:17;;:21;5686:354;;5887:10;5881:17;5943:15;5930:10;5926:2;5922:19;5915:44;5686:354;6010:19;;-1:-1:-1;;;6010:19:84;;;;;;;;;;;14:173:240;82:20;;-1:-1:-1;;;;;131:31:240;;121:42;;111:70;;177:1;174;167:12;111:70;14:173;;;:::o;192:808::-;289:6;297;305;313;321;374:3;362:9;353:7;349:23;345:33;342:53;;;391:1;388;381:12;342:53;427:9;414:23;404:33;;456:38;490:2;479:9;475:18;456:38;:::i;:::-;446:48;;513:38;547:2;536:9;532:18;513:38;:::i;:::-;503:48;;602:2;591:9;587:18;574:32;625:18;666:2;658:6;655:14;652:34;;;682:1;679;672:12;652:34;720:6;709:9;705:22;695:32;;765:7;758:4;754:2;750:13;746:27;736:55;;787:1;784;777:12;736:55;827:2;814:16;853:2;845:6;842:14;839:34;;;869:1;866;859:12;839:34;914:7;909:2;900:6;896:2;892:15;888:24;885:37;882:57;;;935:1;932;925:12;882:57;192:808;;;;-1:-1:-1;192:808:240;;-1:-1:-1;966:2:240;958:11;;988:6;192:808;-1:-1:-1;;;192:808:240:o;1640:184::-;1710:6;1763:2;1751:9;1742:7;1738:23;1734:32;1731:52;;;1779:1;1776;1769:12;1731:52;-1:-1:-1;1802:16:240;;1640:184;-1:-1:-1;1640:184:240:o;2108:277::-;2175:6;2228:2;2216:9;2207:7;2203:23;2199:32;2196:52;;;2244:1;2241;2234:12;2196:52;2276:9;2270:16;2329:5;2322:13;2315:21;2308:5;2305:32;2295:60;;2351:1;2348;2341:12;2643:301;2772:3;2810:6;2804:13;2856:6;2849:4;2841:6;2837:17;2832:3;2826:37;2918:1;2882:16;;2907:13;;;-1:-1:-1;2882:16:240;2643:301;-1:-1:-1;2643:301:240:o",
+    "linkReferences": {},
+    "immutableReferences": {
+      "79450": [
+        {
+          "start": 101,
+          "length": 32
+        },
+        {
+          "start": 191,
+          "length": 32
+        },
+        {
+          "start": 345,
+          "length": 32
+        },
+        {
+          "start": 551,
+          "length": 32
+        }
+      ]
+    }
+  },
+  "methodIdentifiers": {
+    "flashLoan(uint256,address,address,bytes)": "ab19e0c0",
+    "token()": "fc0c546a"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.25+commit.b61c2a91\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract DamnValuableToken\",\"name\":\"_token\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"}],\"name\":\"AddressEmptyCode\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"needed\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"RepayFailed\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"borrower\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"flashLoan\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"internalType\":\"contract DamnValuableToken\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"AddressEmptyCode(address)\":[{\"details\":\"There's no code at `target` (it is not a contract).\"}],\"FailedCall()\":[{\"details\":\"A call to an address target failed. The target may have reverted.\"}],\"InsufficientBalance(uint256,uint256)\":[{\"details\":\"The ETH balance of the account is not enough to perform the operation.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/truster/TrusterLenderPool.sol\":\"TrusterLenderPool\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\",\":@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/\",\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@safe-global/safe-smart-account/=lib/safe-smart-account/\",\":@uniswap/v2-core/=lib/v2-core/\",\":@uniswap/v2-periphery/=lib/v2-periphery/\",\":@uniswap/v3-core/=lib/v3-core/\",\":@uniswap/v3-periphery/=lib/v3-periphery/\",\":ds-test/=lib/solmate/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\":multicall/=lib/multicall/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":permit2/=lib/permit2/src/\",\":safe-smart-account/=lib/safe-smart-account/\",\":solady/=lib/solady/src/\",\":solmate/=lib/solmate/src/\",\":v2-core/=lib/v2-core/contracts/\",\":v2-periphery/=lib/v2-periphery/contracts/\",\":v3-core/=lib/v3-core/contracts/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\"lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e\",\"dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR\"]},\"lib/openzeppelin-contracts/contracts/utils/Errors.sol\":{\"keccak256\":\"0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf\",\"dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB\"]},\"lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a\",\"dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA\"]},\"lib/solmate/src/tokens/ERC20.sol\":{\"keccak256\":\"0xcdfd8db76b2a3415620e4d18cc5545f3d50de792dbf2c3dd5adb40cbe6f94b10\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://57b3ab70cde374af1cf2c9888636e8de6cf660f087b1c9abd805e9271e19fa35\",\"dweb:/ipfs/QmNrLDBAHYFjpjSd12jerm1AdBkDqEYUUaXgnT854BUZ97\"]},\"src/DamnValuableToken.sol\":{\"keccak256\":\"0x0c12e31ea19ca2fe49e121e04629ccf63ebe69f0fcf30c983a601bea6541c253\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a9e27242f3659a017cd5f287f8c9920adda972d23e5535f61b6ca763cb081333\",\"dweb:/ipfs/QmThXgGZSPk8T5JjXva7zcEaL9yjp3ZrPCdWUfpswUAgXG\"]},\"src/truster/TrusterLenderPool.sol\":{\"keccak256\":\"0xcaa415824fd31641ab82dfe6c59e2a9b6cdba1186a3980dc232ec07d61d95220\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a406115131392f3fdbad4f7d6fc226ba5d0755ffd89869b2c3ad7ce8774e1f84\",\"dweb:/ipfs/QmTd5HCq8rRtxn73Bgu2dgQXmtWc667mrtVns8Kcs5og3A\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.25+commit.b61c2a91"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "contract DamnValuableToken",
+              "name": "_token",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
+            }
+          ],
+          "type": "error",
+          "name": "AddressEmptyCode"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "FailedCall"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "balance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "needed",
+              "type": "uint256"
+            }
+          ],
+          "type": "error",
+          "name": "InsufficientBalance"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ReentrancyGuardReentrantCall"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "RepayFailed"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "borrower",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "flashLoan",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "token",
+          "outputs": [
+            {
+              "internalType": "contract DamnValuableToken",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/",
+        "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@safe-global/safe-smart-account/=lib/safe-smart-account/",
+        "@uniswap/v2-core/=lib/v2-core/",
+        "@uniswap/v2-periphery/=lib/v2-periphery/",
+        "@uniswap/v3-core/=lib/v3-core/",
+        "@uniswap/v3-periphery/=lib/v3-periphery/",
+        "ds-test/=lib/solmate/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "multicall/=lib/multicall/src/",
+        "murky/=lib/murky/src/",
+        "openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "permit2/=lib/permit2/src/",
+        "safe-smart-account/=lib/safe-smart-account/",
+        "solady/=lib/solady/src/",
+        "solmate/=lib/solmate/src/",
+        "v2-core/=lib/v2-core/contracts/",
+        "v2-periphery/=lib/v2-periphery/contracts/",
+        "v3-core/=lib/v3-core/contracts/",
+        "v3-periphery/=lib/v3-periphery/contracts/",
+        "lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "none"
+      },
+      "compilationTarget": {
+        "src/truster/TrusterLenderPool.sol": "TrusterLenderPool"
+      },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+        "urls": [
+          "bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+          "dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Errors.sol": {
+        "keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+        "urls": [
+          "bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+          "dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol": {
+        "keccak256": "0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3",
+        "urls": [
+          "bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a",
+          "dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA"
+        ],
+        "license": "MIT"
+      },
+      "lib/solmate/src/tokens/ERC20.sol": {
+        "keccak256": "0xcdfd8db76b2a3415620e4d18cc5545f3d50de792dbf2c3dd5adb40cbe6f94b10",
+        "urls": [
+          "bzz-raw://57b3ab70cde374af1cf2c9888636e8de6cf660f087b1c9abd805e9271e19fa35",
+          "dweb:/ipfs/QmNrLDBAHYFjpjSd12jerm1AdBkDqEYUUaXgnT854BUZ97"
+        ],
+        "license": "AGPL-3.0-only"
+      },
+      "src/DamnValuableToken.sol": {
+        "keccak256": "0x0c12e31ea19ca2fe49e121e04629ccf63ebe69f0fcf30c983a601bea6541c253",
+        "urls": [
+          "bzz-raw://a9e27242f3659a017cd5f287f8c9920adda972d23e5535f61b6ca763cb081333",
+          "dweb:/ipfs/QmThXgGZSPk8T5JjXva7zcEaL9yjp3ZrPCdWUfpswUAgXG"
+        ],
+        "license": "MIT"
+      },
+      "src/truster/TrusterLenderPool.sol": {
+        "keccak256": "0xcaa415824fd31641ab82dfe6c59e2a9b6cdba1186a3980dc232ec07d61d95220",
+        "urls": [
+          "bzz-raw://a406115131392f3fdbad4f7d6fc226ba5d0755ffd89869b2c3ad7ce8774e1f84",
+          "dweb:/ipfs/QmTd5HCq8rRtxn73Bgu2dgQXmtWc667mrtVns8Kcs5og3A"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 208
+}

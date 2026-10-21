@@ -1,0 +1,808 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "_gateway",
+          "type": "address",
+          "internalType": "contract L1Gateway"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "cancelOwnershipHandover",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "completeOwnershipHandover",
+      "inputs": [
+        {
+          "name": "pendingOwner",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "context",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "l2Sender",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "failedMessages",
+      "inputs": [
+        {
+          "name": "messageId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "seen",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "forwardMessage",
+      "inputs": [
+        {
+          "name": "nonce",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "l2Sender",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "target",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "message",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "gateway",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "contract L1Gateway"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getSender",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "l2Handler",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "owner",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "ownershipHandoverExpiresAt",
+      "inputs": [
+        {
+          "name": "pendingOwner",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "renounceOwnership",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "requestOwnershipHandover",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "setL2Handler",
+      "inputs": [
+        {
+          "name": "_l2Handler",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "successfulMessages",
+      "inputs": [
+        {
+          "name": "messageId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "seen",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "transferOwnership",
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "event",
+      "name": "OwnershipHandoverCanceled",
+      "inputs": [
+        {
+          "name": "pendingOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "OwnershipHandoverRequested",
+      "inputs": [
+        {
+          "name": "pendingOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "OwnershipTransferred",
+      "inputs": [
+        {
+          "name": "oldOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "error",
+      "name": "AlreadyForwarded",
+      "inputs": [
+        {
+          "name": "messageId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "AlreadyInitialized",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "BadTarget",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NewOwnerIsZeroAddress",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "NoHandoverRequest",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ReentrancyGuardReentrantCall",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "Unauthorized",
+      "inputs": []
+    }
+  ],
+  "bytecode": {
+    "object": "0x6080604052348015600e575f80fd5b50604051610935380380610935833981016040819052602b916095565b60015f55603633605a565b600380546001600160a01b0319166001600160a01b039290921691909117905560c0565b6001600160a01b0316638b78c6d819819055805f7f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08180a350565b5f6020828403121560a4575f80fd5b81516001600160a01b038116811460b9575f80fd5b9392505050565b610868806100cd5f395ff3fe6080604052600436106100e4575f3560e01c80638da5cb5b11610087578063d0496d6a11610057578063d0496d6a14610230578063f04e283e1461024f578063f2fde38b14610262578063fee81cf414610275575f80fd5b80638da5cb5b1461018d5780639a101dd0146101a5578063a4e7f8bd146101c4578063b1b1b20914610202575f80fd5b806354d1f13d116100c257806354d1f13d146101415780635e01eb5a14610149578063715018a6146101665780638910e9e81461016e575f80fd5b806301210a38146100e8578063116191b6146100fd5780632569296214610139575b5f80fd5b6100fb6100f63660046106d8565b6102b4565b005b348015610108575f80fd5b5060035461011c906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b6100fb61050b565b6100fb610558565b348015610154575f80fd5b506005546001600160a01b031661011c565b6100fb610591565b348015610179575f80fd5b5060045461011c906001600160a01b031681565b348015610198575f80fd5b50638b78c6d8195461011c565b3480156101b0575f80fd5b506100fb6101bf3660046107b1565b6105a4565b3480156101cf575f80fd5b506101f26101de3660046107d3565b60026020525f908152604090205460ff1681565b6040519015158152602001610130565b34801561020d575f80fd5b506101f261021c3660046107d3565b60016020525f908152604090205460ff1681565b34801561023b575f80fd5b5060055461011c906001600160a01b031681565b6100fb61025d3660046107b1565b6105ce565b6100fb6102703660046107b1565b61060b565b348015610280575f80fd5b506102a661028f3660046107b1565b63389a75e1600c9081525f91909152602090205490565b604051908152602001610130565b6102bc610631565b5f848484846040516024016102d494939291906107ea565b60408051601f198184030181529190526020810180516001600160e01b03166224214760e31b17815290519020600354909150336001600160a01b039091161480156103975750600480546003546040805163af8377fb60e01b815290516001600160a01b0393841694939092169263af8377fb9282820192602092908290030181865afa158015610368573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061038c9190610840565b6001600160a01b0316145b156103bb575f8181526002602052604090205460ff16156103b6575f80fd5b6103d4565b5f8181526002602052604090205460ff166103d4575f80fd5b5f8181526001602052604090205460ff161561040a57604051635ad685d160e01b81526004810182905260240160405180910390fd5b6001600160a01b03831630148061042e57506003546001600160a01b038481169116145b1561044c576040516309a4b7ed60e11b815260040160405180910390fd5b6040805160208082018352600580546001600160a01b03808216855285518085019096528916948590526001600160a01b031916909317909255835190915f918291829190870182895af18251600580546001600160a01b0319166001600160a01b03909216919091179055905080156104e0575f838152600160208190526040909120805460ff191690911790556104f9565b5f838152600260205260409020805460ff191660011790555b50505061050560015f55565b50505050565b5f6202a30067ffffffffffffffff164201905063389a75e1600c52335f52806020600c2055337fdbf36a107da19e49527a7176a1babf963b4b0ff8cde35ee35d6cd8f1f9ac7e1d5f80a250565b63389a75e1600c52335f525f6020600c2055337ffa7b8eab7da67f412cc9575ed43464468f9bfbae89d1675917346ca6d8fe3c925f80a2565b610599610659565b6105a25f610673565b565b6105ac610659565b600480546001600160a01b0319166001600160a01b0392909216919091179055565b6105d6610659565b63389a75e1600c52805f526020600c2080544211156105fc57636f5e88185f526004601cfd5b5f905561060881610673565b50565b610613610659565b8060601b61062857637448fbae5f526004601cfd5b61060881610673565b60025f540361065357604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b638b78c6d8195433146105a2576382b429005f526004601cfd5b638b78c6d81980546001600160a01b039092169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e05f80a355565b6001600160a01b0381168114610608575f80fd5b634e487b7160e01b5f52604160045260245ffd5b5f805f80608085870312156106eb575f80fd5b8435935060208501356106fd816106b0565b9250604085013561070d816106b0565b9150606085013567ffffffffffffffff80821115610729575f80fd5b818701915087601f83011261073c575f80fd5b81358181111561074e5761074e6106c4565b604051601f8201601f19908116603f01168101908382118183101715610776576107766106c4565b816040528281528a602084870101111561078e575f80fd5b826020860160208301375f60208483010152809550505050505092959194509250565b5f602082840312156107c1575f80fd5b81356107cc816106b0565b9392505050565b5f602082840312156107e3575f80fd5b5035919050565b8481525f60018060a01b038086166020840152808516604084015250608060608301528251806080840152806020850160a085015e5f60a0828501015260a0601f19601f83011684010191505095945050505050565b5f60208284031215610850575f80fd5b81516107cc816106b056fea164736f6c6343000819000a",
+    "sourceMap": "361:1943:215:-:0;;;802:105;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1857:1:93;2061:7;:21;844:28:215;861:10;844:16;:28::i;:::-;882:7;:18;;-1:-1:-1;;;;;;882:18:215;-1:-1:-1;;;;;882:18:215;;;;;;;;;;361:1943;;4883:1190:135;-1:-1:-1;;;;;5793:26:135;-1:-1:-1;;5876:29:135;;;5793:26;6031:1;5991:38;6031:1;;5980:63;4883:1190;:::o;14:309:240:-;103:6;156:2;144:9;135:7;131:23;127:32;124:52;;;172:1;169;162:12;124:52;198:16;;-1:-1:-1;;;;;243:31:240;;233:42;;223:70;;289:1;286;279:12;223:70;312:5;14:309;-1:-1:-1;;;14:309:240:o;:::-;361:1943:215;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600436106100e4575f3560e01c80638da5cb5b11610087578063d0496d6a11610057578063d0496d6a14610230578063f04e283e1461024f578063f2fde38b14610262578063fee81cf414610275575f80fd5b80638da5cb5b1461018d5780639a101dd0146101a5578063a4e7f8bd146101c4578063b1b1b20914610202575f80fd5b806354d1f13d116100c257806354d1f13d146101415780635e01eb5a14610149578063715018a6146101665780638910e9e81461016e575f80fd5b806301210a38146100e8578063116191b6146100fd5780632569296214610139575b5f80fd5b6100fb6100f63660046106d8565b6102b4565b005b348015610108575f80fd5b5060035461011c906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b6100fb61050b565b6100fb610558565b348015610154575f80fd5b506005546001600160a01b031661011c565b6100fb610591565b348015610179575f80fd5b5060045461011c906001600160a01b031681565b348015610198575f80fd5b50638b78c6d8195461011c565b3480156101b0575f80fd5b506100fb6101bf3660046107b1565b6105a4565b3480156101cf575f80fd5b506101f26101de3660046107d3565b60026020525f908152604090205460ff1681565b6040519015158152602001610130565b34801561020d575f80fd5b506101f261021c3660046107d3565b60016020525f908152604090205460ff1681565b34801561023b575f80fd5b5060055461011c906001600160a01b031681565b6100fb61025d3660046107b1565b6105ce565b6100fb6102703660046107b1565b61060b565b348015610280575f80fd5b506102a661028f3660046107b1565b63389a75e1600c9081525f91909152602090205490565b604051908152602001610130565b6102bc610631565b5f848484846040516024016102d494939291906107ea565b60408051601f198184030181529190526020810180516001600160e01b03166224214760e31b17815290519020600354909150336001600160a01b039091161480156103975750600480546003546040805163af8377fb60e01b815290516001600160a01b0393841694939092169263af8377fb9282820192602092908290030181865afa158015610368573d5f803e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061038c9190610840565b6001600160a01b0316145b156103bb575f8181526002602052604090205460ff16156103b6575f80fd5b6103d4565b5f8181526002602052604090205460ff166103d4575f80fd5b5f8181526001602052604090205460ff161561040a57604051635ad685d160e01b81526004810182905260240160405180910390fd5b6001600160a01b03831630148061042e57506003546001600160a01b038481169116145b1561044c576040516309a4b7ed60e11b815260040160405180910390fd5b6040805160208082018352600580546001600160a01b03808216855285518085019096528916948590526001600160a01b031916909317909255835190915f918291829190870182895af18251600580546001600160a01b0319166001600160a01b03909216919091179055905080156104e0575f838152600160208190526040909120805460ff191690911790556104f9565b5f838152600260205260409020805460ff191660011790555b50505061050560015f55565b50505050565b5f6202a30067ffffffffffffffff164201905063389a75e1600c52335f52806020600c2055337fdbf36a107da19e49527a7176a1babf963b4b0ff8cde35ee35d6cd8f1f9ac7e1d5f80a250565b63389a75e1600c52335f525f6020600c2055337ffa7b8eab7da67f412cc9575ed43464468f9bfbae89d1675917346ca6d8fe3c925f80a2565b610599610659565b6105a25f610673565b565b6105ac610659565b600480546001600160a01b0319166001600160a01b0392909216919091179055565b6105d6610659565b63389a75e1600c52805f526020600c2080544211156105fc57636f5e88185f526004601cfd5b5f905561060881610673565b50565b610613610659565b8060601b61062857637448fbae5f526004601cfd5b61060881610673565b60025f540361065357604051633ee5aeb560e01b815260040160405180910390fd5b60025f55565b638b78c6d8195433146105a2576382b429005f526004601cfd5b638b78c6d81980546001600160a01b039092169182907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e05f80a355565b6001600160a01b0381168114610608575f80fd5b634e487b7160e01b5f52604160045260245ffd5b5f805f80608085870312156106eb575f80fd5b8435935060208501356106fd816106b0565b9250604085013561070d816106b0565b9150606085013567ffffffffffffffff80821115610729575f80fd5b818701915087601f83011261073c575f80fd5b81358181111561074e5761074e6106c4565b604051601f8201601f19908116603f01168101908382118183101715610776576107766106c4565b816040528281528a602084870101111561078e575f80fd5b826020860160208301375f60208483010152809550505050505092959194509250565b5f602082840312156107c1575f80fd5b81356107cc816106b0565b9392505050565b5f602082840312156107e3575f80fd5b5035919050565b8481525f60018060a01b038086166020840152808516604084015250608060608301528251806080840152806020850160a085015e5f60a0828501015260a0601f19601f83011684010191505095945050505050565b5f60208284031215610850575f80fd5b81516107cc816106b056fea164736f6c6343000819000a",
+    "sourceMap": "361:1943:215:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1019:1184;;;;;;:::i;:::-;;:::i;:::-;;587:24;;;;;;;;;;-1:-1:-1;587:24:215;;;;-1:-1:-1;;;;;587:24:215;;;;;;-1:-1:-1;;;;;1736:32:240;;;1718:51;;1706:2;1691:18;587:24:215;;;;;;;;9021:617:135;;;:::i;9720:456::-;;;:::i;2209:93:215:-;;;;;;;;;;-1:-1:-1;2279:7:215;:16;-1:-1:-1;;;;;2279:16:215;2209:93;;8762:100:135;;;:::i;617:24:215:-;;;;;;;;;;-1:-1:-1;617:24:215;;;;-1:-1:-1;;;;;617:24:215;;;11408:182:135;;;;;;;;;;-1:-1:-1;;;11556:18:135;11408:182;;913:100:215;;;;;;;;;;-1:-1:-1;913:100:215;;;;;:::i;:::-;;:::i;519:61::-;;;;;;;;;;-1:-1:-1;519:61:215;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;2590:14:240;;2583:22;2565:41;;2553:2;2538:18;519:61:215;2425:187:240;448:65:215;;;;;;;;;;-1:-1:-1;448:65:215;;;;;:::i;:::-;;;;;;;;;;;;;;;;702:22;;;;;;;;;;-1:-1:-1;702:22:215;;;;-1:-1:-1;;;;;702:22:215;;;10363:708:135;;;;;;:::i;:::-;;:::i;8348:349::-;;;;;;:::i;:::-;;:::i;11693:435::-;;;;;;;;;;-1:-1:-1;11693:435:135;;;;;:::i;:::-;11963:19;11957:4;11950:33;;;11812:14;11996:26;;;;12106:4;12090:21;;12084:28;;11693:435;;;;2763:25:240;;;2751:2;2736:18;11693:435:135;2617:177:240;1019:1184:215;2500:21:93;:19;:21::i;:::-;1182:17:215::1;1298:5;1305:8;1315:6;1323:7;1225:106;;;;;;;;;;;:::i;:::-;;::::0;;-1:-1:-1;;1225:106:215;;::::1;::::0;;;;;;::::1;::::0;::::1;::::0;;-1:-1:-1;;;;;1225:106:215::1;-1:-1:-1::0;;;1225:106:215::1;::::0;;1202:139;;;;1378:7:::1;::::0;1202:139;;-1:-1:-1;1356:10:215::1;-1:-1:-1::0;;;;;1378:7:215;;::::1;1356:30;:64:::0;::::1;;;-1:-1:-1::0;1411:9:215::1;::::0;;1390:7:::1;::::0;:17:::1;::::0;;-1:-1:-1;;;1390:17:215;;;;-1:-1:-1;;;;;1411:9:215;;::::1;::::0;1390:7;;;::::1;::::0;:15:::1;::::0;:17;;::::1;::::0;::::1;::::0;;;;;;;:7;:17:::1;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;-1:-1:-1::0;;;;;1390:30:215::1;;1356:64;1352:195;;;1445:25;::::0;;;:14:::1;:25;::::0;;;;;::::1;;1444:26;1436:35;;;::::0;::::1;;1352:195;;;1510:25;::::0;;;:14:::1;:25;::::0;;;;;::::1;;1502:34;;;::::0;::::1;;1561:29;::::0;;;:18:::1;:29;::::0;;;;;::::1;;1557:94;;;1613:27;::::0;-1:-1:-1;;;1613:27:215;;::::1;::::0;::::1;2763:25:240::0;;;2736:18;;1613:27:215::1;;;;;;;1557:94;-1:-1:-1::0;;;;;1665:23:215;::::1;1683:4;1665:23;::::0;:53:::1;;-1:-1:-1::0;1710:7:215::1;::::0;-1:-1:-1;;;;;1692:26:215;;::::1;1710:7:::0;::::1;1692:26;1665:53;1661:77;;;1727:11;;-1:-1:-1::0;;;1727:11:215::1;;;;;;;;;;;1661:77;1749:36;::::0;;::::1;::::0;;::::1;::::0;;1778:7:::1;1749:36:::0;;-1:-1:-1;;;;;1749:36:215;;::::1;::::0;;1805:29;;;;::::1;::::0;;;;::::1;::::0;;;;-1:-1:-1;;;;;;1795:39:215::1;::::0;;::::1;::::0;;;1943:14;;1749:36;;:26:::1;::::0;;;;;1943:14;1923:18;::::1;1749:26:::0;1912:6;1905:5:::1;1900:64;2028:21:::0;;:7:::1;:21:::0;;-1:-1:-1;;;;;;2028:21:215::1;-1:-1:-1::0;;;;;2028:21:215;;::::1;::::0;;;::::1;::::0;;1889:75;-1:-1:-1;2060:137:215;::::1;;;2087:29;::::0;;;2119:4:::1;2087:29;::::0;;;;;;;:36;;-1:-1:-1;;2087:36:215::1;::::0;;::::1;::::0;;2060:137:::1;;;2154:25;::::0;;;:14:::1;:25;::::0;;;;:32;;-1:-1:-1;;2154:32:215::1;2182:4;2154:32;::::0;;2060:137:::1;1172:1031;;;2542:20:93::0;1857:1;3068:7;:21;2888:208;2542:20;1019:1184:215;;;;:::o;9021:617:135:-;9114:15;7972:9;9132:46;;:15;:46;9114:64;;9346:19;9340:4;9333:33;9396:8;9390:4;9383:22;9452:7;9445:4;9439;9429:21;9422:38;9599:8;9552:45;9549:1;9546;9541:67;9248:374;9021:617::o;9720:456::-;9922:19;9916:4;9909:33;9968:8;9962:4;9955:22;10020:1;10013:4;10007;9997:21;9990:32;10151:8;10105:44;10102:1;10099;10094:66;9720:456::o;8762:100::-;12517:13;:11;:13::i;:::-;8834:21:::1;8852:1;8834:9;:21::i;:::-;8762:100::o:0;913::215:-;12517:13:135;:11;:13::i;:::-;984:9:215::1;:22:::0;;-1:-1:-1;;;;;;984:22:215::1;-1:-1:-1::0;;;;;984:22:215;;;::::1;::::0;;;::::1;::::0;;913:100::o;10363:708:135:-;12517:13;:11;:13::i;:::-;10597:19:::1;10591:4;10584:33;10643:12;10637:4;10630:26;10705:4;10699;10689:21;10811:12;10805:19;10792:11;10789:36;10786:157;;;10857:10;10851:4;10844:24;10924:4;10918;10911:18;10786:157;11020:1;10999:23:::0;;11041::::1;11051:12:::0;11041:9:::1;:23::i;:::-;10363:708:::0;:::o;8348:349::-;12517:13;:11;:13::i;:::-;8520:8:::1;8516:2;8512:17;8502:150;;8562:10;8556:4;8549:24;8633:4;8627;8620:18;8502:150;8671:19;8681:8;8671:9;:19::i;2575:307:93:-:0;1899:1;2702:7;;:18;2698:86;;2743:30;;-1:-1:-1;;;2743:30:93;;;;;;;;;;;2698:86;1899:1;2858:7;:17;2575:307::o;7292:355:135:-;-1:-1:-1;;7498:18:135;7488:8;7485:32;7475:156;;7550:10;7544:4;7537:24;7612:4;7606;7599:18;6145:1089;-1:-1:-1;;7093:16:135;;-1:-1:-1;;;;;6941:26:135;;;;;;7053:38;7050:1;;7042:78;7177:27;6145:1089::o;14:131:240:-;-1:-1:-1;;;;;89:31:240;;79:42;;69:70;;135:1;132;125:12;150:127;211:10;206:3;202:20;199:1;192:31;242:4;239:1;232:15;266:4;263:1;256:15;282:1266;377:6;385;393;401;454:3;442:9;433:7;429:23;425:33;422:53;;;471:1;468;461:12;422:53;507:9;494:23;484:33;;567:2;556:9;552:18;539:32;580:31;605:5;580:31;:::i;:::-;630:5;-1:-1:-1;687:2:240;672:18;;659:32;700:33;659:32;700:33;:::i;:::-;752:7;-1:-1:-1;810:2:240;795:18;;782:32;833:18;863:14;;;860:34;;;890:1;887;880:12;860:34;928:6;917:9;913:22;903:32;;973:7;966:4;962:2;958:13;954:27;944:55;;995:1;992;985:12;944:55;1031:2;1018:16;1053:2;1049;1046:10;1043:36;;;1059:18;;:::i;:::-;1134:2;1128:9;1102:2;1188:13;;-1:-1:-1;;1184:22:240;;;1208:2;1180:31;1176:40;1164:53;;;1232:18;;;1252:22;;;1229:46;1226:72;;;1278:18;;:::i;:::-;1318:10;1314:2;1307:22;1353:2;1345:6;1338:18;1393:7;1388:2;1383;1379;1375:11;1371:20;1368:33;1365:53;;;1414:1;1411;1404:12;1365:53;1470:2;1465;1461;1457:11;1452:2;1444:6;1440:15;1427:46;1515:1;1510:2;1505;1497:6;1493:15;1489:24;1482:35;1536:6;1526:16;;;;;;;282:1266;;;;;;;:::o;1988:247::-;2047:6;2100:2;2088:9;2079:7;2075:23;2071:32;2068:52;;;2116:1;2113;2106:12;2068:52;2155:9;2142:23;2174:31;2199:5;2174:31;:::i;:::-;2224:5;1988:247;-1:-1:-1;;;1988:247:240:o;2240:180::-;2299:6;2352:2;2340:9;2331:7;2327:23;2323:32;2320:52;;;2368:1;2365;2358:12;2320:52;-1:-1:-1;2391:23:240;;2240:180;-1:-1:-1;2240:180:240:o;2799:690::-;3030:6;3019:9;3012:25;2993:4;3073:1;3069;3064:3;3060:11;3056:19;3123:2;3115:6;3111:15;3106:2;3095:9;3091:18;3084:43;3175:2;3167:6;3163:15;3158:2;3147:9;3143:18;3136:43;;3215:3;3210:2;3199:9;3195:18;3188:31;3248:6;3242:13;3292:6;3286:3;3275:9;3271:19;3264:35;3352:6;3347:2;3339:6;3335:15;3329:3;3318:9;3314:19;3308:51;3409:1;3403:3;3394:6;3383:9;3379:22;3375:32;3368:43;3479:3;3472:2;3468:7;3463:2;3455:6;3451:15;3447:29;3436:9;3432:45;3428:55;3420:63;;;2799:690;;;;;;;:::o;3494:251::-;3564:6;3617:2;3605:9;3596:7;3592:23;3588:32;3585:52;;;3633:1;3630;3623:12;3585:52;3665:9;3659:16;3684:31;3709:5;3684:31;:::i",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "cancelOwnershipHandover()": "54d1f13d",
+    "completeOwnershipHandover(address)": "f04e283e",
+    "context()": "d0496d6a",
+    "failedMessages(bytes32)": "a4e7f8bd",
+    "forwardMessage(uint256,address,address,bytes)": "01210a38",
+    "gateway()": "116191b6",
+    "getSender()": "5e01eb5a",
+    "l2Handler()": "8910e9e8",
+    "owner()": "8da5cb5b",
+    "ownershipHandoverExpiresAt(address)": "fee81cf4",
+    "renounceOwnership()": "715018a6",
+    "requestOwnershipHandover()": "25692962",
+    "setL2Handler(address)": "9a101dd0",
+    "successfulMessages(bytes32)": "b1b1b209",
+    "transferOwnership(address)": "f2fde38b"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.25+commit.b61c2a91\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract L1Gateway\",\"name\":\"_gateway\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"messageId\",\"type\":\"bytes32\"}],\"name\":\"AlreadyForwarded\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"AlreadyInitialized\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"BadTarget\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NewOwnerIsZeroAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NoHandoverRequest\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Unauthorized\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"pendingOwner\",\"type\":\"address\"}],\"name\":\"OwnershipHandoverCanceled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"pendingOwner\",\"type\":\"address\"}],\"name\":\"OwnershipHandoverRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"cancelOwnershipHandover\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"pendingOwner\",\"type\":\"address\"}],\"name\":\"completeOwnershipHandover\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"context\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"l2Sender\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"messageId\",\"type\":\"bytes32\"}],\"name\":\"failedMessages\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"seen\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"l2Sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"target\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"message\",\"type\":\"bytes\"}],\"name\":\"forwardMessage\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gateway\",\"outputs\":[{\"internalType\":\"contract L1Gateway\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSender\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"l2Handler\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"result\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"pendingOwner\",\"type\":\"address\"}],\"name\":\"ownershipHandoverExpiresAt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"result\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"requestOwnershipHandover\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_l2Handler\",\"type\":\"address\"}],\"name\":\"setL2Handler\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"messageId\",\"type\":\"bytes32\"}],\"name\":\"successfulMessages\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"seen\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"AlreadyInitialized()\":[{\"details\":\"Cannot double-initialize.\"}],\"NewOwnerIsZeroAddress()\":[{\"details\":\"The `newOwner` cannot be the zero address.\"}],\"NoHandoverRequest()\":[{\"details\":\"The `pendingOwner` does not have a valid handover request.\"}],\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}],\"Unauthorized()\":[{\"details\":\"The caller is not authorized to call the function.\"}]},\"events\":{\"OwnershipHandoverCanceled(address)\":{\"details\":\"The ownership handover to `pendingOwner` has been canceled.\"},\"OwnershipHandoverRequested(address)\":{\"details\":\"An ownership handover to `pendingOwner` has been requested.\"},\"OwnershipTransferred(address,address)\":{\"details\":\"The ownership is transferred from `oldOwner` to `newOwner`. This event is intentionally kept the same as OpenZeppelin's Ownable to be compatible with indexers and [EIP-173](https://eips.ethereum.org/EIPS/eip-173), despite it not being as lightweight as a single argument event.\"}},\"kind\":\"dev\",\"methods\":{\"cancelOwnershipHandover()\":{\"details\":\"Cancels the two-step ownership handover to the caller, if any.\"},\"completeOwnershipHandover(address)\":{\"details\":\"Allows the owner to complete the two-step ownership handover to `pendingOwner`. Reverts if there is no existing ownership handover requested by `pendingOwner`.\"},\"owner()\":{\"details\":\"Returns the owner of the contract.\"},\"ownershipHandoverExpiresAt(address)\":{\"details\":\"Returns the expiry timestamp for the two-step ownership handover to `pendingOwner`.\"},\"renounceOwnership()\":{\"details\":\"Allows the owner to renounce their ownership.\"},\"requestOwnershipHandover()\":{\"details\":\"Request a two-step ownership handover to the caller. The request will automatically expire in 48 hours (172800 seconds) by default.\"},\"transferOwnership(address)\":{\"details\":\"Allows the owner to transfer the ownership to `newOwner`.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/withdrawal/L1Forwarder.sol\":\"L1Forwarder\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\",\":@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/\",\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@safe-global/safe-smart-account/=lib/safe-smart-account/\",\":@uniswap/v2-core/=lib/v2-core/\",\":@uniswap/v2-periphery/=lib/v2-periphery/\",\":@uniswap/v3-core/=lib/v3-core/\",\":@uniswap/v3-periphery/=lib/v3-periphery/\",\":ds-test/=lib/solmate/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\":multicall/=lib/multicall/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":permit2/=lib/permit2/src/\",\":safe-smart-account/=lib/safe-smart-account/\",\":solady/=lib/solady/src/\",\":solmate/=lib/solmate/src/\",\":v2-core/=lib/v2-core/contracts/\",\":v2-periphery/=lib/v2-periphery/contracts/\",\":v3-core/=lib/v3-core/contracts/\",\":v3-periphery/=lib/v3-periphery/contracts/\",\"lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/\",\"lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/\",\"lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/\",\"lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e\",\"dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR\"]},\"lib/openzeppelin-contracts/contracts/utils/Errors.sol\":{\"keccak256\":\"0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf\",\"dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB\"]},\"lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a\",\"dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/Hashes.sol\":{\"keccak256\":\"0x631dc1958d5308bd2d9f91190bbcde4f9ffb9d9401ce8d358c17b35f1a942bb7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e7ef16d9a6f57eae9ab275116eaba1e8de70efd3d0e3682b1585b8f069d9c3f9\",\"dweb:/ipfs/QmR3JQHAyv4sNWnRHeiC6oaz8Bqn8rtzu5sdAqAJRtBqpj\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/MerkleProof.sol\":{\"keccak256\":\"0x36a0c409c437a753cac9b92b75f93b0fbe92803bf2c8ff1517e54b247f166134\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0f91ba472de411aa557cdbf6560c40750d87bd11c9060bc04d2ba7119af9d5a6\",\"dweb:/ipfs/QmQjtYo2i7dDvzCEzZ67bDoNSG4RrwMoxPWuqFmX5Xzpuw\"]},\"lib/solady/src/auth/Ownable.sol\":{\"keccak256\":\"0xc208cdd9de02bbf4b5edad18b88e23a2be7ff56d2287d5649329dc7cda64b9a3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e8fba079cc7230c617f7493a2e97873f88e59a53a5018fcb2e2b6ac42d8aa5a3\",\"dweb:/ipfs/QmTXg8GSt8hsK2cZhbPFrund1mrwVdkLQmEPoQaFy4fhjs\"]},\"lib/solady/src/auth/OwnableRoles.sol\":{\"keccak256\":\"0x34fc1e43ab0c413faea47d5198d49879ccafd3a46c1657083ec79e3f4ca4359d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://539e93fa51da529c6fdf122a68239652e98a4e31eaf5a08868339404878a095d\",\"dweb:/ipfs/Qmf4SGkn3LDLGAeFmuSnETrQUCa8g8h2dSoukCwyj36yy6\"]},\"src/withdrawal/L1Forwarder.sol\":{\"keccak256\":\"0xda34d47177938cfdbc989f3a2f83a8e2679e7b207ee9ff3b3e1580774b006598\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://91e48635d9b4ef552871435d35fdd1995e8a47eca9baa05f945ea2a0f61517e7\",\"dweb:/ipfs/QmZBewez9Laiu8EEEbBwDvXgBDbDQLk9NhS3g3JjVWEdwB\"]},\"src/withdrawal/L1Gateway.sol\":{\"keccak256\":\"0x944258a9a479a54ed7bc5c0cba3a262958d2dbfe969f4bb1035a4430f5509dfd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://dff1e59d61db3544989686f18d8a7cc96719c2d9949b25533231d77034888205\",\"dweb:/ipfs/QmVUhJwU8WAbrfZArjjt8KFmc1RfmUA5cheErQDynNURhT\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.25+commit.b61c2a91"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "contract L1Gateway",
+              "name": "_gateway",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "messageId",
+              "type": "bytes32"
+            }
+          ],
+          "type": "error",
+          "name": "AlreadyForwarded"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "AlreadyInitialized"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "BadTarget"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "NewOwnerIsZeroAddress"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "NoHandoverRequest"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ReentrancyGuardReentrantCall"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "Unauthorized"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "pendingOwner",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "OwnershipHandoverCanceled",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "pendingOwner",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "OwnershipHandoverRequested",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "oldOwner",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "OwnershipTransferred",
+          "anonymous": false
+        },
+        {
+          "inputs": [],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "cancelOwnershipHandover"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "pendingOwner",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "completeOwnershipHandover"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "context",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "l2Sender",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "messageId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "failedMessages",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "seen",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "l2Sender",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "message",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "forwardMessage"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "gateway",
+          "outputs": [
+            {
+              "internalType": "contract L1Gateway",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getSender",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "l2Handler",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "result",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "pendingOwner",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "ownershipHandoverExpiresAt",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "result",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "renounceOwnership"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "requestOwnershipHandover"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_l2Handler",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setL2Handler"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "messageId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "successfulMessages",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "seen",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "transferOwnership"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "cancelOwnershipHandover()": {
+            "details": "Cancels the two-step ownership handover to the caller, if any."
+          },
+          "completeOwnershipHandover(address)": {
+            "details": "Allows the owner to complete the two-step ownership handover to `pendingOwner`. Reverts if there is no existing ownership handover requested by `pendingOwner`."
+          },
+          "owner()": {
+            "details": "Returns the owner of the contract."
+          },
+          "ownershipHandoverExpiresAt(address)": {
+            "details": "Returns the expiry timestamp for the two-step ownership handover to `pendingOwner`."
+          },
+          "renounceOwnership()": {
+            "details": "Allows the owner to renounce their ownership."
+          },
+          "requestOwnershipHandover()": {
+            "details": "Request a two-step ownership handover to the caller. The request will automatically expire in 48 hours (172800 seconds) by default."
+          },
+          "transferOwnership(address)": {
+            "details": "Allows the owner to transfer the ownership to `newOwner`."
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "/Users/0xgleb/code/dataclique/dex-offender/lib/damn-vulnerable-defi/lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/",
+        "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@safe-global/safe-smart-account/=lib/safe-smart-account/",
+        "@uniswap/v2-core/=lib/v2-core/",
+        "@uniswap/v2-periphery/=lib/v2-periphery/",
+        "@uniswap/v3-core/=lib/v3-core/",
+        "@uniswap/v3-periphery/=lib/v3-periphery/",
+        "ds-test/=lib/solmate/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "multicall/=lib/multicall/src/",
+        "murky/=lib/murky/src/",
+        "openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "permit2/=lib/permit2/src/",
+        "safe-smart-account/=lib/safe-smart-account/",
+        "solady/=lib/solady/src/",
+        "solmate/=lib/solmate/src/",
+        "v2-core/=lib/v2-core/contracts/",
+        "v2-periphery/=lib/v2-periphery/contracts/",
+        "v3-core/=lib/v3-core/contracts/",
+        "v3-periphery/=lib/v3-periphery/contracts/",
+        "lib/multicall/lib/forge-std/:ds-test/=lib/multicall/lib/forge-std/lib/ds-test/src/",
+        "lib/murky/lib/openzeppelin-contracts/lib/forge-std/:ds-test/=lib/murky/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test/src/",
+        "lib/openzeppelin-contracts-upgradeable/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/openzeppelin-contracts/:halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/",
+        "lib/solmate/:ds-test/=lib/solmate/lib/ds-test/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "none"
+      },
+      "compilationTarget": {
+        "src/withdrawal/L1Forwarder.sol": "L1Forwarder"
+      },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0xaaa1d17c1129b127a4a401db2fbd72960e2671474be3d08cae71ccdc42f7624c",
+        "urls": [
+          "bzz-raw://cb2f27cd3952aa667e198fba0d9b7bcec52fbb12c16f013c25fe6fb52b29cc0e",
+          "dweb:/ipfs/QmeuohBFoeyDPZA9JNCTEDz3VBfBD4EABWuWXVhHAuEpKR"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Errors.sol": {
+        "keccak256": "0x6afa713bfd42cf0f7656efa91201007ac465e42049d7de1d50753a373648c123",
+        "urls": [
+          "bzz-raw://ba1d02f4847670a1b83dec9f7d37f0b0418d6043447b69f3a29a5f9efc547fcf",
+          "dweb:/ipfs/QmQ7iH2keLNUKgq2xSWcRmuBE5eZ3F5whYAkAGzCNNoEWB"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol": {
+        "keccak256": "0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3",
+        "urls": [
+          "bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a",
+          "dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/cryptography/Hashes.sol": {
+        "keccak256": "0x631dc1958d5308bd2d9f91190bbcde4f9ffb9d9401ce8d358c17b35f1a942bb7",
+        "urls": [
+          "bzz-raw://e7ef16d9a6f57eae9ab275116eaba1e8de70efd3d0e3682b1585b8f069d9c3f9",
+          "dweb:/ipfs/QmR3JQHAyv4sNWnRHeiC6oaz8Bqn8rtzu5sdAqAJRtBqpj"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/cryptography/MerkleProof.sol": {
+        "keccak256": "0x36a0c409c437a753cac9b92b75f93b0fbe92803bf2c8ff1517e54b247f166134",
+        "urls": [
+          "bzz-raw://0f91ba472de411aa557cdbf6560c40750d87bd11c9060bc04d2ba7119af9d5a6",
+          "dweb:/ipfs/QmQjtYo2i7dDvzCEzZ67bDoNSG4RrwMoxPWuqFmX5Xzpuw"
+        ],
+        "license": "MIT"
+      },
+      "lib/solady/src/auth/Ownable.sol": {
+        "keccak256": "0xc208cdd9de02bbf4b5edad18b88e23a2be7ff56d2287d5649329dc7cda64b9a3",
+        "urls": [
+          "bzz-raw://e8fba079cc7230c617f7493a2e97873f88e59a53a5018fcb2e2b6ac42d8aa5a3",
+          "dweb:/ipfs/QmTXg8GSt8hsK2cZhbPFrund1mrwVdkLQmEPoQaFy4fhjs"
+        ],
+        "license": "MIT"
+      },
+      "lib/solady/src/auth/OwnableRoles.sol": {
+        "keccak256": "0x34fc1e43ab0c413faea47d5198d49879ccafd3a46c1657083ec79e3f4ca4359d",
+        "urls": [
+          "bzz-raw://539e93fa51da529c6fdf122a68239652e98a4e31eaf5a08868339404878a095d",
+          "dweb:/ipfs/Qmf4SGkn3LDLGAeFmuSnETrQUCa8g8h2dSoukCwyj36yy6"
+        ],
+        "license": "MIT"
+      },
+      "src/withdrawal/L1Forwarder.sol": {
+        "keccak256": "0xda34d47177938cfdbc989f3a2f83a8e2679e7b207ee9ff3b3e1580774b006598",
+        "urls": [
+          "bzz-raw://91e48635d9b4ef552871435d35fdd1995e8a47eca9baa05f945ea2a0f61517e7",
+          "dweb:/ipfs/QmZBewez9Laiu8EEEbBwDvXgBDbDQLk9NhS3g3JjVWEdwB"
+        ],
+        "license": "MIT"
+      },
+      "src/withdrawal/L1Gateway.sol": {
+        "keccak256": "0x944258a9a479a54ed7bc5c0cba3a262958d2dbfe969f4bb1035a4430f5509dfd",
+        "urls": [
+          "bzz-raw://dff1e59d61db3544989686f18d8a7cc96719c2d9949b25533231d77034888205",
+          "dweb:/ipfs/QmVUhJwU8WAbrfZArjjt8KFmc1RfmUA5cheErQDynNURhT"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 215
+}
