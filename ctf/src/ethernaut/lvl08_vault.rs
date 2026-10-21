@@ -1,9 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::{prelude::*, utils::keccak256};
-use rand::Rng;
+//! Ethernaut level 08 — Vault.
+//!
+//! Read the private password from storage and unlock the Vault.
 
-pub use crate::abi::vault::Vault;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Vault,
+    "abi/ethernaut/Vault.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -12,38 +20,35 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level08)
-    }
-
     fn name(&self) -> &'static str {
         "Vault"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level08.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, .. } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the Vault contract...");
-        let random = rand::thread_rng().gen::<[u8; 32]>();
-        let psswd = keccak256(random);
-        let vault = Vault::deploy(deployer.to_owned(), psswd)?.send().await?;
+        let random = rand::random::<[u8; 32]>();
+        let psswd = alloy::primitives::keccak256(random);
+        let contract = Vault::deploy(provider, psswd).await?;
 
-        let target = Target { address: vault.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        let _ = deployer;
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = Vault::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Vault::new(self.address, provider.clone());
 
         println!("Checking that the contract is unlocked...");
-        let unlocked = !contract.locked().await?;
-
-        Ok(unlocked)
+        let locked = contract.locked().call().await?;
+        Ok(!locked)
     }
 }

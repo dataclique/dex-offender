@@ -1,8 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 21 — Shop.
+//!
+//! Buy the Shop item for less than the asking price.
 
-pub use crate::abi::shop::Shop;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Shop,
+    "abi/ethernaut/Shop.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,32 +20,31 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level21)
-    }
-
     fn name(&self) -> &'static str {
         "Shop"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level21.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Shop contract...");
-        let contract = Shop::deploy(deployer.to_owned(), ())?.send().await?;
-        let target = Target { address: contract.address() };
+        let contract = Shop::deploy(provider).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
-        let contract = Shop::new(self.address, deployer.clone());
-        println!("Checking that you bought the item for less than 100 wei...");
-        Ok(contract.price().await? < 100.into())
+        let provider = roles.provider();
+        let contract = Shop::new(self.address, provider.clone());
+
+        println!("Checking that you bought the item for less than 100...");
+        let price = contract.price().call().await?;
+        Ok(price < U256::from(100))
     }
 }

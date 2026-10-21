@@ -1,8 +1,18 @@
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 03 — Coin Flip.
+//!
+//! Predict the coin flip outcome 10 times in a row by predicting the
+//! blockhash-based randomness.
 
-pub use crate::abi::coin_flip::CoinFlip;
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    CoinFlip,
+    "abi/ethernaut/CoinFlip.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,38 +21,34 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level03)
-    }
-
     fn name(&self) -> &'static str {
         "Coin Flip"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level03.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, .. } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the CoinFlip contract...");
-        let contract =
-            CoinFlip::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = CoinFlip::deploy(provider).await?;
 
-        let consecutive_wins = contract.consecutive_wins().await?;
-        assert_eq!(consecutive_wins, 0.into());
+        let consecutive_wins = contract.consecutiveWins().call().await?;
+        assert_eq!(consecutive_wins, U256::ZERO);
 
-        let target = Target { address: contract.address() };
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = CoinFlip::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = CoinFlip::new(self.address, provider.clone());
 
         println!("Checking that you won 10 times in a row...");
-        let consecutive_wins = contract.consecutive_wins().await?;
-        let ten_wins = consecutive_wins >= 10.into();
-
-        Ok(ten_wins)
+        let consecutive_wins = contract.consecutiveWins().call().await?;
+        Ok(consecutive_wins >= U256::from(10))
     }
 }

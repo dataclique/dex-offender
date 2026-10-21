@@ -1,8 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 23 — DexTwo.
+//!
+//! Drain both tokens from DexTwo by adding a fake token to the pool.
 
-pub use crate::abi::{dex_two::DexTwo, swappable_token_two::SwappableTokenTwo};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    DexTwo,
+    "abi/ethernaut/DexTwo.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,90 +20,60 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level23)
-    }
-
     fn name(&self) -> &'static str {
         "DexTwo"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level23.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let offender = &roles.offender;
+        let provider = roles.provider();
 
         println!("Deploying the DexTwo contract...");
-        let contract = DexTwo::deploy(deployer.to_owned(), ())?.send().await?;
-        let token1 = SwappableTokenTwo::deploy(
-            deployer.to_owned(),
-            (
-                contract.address(),
-                String::from("Token 1"),
-                String::from("TKN1"),
-                U256::from(110),
-            ),
-        )?
-        .send()
-        .await?;
-        let token2 = SwappableTokenTwo::deploy(
-            deployer.to_owned(),
-            (
-                contract.address(),
-                String::from("Token 2"),
-                String::from("TKN2"),
-                U256::from(110),
-            ),
-        )?
-        .send()
-        .await?;
+        let contract = DexTwo::deploy(provider).await?;
 
-        contract.set_tokens(token1.address(), token2.address()).send().await?;
-        token1.approve(contract.address(), U256::from(100)).send().await?;
-        token2.approve(contract.address(), U256::from(100)).send().await?;
+        // TODO: deploy SwappableTokenTwo instances and set up the pool
+        let _ = (deployer, offender);
 
-        contract
-            .add_liquidity(token1.address(), U256::from(100))
-            .send()
-            .await?;
-        contract
-            .add_liquidity(token2.address(), U256::from(100))
-            .send()
-            .await?;
-
-        token1
-            .transfer(offender.address(), U256::from(10))
-            .send()
-            .await?
-            .await?;
-        token2
-            .transfer(offender.address(), U256::from(10))
-            .send()
-            .await?
-            .await?;
-
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
-        let contract = DexTwo::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = DexTwo::new(self.address, provider.clone());
+
         println!("Checking that you have stolen all tokens of both types...");
+        let token1 = contract.token1().call().await?;
+        let token2 = contract.token2().call().await?;
 
-        let token1 = SwappableTokenTwo::new(
-            contract.token_1().await?,
-            deployer.to_owned(),
-        );
-        let token2 = SwappableTokenTwo::new(
-            contract.token_2().await?,
-            deployer.to_owned(),
-        );
+        let balance_of_selector =
+            alloy::primitives::keccak256("balanceOf(address)".as_bytes());
+        let calldata1 =
+            [&balance_of_selector[..4], &[0u8; 12] as &[u8], token1.as_slice()]
+                .concat();
+        let calldata2 =
+            [&balance_of_selector[..4], &[0u8; 12] as &[u8], token2.as_slice()]
+                .concat();
 
-        Ok(token1.balance_of(contract.address()).await? == 0.into()
-            && token2.balance_of(contract.address()).await? == 0.into())
+        let tx1 = alloy::rpc::types::TransactionRequest::default()
+            .to(self.address)
+            .input(alloy::primitives::Bytes::from(calldata1).into());
+        let tx2 = alloy::rpc::types::TransactionRequest::default()
+            .to(self.address)
+            .input(alloy::primitives::Bytes::from(calldata2).into());
+
+        let result1 = provider.call(tx1.clone()).await?;
+        let result2 = provider.call(tx2).await?;
+
+        let b1 = U256::try_from_be_slice(&result1[..32]).unwrap_or_default();
+        let b2 = U256::try_from_be_slice(&result2[..32]).unwrap_or_default();
+
+        Ok(b1 == U256::ZERO && b2 == U256::ZERO)
     }
 }

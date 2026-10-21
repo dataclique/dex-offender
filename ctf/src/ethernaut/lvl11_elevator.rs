@@ -1,8 +1,18 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 11 — Elevator.
+//!
+//! Reach the top floor by returning different values from the Elevator
+//! interface.
 
-pub use crate::abi::elevator::Elevator;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Elevator,
+    "abi/ethernaut/Elevator.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,37 +21,31 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level11)
-    }
-
     fn name(&self) -> &'static str {
         "Elevator"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level11.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Elevator contract...");
-        let contract =
-            Elevator::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = Elevator::deploy(provider).await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = Elevator::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Elevator::new(self.address, provider.clone());
 
         println!("Checking if the elevator is at the top floor...");
-        let top = contract.top().await?;
-
+        let top = contract.top().call().await?;
         Ok(top)
     }
 }

@@ -1,8 +1,18 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 13 — GatekeeperOne.
+//!
+//! Pass all three gates of GatekeeperOne using gas estimation and type
+//! conversion tricks.
 
-pub use crate::abi::gatekeeper_one::GatekeeperOne;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    GatekeeperOne,
+    "abi/ethernaut/GatekeeperOne.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,38 +21,31 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level13)
-    }
-
     fn name(&self) -> &'static str {
         "GatekeeperOne"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level13.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the GatekeeperOne contract...");
-        let contract =
-            GatekeeperOne::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = GatekeeperOne::deploy(provider).await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = GatekeeperOne::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = GatekeeperOne::new(self.address, provider.clone());
 
         println!("Checking the entrant...");
-        let entrant = contract.entrant().await?;
-        let pass = entrant == roles.offender.address();
-
-        Ok(pass)
+        let entrant = contract.entrant().call().await?;
+        Ok(entrant == roles.offender.address())
     }
 }

@@ -1,9 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::{prelude::*, utils::keccak256};
-use rand::Rng;
+//! Ethernaut level 12 — Privacy.
+//!
+//! Read the private data key from storage to unlock the Privacy contract.
 
-pub use crate::abi::privacy::Privacy;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Privacy,
+    "abi/ethernaut/Privacy.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -12,45 +20,36 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level12)
-    }
-
     fn name(&self) -> &'static str {
         "Privacy"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level12.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Privacy contract...");
+        let data = [
+            alloy::primitives::keccak256(rand::random::<[u8; 32]>()),
+            alloy::primitives::keccak256(rand::random::<[u8; 32]>()),
+            alloy::primitives::keccak256(rand::random::<[u8; 32]>()),
+        ];
+        let contract = Privacy::deploy(provider, data).await?;
 
-        let mk_element = || {
-            let random = rand::thread_rng().gen::<[u8; 32]>();
-            keccak256(random)
-        };
-
-        let data = [mk_element(), mk_element(), mk_element()];
-
-        let contract =
-            Privacy::deploy(deployer.to_owned(), data)?.send().await?;
-
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = Privacy::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Privacy::new(self.address, provider.clone());
 
-        println!("Checking that you became the owner...");
-        let locked = contract.locked().await?;
-
+        println!("Checking that you unlocked the contract...");
+        let locked = contract.locked().call().await?;
         Ok(!locked)
     }
 }

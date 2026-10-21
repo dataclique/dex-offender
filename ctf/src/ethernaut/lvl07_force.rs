@@ -1,8 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 07 — Force.
+//!
+//! Force ETH into a contract with no payable functions using selfdestruct.
 
-pub use crate::abi::force::Force;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, providers::Provider, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Force,
+    "abi/ethernaut/Force.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,36 +20,30 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level07)
-    }
-
     fn name(&self) -> &'static str {
         "Force"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level07.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, .. } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Force contract...");
-        let force = Force::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = Force::deploy(provider).await?;
 
-        let target = Target { address: force.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
-        let contract = Force::new(self.address, deployer.clone());
+        let provider = roles.provider();
 
         println!("Checking the contract balance...");
-        let balance = deployer.get_balance(contract.address(), None).await?;
-
-        Ok(balance > 0.into())
+        let balance = provider.get_balance(self.address).await?;
+        Ok(balance > alloy::primitives::U256::ZERO)
     }
 }

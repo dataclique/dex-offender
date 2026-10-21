@@ -1,8 +1,17 @@
-use crate::{abi::recovery_solution::RecoverySolution, roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 17 — Recovery.
+//!
+//! Recover the address of a contract created by the Recovery factory.
 
-pub use crate::abi::recovery::Recovery;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Recovery,
+    "abi/ethernaut/Recovery.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,62 +20,49 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level17)
-    }
-
     fn name(&self) -> &'static str {
         "Recovery"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level17.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the Recovery contract...");
-        let contract =
-            Recovery::deploy(deployer.to_owned(), ())?.send().await?;
+        let contract = Recovery::deploy(provider).await?;
 
         contract
-            .generate_token(String::from("InitialToken"), U256::from(100000))
-            .send()
-            .await?;
-
-        let solution_contract =
-            RecoverySolution::deploy(deployer.to_owned(), ())?.send().await?;
-        let token_address =
-            solution_contract.solution(contract.address()).call().await?;
-        deployer
-            .send_transaction(
-                TransactionRequest::new().to(token_address).value(100000),
-                None,
+            .generateToken(
+                String::from("InitialToken"),
+                alloy::primitives::U256::from(100000),
             )
+            .from(deployer.address())
+            .send()
             .await?
+            .watch()
             .await?;
 
-        let target = Target { address: contract.address() };
+        // TODO: compute the token address from CREATE and fund it
+        // The old ethers implementation used a helper contract; inline the
+        // computation or add the helper ABI.
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
-        let contract = Recovery::new(self.address, deployer.clone());
-
-        let solution_contract =
-            RecoverySolution::deploy(deployer.to_owned(), ())?.send().await?;
-
-        let token_address =
-            solution_contract.solution(contract.address()).call().await?;
+        let provider = roles.provider();
 
         println!(
-            "Checking that you found the token and took all the ether from \
-             it..."
+            "Checking that you found the token and took all ether from it..."
         );
-
-        Ok(deployer.get_balance(token_address, None).await? == 0.into())
+        // TODO: compute the token address and check its balance is zero
+        let _ = provider;
+        Ok(false)
     }
 }

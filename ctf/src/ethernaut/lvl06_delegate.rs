@@ -1,8 +1,17 @@
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 06 — Delegation.
+//!
+//! Claim ownership via delegatecall to owner().
 
-pub use crate::abi::{delegate::Delegate, delegation::Delegation};
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Delegate,
+    "abi/ethernaut/Delegation.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,47 +20,41 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level06)
-    }
-
     fn name(&self) -> &'static str {
         "Delegation"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let delegation_address = ctfs.ethernaut.level06.delegation_address;
+        Ok(Target { delegation_address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, .. } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
-        println!("Deploying the Delegate contract...");
-        let delegate =
-            Delegate::deploy(deployer.to_owned(), deployer.address())?
-                .send()
-                .await?;
+        // Deploy the implementation contract
+        // Note: the Delegation artifact includes both contracts
+        let delegate = Delegate::deploy(provider, deployer.address()).await?;
 
-        println!("Deploying the Delegation contract...");
+        // Deploy the proxy pointing to the implementation
         let delegation =
-            Delegation::deploy(deployer.to_owned(), delegate.address())?
-                .send()
-                .await?;
+            Delegate::deploy(provider, *delegate.address()).await?;
 
-        let owner = delegate.owner().await?;
+        let owner = delegate.owner().call().await?;
         assert_eq!(owner, deployer.address());
 
-        let target = Target { delegation_address: delegation.address() };
-
-        Ok(target)
+        Ok(Target { delegation_address: *delegation.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, .. } = roles;
+        let provider = roles.provider();
         let delegation =
-            Delegation::new(self.delegation_address, deployer.clone());
+            Delegate::new(self.delegation_address, provider.clone());
 
         println!("Checking that you became the owner...");
-        let owner = delegation.owner().await?;
-        let is_owner = owner == roles.offender.address();
-
-        Ok(is_owner)
+        let owner = delegation.owner().call().await?;
+        Ok(owner == roles.offender.address())
     }
 }

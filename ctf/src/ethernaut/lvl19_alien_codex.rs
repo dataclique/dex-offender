@@ -1,8 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 19 — AlienCodex.
+//!
+//! Claim ownership of AlienCodex by exploiting array length underflow.
 
-pub use crate::abi::alien_codex::AlienCodex;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    AlienCodex,
+    "abi/ethernaut/AlienCodex.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,36 +20,31 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level19)
+    fn name(&self) -> &'static str {
+        "AlienCodex"
     }
 
-    fn name(&self) -> &'static str {
-        "Alien Codex"
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level19.address;
+        Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
-        println!("Deploying the Alien Codex contract...");
-        let contract =
-            AlienCodex::deploy(deployer.to_owned(), ())?.send().await?;
+        println!("Deploying the AlienCodex contract...");
+        let contract = AlienCodex::deploy(provider).await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = AlienCodex::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = AlienCodex::new(self.address, provider.clone());
 
-        println!("Checking that you claimed ownership of the contract...");
-        let owner = contract.owner().await?;
-        Ok(owner == offender.address())
+        println!("Checking that you claimed ownership...");
+        let owner = contract.owner().call().await?;
+        Ok(owner == roles.offender.address())
     }
 }

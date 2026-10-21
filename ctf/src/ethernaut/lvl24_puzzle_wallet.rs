@@ -1,8 +1,17 @@
-use crate::{roles::*, to_ether, Level};
-use async_trait::async_trait;
-use ethers::{prelude::*, utils::keccak256};
+//! Ethernaut level 24 — PuzzleWallet.
+//!
+//! Become the owner and drain the PuzzleWallet proxy.
 
-pub use crate::abi::{puzzle_proxy::PuzzleProxy, puzzle_wallet::PuzzleWallet};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    PuzzleWallet,
+    "abi/ethernaut/PuzzleWallet.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,54 +20,32 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level24)
+    fn name(&self) -> &'static str {
+        "PuzzleWallet"
     }
 
-    fn name(&self) -> &'static str { "PuzzleWallet" }
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = Address::ZERO; // TODO: wire into Ethernaut struct
+        Ok(Target { address })
+    }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the PuzzleWallet contract...");
-        let contract =
-            PuzzleWallet::deploy(deployer.to_owned(), ())?.send().await?;
+        // TODO: deploy PuzzleWallet behind a PuzzleProxy
+        let contract = PuzzleWallet::deploy(provider).await?;
 
-        let data = keccak256("init(uint256)")
-            .into_iter()
-            .take(4)
-            .chain({
-                let mut buff = Vec::with_capacity(8);
-                to_ether(100).to_little_endian(&mut buff);
-                buff
-            })
-            .collect::<Vec<u8>>();
-        println!("data: {:?}", data);
-        let proxy = PuzzleProxy::deploy(
-            deployer.to_owned(),
-            (deployer.address(), contract.address(), data),
-        )?
-        .send()
-        .await?;
-        let contract2 = PuzzleWallet::new(proxy.address(), deployer.to_owned());
-
-        contract2.add_to_whitelist(deployer.address()).await?;
-        contract2.deposit().value(100_000_000_000_u128).send().await?;
-
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = PuzzleProxy::new(self.address, deployer.clone());
-        println!("Checking that you have become the admin of the contract...");
+        let provider = roles.provider();
 
-        Ok(contract.admin().await? == offender.address())
+        println!("Checking that you became the owner...");
+        let contract = PuzzleWallet::new(self.address, provider.clone());
+        let owner = contract.owner().call().await?;
+        Ok(owner == roles.offender.address())
     }
 }

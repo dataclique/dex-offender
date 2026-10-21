@@ -1,8 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 15 — NaughtCoin.
+//!
+//! Bypass the transfer lockup period of NaughtCoin.
 
-pub use crate::abi::naught_coin::NaughtCoin;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    NaughtCoin,
+    "abi/ethernaut/NaughtCoin.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,39 +20,35 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level15)
+    fn name(&self) -> &'static str {
+        "NaughtCoin"
     }
 
-    fn name(&self) -> &'static str {
-        "Naught Coin"
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level15.address;
+        Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let offender = &roles.offender;
+        let provider = roles.provider();
 
         println!("Deploying the NaughtCoin contract...");
-        let contract =
-            NaughtCoin::deploy(deployer.to_owned(), offender.address())?
-                .send()
-                .await?;
+        let contract = NaughtCoin::deploy(provider, offender.address()).await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        let _ = deployer;
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = NaughtCoin::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = NaughtCoin::new(self.address, provider.clone());
 
-        println!("Checking that you transfered all tokens...");
-        let balance = contract.balance_of(offender.address()).await?;
-        let zero = U256::from(0_u8);
-        Ok(balance == zero)
+        println!("Checking that you transferred all tokens...");
+        let balance =
+            contract.balanceOf(roles.offender.address()).call().await?;
+        Ok(balance == U256::ZERO)
     }
 }

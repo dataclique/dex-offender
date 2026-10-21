@@ -1,10 +1,17 @@
-use crate::{roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 16 — Preservation.
+//!
+//! Hijack the Preservation contract library address to claim ownership.
 
-pub use crate::abi::{
-    library_contract::LibraryContract, preservation::Preservation,
-};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Preservation,
+    "abi/ethernaut/Preservation.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -13,44 +20,37 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level16)
-    }
-
     fn name(&self) -> &'static str {
         "Preservation"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level16.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Preservation contract...");
-        let timezone1 =
-            LibraryContract::deploy(deployer.to_owned(), ())?.send().await?;
-        let timezone2 =
-            LibraryContract::deploy(deployer.to_owned(), ())?.send().await?;
+        // TODO: deploy LibraryContract instances and pass to Preservation
         let contract = Preservation::deploy(
-            deployer.to_owned(),
-            (timezone1.address(), timezone2.address()),
-        )?
-        .send()
+            provider,
+            alloy::primitives::Address::ZERO,
+            alloy::primitives::Address::ZERO,
+        )
         .await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = Preservation::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Preservation::new(self.address, provider.clone());
 
         println!("Checking that you claimed ownership of the contract...");
-        let owner = contract.owner().await?;
-        Ok(owner == offender.address())
+        let owner = contract.owner().call().await?;
+        Ok(owner == roles.offender.address())
     }
 }

@@ -1,8 +1,17 @@
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 05 — Token.
+//!
+//! Exploit the Token contract integer underflow to get a huge balance.
 
-pub use crate::abi::token::Token;
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Token,
+    "abi/ethernaut/Token.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,37 +20,42 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level05)
-    }
-
     fn name(&self) -> &'static str {
         "Token"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level05.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender, .. } = roles;
+        let deployer = &roles.deployer;
+        let offender = &roles.offender;
+        let provider = roles.provider();
 
         println!("Deploying the Token contract...");
-        let contract = Token::deploy(deployer.clone(), U256::from(21_000_000))?
+        let contract = Token::deploy(provider, U256::from(21_000_000)).await?;
+
+        contract
+            .transfer(offender.address(), U256::from(20))
+            .from(deployer.address())
             .send()
+            .await?
+            .watch()
             .await?;
 
-        contract.transfer(offender.address(), 20.into()).send().await?;
-
-        let target = Target { address: contract.address() };
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender, some_user: _ } = roles;
-        let contract = Token::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = Token::new(self.address, provider.clone());
 
-        println!("Checking that got more tokens...");
-        let balance = contract.balance_of(offender.address()).call().await?;
-
-        Ok(balance > 20.into())
+        println!("Checking that you got more tokens...");
+        let balance =
+            contract.balanceOf(roles.offender.address()).call().await?;
+        Ok(balance > U256::from(20))
     }
 }

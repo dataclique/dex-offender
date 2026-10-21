@@ -1,8 +1,17 @@
-use crate::{abi::meaning_of_life::MeaningOfLife, roles::*, Level};
-use async_trait::async_trait;
-use ethers::prelude::*;
+//! Ethernaut level 18 — MagicNum.
+//!
+//! Deploy a runtime contract that returns 42 as its bytecode.
 
-pub use crate::abi::magic_num::MagicNum;
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
+use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    MagicNum,
+    "abi/ethernaut/MagicNum.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -11,63 +20,65 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level18)
+    fn name(&self) -> &'static str {
+        "MagicNum"
     }
 
-    fn name(&self) -> &'static str {
-        "Magic Number"
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level18.address;
+        Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
-        println!("Deploying the Magic Number contract...");
-        let contract =
-            MagicNum::deploy(deployer.to_owned(), ())?.send().await?;
+        println!("Deploying the MagicNum contract...");
+        let contract = MagicNum::deploy(provider).await?;
 
-        let target = Target { address: contract.address() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
-        let contract = MagicNum::new(self.address, deployer.clone());
+        let provider = roles.provider();
+        let contract = MagicNum::new(self.address, provider.clone());
+
         println!("Verifying that the solver variable is not empty...");
-        let hack_contract_address = contract.solver().await?;
-        println!("Check if TheMeaningOfLife() is 42...");
-        let hack_contract =
-            MeaningOfLife::new(hack_contract_address, deployer.clone());
-        let magic = hack_contract.what_is_the_meaning_of_life().await;
-        match magic {
-            Err(_) => {
-                return Ok(false);
-            }
-            Ok(magic) => {
-                let ft = U256::from(42_u8);
-                if magic != ft {
-                    println!("It's not 42");
-                    return Ok(false);
-                }
-
-                println!("Check if the contract size is less than 10 bytes...");
-                // Retrieve the contract bytecode
-                let bytecode =
-                    deployer.get_code(hack_contract_address, None).await?;
-
-                // Get the size of the bytecode in bytes
-                let bytecode_size = bytecode.len();
-                if bytecode_size > 10 {
-                    println!("It's not");
-                    return Ok(false);
-                }
-            }
+        let solver_address = contract.solver().call().await?;
+        if solver_address == Address::ZERO {
+            return Ok(false);
         }
-        Ok(true)
+
+        println!("Checking the runtime bytecode size...");
+        let code = provider.get_code_at(solver_address).await?;
+        if code.len() > 10 {
+            println!("Contract too large: {} bytes", code.len());
+            return Ok(false);
+        }
+
+        println!("Checking that it returns 42...");
+        // Call whatIsTheMeaningOfLife() on the solver
+        // The selector is keccak256("whatIsTheMeaningOfLife()")[0..4]
+        let selector =
+            alloy::primitives::keccak256("whatIsTheMeaningOfLife()".as_bytes());
+        let calldata = alloy::primitives::Bytes::from(selector[..4].to_vec());
+        let result = provider
+            .call(
+                alloy::rpc::types::TransactionRequest::default()
+                    .to(solver_address)
+                    .input(calldata.into()),
+            )
+            .await;
+
+        match result {
+            Ok(data) => {
+                let value = U256::try_from_be_slice(
+                    &data[..core::cmp::min(32, data.len())],
+                )
+                .unwrap_or_default();
+                Ok(value == U256::from(42))
+            }
+            Err(_) => Ok(false),
+        }
     }
 }
