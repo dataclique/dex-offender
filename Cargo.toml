@@ -15,4 +15,8 @@ serde_json = "1.0.120"
 tokio = { version = "1.38", features = ["macros", "rt-multi-thread", "time"] }
 alloy = "2"
 alloy-sol-types = "1.7"
+litesvm = "0.18"
+solana-sdk = "4"
+spl-token = "8"
+borsh = "1"
 reqwest = "0.13"

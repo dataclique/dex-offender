@@ -4,6 +4,7 @@ pub mod ethernaut;
 pub mod level;
 pub mod paradigm_2023;
 pub mod roles;
+pub mod solana;
 // pub mod damn_vulnerable_defi;
 
 pub use level::*;

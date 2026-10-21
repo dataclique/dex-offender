@@ -13,3 +13,7 @@ serde_json.workspace = true
 async-trait.workspace = true
 tokio.workspace = true
 alloy.workspace = true
+litesvm.workspace = true
+solana-sdk.workspace = true
+spl-token.workspace = true
+borsh.workspace = true
