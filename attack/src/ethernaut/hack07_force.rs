@@ -11,7 +11,11 @@ pub struct Exploit;
 impl ctf::Exploit for Exploit {
     type Target = ctf::ethernaut::lvl07_force::Target;
 
-    async fn attack(self, target: &Self::Target, offender: &Actor) -> eyre::Result<()> {
+    async fn attack(
+        self,
+        target: &Self::Target,
+        offender: &Actor,
+    ) -> eyre::Result<()> {
         // TODO: exploit the level
         let _ = (target, offender);
         Ok(())
