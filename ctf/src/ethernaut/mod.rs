@@ -1,6 +1,7 @@
 //! Ethernaut levels on the alloy core.
 
 use crate::{Level, Roles};
+use alloy::primitives::Address;
 
 pub mod lvl01_fallback;
 pub mod lvl02_fallout;
@@ -98,6 +99,13 @@ pub struct Ethernaut {
     pub level21: lvl21::Target,
     pub level22: lvl22::Target,
     pub level23: lvl23::Target,
+    // Levels 24-29: fields exist for from_file but set_up not yet wired
+    pub level24: lvl24::Target,
+    pub level25: lvl25::Target,
+    pub level26: lvl26::Target,
+    pub level27: lvl27::Target,
+    pub level28: lvl28::Target,
+    pub level29: lvl29::Target,
 }
 
 pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
@@ -150,5 +158,12 @@ pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
         level21,
         level22,
         level23,
+        // Levels 24-29: not yet deployable, use placeholder targets
+        level24: lvl24::Target { address: Address::ZERO },
+        level25: lvl25::Target { address: Address::ZERO },
+        level26: lvl26::Target { address: Address::ZERO },
+        level27: lvl27::Target { address: Address::ZERO },
+        level28: lvl28::Target { address: Address::ZERO },
+        level29: lvl29::Target { address: Address::ZERO },
     })
 }

@@ -2,7 +2,7 @@
 //!
 //! Become the owner and drain the PuzzleWallet proxy.
 
-use crate::{Level, Roles};
+use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
@@ -26,25 +26,32 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = Address::ZERO; // TODO: wire into Ethernaut struct
+        let address = ctfs.ethernaut.level24.address;
         Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
+        let deployer = &roles.deployer;
         let provider = roles.provider();
 
         println!("Deploying the PuzzleWallet contract...");
-        // TODO: deploy PuzzleWallet behind a PuzzleProxy
+        // The upstream factory:
+        // 1. deploys PuzzleWallet logic
+        // 2. encodes init(100 ether) as proxy data
+        // 3. deploys PuzzleProxy(admin, logic, data)
+        // 4. whitelists the factory and deposits 0.001 ETH
+        // TODO: extract PuzzleProxy ABI and implement the proxy deployment
         let contract = PuzzleWallet::deploy(provider).await?;
 
+        let _ = deployer;
         Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
+        let contract = PuzzleWallet::new(self.address, provider.clone());
 
         println!("Checking that you became the owner...");
-        let contract = PuzzleWallet::new(self.address, provider.clone());
         let owner = contract.owner().call().await?;
         Ok(owner == roles.offender.address())
     }

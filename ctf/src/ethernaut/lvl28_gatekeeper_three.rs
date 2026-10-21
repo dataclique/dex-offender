@@ -26,19 +26,25 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = Address::ZERO; // TODO: wire into Ethernaut struct
+        let address = ctfs.ethernaut.level28.address;
         Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        // TODO: implement deployment and initial state
-        let _ = roles;
-        unimplemented!("set_up not yet implemented")
+        let provider = roles.provider();
+
+        println!("Deploying the GatekeeperThree contract...");
+        let contract = GatekeeperThree::deploy(provider).await?;
+
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: implement completion check
-        let _ = roles;
-        unimplemented!("check not yet implemented")
+        let provider = roles.provider();
+        let contract = GatekeeperThree::new(self.address, provider.clone());
+
+        println!("Checking the entrant...");
+        let entrant = contract.entrant().call().await?;
+        Ok(entrant == roles.offender.address())
     }
 }

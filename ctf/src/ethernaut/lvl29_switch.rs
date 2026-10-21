@@ -1,6 +1,6 @@
 //! Ethernaut level 29 — Switch.
 //!
-//! Turn on the Switch by manipulating its function selector.
+//! Turn on the Switch by calling the flipSwitch function.
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};
@@ -26,19 +26,25 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = Address::ZERO; // TODO: wire into Ethernaut struct
+        let address = ctfs.ethernaut.level29.address;
         Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        // TODO: implement deployment and initial state
-        let _ = roles;
-        unimplemented!("set_up not yet implemented")
+        let provider = roles.provider();
+
+        println!("Deploying the Switch contract...");
+        let contract = Switch::deploy(provider).await?;
+
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: implement completion check
-        let _ = roles;
-        unimplemented!("check not yet implemented")
+        let provider = roles.provider();
+        let contract = Switch::new(self.address, provider.clone());
+
+        println!("Checking that the switch is on...");
+        let on = contract.switchOn().call().await?;
+        Ok(on)
     }
 }

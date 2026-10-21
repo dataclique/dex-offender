@@ -26,19 +26,44 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = Address::ZERO; // TODO: wire into Ethernaut struct
+        let address = ctfs.ethernaut.level26.address;
         Ok(Target { address })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        // TODO: implement deployment and initial state
-        let _ = roles;
-        unimplemented!("set_up not yet implemented")
+        let deployer = &roles.deployer;
+        let offender = &roles.offender;
+        let provider = roles.provider();
+
+        println!("Deploying the DoubleEntryPoint contract...");
+        // The upstream factory deploys:
+        // 1. LegacyToken (old token)
+        // 2. CryptoVault (holds the tokens)
+        // 3. Forta (detection bot registry)
+        // 4. DoubleEntryPoint(newToken, vault, forta, player)
+        // TODO: extract LegacyToken, CryptoVault, Forta ABIs
+        let contract = DoubleEntryPoint::deploy(
+            provider,
+            Address::ZERO,
+            Address::ZERO,
+            Address::ZERO,
+            offender.address(),
+        )
+        .await?;
+
+        let _ = deployer;
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: implement completion check
-        let _ = roles;
-        unimplemented!("check not yet implemented")
+        let provider = roles.provider();
+        let contract = DoubleEntryPoint::new(self.address, provider.clone());
+
+        println!("Checking that a bot raised an alert...");
+        // Solved when the Forta bot has raised an alert about the vulnerability
+        // TODO: check forta.users(player).botRaisedAlerts or similar
+        let forta = contract.forta().call().await?;
+        let _ = forta;
+        Ok(false)
     }
 }
