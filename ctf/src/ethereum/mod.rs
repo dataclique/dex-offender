@@ -1,0 +1,23 @@
+//! Ethereum-chain CTFs: Ethernaut, Damn Vulnerable DeFi, Paradigm CTF.
+
+pub mod damn_vulnerable_defi;
+pub mod ethernaut;
+pub mod paradigm_2023;
+
+use crate::Roles;
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct Ethereum {
+    pub ethernaut: ethernaut::Ethernaut,
+    pub paradigm_2023: paradigm_2023::Paradigm2023,
+    pub damn_vulnerable_defi: damn_vulnerable_defi::DamnVulnerableDeFi,
+}
+
+pub async fn set_up_ethereum(roles: &Roles) -> eyre::Result<Ethereum> {
+    let ethernaut = ethernaut::set_up_ethernaut(roles).await?;
+    let paradigm_2023 = paradigm_2023::set_up_paradigm_2023(roles).await?;
+    let damn_vulnerable_defi =
+        damn_vulnerable_defi::set_up_damn_vulnerable_defi(roles).await?;
+
+    Ok(Ethereum { ethernaut, paradigm_2023, damn_vulnerable_defi })
+}

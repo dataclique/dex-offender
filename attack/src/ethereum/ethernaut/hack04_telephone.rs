@@ -1,0 +1,23 @@
+//! Solution scaffold for Ethernaut level 04 — telephone.
+//!
+//! Exploit tx.origin vs msg.sender to claim ownership.
+
+use async_trait::async_trait;
+use ctf::Actor;
+
+pub struct Exploit;
+
+#[async_trait]
+impl ctf::Exploit for Exploit {
+    type Target = ctf::ethereum::ethernaut::lvl04_telephone::Target;
+
+    async fn attack(
+        self,
+        target: &Self::Target,
+        offender: &Actor,
+    ) -> eyre::Result<()> {
+        // TODO: exploit the level
+        let _ = (target, offender);
+        Ok(())
+    }
+}
