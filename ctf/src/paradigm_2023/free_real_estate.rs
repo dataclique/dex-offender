@@ -26,7 +26,11 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.paradigm_2023.free_real_estate.address;
+        let address = ctfs
+            .paradigm_2023
+            .free_real_estate
+            .ok_or_else(|| eyre::eyre!("level not yet deployed"))?
+            .address;
         Ok(Target { address })
     }
 
