@@ -43,7 +43,7 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Challenge::new(self.address, provider.clone());
 
-        let solved = contract.isSolved().call().await?;
+        let solved = contract.getScore().call().await? > 0;
         Ok(solved)
     }
 }
