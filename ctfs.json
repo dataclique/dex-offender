@@ -5,6 +5,69 @@
     },
     "level02": {
       "address": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"
+    },
+    "level03": {
+      "address": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"
+    },
+    "level04": {
+      "address": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"
+    },
+    "level05": {
+      "address": "0x0165878a594ca255338adfa4d48449f69242eb8f"
+    },
+    "level06": {
+      "delegation_address": "0x8a791620dd6260079bf849dc5567adc3f2fdc318"
+    },
+    "level07": {
+      "address": "0x610178da211fef7d417bc0e6fed39f05609ad788"
+    },
+    "level08": {
+      "address": "0xb7f8bc63bbcad18155201308c8f3540b07f84f5e"
+    },
+    "level09": {
+      "address": "0xa51c1fc2f0d1a1b8494ed1fe312d7c3a78ed91c0"
+    },
+    "level10": {
+      "address": "0x0dcd1bf9a1b36ce34237eeafef220932846bcd82"
+    },
+    "level11": {
+      "address": "0x959922be3caee4b8cd9a407cc3ac1c251c2007b1"
+    },
+    "level12": {
+      "address": "0x9a9f2ccfde556a7e9ff0848998aa4a0cfd8863ae"
+    },
+    "level13": {
+      "address": "0x68b1d87f95878fe05b998f19b66f4baba5de1aed"
+    },
+    "level14": {
+      "address": "0x3aa5ebb10dc797cac828524e59a333d0a371443c"
+    },
+    "level15": {
+      "address": "0xc6e7df5e7b4f2a278906862b61205850344d4e7d"
+    },
+    "level16": {
+      "address": "0x59b670e9fa9d0a427751af201d676719a970857b"
+    },
+    "level17": {
+      "address": "0x4ed7c70f96b99c776995fb64377f0d4ab3b0e1c1"
+    },
+    "level18": {
+      "address": "0xa85233c63b9ee964add6f2cffe00fd84eb32338f"
+    },
+    "level19": {
+      "address": "0x4a679253410272dd5232b3ff7cf5dbb88f295319"
+    },
+    "level20": {
+      "address": "0x7a2088a1bfc9d81c55368ae168c2c02570cb814f"
+    },
+    "level21": {
+      "address": "0xc5a5c42992decbae36851359345fe25997f5c42d"
+    },
+    "level22": {
+      "address": "0x67d269191c92caf3cd7723f116c85e6e9bf55933"
+    },
+    "level23": {
+      "address": "0xe6e340d132b5f46d1e472debcd681b2abc16e57e"
     }
   }
 }
