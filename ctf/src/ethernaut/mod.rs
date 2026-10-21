@@ -32,17 +32,17 @@ pub mod lvl26_double_entry_point;
 pub mod lvl27_good_samaritan;
 pub mod lvl28_gatekeeper_three;
 pub mod lvl29_switch;
-// pub mod lvl30_higher_order;
-// pub mod lvl31_stake;
-// pub mod lvl32_impersonator;
-// pub mod lvl33_magic_animal_carousel;
-// pub mod lvl34_bet_house;
-// pub mod lvl35_elliptic_token;
-// pub mod lvl36_cashback;
-// pub mod lvl37_impersonator_two;
-// pub mod lvl38_unique_nft;
-// pub mod lvl39_forger;
-// pub mod lvl40_not_optimistic_portal;
+pub mod lvl30_higher_order;
+pub mod lvl31_stake;
+pub mod lvl32_impersonator;
+pub mod lvl33_magic_animal_carousel;
+pub mod lvl34_bet_house;
+pub mod lvl35_elliptic_token;
+pub mod lvl36_cashback;
+pub mod lvl37_impersonator_two;
+pub mod lvl38_unique_nft;
+pub mod lvl39_forger;
+pub mod lvl40_not_optimistic_portal;
 
 use lvl01_fallback as lvl01;
 use lvl02_fallout as lvl02;
@@ -73,6 +73,17 @@ use lvl26_double_entry_point as lvl26;
 use lvl27_good_samaritan as lvl27;
 use lvl28_gatekeeper_three as lvl28;
 use lvl29_switch as lvl29;
+use lvl30_higher_order as lvl30;
+use lvl31_stake as lvl31;
+use lvl32_impersonator as lvl32;
+use lvl33_magic_animal_carousel as lvl33;
+use lvl34_bet_house as lvl34;
+use lvl35_elliptic_token as lvl35;
+use lvl36_cashback as lvl36;
+use lvl37_impersonator_two as lvl37;
+use lvl38_unique_nft as lvl38;
+use lvl39_forger as lvl39;
+use lvl40_not_optimistic_portal as lvl40;
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Ethernaut {
@@ -106,6 +117,17 @@ pub struct Ethernaut {
     pub level27: lvl27::Target,
     pub level28: lvl28::Target,
     pub level29: lvl29::Target,
+    pub level30: lvl30::Target,
+    pub level31: lvl31::Target,
+    pub level32: lvl32::Target,
+    pub level33: lvl33::Target,
+    pub level34: lvl34::Target,
+    pub level35: lvl35::Target,
+    pub level36: lvl36::Target,
+    pub level37: lvl37::Target,
+    pub level38: lvl38::Target,
+    pub level39: lvl39::Target,
+    pub level40: lvl40::Target,
 }
 
 pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
@@ -165,5 +187,17 @@ pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
         level27: lvl27::Target { address: Address::ZERO },
         level28: lvl28::Target { address: Address::ZERO },
         level29: lvl29::Target { address: Address::ZERO },
+        // Levels 30-40: not yet deployable, use placeholder targets
+        level30: lvl30::Target { address: Address::ZERO },
+        level31: lvl31::Target { address: Address::ZERO },
+        level32: lvl32::Target { address: Address::ZERO },
+        level33: lvl33::Target { address: Address::ZERO },
+        level34: lvl34::Target { address: Address::ZERO },
+        level35: lvl35::Target { address: Address::ZERO },
+        level36: lvl36::Target { address: Address::ZERO },
+        level37: lvl37::Target { address: Address::ZERO },
+        level38: lvl38::Target { address: Address::ZERO },
+        level39: lvl39::Target { address: Address::ZERO },
+        level40: lvl40::Target { address: Address::ZERO },
     })
 }

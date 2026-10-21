@@ -1,27 +1,18 @@
-//! Ethernaut level 36 — Cashback
+//! Ethernaut level 36 — Cashback.
 //!
-//! You've just joined Cashback, the hottest crypto neobank in town. Their pitch
-//! is irresistible: for every on-chain payment you make, you earn points. Rack
-//! up enough and you'll reach legendary status, unlocking the coveted Super
-//! Cashback NFT badge.
-//!
-//! The system leverages EIP-7702 to allow EOAs to accrue cashback. Users must
-//! delegate to the Cashback contract to use the `payWithCashback` function.
-//!
-//! Rumor has it there's a back door for power users. Your brief is simple:
-//! become the loyalty program's nightmare. Max out your cashback in every
-//! supported currency and walk away with at least two Super Cashback NFT, one
-//! of which must correspond to your player address.
+//! Max out cashback in every supported currency and get 2+ Super Cashback
+//! NFTs.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level36` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::cashback::Cashback;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Cashback,
+    "abi/ethernaut/Cashback.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -30,32 +21,46 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level36)
-    }
-
     fn name(&self) -> &'static str {
         "Cashback"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level36.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the Cashback contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        // Cashback takes (address[], uint256[], uint256[], address)
+        // TODO: deploy supported tokens and set up cashback rates
+        let contract = Cashback::deploy(
+            provider,
+            vec![],
+            vec![],
+            vec![],
+            deployer.address(),
+        )
+        .await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+        let contract = Cashback::new(self.address, provider.clone());
+
+        println!("Checking that you got 2+ Super Cashback NFTs...");
+        // Check balanceOfBatch for ERC1155-style NFT ownership
+        // TODO: determine the Super Cashback NFT token ID
+        let balance = contract
+            .balanceOf(roles.offender.address(), U256::from(1))
+            .call()
+            .await?;
+        Ok(balance >= U256::from(2))
     }
 }

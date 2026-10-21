@@ -1,25 +1,17 @@
-//! Ethernaut level 31 — Stake
+//! Ethernaut level 31 — Stake.
 //!
-//! Stake is safe for staking native ETH and ERC20 WETH, considering the same
-//! 1:1 value of the tokens. Can you drain the contract?
-//!
-//! To complete this level, the contract state must meet the following
-//! conditions:
-//!
-//! - The `Stake` contract's ETH balance has to be greater than 0.
-//! - `totalStaked` must be greater than the `Stake` contract's ETH balance.
-//! - You must be a staker.
-//! - Your staked balance must be 0.
+//! Drain the Stake contract (native ETH + WETH staking).
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level31` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::stake::Stake;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Stake,
+    "abi/ethernaut/Stake.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -28,32 +20,39 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level31)
-    }
-
     fn name(&self) -> &'static str {
         "Stake"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level31.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Stake contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        // Stake takes a WETH address
+        // TODO: deploy WETH first
+        let contract = Stake::deploy(provider, Address::ZERO).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+
+        println!("Checking the staking conditions...");
+        // Solved when: ETH balance > 0, totalStaked > balance,
+        // you're a staker, and your stake is 0
+        let contract = Stake::new(self.address, provider.clone());
+        let eth_balance = provider.get_balance(self.address).await?;
+        let total_staked = contract.totalStaked().call().await?;
+        let is_staker =
+            contract.Stakers(roles.offender.address()).call().await?;
+
+        Ok(eth_balance > U256::ZERO && total_staked > eth_balance && is_staker)
     }
 }

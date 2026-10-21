@@ -1,31 +1,17 @@
-//! Ethernaut level 40 — NotOptimisticPortal
+//! Ethernaut level 40 — NotOptimisticPortal.
 //!
-//! This portal relies on a complex chain of cryptographic proofs to verify
-//! cross-chain messages. It claims to be secure against invalid state
-//! transitions, but the gap between verification and execution might be wider
-//! than it looks.
-//!
-//! Can you manage to mint some tokens for your wallet?
-//!
-//! Things that might help:
-//! - Understanding Function Selectors.
-//! - The Checks-Effects-Interactions (CEI) pattern.
-//! - Merkle Patricia Tries and RLP encoding.
-//!
-//! Tips:
-//! - Sometimes the data you verify isn't exactly the same data you execute.
-//! - If a hash cycle seems impossible to solve, look for a way to break the
-//!   loop.
+//! Mint some tokens for your wallet through the cross-chain portal.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level40` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::not_optimistic_portal::NotOptimisticPortal;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    NotOptimisticPortal,
+    "abi/ethernaut/NotOptimisticPortal.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -34,32 +20,43 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level40)
-    }
-
     fn name(&self) -> &'static str {
         "NotOptimisticPortal"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level40.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the NotOptimisticPortal contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        // Takes (string, string, bytes, address) — message, version, data, target
+        // TODO: determine proper constructor args from the level source
+        let contract = NotOptimisticPortal::deploy(
+            provider,
+            String::new(),
+            String::new(),
+            alloy::primitives::Bytes::new(),
+            deployer.address(),
+        )
+        .await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
+        let provider = roles.provider();
+        let contract = NotOptimisticPortal::new(self.address, provider.clone());
+
+        println!("Checking that you minted tokens...");
+        // TODO: determine exact check from the contract source
+        // Likely checking a token balance of the offender
+        let _ = contract;
         Ok(false)
     }
 }

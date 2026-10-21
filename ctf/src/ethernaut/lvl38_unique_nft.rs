@@ -1,29 +1,17 @@
-//! Ethernaut level 38 — UniqueNFT
+//! Ethernaut level 38 — UniqueNFT.
 //!
-//! Welcome to UniqueNFT, where any user can get its very own shiny digital
-//! badge.
-//!
-//! Humans with EOAs? You mint for free, no questions asked. Proof of Humanity
-//! for the win!
-//!
-//! Smart contracts? Sorry bots, pay the toll –> one whole ether!
-//!
-//! But here's the twist: one badge per address, no greedy hoarding allowed.
-//!
-//! And forget about trading, these things stick like glue. It's like blockchain
-//! tattoos, once it's yours, it's yours forever.
-//!
-//! Think you can outsmart the rules and own more a single NFT? Prove it.
+//! Own more than one NFT to prove you can outsmart the rules.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level38` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::unique_nft::UniqueNFT;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    UniqueNFT,
+    "abi/ethernaut/UniqueNFT.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -32,32 +20,32 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level38)
-    }
-
     fn name(&self) -> &'static str {
         "UniqueNFT"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level38.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the UniqueNFT contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        let contract = UniqueNFT::deploy(provider).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+        let contract = UniqueNFT::new(self.address, provider.clone());
+
+        println!("Checking that you own more than one NFT...");
+        let balance =
+            contract.balanceOf(roles.offender.address()).call().await?;
+        Ok(balance > U256::from(1))
     }
 }

@@ -1,21 +1,17 @@
-//! Ethernaut level 32 — Impersonator
+//! Ethernaut level 32 — Impersonator.
 //!
-//! SlockDotIt's new product, ECLocker, integrates IoT gate locks with Solidity
-//! smart contracts, utilizing Ethereum ECDSA for authorization. When a valid
-//! signature is sent to the lock, the system emits an `Open` event, unlocking
-//! doors for the authorized controller. SlockDotIt has hired you to assess the
-//! security of this product before its launch. Can you compromise the system in
-//! a way that anyone can open the door?
+//! Compromise the ECLocker so anyone can open the door.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level32` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::impersonator::Impersonator;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Impersonator,
+    "abi/ethernaut/Impersonator.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -24,32 +20,35 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level32)
-    }
-
     fn name(&self) -> &'static str {
         "Impersonator"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level32.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the Impersonator contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        let contract =
+            Impersonator::deploy(provider, alloy::primitives::U256::from(1))
+                .await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+        let contract = Impersonator::new(self.address, provider.clone());
+
+        println!("Checking that the lock is compromised...");
+        // Solved when anyone (not just authorized) can open the door
+        // TODO: determine exact check from the contract source
+        let owner = contract.owner().call().await?;
+        Ok(owner == roles.offender.address())
     }
 }

@@ -1,20 +1,17 @@
-//! Ethernaut level 37 — Impersonator Two
+//! Ethernaut level 37 — Impersonator Two.
 //!
-//! The goal of this level is for you to steal all the funds from the contract.
-//!
-//! Things that might help:
-//! - Look carefully at the 2 signatures that the owner of the contract used to
-//!   lock it and set the admin.
+//! Steal all the funds from the contract.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level37` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::impersonator_two::ImpersonatorTwo;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    ImpersonatorTwo,
+    "abi/ethernaut/ImpersonatorTwo.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -23,32 +20,38 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level37)
-    }
-
     fn name(&self) -> &'static str {
         "Impersonator Two"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level37.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the ImpersonatorTwo contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        let contract = ImpersonatorTwo::deploy(provider).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
+        // Fund the contract
+        deployer.transfer(*contract.address(), to_ether(1)).await?;
 
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+
+        println!("Checking that all funds are stolen...");
+        let balance = provider.get_balance(self.address).await?;
+        Ok(balance == U256::ZERO)
     }
+}
+
+fn to_ether(amount: u64) -> U256 {
+    U256::from(amount) * U256::from(10).pow(U256::from(18))
 }

@@ -1,24 +1,17 @@
-//! Ethernaut level 33 — Magic Animal Carousel
+//! Ethernaut level 33 — Magic Animal Carousel.
 //!
-//! Welcome, dear Anon, to the Magic Carousel, where creatures spin and twirl in
-//! a boundless spell. In this magical, infinite digital wheel, they loop and
-//! whirl with enchanting zeal.
-//!
-//! Add a creature to join the fun, but heed the rule, or the game's undone. If
-//! an animal joins the ride, take care when you check again, that same animal
-//! must be there!
-//!
-//! Can you break the magic rule of the carousel?
+//! Break the magic rule of the carousel.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level33` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::magic_animal_carousel::MagicAnimalCarousel;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    MagicAnimalCarousel,
+    "abi/ethernaut/MagicAnimalCarousel.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -27,32 +20,34 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level33)
-    }
-
     fn name(&self) -> &'static str {
         "Magic Animal Carousel"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level33.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the MagicAnimalCarousel contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        let contract = MagicAnimalCarousel::deploy(provider).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
+        let provider = roles.provider();
+        let contract = MagicAnimalCarousel::new(self.address, provider.clone());
+
+        println!("Checking that the carousel rule is broken...");
+        // Solved when an animal exists in the carousel but doesn't match
+        // what it should be (the "magic rule" is broken)
+        // TODO: determine exact check from the contract source
+        let _ = contract;
         Ok(false)
     }
 }

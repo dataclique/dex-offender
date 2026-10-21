@@ -1,20 +1,17 @@
-//! Ethernaut level 34 — Bet House
+//! Ethernaut level 34 — Bet House.
 //!
-//! Welcome to the Bet House.
-//!
-//! You start with 5 Pool Deposit Tokens (PDT).
-//!
-//! Could you master the art of strategic gambling and become a bettor?
+//! Master the art of strategic gambling and become a bettor.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level34` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::bet_house::BetHouse;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    BetHouse,
+    "abi/ethernaut/BetHouse.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -23,32 +20,33 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level34)
-    }
-
     fn name(&self) -> &'static str {
         "Bet House"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level34.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let provider = roles.provider();
 
         println!("Deploying the BetHouse contract...");
-        // TODO: deploy the level contracts and fund the offender.
-        let _ = deployer;
-        let target = Target { address: Address::zero() };
+        // TODO: deploy pool token first
+        let contract = BetHouse::deploy(provider, Address::ZERO).await?;
 
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+        let contract = BetHouse::new(self.address, provider.clone());
+
+        println!("Checking that you are a bettor...");
+        let is_bettor =
+            contract.isBettor(roles.offender.address()).call().await?;
+        Ok(is_bettor)
     }
 }

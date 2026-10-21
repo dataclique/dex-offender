@@ -1,26 +1,17 @@
-//! Ethernaut level 39 — Forger
+//! Ethernaut level 39 — Forger.
 //!
-//! This is the Forger, the token printer your mom warned you about.
-//!
-//! This ERC-20 hands out mint passes signed by the owner... or so they say.
-//!
-//! One golden signature already exists, good for 100 shiny tokens.
-//!
-//! The team insists the pass is single-use and perfectly safe.
-//!
-//! Your goal? Making the total supply greater than 100 tokens.
-//!
-//! Get creative, stay sharp, and may your forgeries be legendary.
+//! Make the total supply greater than 100 tokens.
 
-// TODO: implement deployment and the completion check, then declare this
-// module in `ctf/src/ethernaut/mod.rs` (add the `level39` field to the
-// `Ethernaut` struct and the `use` alias) when you want it deployed.
-
-use crate::{roles::*, Level};
+use crate::{Level, Roles};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
-use ethers::prelude::*;
 
-pub use crate::abi::forger::Forger;
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Forger,
+    "abi/ethernaut/Forger.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -29,32 +20,35 @@ pub struct Target {
 
 #[async_trait]
 impl Level for Target {
-    fn from_file() -> eyre::Result<Self> {
-        let ctfs = crate::CTFs::from_file()?;
-        Ok(ctfs.ethernaut.level39)
-    }
-
     fn name(&self) -> &'static str {
         "Forger"
     }
 
+    fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        let address = ctfs.ethernaut.level39.address;
+        Ok(Target { address })
+    }
+
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let Roles { deployer, offender: _, some_user: _ } = roles;
+        let deployer = &roles.deployer;
+        let provider = roles.provider();
 
         println!("Deploying the Forger contract...");
-        // TODO: deploy the level contracts and fund the offender.
+        let contract = Forger::deploy(provider).await?;
+
+        // The golden signature mints 100 tokens initially
+        // TODO: set up the golden signature scenario from the level description
         let _ = deployer;
-        let target = Target { address: Address::zero() };
-
-        let check = target.check(roles).await?;
-        assert!(!check);
-
-        Ok(target)
+        Ok(Target { address: *contract.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
-        // TODO: check the completion condition for this level.
-        let _ = roles;
-        Ok(false)
+        let provider = roles.provider();
+        let contract = Forger::new(self.address, provider.clone());
+
+        println!("Checking that total supply > 100...");
+        let supply = contract.totalSupply().call().await?;
+        Ok(supply > U256::from(100))
     }
 }
