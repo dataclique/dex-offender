@@ -69,5 +69,10 @@
     "level23": {
       "address": "0xe6e340d132b5f46d1e472debcd681b2abc16e57e"
     }
+  },
+  "paradigm_2023": {
+    "hello_world": {
+      "address": "0xc3e53f4d16ae77db1c982e75a937b9f60fe63690"
+    }
   }
 }

@@ -27,13 +27,17 @@ async fn main() -> eyre::Result<()> {
         println!("Setting up Ethernaut...");
         let ethernaut = ctf::ethernaut::set_up_ethernaut(&roles).await?;
 
+        println!("Setting up Paradigm 2023...");
+        let paradigm_2023 =
+            ctf::paradigm_2023::set_up_paradigm_2023(&roles).await?;
+
         // we need to wait for at least a second for Anvil to save
         // the state
         println!("Saving blockchain state to a file...");
         let delay = tokio::time::sleep(Duration::from_secs(2));
 
         println!("Saving levels to a file...");
-        let ctfs = ctf::CTFs { ethernaut };
+        let ctfs = ctf::CTFs { ethernaut, paradigm_2023 };
 
         std::fs::write("ctfs.json", serde_json::to_string_pretty(&ctfs)?)?;
 

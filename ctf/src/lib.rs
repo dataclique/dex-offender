@@ -1,6 +1,7 @@
 // pub mod abi; // forge-bind ethers bindings, replaced by sol! artifacts in ctf/abi
 pub mod ethernaut;
 pub mod level;
+pub mod paradigm_2023;
 pub mod roles;
 // pub mod damn_vulnerable_defi;
 
@@ -16,7 +17,7 @@ pub fn to_ether(amount: u64) -> U256 {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct CTFs {
     pub ethernaut: ethernaut::Ethernaut,
-    // pub damn_vulnerable_defi: damn_vulnerable_defi::DamnVulnerableDeFi,
+    pub paradigm_2023: paradigm_2023::Paradigm2023,
 }
 
 impl CTFs {
