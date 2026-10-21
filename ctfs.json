@@ -68,11 +68,82 @@
     },
     "level23": {
       "address": "0xe6e340d132b5f46d1e472debcd681b2abc16e57e"
+    },
+    "level24": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level25": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level26": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level27": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level28": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level29": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level30": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level31": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level32": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level33": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level34": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level35": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level36": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level37": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level38": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level39": {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    "level40": {
+      "address": "0x0000000000000000000000000000000000000000"
     }
   },
   "paradigm_2023": {
     "hello_world": {
       "address": "0xc3e53f4d16ae77db1c982e75a937b9f60fe63690"
+    },
+    "cosmic_radiation": {
+      "address": "0x84ea74d481ee0a5332c457a4d796187f6ba67feb"
+    },
+    "grains_of_sand": null,
+    "black_sheep": null,
+    "dai_plus_plus": null,
+    "dodont": null,
+    "dragon_tyrant": null,
+    "dropper": null,
+    "enterprise_blockchain": null,
+    "free_real_estate": null,
+    "hopping_into_place": null,
+    "one_hundred_percent": null,
+    "skill_based_game": null,
+    "suspicious_charity": null
+  },
+  "damn_vulnerable_defi": {
+    "unstoppable": {
+      "address": "0xa82ff9afd8f496c3d6ac40e2a0f282e47488cfc9"
     }
   }
 }
