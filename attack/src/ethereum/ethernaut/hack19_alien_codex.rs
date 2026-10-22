@@ -4,12 +4,13 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
+use ctf::ethereum::ethernaut::lvl19_alien_codex::Target;
 
 pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-    type Target = ctf::ethereum::ethernaut::lvl19_alien_codex::Target;
+    type Target = Target;
 
     async fn attack(
         self,

@@ -1,16 +1,22 @@
+//! Example solution for Ethernaut level 01 — Fallback.
+//!
+//! Take ownership and drain the contract. This is the ONLY example —
+//! all other hacks are intentionally left blank for you to solve.
+
 use alloy::primitives::U256;
 use async_trait::async_trait;
 use ctf::Actor;
 use ctf::ethereum::ethernaut::lvl01_fallback::*;
 
 pub struct Exploit;
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
 
     async fn attack(
         self,
-        target: &Self::Target,
+        target: &Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
         let contract =

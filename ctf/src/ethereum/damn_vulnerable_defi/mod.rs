@@ -3,6 +3,7 @@
 //! Each challenge deploys its own set of contracts per the upstream
 //! test files in lib/damn-vulnerable-defi/test/.
 
+pub mod compromised;
 pub mod naive_receiver;
 pub mod selfie;
 pub mod side_entrance;
@@ -20,6 +21,7 @@ pub struct DamnVulnerableDeFi {
     pub side_entrance: side_entrance::Target,
     pub the_rewarder: the_rewarder::Target,
     pub selfie: selfie::Target,
+    pub compromised: compromised::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -32,6 +34,7 @@ pub async fn set_up_damn_vulnerable_defi(
     let side_entrance = side_entrance::Target::set_up(roles).await?;
     let the_rewarder = the_rewarder::Target::set_up(roles).await?;
     let selfie = selfie::Target::set_up(roles).await?;
+    let compromised = compromised::Target::set_up(roles).await?;
 
     Ok(DamnVulnerableDeFi {
         unstoppable,
@@ -40,5 +43,6 @@ pub async fn set_up_damn_vulnerable_defi(
         side_entrance,
         the_rewarder,
         selfie,
+        compromised,
     })
 }

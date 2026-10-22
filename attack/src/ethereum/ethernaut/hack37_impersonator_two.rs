@@ -11,7 +11,7 @@ pub(crate) struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-    type Target = Target;
+        type Target = Target;
 
     async fn attack(
         self,

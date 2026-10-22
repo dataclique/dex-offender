@@ -4,12 +4,13 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
+use ctf::ethereum::ethernaut::lvl03_coin_flip::Target;
 
 pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-    type Target = ctf::ethereum::ethernaut::lvl03_coin_flip::Target;
+    type Target = Target;
 
     async fn attack(
         self,
