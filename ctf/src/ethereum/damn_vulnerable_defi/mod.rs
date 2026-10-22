@@ -5,6 +5,7 @@
 
 pub mod naive_receiver;
 pub mod side_entrance;
+pub mod the_rewarder;
 pub mod truster;
 pub mod unstoppable;
 
@@ -16,6 +17,7 @@ pub struct DamnVulnerableDeFi {
     pub naive_receiver: naive_receiver::Target,
     pub truster: truster::Target,
     pub side_entrance: side_entrance::Target,
+    pub the_rewarder: the_rewarder::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -26,11 +28,13 @@ pub async fn set_up_damn_vulnerable_defi(
     let naive_receiver = naive_receiver::Target::set_up(roles).await?;
     let truster = truster::Target::set_up(roles).await?;
     let side_entrance = side_entrance::Target::set_up(roles).await?;
+    let the_rewarder = the_rewarder::Target::set_up(roles).await?;
 
     Ok(DamnVulnerableDeFi {
         unstoppable,
         naive_receiver,
         truster,
         side_entrance,
+        the_rewarder,
     })
 }
