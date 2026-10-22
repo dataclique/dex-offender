@@ -8,3 +8,4 @@ pub mod hack07_compromised;
 pub mod hack08_puppet;
 pub mod hack09_puppet_v2;
 pub mod hack10_free_rider;
+pub mod hack11_backdoor;
