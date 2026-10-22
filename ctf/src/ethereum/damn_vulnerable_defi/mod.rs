@@ -19,6 +19,7 @@ pub mod the_rewarder;
 pub mod truster;
 pub mod unstoppable;
 pub mod wallet_mining;
+pub mod withdrawal;
 
 use crate::{Level as _, Roles};
 
@@ -42,6 +43,7 @@ pub struct DamnVulnerableDeFi {
     pub puppet_v3: Option<puppet_v3::Target>,
     pub abi_smuggling: abi_smuggling::Target,
     pub shards: shards::Target,
+    pub withdrawal: withdrawal::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -62,6 +64,7 @@ pub async fn set_up_damn_vulnerable_defi(
     let climber = climber::Target::set_up(roles).await?;
     let abi_smuggling = abi_smuggling::Target::set_up(roles).await?;
     let shards = shards::Target::set_up(roles).await?;
+    let withdrawal = withdrawal::Target::set_up(roles).await?;
 
     Ok(DamnVulnerableDeFi {
         unstoppable,
@@ -80,5 +83,6 @@ pub async fn set_up_damn_vulnerable_defi(
         puppet_v3: None,     // TODO: mainnet fork required
         abi_smuggling,
         shards,
+        withdrawal,
     })
 }

@@ -193,6 +193,10 @@
       },
       "shards": {
         "address": "0xce0066b1008237625dddbe4a751827de037e53d2"
+      },
+      "withdrawal": {
+        "address": "0x51c65cd0cdb1a8a8b79dfc2ee965b1ba0bb8fc89",
+        "token": "0x87006e75a5b6be9d1bbf61ac8cd84f05d9140589"
       }
     }
   }
