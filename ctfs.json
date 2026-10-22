@@ -155,6 +155,12 @@
       },
       "side_entrance": {
         "address": "0x36c02da8a0983159322a80ffe9f24b1acff8b570"
+      },
+      "the_rewarder": {
+        "address": "0x5f3f1dbd7b74c6b46e8c44f98792a1daf8d69154"
+      },
+      "selfie": {
+        "address": "0x2bdcc0de6be1f7d2ee689a0342d76f52e8efaba3"
       }
     }
   }
