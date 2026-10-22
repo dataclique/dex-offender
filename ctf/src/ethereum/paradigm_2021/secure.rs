@@ -2,7 +2,7 @@
 //!
 //! Call the target function on the Hello contract.
 
-use crate::{Level, Roles};
+use crate::{Level, Roles, anvil::plant_weth9, to_ether};
 use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
@@ -39,8 +39,14 @@ impl Level for Target {
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let provider = roles.provider();
         println!("Deploying the secure challenge...");
-        let setup = Setup::deploy(provider).await?;
-        Ok(Target { address: *setup.address() })
+        // The setup wraps the canonical mainnet WETH9 — plant it first.
+        plant_weth9(roles).await?;
+        let setup = Setup::deploy_builder(provider)
+            .value(to_ether(50))
+            .from(roles.deployer.address())
+            .deploy()
+            .await?;
+        Ok(Target { address: setup })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {

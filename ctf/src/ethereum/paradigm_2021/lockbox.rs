@@ -39,6 +39,7 @@ impl Level for Target {
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let provider = roles.provider();
         println!("Deploying the lockbox challenge...");
+        // Entrypoint deploys internally; no external deps, no value.
         let setup = Setup::deploy(provider).await?;
         Ok(Target { address: *setup.address() })
     }

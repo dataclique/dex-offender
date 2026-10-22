@@ -3,11 +3,11 @@
 //! Each challenge deploys a Setup contract that internally deploys the
 //! challenge contracts and exposes `isSolved()`.
 //!
-//! NOTE: most 2021 Setup constructors revert on local anvil due to old
-//! solc versions and pre-Byzantium EVM semantics. Only `hello` currently
-//! deploys. The remaining ABI artifacts and level modules are ready —
-//! they just need per-challenge deploy fixes (vm.deal equivalents,
-//! hardcoded WETH addresses, etc.).
+//! NOTE: most 2021 setups wrap the canonical mainnet WETH9 at
+//! `0xC02aaA…`; the harness plants a real WETH9 there via `anvil_setCode`
+//! first (see [`crate::anvil::plant_weth9`]). broker/swap/farmer additionally
+//! hardcode UniswapV2 factory/router plus DAI/COMP/cTokens — those stay
+//! undeployed (`None`) until equivalent planting exists.
 
 pub mod bank;
 pub mod bouncer;
@@ -43,17 +43,19 @@ pub async fn set_up_paradigm_2021(roles: &Roles) -> eyre::Result<Paradigm2021> {
     println!("Deploying Paradigm CTF 2021 challenges...");
     let hello = hello::Target::set_up(roles).await?;
 
+    // broker/swap/farmer need planted Uniswap factory/router + stablecoins;
+    // everything else is self-contained or only needs canonical WETH9.
     Ok(Paradigm2021 {
         hello,
-        bank: None,
-        bouncer: None,
+        bank: bank::Target::set_up(roles).await.ok(),
+        bouncer: bouncer::Target::set_up(roles).await.ok(),
         broker: None,
         farmer: None,
-        lockbox: None,
-        market: None,
-        secure: None,
+        lockbox: lockbox::Target::set_up(roles).await.ok(),
+        market: market::Target::set_up(roles).await.ok(),
+        secure: secure::Target::set_up(roles).await.ok(),
         swap: None,
-        vault: None,
-        yield_aggregator: None,
+        vault: vault::Target::set_up(roles).await.ok(),
+        yield_aggregator: yield_aggregator::Target::set_up(roles).await.ok(),
     })
 }
