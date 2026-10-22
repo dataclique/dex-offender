@@ -161,6 +161,12 @@
       },
       "selfie": {
         "address": "0x2bdcc0de6be1f7d2ee689a0342d76f52e8efaba3"
+      },
+      "compromised": {
+        "address": "0xc351628eb244ec633d5f21fbd6621e1a683b1181"
+      },
+      "puppet": {
+        "address": "0x1fa02b2d6a771842690194cf62d91bdd92bfe28d"
       }
     }
   }
