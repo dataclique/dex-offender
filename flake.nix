@@ -56,16 +56,9 @@
                 toolchainPackage = channel.toolchain;
               };
 
-              scripts.bind-attack.exec = ''
-                ${forge} install
-                ${forge} fmt
-                ${forge} bind -b ./attack/src/abi --module --force --overwrite
-                pre-commit run rustfmt -a > /dev/null || true
-              '';
-
-              # NOTE: forge bind was only used for ctf/contracts, which was
-              # replaced by the pinned level submodules in lib/. ABI bindings
-              # will be generated via alloy's sol! macro (see ctf/src/abi).
+              # NOTE: ABI bindings are generated via alloy sol! macros loading
+              # ctf/abi/*.json artifacts (see scripts/build-abis.nu). forge
+              # bind is no longer used.
 
               scripts.deploy-levels.exec = ''
                 if [ -f state.json ]; then
