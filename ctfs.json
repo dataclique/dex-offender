@@ -157,6 +157,19 @@
       "vault": null,
       "yield_aggregator": null
     },
+    "paradigm_2022": {
+      "electric_sheep": null,
+      "fun_reversing_challenge": null,
+      "hint_finance": null,
+      "just_in_time": null,
+      "lockbox2": null,
+      "merkledrop": null,
+      "random": null,
+      "rescue": null,
+      "sourcecode": null,
+      "stealing_sats": null,
+      "vanity": null
+    },
     "damn_vulnerable_defi": {
       "unstoppable": {
         "address": "0x1613beb3b2c4f22ee086b2b38c1476a3ce7f78e8"
