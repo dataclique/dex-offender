@@ -3,7 +3,7 @@
 //! Drain all WETH from the pool and the flash loan receiver in ≤2 txs.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(

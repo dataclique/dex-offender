@@ -3,7 +3,7 @@
 //! Destroy the Motorbike engine by selfdestructing its implementation.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, providers::Provider, sol};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(

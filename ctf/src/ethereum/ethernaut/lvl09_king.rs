@@ -3,7 +3,7 @@
 //! Prevent prize transfer to stay king forever.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, providers::Provider, sol};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -46,7 +46,7 @@ impl Level for Target {
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let deployer = &roles.deployer;
-        let contract = King::new(self.address, deployer.provider().clone());
+        let _contract = King::new(self.address, deployer.provider().clone());
 
         println!("Attempting to reclaim the kingdom...");
         let result = deployer.transfer(self.address, to_ether(10)).await;

@@ -47,7 +47,7 @@ impl Level for Target {
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
-        let contract = Challenge::new(self.address, provider.clone());
+        let _contract = Challenge::new(self.address, provider.clone());
 
         // TODO: determine completion condition (no isSolved or getScore)
         Ok(false)

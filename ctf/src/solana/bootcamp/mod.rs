@@ -6,7 +6,7 @@ pub mod level_3;
 pub mod level_4;
 pub mod level_5;
 
-use crate::solana::{SolActor, SolChain, SolRoles};
+use crate::solana::{SolChain, SolRoles};
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 

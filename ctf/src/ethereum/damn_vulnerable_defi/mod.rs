@@ -4,6 +4,8 @@
 //! test files in lib/damn-vulnerable-defi/test/.
 
 pub mod naive_receiver;
+pub mod side_entrance;
+pub mod truster;
 pub mod unstoppable;
 
 use crate::{Level as _, Roles};
@@ -12,6 +14,8 @@ use crate::{Level as _, Roles};
 pub struct DamnVulnerableDeFi {
     pub unstoppable: unstoppable::Target,
     pub naive_receiver: naive_receiver::Target,
+    pub truster: truster::Target,
+    pub side_entrance: side_entrance::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -20,6 +24,13 @@ pub async fn set_up_damn_vulnerable_defi(
     println!("Deploying Damn Vulnerable DeFi challenges...");
     let unstoppable = unstoppable::Target::set_up(roles).await?;
     let naive_receiver = naive_receiver::Target::set_up(roles).await?;
+    let truster = truster::Target::set_up(roles).await?;
+    let side_entrance = side_entrance::Target::set_up(roles).await?;
 
-    Ok(DamnVulnerableDeFi { unstoppable, naive_receiver })
+    Ok(DamnVulnerableDeFi {
+        unstoppable,
+        naive_receiver,
+        truster,
+        side_entrance,
+    })
 }

@@ -2,7 +2,7 @@
 //!
 //! Become the owner and drain the PuzzleWallet proxy.
 
-use crate::{Level, Roles, to_ether};
+use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
