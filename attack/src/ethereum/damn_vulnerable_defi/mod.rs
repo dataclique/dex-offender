@@ -6,3 +6,4 @@ pub mod hack05_the_rewarder;
 pub mod hack06_selfie;
 pub mod hack07_compromised;
 pub mod hack08_puppet;
+pub mod hack09_puppet_v2;

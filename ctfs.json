@@ -167,6 +167,10 @@
       },
       "puppet": {
         "address": "0x1fa02b2d6a771842690194cf62d91bdd92bfe28d"
+      },
+      "puppet_v2": {
+        "address": "0x36b58f5c1969b7b6591d752ea6f5486d069010ab",
+        "token": "0x4c4a2f8c81640e47606d3fd77b353e87ba015584"
       }
     }
   }

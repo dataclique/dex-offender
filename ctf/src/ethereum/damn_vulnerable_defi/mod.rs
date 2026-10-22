@@ -6,6 +6,7 @@
 pub mod compromised;
 pub mod naive_receiver;
 pub mod puppet;
+pub mod puppet_v2;
 pub mod selfie;
 pub mod side_entrance;
 pub mod the_rewarder;
@@ -24,6 +25,7 @@ pub struct DamnVulnerableDeFi {
     pub selfie: selfie::Target,
     pub compromised: compromised::Target,
     pub puppet: puppet::Target,
+    pub puppet_v2: puppet_v2::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -38,6 +40,7 @@ pub async fn set_up_damn_vulnerable_defi(
     let selfie = selfie::Target::set_up(roles).await?;
     let compromised = compromised::Target::set_up(roles).await?;
     let puppet = puppet::Target::set_up(roles).await?;
+    let puppet_v2 = puppet_v2::Target::set_up(roles).await?;
 
     Ok(DamnVulnerableDeFi {
         unstoppable,
@@ -48,5 +51,6 @@ pub async fn set_up_damn_vulnerable_defi(
         selfie,
         compromised,
         puppet,
+        puppet_v2,
     })
 }
