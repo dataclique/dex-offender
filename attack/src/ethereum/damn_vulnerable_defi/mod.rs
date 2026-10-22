@@ -13,3 +13,4 @@ pub mod hack12_climber;
 pub mod hack13_wallet_mining;
 pub mod hack14_puppet_v3;
 pub mod hack15_abi_smuggling;
+pub mod hack16_shards;

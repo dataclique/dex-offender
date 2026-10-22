@@ -190,6 +190,9 @@
       "abi_smuggling": {
         "address": "0xa4899d35897033b927acfcf422bc745916139776",
         "token": "0x86a2ee8faf9a840f7a2c64ca3d51209f9a02081d"
+      },
+      "shards": {
+        "address": "0xce0066b1008237625dddbe4a751827de037e53d2"
       }
     }
   }
