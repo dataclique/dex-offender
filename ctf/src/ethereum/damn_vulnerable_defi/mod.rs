@@ -4,6 +4,7 @@
 //! test files in lib/damn-vulnerable-defi/test/.
 
 pub mod compromised;
+pub mod free_rider;
 pub mod naive_receiver;
 pub mod puppet;
 pub mod puppet_v2;
@@ -26,6 +27,7 @@ pub struct DamnVulnerableDeFi {
     pub compromised: compromised::Target,
     pub puppet: puppet::Target,
     pub puppet_v2: puppet_v2::Target,
+    pub free_rider: free_rider::Target,
 }
 
 pub async fn set_up_damn_vulnerable_defi(
@@ -41,6 +43,7 @@ pub async fn set_up_damn_vulnerable_defi(
     let compromised = compromised::Target::set_up(roles).await?;
     let puppet = puppet::Target::set_up(roles).await?;
     let puppet_v2 = puppet_v2::Target::set_up(roles).await?;
+    let free_rider = free_rider::Target::set_up(roles).await?;
 
     Ok(DamnVulnerableDeFi {
         unstoppable,
@@ -52,5 +55,6 @@ pub async fn set_up_damn_vulnerable_defi(
         compromised,
         puppet,
         puppet_v2,
+        free_rider,
     })
 }

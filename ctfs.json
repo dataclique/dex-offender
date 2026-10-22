@@ -171,6 +171,10 @@
       "puppet_v2": {
         "address": "0x36b58f5c1969b7b6591d752ea6f5486d069010ab",
         "token": "0x4c4a2f8c81640e47606d3fd77b353e87ba015584"
+      },
+      "free_rider": {
+        "address": "0xd84379ceae14aa33c123af12424a37803f885889",
+        "token": "0x202cce504e04bed6fc0521238ddf04bc9e8e15ab"
       }
     }
   }
