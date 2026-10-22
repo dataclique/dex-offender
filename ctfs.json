@@ -179,6 +179,11 @@
       "backdoor": {
         "address": "0x1c85638e118b37167e9298c2268758e058ddfda0",
         "token": "0xc9a43158891282a2b1475592d5719c001986aaec"
+      },
+      "climber": {
+        "address": "0x7a9ec1d04904907de0ed7b6839ccdd59c3716ac9",
+        "token": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff",
+        "timelock": "0xf7b9dc26255f3e15570c30e0d07207dfcd43646f"
       }
     }
   }
