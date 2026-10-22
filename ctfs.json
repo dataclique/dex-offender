@@ -184,6 +184,12 @@
         "address": "0x7a9ec1d04904907de0ed7b6839ccdd59c3716ac9",
         "token": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff",
         "timelock": "0xf7b9dc26255f3e15570c30e0d07207dfcd43646f"
+      },
+      "wallet_mining": null,
+      "puppet_v3": null,
+      "abi_smuggling": {
+        "address": "0xa4899d35897033b927acfcf422bc745916139776",
+        "token": "0x86a2ee8faf9a840f7a2c64ca3d51209f9a02081d"
       }
     }
   }

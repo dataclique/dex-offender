@@ -10,3 +10,6 @@ pub mod hack09_puppet_v2;
 pub mod hack10_free_rider;
 pub mod hack11_backdoor;
 pub mod hack12_climber;
+pub mod hack13_wallet_mining;
+pub mod hack14_puppet_v3;
+pub mod hack15_abi_smuggling;
