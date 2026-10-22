@@ -1,3 +1,6 @@
+[workspace.lints.clippy]
+too_many_arguments = "allow"
+
 [workspace]
 members = ["attack", "ctf"]
 resolver = "2"
