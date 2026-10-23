@@ -2,8 +2,8 @@
 //!
 //! Become the owner and drain the PuzzleWallet proxy.
 
-use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use crate::{Level, Roles, to_ether};
+use alloy::{primitives::Address, primitives::U256, sol, sol_types::SolCall};
 use async_trait::async_trait;
 
 sol!(
@@ -11,6 +11,13 @@ sol!(
     #[sol(rpc)]
     PuzzleWallet,
     "abi/ethernaut/PuzzleWallet.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    PuzzleProxy,
+    "abi/ethernaut/PuzzleProxy.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -34,25 +41,50 @@ impl Level for Target {
         let deployer = &roles.deployer;
         let provider = roles.provider();
 
-        println!("Deploying the PuzzleWallet contract...");
-        // The upstream factory:
-        // 1. deploys PuzzleWallet logic
-        // 2. encodes init(100 ether) as proxy data
-        // 3. deploys PuzzleProxy(admin, logic, data)
-        // 4. whitelists the factory and deposits 0.001 ETH
-        // TODO: extract PuzzleProxy ABI and implement the proxy deployment
-        let contract = PuzzleWallet::deploy(provider).await?;
+        // Mirror PuzzleWalletFactory.createInstance exactly:
+        // 1. deploy the PuzzleWallet logic
+        let logic = PuzzleWallet::deploy(provider).await?;
 
-        let _ = deployer;
-        Ok(Target { address: *contract.address() })
+        // 2. deploy proxy with init(100 ether) as upgrade data
+        let init_data =
+            PuzzleWallet::initCall { _maxBalance: to_ether(100) }.abi_encode();
+        let proxy_addr = PuzzleProxy::deploy_builder(
+            provider,
+            deployer.address(),
+            *logic.address(),
+            init_data.into(),
+        )
+        .deploy()
+        .await?;
+
+        // 3. whitelist the factory (deployer here) and deposit 0.001 ETH
+        let wallet = PuzzleWallet::new(proxy_addr, provider.clone());
+        wallet
+            .addToWhitelist(deployer.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        wallet
+            .deposit()
+            .value(to_ether(1) / U256::from(1000))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        println!("Deployed the PuzzleWallet proxy at {proxy_addr}");
+        Ok(Target { address: proxy_addr })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
-        let contract = PuzzleWallet::new(self.address, provider.clone());
 
-        println!("Checking that you became the owner...");
-        let owner = contract.owner().call().await?;
-        Ok(owner == roles.offender.address())
+        println!("Checking that you became the proxy admin...");
+        let proxy = PuzzleProxy::new(self.address, provider.clone());
+        let admin = proxy.admin().call().await?;
+        Ok(admin == roles.offender.address())
     }
 }

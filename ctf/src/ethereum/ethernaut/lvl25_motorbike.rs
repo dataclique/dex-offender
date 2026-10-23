@@ -3,7 +3,11 @@
 //! Destroy the Motorbike engine by selfdestructing its implementation.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use alloy::{
+    primitives::{Address, B256, U256},
+    providers::Provider,
+    sol,
+};
 use async_trait::async_trait;
 
 sol!(
@@ -11,6 +15,13 @@ sol!(
     #[sol(rpc)]
     Motorbike,
     "abi/ethernaut/Motorbike.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Engine,
+    "abi/ethernaut/Engine.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -34,27 +45,31 @@ impl Level for Target {
         let provider = roles.provider();
 
         println!("Deploying the Motorbike contract...");
-        // Motorbike takes the engine address as constructor arg.
-        // The Engine is deployed first in the upstream factory, then passed.
-        // For now we deploy with a placeholder — the actual Engine ABI
-        // needs to be extracted separately.
-        // TODO: extract Engine ABI and deploy it first
-        let contract = Motorbike::deploy(provider, Address::ZERO).await?;
+        // Mirror MotorbikeFactory: deploy the Engine implementation first,
+        // then the proxy (whose constructor delegatecalls initialize()).
+        let engine = Engine::deploy(provider).await?;
+        let motorbike = Motorbike::deploy(provider, *engine.address()).await?;
 
-        Ok(Target { address: *contract.address() })
+        Ok(Target { address: *motorbike.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
         println!("Checking that the engine is destroyed...");
-        // Solved when the engine's implementation has no code
-        // (extcodesize == 0 after selfdestruct)
-        // The engine address is stored in the Motorbike contract
-        let contract = Motorbike::new(self.address, provider.clone());
-        // TODO: read the engine address from Motorbike's storage and check
-        // that its code size is 0 (selfdestructed)
-        let _ = contract;
-        Ok(false)
+        // Mirror MotorbikeFactory.validateInstance: the engine
+        // implementation must no longer have code (selfdestructed).
+        const EIP1967_IMPL_SLOT: B256 = alloy::primitives::b256!(
+            "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+        );
+        let raw = provider
+            .get_storage_at(
+                self.address,
+                U256::from_be_bytes(EIP1967_IMPL_SLOT.0),
+            )
+            .await?;
+        let engine = Address::from_word(B256::from(raw.to_be_bytes()));
+        let code = provider.get_code_at(engine).await?;
+        Ok(code.is_empty())
     }
 }

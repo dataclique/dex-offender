@@ -2,8 +2,8 @@
 //!
 //! Detect the DoubleEntryPoint vulnerability using a Forta bot.
 
-use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use crate::{Level, Roles, to_ether};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -11,6 +11,27 @@ sol!(
     #[sol(rpc)]
     DoubleEntryPoint,
     "abi/ethernaut/DoubleEntryPoint.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    LegacyToken,
+    "abi/ethernaut/LegacyToken.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    CryptoVault,
+    "abi/ethernaut/CryptoVault.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Forta,
+    "abi/ethernaut/Forta.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -35,35 +56,73 @@ impl Level for Target {
         let offender = &roles.offender;
         let provider = roles.provider();
 
-        println!("Deploying the DoubleEntryPoint contract...");
-        // The upstream factory deploys:
-        // 1. LegacyToken (old token)
-        // 2. CryptoVault (holds the tokens)
-        // 3. Forta (detection bot registry)
-        // 4. DoubleEntryPoint(newToken, vault, forta, player)
-        // TODO: extract LegacyToken, CryptoVault, Forta ABIs
-        let contract = DoubleEntryPoint::deploy(
+        // Mirror DoubleEntryPointFactory.createInstance.
+        let old_token = LegacyToken::deploy(provider).await?;
+        let forta = Forta::deploy(provider).await?;
+        let vault = CryptoVault::deploy(provider, offender.address()).await?;
+        let new_token = DoubleEntryPoint::deploy(
             provider,
-            Address::ZERO,
-            Address::ZERO,
-            Address::ZERO,
+            *old_token.address(),
+            *vault.address(),
+            *forta.address(),
             offender.address(),
         )
         .await?;
 
-        let _ = deployer;
-        Ok(Target { address: *contract.address() })
+        vault
+            .setUnderlying(*new_token.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        old_token
+            .delegateToNewContract(*new_token.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        old_token
+            .mint(*vault.address(), to_ether(100))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        println!("Deployed the DoubleEntryPoint at {}", new_token.address());
+        Ok(Target { address: *new_token.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
         let contract = DoubleEntryPoint::new(self.address, provider.clone());
 
-        println!("Checking that a bot raised an alert...");
-        // Solved when the Forta bot has raised an alert about the vulnerability
-        // TODO: check forta.users(player).botRaisedAlerts or similar
-        let forta = contract.forta().call().await?;
-        let _ = forta;
-        Ok(false)
+        println!("Checking that the player registered a detection bot...");
+        // Mirror validateInstance: solved when the player set a Forta
+        // detection bot and sweeping the legacy token still reverts
+        // (raised alert) while the vault keeps its balance.
+        let forta_addr = contract.forta().call().await?;
+        let forta = Forta::new(forta_addr, provider.clone());
+        let bot =
+            forta.usersDetectionBots(roles.offender.address()).call().await?;
+        if bot == Address::ZERO {
+            return Ok(false);
+        }
+
+        // Try sweeping the legacy (delegated-from) token: the alert raised by
+        // the player's bot must make the sweep revert.
+        let legacy = contract.delegatedFrom().call().await?;
+        let vault_addr = contract.cryptoVault().call().await?;
+        let vault = CryptoVault::new(vault_addr, provider.clone());
+        let sweep = vault
+            .sweepToken(legacy)
+            .from(roles.offender.address())
+            .send()
+            .await;
+        let reverted = sweep.is_err();
+        let balance = contract.balanceOf(vault_addr).call().await?;
+        Ok(reverted && balance > U256::ZERO)
     }
 }
