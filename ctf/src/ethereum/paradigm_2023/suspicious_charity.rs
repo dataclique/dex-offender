@@ -9,6 +9,13 @@ use async_trait::async_trait;
 sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
+    Router,
+    "abi/paradigm-2023/Router.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/suspicious-charity.json"
 );
@@ -38,9 +45,9 @@ impl Level for Target {
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let provider = roles.provider();
 
-        println!("Deploying the Suspicious Charity challenge...");
-        // TODO: deploy Pair + Router then Challenge(router)
-        let contract = Challenge::deploy(provider, Address::ZERO).await?;
+        // Mirror the upstream Deploy script: Router then Challenge(router).
+        let router = Router::deploy(provider).await?;
+        let contract = Challenge::deploy(provider, *router.address()).await?;
 
         Ok(Target { address: *contract.address() })
     }

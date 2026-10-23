@@ -132,44 +132,58 @@
       },
       "grains_of_sand": null,
       "black_sheep": null,
-      "dai_plus_plus": null,
+      "dai_plus_plus": {
+        "address": "0xc96304e3c037f81da488ed9dea1d8f2a48278a75"
+      },
       "dodont": null,
-      "dragon_tyrant": null,
-      "dropper": null,
-      "enterprise_blockchain": null,
-      "free_real_estate": null,
+      "dragon_tyrant": {
+        "address": "0xbec49fa140acaa83533fb00a2bb19bddd0290f25"
+      },
+      "dropper": {
+        "address": "0xd84379ceae14aa33c123af12424a37803f885889"
+      },
+      "enterprise_blockchain": {
+        "address": "0xc9a43158891282a2b1475592d5719c001986aaec"
+      },
+      "free_real_estate": {
+        "address": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff"
+      },
       "hopping_into_place": null,
-      "one_hundred_percent": null,
+      "one_hundred_percent": {
+        "address": "0xf953b3a269d80e3eb0f2947630da976b896a8c5b"
+      },
       "skill_based_game": null,
-      "suspicious_charity": null
+      "suspicious_charity": {
+        "address": "0x5c74c94173f05da1720953407cbb920f3df9f887"
+      }
     },
     "paradigm_2021": {
       "hello": {
-        "address": "0x0355b7b8cb128fa5692729ab3aaa199c1753f726"
+        "address": "0x34b40ba116d5dec75548a9e9a8f15411461e8c70"
       },
       "bank": {
-        "address": "0x202cce504e04bed6fc0521238ddf04bc9e8e15ab"
+        "address": "0xd0141e899a65c95a556fe2b27e5982a6de7fdd7a"
       },
       "bouncer": {
-        "address": "0xf4b146fba71f41e0592668ffbf264f1d186b2ca8"
+        "address": "0x07882ae1ecb7429a84f1d53048d35c4bb2056877"
       },
       "broker": null,
       "farmer": null,
       "lockbox": {
-        "address": "0x172076e0166d1f9cc711c77adf8488051744980c"
+        "address": "0x22753e4264fddc6181dc7cce468904a80a363e44"
       },
       "market": {
-        "address": "0x4ee6ecad1c2dae9f525404de8555724e3c35d07b"
+        "address": "0xa7c59f010700930003b33ab25a7a0679c860f29c"
       },
       "secure": {
-        "address": "0xbec49fa140acaa83533fb00a2bb19bddd0290f25"
+        "address": "0xfaaddc93baf78e89dcf37ba67943e1be8f37bb8c"
       },
       "swap": null,
       "vault": {
-        "address": "0xd84379ceae14aa33c123af12424a37803f885889"
+        "address": "0x276c216d241856199a83bf27b2286659e5b877d3"
       },
       "yield_aggregator": {
-        "address": "0x2b0d36facd61b71cc05ab8f3d2355ec3631c0dd5"
+        "address": "0x3347b4d90ebe72befb30444c9966b2b990ae9fcb"
       }
     },
     "paradigm_2022": {
@@ -187,59 +201,59 @@
     },
     "damn_vulnerable_defi": {
       "unstoppable": {
-        "address": "0x46b142dd1e924fab83ecc3c08e4d46e82f005e0e"
-      },
-      "naive_receiver": {
-        "address": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff",
-        "receiver": "0x4631bcabd6df18d94796344963cb60d44a4136b6"
-      },
-      "truster": {
-        "address": "0xaa292e8611adf267e563f334ee42320ac96d0463"
-      },
-      "side_entrance": {
-        "address": "0x720472c8ce72c2a2d711333e064abd3e6bbeadd3"
-      },
-      "the_rewarder": {
-        "address": "0x4b6ab5f819a515382b0deb6935d793817bb4af28"
-      },
-      "selfie": {
-        "address": "0xc0f115a19107322cfbf1cdbc7ea011c19ebdb4f8"
-      },
-      "compromised": {
-        "address": "0xd0141e899a65c95a556fe2b27e5982a6de7fdd7a"
-      },
-      "puppet": {
         "address": "0x5bf5b11053e734690269c6b9d438f8c9d48f528a"
       },
+      "naive_receiver": {
+        "address": "0x457ccf29090fe5a24c19c1bc95f492168c0eafdb",
+        "receiver": "0x525c7063e7c20997baae9bda922159152d0e8417"
+      },
+      "truster": {
+        "address": "0x2a810409872afc346f9b5b26571fd6ec42ea4849"
+      },
+      "side_entrance": {
+        "address": "0x8a93d247134d91e0de6f96547cb0204e5be8e5d8"
+      },
+      "the_rewarder": {
+        "address": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f"
+      },
+      "selfie": {
+        "address": "0x5feaebfb4439f3516c74939a9d04e95afe82c4ae"
+      },
+      "compromised": {
+        "address": "0xd42912755319665397ff090fbb63b1a31ae87cee"
+      },
+      "puppet": {
+        "address": "0xfd6f7a6a5c21a3f503ebae7a473639974379c351"
+      },
       "puppet_v2": {
-        "address": "0x5fc748f1feb28d7b76fa1c6b07d8ba2d5535177c",
-        "token": "0xab16a69a5a8c12c732e0deff4be56a70bb64c926"
+        "address": "0xefc1ab2475acb7e60499efb171d173be19928a05",
+        "token": "0x0ed64d01d0b4b655e410ef1441dd677b695639e7"
       },
       "free_rider": {
-        "address": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f",
-        "token": "0xb9beecd1a582768711de1ee7b0a1d582d9d72a6c"
+        "address": "0x8bce54ff8ab45cb075b044ae117b8fd91f9351ab",
+        "token": "0xe1fd27f4390dcbe165f4d60dbf821e4b9bb02ded"
       },
       "backdoor": {
-        "address": "0x976fcd02f7c4773dd89c309fbf55d5923b4c98a1",
-        "token": "0x5feaebfb4439f3516c74939a9d04e95afe82c4ae"
+        "address": "0x26b862f640357268bd2d9e95bc81553a2aa81d7e",
+        "token": "0x70bda08dbe07363968e9ee53d899dfe48560605b"
       },
       "climber": {
-        "address": "0xfcdb4564c18a9134002b9771816092c9693622e3",
-        "token": "0x927b167526babb9be047421db732c663a0b77b11",
-        "timelock": "0xa699d8ef1c09125189543ec2561ba56d7c96fe36"
+        "address": "0xdde78e6202518ff4936b5302cc2891ec180e8bff",
+        "token": "0xb06c856c8eabd1d8321b687e188204c1018bc4e5",
+        "timelock": "0xba6d88f8d7d8a15449bc872689d5ea00fb72cf6c"
       },
       "wallet_mining": null,
       "puppet_v3": null,
       "abi_smuggling": {
-        "address": "0x02b0b4efd909240fcb2eb5fae060dc60d112e3a4",
-        "token": "0x01c1def3b91672704716159c9041aeca392ddffb"
+        "address": "0x045857bdeae7c1c7252d611eb24eb55564198b4c",
+        "token": "0xad523115cd35a8d4e60b3c0953e0e0ac10418309"
       },
       "shards": {
-        "address": "0xd3ffd73c53f139cebb80b6a524be280955b3f4db"
+        "address": "0x9338ca7d556248055f5751d85cda7ad6ef254433"
       },
       "withdrawal": {
-        "address": "0xcbbe2a5c3a22be749d5ddf24e9534f98951983e2",
-        "token": "0x9fd16ea9e31233279975d99d5e8fc91dd214c7da"
+        "address": "0x33e45b187da34826abceda1039231be46f1b05af",
+        "token": "0x7cf4be31f546c04787886358b9486ca3d62b9acf"
       }
     }
   }

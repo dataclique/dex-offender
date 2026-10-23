@@ -56,20 +56,35 @@ pub async fn set_up_paradigm_2023(roles: &Roles) -> eyre::Result<Paradigm2023> {
     let hello_world = hello_world::Target::set_up(roles).await?;
     let cosmic_radiation = cosmic_radiation::Target::set_up(roles).await?;
 
+    // Locally deployable set_ups; failures fall back to None so one
+    // broken challenge never blocks the whole deployment.
+    let dragon_tyrant = dragon_tyrant::Target::set_up(roles).await.ok();
+    let dropper = dropper::Target::set_up(roles).await.ok();
+    let enterprise_blockchain =
+        enterprise_blockchain::Target::set_up(roles).await.ok();
+    let free_real_estate = free_real_estate::Target::set_up(roles).await.ok();
+    let one_hundred_percent =
+        one_hundred_percent::Target::set_up(roles).await.ok();
+    let suspicious_charity =
+        suspicious_charity::Target::set_up(roles).await.ok();
+    let dai_plus_plus = dai_plus_plus::Target::set_up(roles).await.ok();
+
+    // Fork/toolchain-blocked (see field docs): grains_of_sand,
+    // black_sheep, dodont, hopping_into_place, skill_based_game.
     Ok(Paradigm2023 {
         hello_world,
         cosmic_radiation,
         grains_of_sand: None,
         black_sheep: None,
-        dai_plus_plus: None,
+        dai_plus_plus,
         dodont: None,
-        dragon_tyrant: None,
-        dropper: None,
-        enterprise_blockchain: None,
-        free_real_estate: None,
+        dragon_tyrant,
+        dropper,
+        enterprise_blockchain,
+        free_real_estate,
         hopping_into_place: None,
-        one_hundred_percent: None,
+        one_hundred_percent,
         skill_based_game: None,
-        suspicious_charity: None,
+        suspicious_charity,
     })
 }

@@ -2,9 +2,27 @@
 //!
 //! Get 100% of the split.
 
-use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use crate::{Level, Roles, to_ether};
+use alloy::{
+    primitives::U256,
+    primitives::{Address, address},
+    sol,
+};
 use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Split,
+    "abi/paradigm-2023/Split.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    SplitWallet,
+    "abi/paradigm-2023/SplitWallet.json"
+);
 
 sol!(
     #[allow(missing_docs)]
@@ -36,11 +54,39 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
+        let deployer = &roles.deployer;
         let provider = roles.provider();
 
-        println!("Deploying the One Hundred Percent challenge...");
-        // TODO: deploy Split then Challenge(split)
-        let contract = Challenge::deploy(provider, Address::ZERO).await?;
+        // Mirror the upstream Deploy script: Split, a 50/50 dEaD/bEEF
+        // split, 100 ether deposited into its wallet, then the Challenge.
+        let split = Split::deploy(provider).await?;
+        let id = split
+            .createSplit(
+                vec![
+                    address!("000000000000000000000000000000000000dEaD"),
+                    address!("000000000000000000000000000000000000bEEF"),
+                ],
+                vec![500_000, 500_000],
+                0,
+            )
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        let _ = id;
+
+        let data = split.splitsById(U256::ZERO).call().await?;
+        SplitWallet::new(data.wallet, provider.clone())
+            .deposit()
+            .value(to_ether(100))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        let contract = Challenge::deploy(provider, *split.address()).await?;
 
         Ok(Target { address: *contract.address() })
     }

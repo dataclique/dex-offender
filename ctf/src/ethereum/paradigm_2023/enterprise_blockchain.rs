@@ -3,8 +3,22 @@
 //! Exploit the cross-chain bridge.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Bridge,
+    "abi/paradigm-2023/Bridge.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    FlagToken,
+    "abi/paradigm-2023/FlagToken.json"
+);
 
 sol!(
     #[allow(missing_docs)]
@@ -36,12 +50,44 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
+        let relayer = &roles.some_user;
+        let offender = &roles.offender;
         let provider = roles.provider();
 
-        println!("Deploying the Enterprise Blockchain challenge...");
-        // TODO: deploy Bridge + FlagToken then Challenge(l1Bridge, flagToken)
-        let contract =
-            Challenge::deploy(provider, Address::ZERO, Address::ZERO).await?;
+        // Mirror the upstream Deploy script. It forks L1+L2; locally both
+        // bridges live on the same anvil with distinct registered chain ids
+        // (78705 self-registration, 78704 → L1 bridge), preserving the
+        // replay mechanics.
+        let l1_bridge = Bridge::deploy(provider, relayer.address()).await?;
+        let flag_token = FlagToken::deploy(
+            provider,
+            *l1_bridge.address(),
+            offender.address(),
+        )
+        .await?;
+        let contract = Challenge::deploy(
+            provider,
+            *l1_bridge.address(),
+            *flag_token.address(),
+        )
+        .await?;
+
+        l1_bridge
+            .registerRemoteBridge(U256::from(78705), *l1_bridge.address())
+            .from(relayer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        let l2_bridge = Bridge::deploy(provider, relayer.address()).await?;
+        l2_bridge
+            .registerRemoteBridge(U256::from(78704), *l1_bridge.address())
+            .from(relayer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
 
         Ok(Target { address: *contract.address() })
     }

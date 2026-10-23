@@ -9,6 +9,10 @@ async fn main() -> eyre::Result<()> {
     let mut anvil = std::process::Command::new("anvil")
         .arg("--port")
         .arg("8901")
+        // Paradigm's CTF launcher raises the EIP-170 code-size limit (some
+        // 2023 helpers exceed 24 KiB of deployed code).
+        .arg("--code-size-limit")
+        .arg("50000")
         .arg("--dump-state")
         .arg("state.json")
         .arg("--state-interval")

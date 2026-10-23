@@ -2,9 +2,37 @@
 //!
 //! Exploit the stablecoin system.
 
-use crate::{Level, Roles};
+use crate::{Level, Roles, anvil::plant_eth_usd_feed};
 use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    SystemConfiguration,
+    "abi/paradigm-2023/SystemConfiguration.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    AccountManager,
+    "abi/paradigm-2023/AccountManager.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Stablecoin,
+    "abi/paradigm-2023/Stablecoin.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    AccountImpl,
+    "abi/paradigm-2023/Account.json"
+);
 
 sol!(
     #[allow(missing_docs)]
@@ -36,11 +64,57 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
+        let deployer = &roles.deployer;
         let provider = roles.provider();
 
-        println!("Deploying the Dai Plus Plus challenge...");
-        // TODO: deploy SystemConfiguration helper then Challenge(configuration)
-        let contract = Challenge::deploy(provider, Address::ZERO).await?;
+        // Mirror the upstream Deploy script. The canonical ETH/USD feed is
+        // planted as a fixed-price mock (see anvil::plant_eth_usd_feed).
+        plant_eth_usd_feed(roles).await?;
+
+        let configuration = SystemConfiguration::deploy(provider).await?;
+        let manager =
+            AccountManager::deploy(provider, *configuration.address()).await?;
+        configuration
+            .updateAccountManager(*manager.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        let stablecoin =
+            Stablecoin::deploy(provider, *configuration.address()).await?;
+        configuration
+            .updateStablecoin(*stablecoin.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        let account_impl = AccountImpl::deploy(provider).await?;
+        configuration
+            .updateAccountImplementation(*account_impl.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        configuration
+            .updateEthUsdPriceFeed(crate::anvil::MAINNET_ETH_USD_FEED)
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        configuration
+            .updateSystemContract(*manager.address(), true)
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        let contract =
+            Challenge::deploy(provider, *configuration.address()).await?;
 
         Ok(Target { address: *contract.address() })
     }

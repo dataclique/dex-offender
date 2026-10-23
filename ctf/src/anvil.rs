@@ -68,3 +68,32 @@ pub async fn plant_weth9(roles: &Roles) -> eyre::Result<()> {
 
     set_code(roles, MAINNET_WETH9, code).await
 }
+
+/// Canonical mainnet Chainlink ETH/USD price feed.
+pub const MAINNET_ETH_USD_FEED: Address =
+    address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419");
+
+/// Plant a fixed-price (2000 USD) Chainlink mock at the canonical
+/// mainnet feed address (used by Paradigm 2023 dai-plus-plus).
+/// Idempotent.
+pub async fn plant_eth_usd_feed(roles: &Roles) -> eyre::Result<()> {
+    let existing = roles
+        .provider()
+        .get_code_at(MAINNET_ETH_USD_FEED)
+        .block_id(BlockId::latest())
+        .await?;
+    if !existing.is_empty() {
+        return Ok(());
+    }
+
+    let artifact: serde_json::Value = serde_json::from_str(include_str!(
+        "../abi/paradigm-2023/MockEthUsdFeed.json"
+    ))?;
+    let hex =
+        artifact["deployedBytecode"]["object"].as_str().ok_or_else(|| {
+            eyre::eyre!("mock feed artifact missing deployedBytecode.object")
+        })?;
+    let code: Bytes = hex.parse()?;
+
+    set_code(roles, MAINNET_ETH_USD_FEED, code).await
+}
