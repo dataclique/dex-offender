@@ -140,3 +140,28 @@ pub async fn send_as(
     }
     Err(eyre::eyre!("impersonated tx {tx_hash} never mined"))
 }
+
+/// Broadcast a pre-signed raw transaction (anvil `sendRawTransaction`),
+/// waiting for its receipt.
+pub async fn broadcast_raw(roles: &Roles, raw_tx: &str) -> eyre::Result<B256> {
+    let tx_hash: B256 = roles
+        .provider()
+        .client()
+        .request("eth_sendRawTransaction", (raw_tx,))
+        .await?;
+    for _ in 0..60 {
+        let receipt: Option<serde_json::Value> = roles
+            .provider()
+            .client()
+            .request("eth_getTransactionReceipt", (tx_hash,))
+            .await?;
+        if let Some(receipt) = receipt {
+            if receipt["status"].as_str() != Some("0x1") {
+                return Err(eyre::eyre!("raw tx {tx_hash} reverted"));
+            }
+            return Ok(tx_hash);
+        }
+        tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+    }
+    Err(eyre::eyre!("raw tx {tx_hash} never mined"))
+}

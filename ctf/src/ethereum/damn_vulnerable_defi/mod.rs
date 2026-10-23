@@ -82,7 +82,7 @@ pub async fn set_up_damn_vulnerable_defi(
         free_rider,
         backdoor,
         climber,
-        wallet_mining: None, // TODO: Safe factory + CreateX raw tx deploy
+        wallet_mining: wallet_mining::Target::set_up(roles).await.ok(),
         puppet_v3: puppet_v3::Target::set_up(roles).await.ok(),
         curvy_puppet: curvy_puppet::Target::set_up(roles).await.ok(),
         abi_smuggling,

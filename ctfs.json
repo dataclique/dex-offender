@@ -255,8 +255,12 @@
         "token": "0x2b5a4e5493d4a54e717057b127cf0c000c876f9b",
         "timelock": "0xd5a0a480ac9500c3b81de52a7b604c45eae2868f"
       },
-      "wallet_mining": null,
+      "wallet_mining": {
+        "address": "0xde4c2fb548649bcb38dd3e33d51b613bb8ec4f1c",
+        "token": "0x627b9a657eac8c3463ad17009a424dfe3fdbd0b1"
+      },
       "puppet_v3": null,
+      "curvy_puppet": null,
       "abi_smuggling": {
         "address": "0x821f3361d454cc98b7555221a06be563a7e2e0a6",
         "token": "0x02df3a3f960393f5b349e40a599feda91a7cc1a7"
