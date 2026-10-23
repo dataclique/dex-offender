@@ -9,15 +9,20 @@
 //! hardcode UniswapV2 factory/router plus DAI/COMP/cTokens — those stay
 //! undeployed (`None`) until equivalent planting exists.
 
+pub mod babyrev;
+pub mod babysandbox;
 pub mod bank;
 pub mod bouncer;
 pub mod broker;
 pub mod farmer;
 pub mod hello;
+pub mod jop;
 pub mod lockbox;
 pub mod market;
+pub mod rever;
 pub mod secure;
 pub mod swap;
+pub mod upgrade;
 pub mod vault;
 pub mod yield_aggregator;
 
@@ -26,13 +31,19 @@ use crate::{Level as _, Roles};
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Paradigm2021 {
     pub hello: hello::Target,
+    /// upgrade: requires the real mainnet USDC proxy (fork-only)
+    pub upgrade: Option<upgrade::Target>,
     // Remaining challenges: ABI + level modules ready, deploy TODO
+    pub babyrev: Option<babyrev::Target>,
+    pub babysandbox: Option<babysandbox::Target>,
     pub bank: Option<bank::Target>,
     pub bouncer: Option<bouncer::Target>,
     pub broker: Option<broker::Target>,
     pub farmer: Option<farmer::Target>,
+    pub jop: Option<jop::Target>,
     pub lockbox: Option<lockbox::Target>,
     pub market: Option<market::Target>,
+    pub rever: Option<rever::Target>,
     pub secure: Option<secure::Target>,
     pub swap: Option<swap::Target>,
     pub vault: Option<vault::Target>,
@@ -52,6 +63,11 @@ pub async fn set_up_paradigm_2021(roles: &Roles) -> eyre::Result<Paradigm2021> {
         broker: None,
         farmer: None,
         lockbox: lockbox::Target::set_up(roles).await.ok(),
+        babyrev: babyrev::Target::set_up(roles).await.ok(),
+        babysandbox: babysandbox::Target::set_up(roles).await.ok(),
+        jop: jop::Target::set_up(roles).await.ok(),
+        rever: rever::Target::set_up(roles).await.ok(),
+        upgrade: None,
         market: market::Target::set_up(roles).await.ok(),
         secure: secure::Target::set_up(roles).await.ok(),
         swap: None,

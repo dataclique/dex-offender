@@ -2,8 +2,10 @@
 //!
 //! Each challenge deploys a Setup contract that exposes `isSolved()`.
 //!
-//! NOTE: trapdooor/trapdoooor deploy raw bytecode (no Setup.sol with
-//! isSolved) — they need custom deployment logic.
+//! NOTE: trapdooor/trapdoooor are off-chain judged challenges — the
+//! player submits runtime bytecode that factors a random semiprime,
+//! graded by a forge script (see their public/deploy/chal.py). There is
+//! no on-chain Setup, so they have no harness module.
 
 pub mod electric_sheep;
 pub mod fun_reversing_challenge;
