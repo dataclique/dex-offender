@@ -30,6 +30,13 @@ pub trait SolChain: Send + Sync {
         payer: &Keypair,
         ixs: &[Instruction],
     ) -> eyre::Result<Vec<String>>;
+    /// Send a transaction signed by multiple keypairs (evaluation flows
+    /// that require two signers, e.g. bootcamp level 2's reveal_secret).
+    fn send_signed(
+        &self,
+        signers: &[&Keypair],
+        ixs: &[Instruction],
+    ) -> eyre::Result<Vec<String>>;
     fn get_account(&self, addr: &Pubkey) -> Option<Vec<u8>>;
     fn set_account(&self, addr: Pubkey, data: Vec<u8>, owner: Pubkey);
     fn airdrop(&self, addr: &Pubkey, lamports: u64) -> eyre::Result<()>;
@@ -80,6 +87,26 @@ impl SolChain for LiteSvmChain {
             self.svm.lock().map_err(|e| eyre::eyre!("svm lock: {e}"))?;
         let msg = Message::new(ixs, Some(&payer.pubkey()));
         let tx = Transaction::new(&[payer], msg, svm.latest_blockhash());
+        let result = svm.send_transaction(tx);
+        match result {
+            Ok(meta) => Ok(meta.logs),
+            Err(e) => Err(eyre::eyre!(
+                "tx failed: {:?}; meta logs: {:?}",
+                e.err,
+                e.meta.logs
+            )),
+        }
+    }
+
+    fn send_signed(
+        &self,
+        signers: &[&Keypair],
+        ixs: &[Instruction],
+    ) -> eyre::Result<Vec<String>> {
+        let mut svm =
+            self.svm.lock().map_err(|e| eyre::eyre!("svm lock: {e}"))?;
+        let msg = Message::new(ixs, Some(&signers[0].pubkey()));
+        let tx = Transaction::new(signers, msg, svm.latest_blockhash());
         let result = svm.send_transaction(tx);
         match result {
             Ok(meta) => Ok(meta.logs),
