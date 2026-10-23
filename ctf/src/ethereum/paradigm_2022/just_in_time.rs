@@ -36,8 +36,15 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let _ = roles;
-        unimplemented!("just-in-time requires mainnet fork")
+        let provider = roles.provider();
+        println!("Deploying the just-in-time challenge...");
+        // Self-contained setup; only needs exactly 50 ether of value.
+        let setup = Setup::deploy_builder(provider)
+            .value(crate::to_ether(50))
+            .from(roles.deployer.address())
+            .deploy()
+            .await?;
+        Ok(Target { address: setup })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {

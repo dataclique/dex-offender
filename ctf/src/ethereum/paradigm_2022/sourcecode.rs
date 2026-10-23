@@ -36,8 +36,10 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let _ = roles;
-        unimplemented!("sourcecode requires mainnet fork")
+        let provider = roles.provider();
+        println!("Deploying the sourcecode challenge...");
+        let setup = Setup::deploy(provider).await?;
+        Ok(Target { address: *setup.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {

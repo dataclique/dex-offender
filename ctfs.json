@@ -201,76 +201,90 @@
     },
     "paradigm_2022": {
       "electric_sheep": null,
-      "fun_reversing_challenge": null,
+      "fun_reversing_challenge": {
+        "address": "0xab16a69a5a8c12c732e0deff4be56a70bb64c926"
+      },
       "hint_finance": null,
-      "just_in_time": null,
-      "lockbox2": null,
-      "merkledrop": null,
-      "random": null,
+      "just_in_time": {
+        "address": "0xe3011a37a904ab90c8881a99bd1f6e21401f1522"
+      },
+      "lockbox2": {
+        "address": "0x1f10f3ba7acb61b2f50b9d6ddcf91a6f787c0e82"
+      },
+      "merkledrop": {
+        "address": "0x457ccf29090fe5a24c19c1bc95f492168c0eafdb"
+      },
+      "random": {
+        "address": "0x525c7063e7c20997baae9bda922159152d0e8417"
+      },
       "rescue": null,
-      "sourcecode": null,
+      "sourcecode": {
+        "address": "0x38a024c0b412b9d1db8bc398140d00f5af3093d4"
+      },
       "stealing_sats": null,
-      "vanity": null
+      "vanity": {
+        "address": "0x5fc748f1feb28d7b76fa1c6b07d8ba2d5535177c"
+      }
     },
     "damn_vulnerable_defi": {
       "unstoppable": {
-        "address": "0xe3011a37a904ab90c8881a99bd1f6e21401f1522"
+        "address": "0x2a810409872afc346f9b5b26571fd6ec42ea4849"
       },
       "naive_receiver": {
-        "address": "0xb82008565fdc7e44609fa118a4a681e92581e680",
-        "receiver": "0x2a810409872afc346f9b5b26571fd6ec42ea4849"
+        "address": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f",
+        "receiver": "0x6f6f570f45833e249e27022648a26f4076f48f78"
       },
       "truster": {
-        "address": "0xf32d39ff9f6aa7a7a64d7a4f00a54826ef791a55"
+        "address": "0x976fcd02f7c4773dd89c309fbf55d5923b4c98a1"
       },
       "side_entrance": {
-        "address": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f"
+        "address": "0xd42912755319665397ff090fbb63b1a31ae87cee"
       },
       "the_rewarder": {
-        "address": "0x5feaebfb4439f3516c74939a9d04e95afe82c4ae"
-      },
-      "selfie": {
-        "address": "0xfcdb4564c18a9134002b9771816092c9693622e3"
-      },
-      "compromised": {
         "address": "0x01c1def3b91672704716159c9041aeca392ddffb"
       },
+      "selfie": {
+        "address": "0xfd6f7a6a5c21a3f503ebae7a473639974379c351"
+      },
+      "compromised": {
+        "address": "0x0ed64d01d0b4b655e410ef1441dd677b695639e7"
+      },
       "puppet": {
-        "address": "0x4bf010f1b9beda5450a8dd702ed602a104ff65ee"
+        "address": "0xd49a0e9a4cd5979ae36840f542d2d7f02c4817be"
       },
       "puppet_v2": {
-        "address": "0xc582bc0317dbb0908203541971a358c44b1f3766",
-        "token": "0x986aaa537b8cc170761fdac6ac4fc7f9d8a20a8c"
+        "address": "0xaca81583840b1bf2ddf6cde824ada250c1936b4d",
+        "token": "0xb2b580ce436e6f77a5713d80887e14788ef49c9a"
       },
       "free_rider": {
-        "address": "0x70bda08dbe07363968e9ee53d899dfe48560605b",
-        "token": "0x66f625b8c4c635af8b74ece2d7ed0d58b4af3c3d"
+        "address": "0xad523115cd35a8d4e60b3c0953e0e0ac10418309",
+        "token": "0xa56f946d6398dd7d9d4d9b337cf9e0f68982ca5b"
       },
       "backdoor": {
-        "address": "0xb06c856c8eabd1d8321b687e188204c1018bc4e5",
-        "token": "0xdde78e6202518ff4936b5302cc2891ec180e8bff"
+        "address": "0x821f3361d454cc98b7555221a06be563a7e2e0a6",
+        "token": "0x02df3a3f960393f5b349e40a599feda91a7cc1a7"
       },
       "climber": {
-        "address": "0x045857bdeae7c1c7252d611eb24eb55564198b4c",
-        "token": "0x2b5a4e5493d4a54e717057b127cf0c000c876f9b",
-        "timelock": "0xd5a0a480ac9500c3b81de52a7b604c45eae2868f"
+        "address": "0x71089ba41e478702e1904692385be3972b2cbf9e",
+        "token": "0x8f4ec854dd12f1fe79500a1f53d0cbb30f9b6134",
+        "timelock": "0xd0c43831ab7c05716012b2fde15598ec10811201"
       },
       "wallet_mining": {
-        "address": "0xde4c2fb548649bcb38dd3e33d51b613bb8ec4f1c",
-        "token": "0x627b9a657eac8c3463ad17009a424dfe3fdbd0b1"
+        "address": "0x7d1d0d4a3498f978103f654ed68117a1e5b70072",
+        "token": "0xd753c12650c280383ce873cc3a898f6f53973d16"
       },
       "puppet_v3": null,
       "curvy_puppet": null,
       "abi_smuggling": {
-        "address": "0x821f3361d454cc98b7555221a06be563a7e2e0a6",
-        "token": "0x02df3a3f960393f5b349e40a599feda91a7cc1a7"
+        "address": "0x12bcb546bc60ff39f1adfc7ce4605d5bd6a6a876",
+        "token": "0xef31027350be2c7439c1b0be022d49421488b72c"
       },
       "shards": {
-        "address": "0x0c626fc4a447b01554518550e30600136864640b"
+        "address": "0xa4e00cb342b36ec9fdc4b50b3d527c3643d4c49e"
       },
       "withdrawal": {
-        "address": "0x158d291d8b47f056751cff47d1eecd19fdf9b6f8",
-        "token": "0x2a590c461db46bca129e8dbe5c3998a8ff402e76"
+        "address": "0x4eab29997d332a666c3c366217ab177cf9a7c436",
+        "token": "0x325c8df4cfb5b068675aff8f62aa668d1dec3c4b"
       }
     }
   }

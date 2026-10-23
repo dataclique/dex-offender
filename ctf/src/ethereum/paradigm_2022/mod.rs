@@ -19,7 +19,7 @@ pub mod sourcecode;
 pub mod stealing_sats;
 pub mod vanity;
 
-use crate::Roles;
+use crate::{Level as _, Roles};
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Paradigm2022 {
@@ -39,21 +39,24 @@ pub struct Paradigm2022 {
 
 pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
     println!("Deploying Paradigm CTF 2022 challenges...");
-    // TODO: most 2022 Setup constructors revert on local anvil (similar to 2021)
-    // Fix per-challenge deployment. See each module's set_up for the attempt.
-    let _ = roles;
+    // Each set_up self-documents its own requirements; failures fall back
+    // to None so one broken challenge never blocks the whole deployment.
+    // Fork-only: electric_sheep (NFT state), hint_finance (mainnet tokens),
+    // stealing_sats (mainnet WBTC + Bitfinex wallet).
 
     Ok(Paradigm2022 {
-        electric_sheep: None, // also needs mainnet fork
-        fun_reversing_challenge: None,
+        electric_sheep: None,
+        fun_reversing_challenge: fun_reversing_challenge::Target::set_up(roles)
+            .await
+            .ok(),
         hint_finance: None,
-        just_in_time: None,
-        lockbox2: None,
-        merkledrop: None,
-        random: None,
-        rescue: None,
-        sourcecode: None,
+        just_in_time: just_in_time::Target::set_up(roles).await.ok(),
+        lockbox2: lockbox2::Target::set_up(roles).await.ok(),
+        merkledrop: merkledrop::Target::set_up(roles).await.ok(),
+        random: random::Target::set_up(roles).await.ok(),
+        rescue: None, // fork-only: real SushiSwap MasterChef + router
+        sourcecode: sourcecode::Target::set_up(roles).await.ok(),
         stealing_sats: None,
-        vanity: None,
+        vanity: vanity::Target::set_up(roles).await.ok(),
     })
 }
