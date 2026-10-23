@@ -3,7 +3,7 @@
 //! Compromise the ECLocker so anyone can open the door.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -11,6 +11,13 @@ sol!(
     #[sol(rpc)]
     Impersonator,
     "abi/ethernaut/Impersonator.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    ECLocker,
+    "abi/ethernaut/ECLocker.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -33,10 +40,30 @@ impl Level for Target {
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let provider = roles.provider();
 
-        println!("Deploying the Impersonator contract...");
+        // Mirror ImpersonatorFactory: Impersonator(1336) plus the first
+        // ECLock deployed with the factory's known signature (r, s, v).
         let contract =
-            Impersonator::deploy(provider, alloy::primitives::U256::from(1))
+            Impersonator::deploy(provider, alloy::primitives::U256::from(1336))
                 .await?;
+        let r: alloy::primitives::U256 =
+            "11397568185806560130291530949248708355673262872727946990834312389557386886033"
+                .parse()?;
+        let s: alloy::primitives::U256 =
+            "54405834204020870944342294544757609285398723182661749830189277079337680158706"
+                .parse()?;
+        let mut sig = Vec::with_capacity(96);
+        sig.extend_from_slice(&r.to_be_bytes::<32>());
+        sig.extend_from_slice(&s.to_be_bytes::<32>());
+        sig.extend_from_slice(
+            &alloy::primitives::U256::from(27).to_be_bytes::<32>(),
+        );
+        contract
+            .deployNewLock(sig.into())
+            .from(roles.deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
 
         Ok(Target { address: *contract.address() })
     }
@@ -45,10 +72,11 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Impersonator::new(self.address, provider.clone());
 
-        println!("Checking that the lock is compromised...");
-        // Solved when anyone (not just authorized) can open the door
-        // TODO: determine exact check from the contract source
-        let owner = contract.owner().call().await?;
-        Ok(owner == roles.offender.address())
+        println!("Checking that the lock controller was cleared...");
+        // Mirror validateInstance: lockers(0).controller() == 0.
+        let locker_addr = contract.lockers(U256::from(0)).call().await?;
+        let locker = ECLocker::new(locker_addr, provider.clone());
+        let controller = locker.controller().call().await?;
+        Ok(controller == Address::ZERO)
     }
 }

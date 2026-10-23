@@ -89,45 +89,46 @@
         "address": "0x5eb3bc0a489c5a8288765d2336659ebca68fcd00"
       },
       "level30": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x36c02da8a0983159322a80ffe9f24b1acff8b570"
       },
       "level31": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x4c5859f0f772848b2d91f1d83e2fe57935348029"
       },
       "level32": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x1291be112d480055dafd8a610b7d1e203891c274"
       },
       "level33": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0xb7278a61aa25c888815afc32ad3cc52ff24fe575"
       },
       "level34": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x7969c5ed335650692bc04293b07f5bf2e7a673c0"
       },
       "level35": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0xcbeaf3bde82155f56486fb5a1072cb8baaf547cc"
       },
       "level36": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x1fa02b2d6a771842690194cf62d91bdd92bfe28d",
+        "free": "0x162a433068f51e18b7d13932f27e66a3f99e6890"
       },
       "level37": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x04c89607413713ec9775e14b954286519d836fef"
       },
       "level38": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0xd8a5a9b31c3c0232e196d518e89fd8bf83acad43"
       },
       "level39": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0xdc11f7e700a4c898ae5caddb1082cffa76512add"
       },
       "level40": {
-        "address": "0x0000000000000000000000000000000000000000"
+        "address": "0x51a1ceb83b83f1985a81c295d1ff28afef186e02"
       }
     },
     "paradigm_2023": {
       "hello_world": {
-        "address": "0x36c02da8a0983159322a80ffe9f24b1acff8b570"
+        "address": "0x36b58f5c1969b7b6591d752ea6f5486d069010ab"
       },
       "cosmic_radiation": {
-        "address": "0x809d550fca64d94bd9f66e60752a544199cfac3d"
+        "address": "0x8198f5d8f8cffe8f9c413d98a0a55aeb8ab9fbb7"
       },
       "grains_of_sand": null,
       "black_sheep": null,
@@ -144,31 +145,31 @@
     },
     "paradigm_2021": {
       "hello": {
-        "address": "0x4c5859f0f772848b2d91f1d83e2fe57935348029"
+        "address": "0x0355b7b8cb128fa5692729ab3aaa199c1753f726"
       },
       "bank": {
-        "address": "0x1291be112d480055dafd8a610b7d1e203891c274"
+        "address": "0x202cce504e04bed6fc0521238ddf04bc9e8e15ab"
       },
       "bouncer": {
-        "address": "0x5f3f1dbd7b74c6b46e8c44f98792a1daf8d69154"
+        "address": "0xf4b146fba71f41e0592668ffbf264f1d186b2ca8"
       },
       "broker": null,
       "farmer": null,
       "lockbox": {
-        "address": "0xb7278a61aa25c888815afc32ad3cc52ff24fe575"
+        "address": "0x172076e0166d1f9cc711c77adf8488051744980c"
       },
       "market": {
-        "address": "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90"
+        "address": "0x4ee6ecad1c2dae9f525404de8555724e3c35d07b"
       },
       "secure": {
-        "address": "0x82e01223d51eb87e16a03e24687edf0f294da6f1"
+        "address": "0xbec49fa140acaa83533fb00a2bb19bddd0290f25"
       },
       "swap": null,
       "vault": {
-        "address": "0x2bdcc0de6be1f7d2ee689a0342d76f52e8efaba3"
+        "address": "0xd84379ceae14aa33c123af12424a37803f885889"
       },
       "yield_aggregator": {
-        "address": "0x7969c5ed335650692bc04293b07f5bf2e7a673c0"
+        "address": "0x2b0d36facd61b71cc05ab8f3d2355ec3631c0dd5"
       }
     },
     "paradigm_2022": {
@@ -186,59 +187,59 @@
     },
     "damn_vulnerable_defi": {
       "unstoppable": {
-        "address": "0xc351628eb244ec633d5f21fbd6621e1a683b1181"
+        "address": "0x46b142dd1e924fab83ecc3c08e4d46e82f005e0e"
       },
       "naive_receiver": {
-        "address": "0x922d6956c99e12dfeb3224dea977d0939758a1fe",
-        "receiver": "0x5081a39b8a5f0e35a8d959395a630b68b74dd30f"
+        "address": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff",
+        "receiver": "0x4631bcabd6df18d94796344963cb60d44a4136b6"
       },
       "truster": {
-        "address": "0x4c4a2f8c81640e47606d3fd77b353e87ba015584"
+        "address": "0xaa292e8611adf267e563f334ee42320ac96d0463"
       },
       "side_entrance": {
-        "address": "0x2e2ed0cfd3ad2f1d34481277b3204d807ca2f8c2"
+        "address": "0x720472c8ce72c2a2d711333e064abd3e6bbeadd3"
       },
       "the_rewarder": {
-        "address": "0x36b58f5c1969b7b6591d752ea6f5486d069010ab"
+        "address": "0x4b6ab5f819a515382b0deb6935d793817bb4af28"
       },
       "selfie": {
-        "address": "0xf4b146fba71f41e0592668ffbf264f1d186b2ca8"
+        "address": "0xc0f115a19107322cfbf1cdbc7ea011c19ebdb4f8"
       },
       "compromised": {
-        "address": "0xbec49fa140acaa83533fb00a2bb19bddd0290f25"
+        "address": "0xd0141e899a65c95a556fe2b27e5982a6de7fdd7a"
       },
       "puppet": {
-        "address": "0x4c2f7092c2ae51d986befee378e50bd4db99c901"
+        "address": "0x5bf5b11053e734690269c6b9d438f8c9d48f528a"
       },
       "puppet_v2": {
-        "address": "0x720472c8ce72c2a2d711333e064abd3e6bbeadd3",
-        "token": "0x4631bcabd6df18d94796344963cb60d44a4136b6"
+        "address": "0x5fc748f1feb28d7b76fa1c6b07d8ba2d5535177c",
+        "token": "0xab16a69a5a8c12c732e0deff4be56a70bb64c926"
       },
       "free_rider": {
-        "address": "0xc0f115a19107322cfbf1cdbc7ea011c19ebdb4f8",
-        "token": "0x18e317a7d70d8fbf8e6e893616b52390ebbdb629"
+        "address": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f",
+        "token": "0xb9beecd1a582768711de1ee7b0a1d582d9d72a6c"
       },
       "backdoor": {
-        "address": "0x22753e4264fddc6181dc7cce468904a80a363e44",
-        "token": "0x07882ae1ecb7429a84f1d53048d35c4bb2056877"
+        "address": "0x976fcd02f7c4773dd89c309fbf55d5923b4c98a1",
+        "token": "0x5feaebfb4439f3516c74939a9d04e95afe82c4ae"
       },
       "climber": {
-        "address": "0x276c216d241856199a83bf27b2286659e5b877d3",
-        "token": "0x3347b4d90ebe72befb30444c9966b2b990ae9fcb",
-        "timelock": "0xc8a6b30d7de5a5277a3d71abb89e194e9284acff"
+        "address": "0xfcdb4564c18a9134002b9771816092c9693622e3",
+        "token": "0x927b167526babb9be047421db732c663a0b77b11",
+        "timelock": "0xa699d8ef1c09125189543ec2561ba56d7c96fe36"
       },
       "wallet_mining": null,
       "puppet_v3": null,
       "abi_smuggling": {
-        "address": "0xffa7ca1aeeebbc30c874d32c7e22f052bbea0429",
-        "token": "0x5bf5b11053e734690269c6b9d438f8c9d48f528a"
+        "address": "0x02b0b4efd909240fcb2eb5fae060dc60d112e3a4",
+        "token": "0x01c1def3b91672704716159c9041aeca392ddffb"
       },
       "shards": {
-        "address": "0x967ab65ef14c58bd4dcffeaaa1adb40a022140e5"
+        "address": "0xd3ffd73c53f139cebb80b6a524be280955b3f4db"
       },
       "withdrawal": {
-        "address": "0x8e264821afa98dd104eecfcfa7fd9f8d8b320ada",
-        "token": "0x0aec7c174554af8aec3680bb58431f6618311510"
+        "address": "0xcbbe2a5c3a22be749d5ddf24e9534f98951983e2",
+        "token": "0x9fd16ea9e31233279975d99d5e8fc91dd214c7da"
       }
     }
   }

@@ -13,6 +13,13 @@ sol!(
     "abi/ethernaut/Stake.json"
 );
 
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Weth,
+    "abi/damn-vulnerable-defi/WETH.json"
+);
+
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
@@ -33,11 +40,12 @@ impl Level for Target {
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let provider = roles.provider();
 
-        println!("Deploying the Stake contract...");
-        // Stake takes a WETH address
-        // TODO: deploy WETH first
-        let contract = Stake::deploy(provider, Address::ZERO).await?;
+        // Mirror StakeFactory: deploy a dummy WETH token (any ERC20
+        // answering allowance/transferFrom works), then the Stake pool.
+        let weth = Weth::deploy(provider).await?;
+        let contract = Stake::deploy(provider, *weth.address()).await?;
 
+        println!("Deployed the Stake contract at {}", contract.address());
         Ok(Target { address: *contract.address() })
     }
 

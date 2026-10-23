@@ -3,7 +3,7 @@
 //! Master the art of strategic gambling and become a bettor.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -11,6 +11,20 @@ sol!(
     #[sol(rpc)]
     BetHouse,
     "abi/ethernaut/BetHouse.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Pool,
+    "abi/ethernaut/Pool.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    PoolToken,
+    "abi/ethernaut/PoolToken.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -31,12 +45,51 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
+        let deployer = &roles.deployer;
+        let offender = &roles.offender;
         let provider = roles.provider();
 
-        println!("Deploying the BetHouse contract...");
-        // TODO: deploy pool token first
-        let contract = BetHouse::deploy(provider, Address::ZERO).await?;
+        // Mirror BetHouseFactory.createInstance.
+        let wrapped = PoolToken::deploy(
+            provider,
+            "PoolWrappedToken".into(),
+            "PWT".into(),
+        )
+        .await?;
+        let deposit = PoolToken::deploy(
+            provider,
+            "PoolDepositToken".into(),
+            "PDT".into(),
+        )
+        .await?;
+        let pool =
+            Pool::deploy(provider, *wrapped.address(), *deposit.address())
+                .await?;
+        let contract = BetHouse::deploy(provider, *pool.address()).await?;
 
+        deposit
+            .mint(offender.address(), U256::from(5))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        wrapped
+            .transferOwnership(*pool.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        deposit
+            .transferOwnership(*pool.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        println!("Deployed the BetHouse at {}", contract.address());
         Ok(Target { address: *contract.address() })
     }
 

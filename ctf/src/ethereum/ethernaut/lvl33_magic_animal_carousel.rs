@@ -44,10 +44,22 @@ impl Level for Target {
         let contract = MagicAnimalCarousel::new(self.address, provider.clone());
 
         println!("Checking that the carousel rule is broken...");
-        // Solved when an animal exists in the carousel but doesn't match
-        // what it should be (the "magic rule" is broken)
-        // TODO: determine exact check from the contract source
-        let _ = contract;
-        Ok(false)
+        // Mirror validateInstance: store a goat, spin, then the stored
+        // animal must differ from the plain "Goat" encoding.
+        contract
+            .setAnimalAndSpin("Goat".to_string())
+            .from(roles.deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        let current_crate = contract.currentCrateId().call().await?;
+        let animal_in_box =
+            contract.carousel(current_crate).call().await? >> 176;
+        let goat_enc = alloy::primitives::U256::from_be_slice(&[
+            b'G', b'o', b'a', b't', 0, 0, 0, 0, 0, 0,
+        ]);
+        Ok(animal_in_box != goat_enc)
     }
 }

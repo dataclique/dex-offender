@@ -1,7 +1,6 @@
 //! Ethernaut levels on the alloy core.
 
 use crate::{Level, Roles};
-use alloy::primitives::Address;
 
 pub mod lvl01_fallback;
 pub mod lvl02_fallout;
@@ -187,16 +186,16 @@ pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
         level28: lvl28::Target::set_up(roles).await?,
         level29: lvl29::Target::set_up(roles).await?,
         // Levels 30-40: not yet deployable, use placeholder targets
-        level30: lvl30::Target { address: Address::ZERO },
-        level31: lvl31::Target { address: Address::ZERO },
-        level32: lvl32::Target { address: Address::ZERO },
-        level33: lvl33::Target { address: Address::ZERO },
-        level34: lvl34::Target { address: Address::ZERO },
-        level35: lvl35::Target { address: Address::ZERO },
-        level36: lvl36::Target { address: Address::ZERO },
-        level37: lvl37::Target { address: Address::ZERO },
-        level38: lvl38::Target { address: Address::ZERO },
-        level39: lvl39::Target { address: Address::ZERO },
-        level40: lvl40::Target { address: Address::ZERO },
+        level30: lvl30::Target::set_up(roles).await?,
+        level31: lvl31::Target::set_up(roles).await?,
+        level32: lvl32::Target::set_up(roles).await?,
+        level33: lvl33::Target::set_up(roles).await?,
+        level34: lvl34::Target::set_up(roles).await?,
+        level35: lvl35::Target::set_up(roles).await?,
+        level36: lvl36::Target::set_up(roles).await?,
+        level37: lvl37::Target::set_up(roles).await?,
+        level38: lvl38::Target::set_up(roles).await?,
+        level39: lvl39::Target::set_up(roles).await?,
+        level40: lvl40::Target::set_up(roles).await?,
     })
 }
