@@ -5,7 +5,7 @@
 
 use crate::Roles;
 use alloy::{
-    primitives::{Address, Bytes, U256, address},
+    primitives::{Address, B256, Bytes, U256, address},
     providers::Provider,
     rpc::types::BlockId,
 };
@@ -96,4 +96,47 @@ pub async fn plant_eth_usd_feed(roles: &Roles) -> eyre::Result<()> {
     let code: Bytes = hex.parse()?;
 
     set_code(roles, MAINNET_ETH_USD_FEED, code).await
+}
+
+/// Unlock an arbitrary account (anvil `impersonateAccount`).
+pub async fn impersonate(roles: &Roles, addr: Address) -> eyre::Result<()> {
+    roles
+        .provider()
+        .client()
+        .request::<_, ()>("anvil_impersonateAccount", (addr,))
+        .await?;
+    Ok(())
+}
+
+/// Send an unlocked `eth_sendTransaction` as `from` (must be impersonated
+/// or prefunded by anvil). Used for fork whales and synthetic users.
+pub async fn send_as(
+    roles: &Roles,
+    from: Address,
+    to: Address,
+    data: alloy::primitives::Bytes,
+) -> eyre::Result<()> {
+    let tx = serde_json::json!({
+        "from": from,
+        "to": to,
+        "data": data,
+    });
+    let tx_hash: B256 =
+        roles.provider().client().request("eth_sendTransaction", (tx,)).await?;
+    for _ in 0..60 {
+        let mined: Option<serde_json::Value> = roles
+            .provider()
+            .client()
+            .request("eth_getTransactionReceipt", (tx_hash,))
+            .await?;
+        if let Some(receipt) = mined {
+            let ok = receipt["status"].as_str() == Some("0x1");
+            if !ok {
+                return Err(eyre::eyre!("impersonated tx {tx_hash} reverted"));
+            }
+            return Ok(());
+        }
+        tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+    }
+    Err(eyre::eyre!("impersonated tx {tx_hash} never mined"))
 }

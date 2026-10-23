@@ -7,7 +7,7 @@ A compilation of smart contract CTF wargames with a Rust practice harness. Solve
 | CTF                                                                            | Levels | Status                                                            |
 | ------------------------------------------------------------------------------ | ------ | ----------------------------------------------------------------- |
 | [Ethernaut](https://ethernaut.openzeppelin.org/)                               | 40     | ✅ 23 deployable, 17 scaffolds                                    |
-| [Damn Vulnerable DeFi](https://damnvulnerabledefi.xyz/)                        | 15     | ✅ 14 deployable, 1 fork-blocked                                  |
+| [Damn Vulnerable DeFi](https://damnvulnerabledefi.xyz/)                        | 15     | ✅ 14 deployable, 2 fork-deployable via `FORK_URL`                |
 | [Paradigm CTF 2023](https://github.com/paradigmxyz/paradigm-ctf-2023)          | 14 EVM | ✅ 2 deployable, 12 scaffolds                                     |
 | [Paradigm CTF 2021](https://github.com/paradigmxyz/paradigm-ctf-2021)          | 16 EVM | ✅ 1 deployable, 15 scaffolds                                     |
 | [Paradigm CTF 2022](https://github.com/paradigmxyz/paradigm-ctf-2022)          | 12 EVM | ✅ scaffolds ready, deploy TODO                                   |
@@ -75,7 +75,10 @@ nu scripts/build-abis.nu
 
 - **Deployable**: `deploy_levels` successfully creates the challenge on local anvil
 - **Scaffold**: module + ABI + hack stub exist but deployment or setup needs work
-- **Fork-blocked**: requires anvil `--fork-url` (PuppetV3, CurvyPuppet, electric-sheep)
+- **Fork-gated**: PuppetV3 + CurvyPuppet deploy via `FORK_URL`/`FORK_BLOCK`
+  (verified with the free public `eth.drpc.org` archive endpoint;
+  `ctf/tests/fork_levels.rs` runs them). electric-sheep stays
+  fork-blocked pending its own setup port.
 
 ## Local blockchain
 

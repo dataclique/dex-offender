@@ -7,6 +7,7 @@ pub mod abi_smuggling;
 pub mod backdoor;
 pub mod climber;
 pub mod compromised;
+pub mod curvy_puppet;
 pub mod free_rider;
 pub mod naive_receiver;
 pub mod puppet;
@@ -41,6 +42,8 @@ pub struct DamnVulnerableDeFi {
     pub wallet_mining: Option<wallet_mining::Target>,
     // puppet_v3: requires mainnet fork at block 15450164
     pub puppet_v3: Option<puppet_v3::Target>,
+    /// curvy_puppet: requires mainnet fork at block 20190356
+    pub curvy_puppet: Option<curvy_puppet::Target>,
     pub abi_smuggling: abi_smuggling::Target,
     pub shards: shards::Target,
     pub withdrawal: withdrawal::Target,
@@ -80,7 +83,8 @@ pub async fn set_up_damn_vulnerable_defi(
         backdoor,
         climber,
         wallet_mining: None, // TODO: Safe factory + CreateX raw tx deploy
-        puppet_v3: None,     // TODO: mainnet fork required
+        puppet_v3: puppet_v3::Target::set_up(roles).await.ok(),
+        curvy_puppet: curvy_puppet::Target::set_up(roles).await.ok(),
         abi_smuggling,
         shards,
         withdrawal,

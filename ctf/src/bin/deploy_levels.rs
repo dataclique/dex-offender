@@ -6,7 +6,8 @@ use std::time::Duration;
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     println!("Spawning Anvil...");
-    let mut anvil = std::process::Command::new("anvil")
+    let mut anvil_cmd = std::process::Command::new("anvil");
+    anvil_cmd
         .arg("--port")
         .arg("8901")
         // Paradigm's CTF launcher raises the EIP-170 code-size limit (some
@@ -16,8 +17,27 @@ async fn main() -> eyre::Result<()> {
         .arg("--dump-state")
         .arg("state.json")
         .arg("--state-interval")
-        .arg("1")
-        .spawn()?;
+        .arg("1");
+    // Optional mainnet fork: FORK_URL (and optionally FORK_BLOCK) enable
+    // the fork-gated levels (PuppetV3, CurvyPuppet). The URL is never
+    // logged — it may carry credentials in its query string.
+    match (std::env::var("FORK_URL"), std::env::var("FORK_BLOCK")) {
+        (Ok(url), _) if !url.is_empty() => {
+            println!("Forking mainnet (FORK_URL set)");
+            anvil_cmd.arg("--fork-url").arg(&url);
+            // Harness artifacts use a modern solc (PUSH0+); run the fork
+            // with a modern spec over the historical state.
+            anvil_cmd.arg("--hardfork").arg("cancun");
+            if let Ok(block) = std::env::var("FORK_BLOCK")
+                && !block.is_empty()
+            {
+                println!("Fork block {block}");
+                anvil_cmd.arg("--fork-block-number").arg(&block);
+            }
+        }
+        _ => println!("No FORK_URL set; fork-gated levels stay undeployed"),
+    }
+    let mut anvil = anvil_cmd.spawn()?;
 
     println!("Waiting for Anvil to accept connections...");
     wait_for_port("127.0.0.1", 8901, 100)?;
