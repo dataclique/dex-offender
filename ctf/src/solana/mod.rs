@@ -15,11 +15,20 @@ use std::sync::{Arc, Mutex};
 pub use litesvm;
 
 pub mod bootcamp;
+pub mod hana;
 
 /// Abstraction over the Solana execution environment.
 /// Default impl wraps `litesvm::LiteSVM` (in-process, no binary needed).
 pub trait SolChain: Send + Sync {
     fn deploy_program(&self, id: Pubkey, elf: &[u8]) -> eyre::Result<()>;
+    /// Deploy with an explicit loader — legacy (solana 1.9-era) programs
+    /// require `bpf_loader::id()` (BPFLoader2), not the upgradeable one.
+    fn deploy_program_with_loader(
+        &self,
+        id: Pubkey,
+        elf: &[u8],
+        loader: Pubkey,
+    ) -> eyre::Result<()>;
     fn deploy_program_from_file(
         &self,
         id: Pubkey,
@@ -29,6 +38,12 @@ pub trait SolChain: Send + Sync {
         &self,
         payer: &Keypair,
         ixs: &[Instruction],
+    ) -> eyre::Result<Vec<String>>;
+    /// Submit a fully built (already signed) transaction — used when an
+    /// instruction needs non-payer signers (e.g. new-account keypairs).
+    fn send_transaction(
+        &self,
+        tx: solana_sdk::transaction::Transaction,
     ) -> eyre::Result<Vec<String>>;
     /// Send a transaction signed by multiple keypairs (evaluation flows
     /// that require two signers, e.g. bootcamp level 2's reveal_secret).
@@ -52,6 +67,26 @@ impl LiteSvmChain {
     pub fn new() -> Self {
         Self { svm: Mutex::new(litesvm::LiteSVM::new()) }
     }
+
+    /// A chain that accepts legacy (sbpf v0/v1/v2) programs — required
+    /// for older CTF binaries (e.g. Paradigm 2022 hana, built against
+    /// solana 1.9) which the default feature set refuses to deploy.
+    /// The no-op custom syscall forces litesvm to rebuild its program
+    /// runtime environments after the feature-set change.
+    pub fn with_legacy_programs() -> Self {
+        let mut feature_set = agave_feature_set::FeatureSet::default();
+        feature_set.deactivate(
+            &agave_feature_set::disable_sbpf_v0_v1_v2_deployment::ID,
+        );
+        feature_set
+            .activate(&agave_feature_set::reenable_sbpf_v0_execution::ID, 0);
+        let svm = litesvm::LiteSVM::new()
+            .with_feature_set(feature_set)
+            .with_custom_syscall("__rebuild_envs__", |_: &mut _, _: &str| {
+                Ok(())
+            });
+        Self { svm: Mutex::new(svm) }
+    }
 }
 
 impl Default for LiteSvmChain {
@@ -66,6 +101,19 @@ impl SolChain for LiteSvmChain {
             .lock()
             .map_err(|e| eyre::eyre!("svm lock: {e}"))?
             .add_program(id, elf)
+            .map_err(|e| eyre::eyre!("deploy program {id}: {e}"))
+    }
+
+    fn deploy_program_with_loader(
+        &self,
+        id: Pubkey,
+        elf: &[u8],
+        loader: Pubkey,
+    ) -> eyre::Result<()> {
+        self.svm
+            .lock()
+            .map_err(|e| eyre::eyre!("svm lock: {e}"))?
+            .add_program_with_loader(id, elf, loader)
             .map_err(|e| eyre::eyre!("deploy program {id}: {e}"))
     }
 
@@ -103,14 +151,30 @@ impl SolChain for LiteSvmChain {
         signers: &[&Keypair],
         ixs: &[Instruction],
     ) -> eyre::Result<Vec<String>> {
+        let msg = Message::new(ixs, Some(&signers[0].pubkey()));
+        let blockhash = {
+            let svm =
+                self.svm.lock().map_err(|e| eyre::eyre!("svm lock: {e}"))?;
+            svm.latest_blockhash()
+        };
+        let tx = Transaction::new(signers, msg, blockhash);
+        self.send_transaction(tx)
+    }
+
+    fn send_transaction(
+        &self,
+        tx: solana_sdk::transaction::Transaction,
+    ) -> eyre::Result<Vec<String>> {
         let mut svm =
             self.svm.lock().map_err(|e| eyre::eyre!("svm lock: {e}"))?;
-        let msg = Message::new(ixs, Some(&signers[0].pubkey()));
-        let tx = Transaction::new(signers, msg, svm.latest_blockhash());
         let result = svm.send_transaction(tx);
         match result {
             Ok(meta) => Ok(meta.logs),
-            Err(e) => Err(eyre::eyre!("tx failed: {:?}", e.err)),
+            Err(e) => Err(eyre::eyre!(
+                "tx failed: {:?}; meta logs: {:?}",
+                e.err,
+                e.meta.logs
+            )),
         }
     }
 

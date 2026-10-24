@@ -19,6 +19,7 @@ tokio = { version = "1.38", features = ["macros", "rt-multi-thread", "time"] }
 alloy = "2"
 alloy-sol-types = "1.7"
 litesvm = "0.18"
+agave-feature-set = "4.3"
 solana-sdk = "4"
 spl-token = "8"
 borsh = "1"

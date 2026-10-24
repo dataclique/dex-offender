@@ -1792,6 +1792,7 @@ dependencies = [
 name = "ctf"
 version = "0.1.0"
 dependencies = [
+ "agave-feature-set",
  "alloy",
  "async-trait",
  "borsh",
@@ -1801,6 +1802,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solana-sdk",
+ "solana-system-interface 3.3.0",
  "spl-token",
  "tokio",
 ]
