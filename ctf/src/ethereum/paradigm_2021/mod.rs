@@ -67,7 +67,7 @@ pub async fn set_up_paradigm_2021(roles: &Roles) -> eyre::Result<Paradigm2021> {
         babysandbox: babysandbox::Target::set_up(roles).await.ok(),
         jop: jop::Target::set_up(roles).await.ok(),
         rever: rever::Target::set_up(roles).await.ok(),
-        upgrade: None,
+        upgrade: upgrade::Target::set_up(roles).await.ok(),
         market: market::Target::set_up(roles).await.ok(),
         secure: secure::Target::set_up(roles).await.ok(),
         swap: None,
