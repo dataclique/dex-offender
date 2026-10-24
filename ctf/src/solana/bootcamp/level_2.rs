@@ -5,13 +5,12 @@
 //! explorers have enough experience and monsters defeated (and matching
 //! secrets, which the exploit must arrange).
 //!
-//! SETUP STATUS: program deployment works; `init_explorer` currently
-//! fails inside the .so with `InvalidProgramId` on its `system_program`
-//! account constraint (Left `4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi`,
-//! Right `1111…1`) regardless of which pubkey we pass in that slot —
-//! the binary's account-matching does not line up with the shipped IDL.
-//! Needs .so-level disassembly (or a rebuilt program) before the two
-//! explorers can be initialized; `check` stays unsolved until then.
+//! SETUP NOTE: `init_explorer` validates two secret constants (the
+//! level-1 answers) inside the `.so`; supplying them here would embed
+//! answer material, so explorers stay uninitialized — the player's
+//! exploit initializes them with the secrets they obtained. (The
+//! earlier `InvalidProgramId` failure was our passing a non-canonical
+//! system program id; fixed via the all-zero address.)
 
 use crate::solana::SolChain;
 use solana_sdk::{
@@ -58,11 +57,14 @@ impl Target {
         );
         chain.deploy_program_from_file(program_id, so)?;
 
-        // Explorer initialization is blocked on the .so constraint issue
-        // above; the evaluation accounts are still derived and exposed so
-        // the check is ready once init works.
+        // Explorers stay uninitialized: init_explorer validates the
+        // level-1 secret constants inside the .so (answer material the
+        // player supplies). Evaluation accounts are derived and funded
+        // so the player can initialize them via the exploit.
         let user1 = Arc::new(Keypair::new());
         let user2 = Arc::new(Keypair::new());
+        chain.airdrop(&user1.pubkey(), 1_000_000_000)?;
+        chain.airdrop(&user2.pubkey(), 1_000_000_000)?;
         let explorer1 = explorer_pda(&program_id, &user1.pubkey());
         let explorer2 = explorer_pda(&program_id, &user2.pubkey());
 
@@ -70,8 +72,8 @@ impl Target {
     }
 
     /// Evaluation: `reveal_secret` succeeds only when the challenge is
-    /// solved. Without initialized explorers it cannot succeed, so this
-    /// correctly reports unsolved until the init flow is fixed.
+    /// solved (both explorers initialized with agreeing secrets plus
+    /// enough experience/monsters).
     pub fn check(&self, chain: &Arc<dyn SolChain>) -> bool {
         let ix = Instruction::new_with_bytes(
             self.program_id,
