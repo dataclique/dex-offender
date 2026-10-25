@@ -25,3 +25,6 @@ spl-token-2022-interface = "3"
 solana-system-interface = "3.3"
 spl-token.workspace = true
 borsh.workspace = true
+sui-rpc.workspace = true
+sui-transaction-builder.workspace = true
+sui-sdk-types.workspace = true
