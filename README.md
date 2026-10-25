@@ -6,12 +6,13 @@ A compilation of smart contract CTF wargames with a Rust practice harness. Solve
 
 | CTF                                                                            | Levels | Status                                                            |
 | ------------------------------------------------------------------------------ | ------ | ----------------------------------------------------------------- |
-| [Ethernaut](https://ethernaut.openzeppelin.org/)                               | 40     | ✅ 23 deployable, 17 scaffolds                                    |
-| [Damn Vulnerable DeFi](https://damnvulnerabledefi.xyz/)                        | 15     | ✅ 14 deployable, 2 fork-deployable via `FORK_URL`                |
-| [Paradigm CTF 2023](https://github.com/paradigmxyz/paradigm-ctf-2023)          | 14 EVM | ✅ 2 deployable, 12 scaffolds                                     |
-| [Paradigm CTF 2021](https://github.com/paradigmxyz/paradigm-ctf-2021)          | 16 EVM | ✅ 1 deployable, 15 scaffolds                                     |
-| [Paradigm CTF 2022](https://github.com/paradigmxyz/paradigm-ctf-2022)          | 12 EVM | ✅ scaffolds ready, deploy TODO                                   |
-| [Ackee Bootcamp](https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp) | 5      | ✅ Solana litesvm core ready                                      |
+| [Ethernaut](https://ethernaut.openzeppelin.org/)                               | 40     | ✅ 40/40 deployable                                               |
+| [Damn Vulnerable DeFi](https://damnvulnerabledefi.xyz/)                        | 16     | ✅ 16/16 — 14 local + 2 fork via `FORK_URL`                       |
+| [Paradigm CTF 2023](https://github.com/paradigmxyz/paradigm-ctf-2023)          | 14 EVM | ✅ 9/14 deployable — 5 await undeployed helper contracts           |
+| [Paradigm CTF 2021](https://github.com/paradigmxyz/paradigm-ctf-2021)          | 16 EVM | ✅ 15/16 — upgrade blocked pending planted permissive USDC proxy   |
+| [Paradigm CTF 2022](https://github.com/paradigmxyz/paradigm-ctf-2022)          | 11 EVM | ✅ 11/11 — 7 local + 4 fork (`FORK_URL`, sats wants `FORK_BLOCK`)  |
+| [Ackee Bootcamp](https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp) | 5      | ✅ 4/5 full + lvl4 eval-check (init blocked on era-matched .so)    |
+| [Paradigm 2022 Solana](https://github.com/paradigmxyz/paradigm-ctf-2022)       | 4      | ✅ hana deployed (litesvm); 3 blocked on SBF toolchain             |
 | [Mysten CTF](https://github.com/MystenLabs/CTF)                                | 5      | 🔍 research in progress                                           |
 | [move_over_ctf](https://github.com/OpenZeppelin/move_over_ctf)                 | 8      | 🔍 research in progress                                           |
 | [lets-ctf](https://github.com/hoh-zone/lets-ctf)                               | 2+     | 🔍 research in progress                                           |

@@ -41,8 +41,10 @@ pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
     println!("Deploying Paradigm CTF 2022 challenges...");
     // Each set_up self-documents its own requirements; failures fall back
     // to None so one broken challenge never blocks the whole deployment.
-    // Fork-only: electric_sheep (NFT state), hint_finance (mainnet tokens),
-    // stealing_sats (mainnet WBTC + Bitfinex wallet).
+    // Fork levels (electric_sheep, hint_finance, rescue, stealing_sats)
+    // deploy when FORK_URL is set and fail fast to None otherwise;
+    // stealing_sats additionally wants FORK_BLOCK=15707136 for the
+    // 2022-era balance on its target wallet.
 
     Ok(Paradigm2022 {
         electric_sheep: electric_sheep::Target::set_up(roles).await.ok(),
