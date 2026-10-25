@@ -49,7 +49,7 @@ pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
         fun_reversing_challenge: fun_reversing_challenge::Target::set_up(roles)
             .await
             .ok(),
-        hint_finance: None,
+        hint_finance: hint_finance::Target::set_up(roles).await.ok(),
         just_in_time: just_in_time::Target::set_up(roles).await.ok(),
         lockbox2: lockbox2::Target::set_up(roles).await.ok(),
         merkledrop: merkledrop::Target::set_up(roles).await.ok(),
