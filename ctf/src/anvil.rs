@@ -5,9 +5,11 @@
 
 use crate::Roles;
 use alloy::{
+    network::{ReceiptResponse, TransactionBuilder},
     primitives::{Address, B256, Bytes, U256, address},
     providers::Provider,
     rpc::types::BlockId,
+    sol_types::SolValue,
 };
 
 /// Overwrite the runtime code at `addr` (anvil `setCode`).
@@ -20,6 +22,21 @@ pub async fn set_code(
         .provider()
         .client()
         .request::<_, ()>("anvil_setCode", (addr, runtime_code))
+        .await?;
+    Ok(())
+}
+
+/// Write a raw storage slot (anvil `setStorageAt`).
+pub async fn set_storage(
+    roles: &Roles,
+    addr: Address,
+    slot: U256,
+    value: B256,
+) -> eyre::Result<()> {
+    roles
+        .provider()
+        .client()
+        .request::<_, bool>("anvil_setStorageAt", (addr, slot, value))
         .await?;
     Ok(())
 }
@@ -96,6 +113,108 @@ pub async fn plant_eth_usd_feed(roles: &Roles) -> eyre::Result<()> {
     let code: Bytes = hex.parse()?;
 
     set_code(roles, MAINNET_ETH_USD_FEED, code).await
+}
+
+/// Canonical mainnet UniswapV2 factory.
+pub const MAINNET_UNISWAP_V2_FACTORY: Address =
+    address!("5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f");
+
+/// Plant a functional UniswapV2 factory at the canonical mainnet
+/// address, deploying with the harness deployer as `feeToSetter` so
+/// constructor storage is properly initialized, then copying the
+/// initialized runtime to the canonical address via `anvil_setCode`.
+pub async fn plant_uniswap_v2_factory(roles: &Roles) -> eyre::Result<Address> {
+    let existing =
+        roles.provider().get_code_at(MAINNET_UNISWAP_V2_FACTORY).await?;
+    if !existing.is_empty() {
+        return Ok(MAINNET_UNISWAP_V2_FACTORY);
+    }
+
+    let artifact: serde_json::Value = serde_json::from_str(include_str!(
+        "../abi/damn-vulnerable-defi/UniswapV2Factory.json"
+    ))?;
+    let hex = artifact["bytecode"]
+        .as_str()
+        .ok_or_else(|| eyre::eyre!("factory artifact missing bytecode"))?;
+    let code: Bytes = hex.parse()?;
+
+    // The factory constructor takes feeToSetter; append the deployer
+    // address (abi-encoded) to the creation code.
+    let calldata =
+        [code.as_ref(), &roles.deployer.address().abi_encode()].concat();
+
+    // Deploy the factory normally — the constructor stores feeToSetter
+    // (slot 1) — then copy the initialized runtime to the canonical
+    // address via anvil_setCode so the storage-backed init comes from a
+    // real deploy, not a hand-written slot write.
+    let receipt = roles
+        .provider()
+        .send_transaction(
+            alloy::rpc::types::TransactionRequest::default()
+                .create()
+                .with_from(roles.deployer.address())
+                .with_input(calldata),
+        )
+        .await?
+        .get_receipt()
+        .await?;
+    let deployed = receipt
+        .contract_address()
+        .ok_or_else(|| eyre::eyre!("factory deploy produced no address"))?;
+
+    let runtime = roles.provider().get_code_at(deployed).await?;
+    set_code(roles, MAINNET_UNISWAP_V2_FACTORY, runtime).await?;
+
+    // anvil_setCode copies only code; the constructor-initialized
+    // storage (feeToSetter at slot 1) must be copied explicitly so the
+    // canonical address reflects a real deploy.
+    let fee_to_setter = roles
+        .provider()
+        .get_storage_at(deployed, alloy::primitives::U256::from(1))
+        .await?;
+    set_storage(
+        roles,
+        MAINNET_UNISWAP_V2_FACTORY,
+        U256::from(1),
+        B256::from(fee_to_setter.to_be_bytes()),
+    )
+    .await?;
+    Ok(MAINNET_UNISWAP_V2_FACTORY)
+}
+
+/// Steer the deployer nonce so the next contract's FIRST nested CREATE
+/// (a token created inside its constructor) lands at an address below
+/// `bound`. Needed for setups whose pair math requires the challenge
+/// token to sort before a planted canonical token (e.g. broker: the
+/// UniswapV2 pair's `rate()` uses reserve0/reserve1 integer division,
+/// so the token must be token0).
+pub async fn steer_deployer_below(
+    roles: &Roles,
+    bound: Address,
+) -> eyre::Result<()> {
+    let deployer = roles.deployer.address();
+    let mut nonce = roles.provider().get_transaction_count(deployer).await?;
+    let mut token_addr = deployer.create(nonce).create(1);
+    while token_addr >= bound {
+        nonce += 1;
+        token_addr = deployer.create(nonce).create(1);
+    }
+    // Advance with real (empty) self-transactions rather than
+    // anvil_setNonce: the latter desyncs the wallet filler's cached
+    // nonce and the next send fails with `nonce too low`.
+    while roles.provider().get_transaction_count(deployer).await? < nonce {
+        roles
+            .provider()
+            .send_transaction(
+                alloy::rpc::types::TransactionRequest::default()
+                    .from(deployer)
+                    .to(deployer),
+            )
+            .await?
+            .get_receipt()
+            .await?;
+    }
+    Ok(())
 }
 
 /// Unlock an arbitrary account (anvil `impersonateAccount`).

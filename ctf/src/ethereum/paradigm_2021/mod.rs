@@ -60,7 +60,7 @@ pub async fn set_up_paradigm_2021(roles: &Roles) -> eyre::Result<Paradigm2021> {
         hello,
         bank: bank::Target::set_up(roles).await.ok(),
         bouncer: bouncer::Target::set_up(roles).await.ok(),
-        broker: None,
+        broker: broker::Target::set_up(roles).await.ok(),
         farmer: None,
         lockbox: lockbox::Target::set_up(roles).await.ok(),
         babyrev: babyrev::Target::set_up(roles).await.ok(),
