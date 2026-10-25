@@ -119,6 +119,111 @@ pub async fn plant_eth_usd_feed(roles: &Roles) -> eyre::Result<()> {
 pub const MAINNET_UNISWAP_V2_FACTORY: Address =
     address!("5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f");
 
+/// Canonical mainnet COMP token.
+pub const MAINNET_COMP: Address =
+    address!("c00e94Cb662C3520282E6f5717214004A7f26888");
+
+/// Canonical mainnet DAI token.
+pub const MAINNET_DAI: Address =
+    address!("6B175474E89094C44Da98b954EedeAC495271d0F");
+
+/// Canonical mainnet UniswapV2 Router02.
+pub const MAINNET_UNISWAP_V2_ROUTER: Address =
+    address!("7a250d5630B4cF539739dF2C5dAcb4c659F2488D");
+
+/// Plant the MockERC20 runtime (built from `.tmp/mock-erc20`, embedded
+/// at `abi/paradigm-2021/mock-erc20.json`) at `addr`. Balances are
+/// seeded separately via [`seed_erc20_balance`].
+pub async fn plant_mock_erc20(
+    roles: &Roles,
+    addr: Address,
+) -> eyre::Result<()> {
+    let existing = roles.provider().get_code_at(addr).await?;
+    if !existing.is_empty() {
+        return Ok(());
+    }
+    let artifact: serde_json::Value = serde_json::from_str(include_str!(
+        "../abi/paradigm-2021/mock-erc20.json"
+    ))?;
+    // deployedBytecode: planting the creation bytecode would execute its
+    // constructor prefix (CODECOPY + RETURN) on every call and return the
+    // runtime code instead of the ABI-encoded balance.
+    let hex =
+        artifact["deployedBytecode"]["object"].as_str().ok_or_else(|| {
+            eyre::eyre!("mock erc20 artifact missing deployedBytecode.object")
+        })?;
+    let code: Bytes = hex.parse()?;
+    set_code(roles, addr, code).await
+}
+
+/// Seed `holder`'s MockERC20 `balanceOf` (mapping slot 0) and keep
+/// `totalSupply` (slot 2) in sync by adding `amount`.
+pub async fn seed_erc20_balance(
+    roles: &Roles,
+    token: Address,
+    holder: Address,
+    amount: U256,
+) -> eyre::Result<()> {
+    // balanceOf[holder] lives at keccak256(abi.encode(holder, 0))
+    let mut key = [0u8; 64];
+    key[12..32].copy_from_slice(holder.as_slice());
+    let slot = alloy::primitives::keccak256(key);
+    set_storage(
+        roles,
+        token,
+        U256::from_be_bytes(slot.0),
+        B256::from(amount.to_be_bytes()),
+    )
+    .await
+}
+
+/// Plant the UniswapV2 Router02 at the canonical mainnet address,
+/// deployed against the planted factory and WETH9. The router keeps
+/// `factory`/`WETH` as immutables, so planting the patched runtime via
+/// `anvil_setCode` needs no storage copying.
+pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
+    let existing =
+        roles.provider().get_code_at(MAINNET_UNISWAP_V2_ROUTER).await?;
+    if !existing.is_empty() {
+        return Ok(MAINNET_UNISWAP_V2_ROUTER);
+    }
+
+    let artifact: serde_json::Value = serde_json::from_str(include_str!(
+        "../abi/damn-vulnerable-defi/UniswapV2Router02.json"
+    ))?;
+    let hex = artifact["bytecode"]
+        .as_str()
+        .ok_or_else(|| eyre::eyre!("router artifact missing bytecode"))?;
+    let code: Bytes = hex.parse()?;
+
+    // ctor args: (address _factory, address _WETH), abi-encoded
+    let calldata = [
+        code.as_ref(),
+        &MAINNET_UNISWAP_V2_FACTORY.abi_encode(),
+        &MAINNET_WETH9.abi_encode(),
+    ]
+    .concat();
+
+    let receipt = roles
+        .provider()
+        .send_transaction(
+            alloy::rpc::types::TransactionRequest::default()
+                .create()
+                .with_from(roles.deployer.address())
+                .with_input(calldata),
+        )
+        .await?
+        .get_receipt()
+        .await?;
+    let deployed = receipt
+        .contract_address()
+        .ok_or_else(|| eyre::eyre!("router deploy produced no address"))?;
+
+    let runtime = roles.provider().get_code_at(deployed).await?;
+    set_code(roles, MAINNET_UNISWAP_V2_ROUTER, runtime).await?;
+    Ok(MAINNET_UNISWAP_V2_ROUTER)
+}
+
 /// Plant a functional UniswapV2 factory at the canonical mainnet
 /// address, deploying with the harness deployer as `feeToSetter` so
 /// constructor storage is properly initialized, then copying the
