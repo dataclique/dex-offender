@@ -29,8 +29,46 @@
         foundry-pkg = foundry.defaultPackage.${system};
         forge = "${foundry-pkg}/bin/forge";
         channel = fenix.packages.${system}.stable;
+
+        # Official sui CLI from the MystenLabs release binaries, same
+        # packaging as dataclique/nth (per-system sha256 pins). Candidate
+        # for extraction into a shared dataclique/sui.nix flake input.
+        suiPkg =
+          let
+            baseUrl = "https://github.com/MystenLabs/sui/releases/download";
+            version = "v1.76.1";
+            assets = {
+              aarch64-darwin = {
+                suffix = "macos-arm64";
+                hash = "sha256-/F5Gh1AbdRLu1q07PLwe8ls8loJqyyhOPGwHdp+00Ms=";
+              };
+              aarch64-linux = {
+                suffix = "ubuntu-aarch64";
+                hash = "sha256-exjWtHfSoQM3XD+d8nYh8epiWdmNO7aPmAiGNfAg3Y8=";
+              };
+              x86_64-linux = {
+                suffix = "ubuntu-x86_64";
+                hash = "sha256-uKgmoJiKGnIfrGZ/4T00Azw7AAPw45cH4yXMnTU2jvM=";
+              };
+            };
+            asset = assets.${system} or (throw "sui ${version} has no prebuilt binary for ${system}");
+          in
+          pkgs.stdenv.mkDerivation {
+            name = "sui";
+            src = pkgs.fetchzip {
+              url = "${baseUrl}/testnet-${version}/sui-testnet-${version}-${asset.suffix}.tgz";
+              inherit (asset) hash;
+              stripRoot = false;
+            };
+            installPhase = ''
+              mkdir -p $out/bin
+              cp -v sui $out/bin
+            '';
+          };
       in
       {
+        packages.sui = suiPkg;
+
         devShells.default = devenv.lib.mkShell {
           inherit inputs pkgs;
 
@@ -41,6 +79,7 @@
                 pkgs.gcc
                 foundry-pkg
                 pkgs.go-ethereum
+                suiPkg
               ]
               ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];
 
