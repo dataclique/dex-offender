@@ -54,7 +54,7 @@ pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
         lockbox2: lockbox2::Target::set_up(roles).await.ok(),
         merkledrop: merkledrop::Target::set_up(roles).await.ok(),
         random: random::Target::set_up(roles).await.ok(),
-        rescue: None, // fork-only: real SushiSwap MasterChef + router
+        rescue: rescue::Target::set_up(roles).await.ok(),
         sourcecode: sourcecode::Target::set_up(roles).await.ok(),
         stealing_sats: None,
         vanity: vanity::Target::set_up(roles).await.ok(),
