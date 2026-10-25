@@ -56,7 +56,7 @@ pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
         random: random::Target::set_up(roles).await.ok(),
         rescue: rescue::Target::set_up(roles).await.ok(),
         sourcecode: sourcecode::Target::set_up(roles).await.ok(),
-        stealing_sats: None,
+        stealing_sats: stealing_sats::Target::set_up(roles).await.ok(),
         vanity: vanity::Target::set_up(roles).await.ok(),
     })
 }
