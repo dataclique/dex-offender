@@ -1,9 +1,16 @@
 //! Paradigm CTF 2022 — electric-sheep.
 //!
-//! Exploit the NFT/descendants contract (requires mainnet fork).
+//! The setup deploys with no dependencies; `isSolved()` reads the
+//! balance of the real mainnet DREAMERS token (`0x1C4d…`), so the
+//! check only behaves on a mainnet fork (run deploy_levels with
+//! `FORK_URL` set). Any fork block where the token exists works.
 
 use crate::{Level, Roles};
-use alloy::{primitives::Address, sol};
+use alloy::{
+    primitives::{Address, U256, address},
+    providers::Provider,
+    sol,
+};
 use async_trait::async_trait;
 
 sol!(
@@ -12,6 +19,9 @@ sol!(
     Setup,
     "abi/paradigm-2022/electric-sheep.json"
 );
+
+const MAINNET_DREAMERS: Address =
+    address!("1C4d5CA50419f94fc952a20DdDCDC4182Ef77cdF");
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -36,8 +46,24 @@ impl Level for Target {
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let _ = roles;
-        unimplemented!("electric-sheep requires mainnet fork")
+        let provider = roles.provider();
+
+        // isSolved() calls the real DREAMERS token; without a fork the
+        // call to a codeless address reverts and the check errors.
+        let dreamers_code = provider.get_code_at(MAINNET_DREAMERS).await?;
+        if dreamers_code.is_empty() {
+            return Err(eyre::eyre!(
+                "electric-sheep needs a mainnet fork (set FORK_URL)"
+            ));
+        }
+
+        println!("Deploying the electric-sheep challenge...");
+        let address = Setup::deploy_builder(provider)
+            .value(U256::ZERO)
+            .from(roles.deployer.address())
+            .deploy()
+            .await?;
+        Ok(Target { address })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {

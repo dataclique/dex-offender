@@ -45,7 +45,7 @@ pub async fn set_up_paradigm_2022(roles: &Roles) -> eyre::Result<Paradigm2022> {
     // stealing_sats (mainnet WBTC + Bitfinex wallet).
 
     Ok(Paradigm2022 {
-        electric_sheep: None,
+        electric_sheep: electric_sheep::Target::set_up(roles).await.ok(),
         fun_reversing_challenge: fun_reversing_challenge::Target::set_up(roles)
             .await
             .ok(),
