@@ -9,6 +9,7 @@ use alloy::{
     primitives::{Address, B256, Bytes, U256, address},
     providers::Provider,
     rpc::types::BlockId,
+    sol,
     sol_types::SolValue,
 };
 
@@ -127,9 +128,26 @@ pub const MAINNET_COMP: Address =
 pub const MAINNET_DAI: Address =
     address!("6B175474E89094C44Da98b954EedeAC495271d0F");
 
+/// Canonical mainnet TrueUSD token.
+pub const MAINNET_TUSD: Address =
+    address!("0000000000085d4780B73119b644AE5ecd22b376");
+
+/// Canonical mainnet USDC token.
+pub const MAINNET_USDC: Address =
+    address!("A0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48");
+
+/// Canonical mainnet USDT token.
+pub const MAINNET_USDT: Address =
+    address!("dAC17F958D2ee523a2206206994597C13D831ec7");
+
 /// Canonical mainnet UniswapV2 Router02.
 pub const MAINNET_UNISWAP_V2_ROUTER: Address =
     address!("7a250d5630B4cF539739dF2C5dAcb4c659F2488D");
+
+/// Canonical mainnet UniswapV2 Router01 (deprecated on mainnet; the
+/// swap challenge hardcodes it).
+pub const MAINNET_UNISWAP_V2_ROUTER01: Address =
+    address!("f164fC0Ec4E93095b804a4795bBe1e041497b92a");
 
 /// Plant the MockERC20 runtime (built from `.tmp/mock-erc20`, embedded
 /// at `abi/paradigm-2021/mock-erc20.json`) at `addr`. Balances are
@@ -164,6 +182,13 @@ pub async fn seed_erc20_balance(
     holder: Address,
     amount: U256,
 ) -> eyre::Result<()> {
+    // Additive, not overwriting: a pair seeded by an earlier level has
+    // synced reserves at the old balance; lowering it below the synced
+    // reserve makes the next `pair.mint` revert (ds-math-sub-underflow).
+    let mock = MockErc20::new(token, roles.provider());
+    let current = mock.balanceOf(holder).call().await?;
+    let next = current.saturating_add(amount);
+
     // balanceOf[holder] lives at keccak256(abi.encode(holder, 0))
     let mut key = [0u8; 64];
     key[12..32].copy_from_slice(holder.as_slice());
@@ -172,20 +197,24 @@ pub async fn seed_erc20_balance(
         roles,
         token,
         U256::from_be_bytes(slot.0),
-        B256::from(amount.to_be_bytes()),
+        B256::from(next.to_be_bytes()),
     )
     .await
 }
 
-/// Plant the UniswapV2 Router02 at the canonical mainnet address,
-/// deployed against the planted factory and WETH9. The router keeps
-/// `factory`/`WETH` as immutables, so planting the patched runtime via
-/// `anvil_setCode` needs no storage copying.
-pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
-    let existing =
-        roles.provider().get_code_at(MAINNET_UNISWAP_V2_ROUTER).await?;
+/// Plant the UniswapV2 Router02 bytecode at `at_addr` (the canonical
+/// Router02 address, or the deprecated Router01 address which the swap
+/// challenge hardcodes — `swapExactETHForTokens` is selector-identical
+/// across both), deployed against the planted factory and WETH9. The
+/// router keeps `factory`/`WETH` as immutables, so planting the patched
+/// runtime via `anvil_setCode` needs no storage copying.
+pub async fn plant_uniswap_v2_router_at(
+    roles: &Roles,
+    at_addr: Address,
+) -> eyre::Result<Address> {
+    let existing = roles.provider().get_code_at(at_addr).await?;
     if !existing.is_empty() {
-        return Ok(MAINNET_UNISWAP_V2_ROUTER);
+        return Ok(at_addr);
     }
 
     let artifact: serde_json::Value = serde_json::from_str(include_str!(
@@ -220,8 +249,103 @@ pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
         .ok_or_else(|| eyre::eyre!("router deploy produced no address"))?;
 
     let runtime = roles.provider().get_code_at(deployed).await?;
-    set_code(roles, MAINNET_UNISWAP_V2_ROUTER, runtime).await?;
-    Ok(MAINNET_UNISWAP_V2_ROUTER)
+    set_code(roles, at_addr, runtime).await?;
+    Ok(at_addr)
+}
+
+/// Plant the UniswapV2 Router02 at its canonical mainnet address.
+pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
+    plant_uniswap_v2_router_at(roles, MAINNET_UNISWAP_V2_ROUTER).await
+}
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    V2Factory,
+    "abi/damn-vulnerable-defi/UniswapV2Factory.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    MockErc20,
+    "abi/paradigm-2021/mock-erc20.json"
+);
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    WETH9Token,
+    "abi/paradigm-2021/weth9.json"
+);
+
+/// Create the WETH/`token` pair via the planted factory, give it
+/// `tokens` of mock-token balance (storage-seeded) and `weth_amount`
+/// of real WETH, then mint LP so the pair has usable reserves.
+pub async fn seed_weth_pair(
+    roles: &Roles,
+    token: Address,
+    tokens: u128,
+    weth_amount: u128,
+) -> eyre::Result<()> {
+    let deployer = roles.deployer.address();
+    let provider = roles.provider();
+    let factory = V2Factory::new(MAINNET_UNISWAP_V2_FACTORY, provider.clone());
+    let weth = WETH9Token::new(MAINNET_WETH9, provider.clone());
+
+    // Idempotent: a prior level (e.g. farmer) may have created this
+    // pair already; createPair reverts with PAIR_EXISTS and the failed
+    // gas estimate would poison the wallet nonce cache for every later
+    // send.
+    let mut pair = factory.getPair(MAINNET_WETH9, token).call().await?;
+    if Address::new(pair.0.0).is_zero() {
+        factory
+            .createPair(MAINNET_WETH9, token)
+            .from(deployer)
+            .send()
+            .await?
+            .get_receipt()
+            .await?;
+        pair = factory.getPair(MAINNET_WETH9, token).call().await?;
+    }
+    let pair_address = Address::new(pair.0.0);
+    if pair_address.is_zero() {
+        return Err(eyre::eyre!("createPair produced no pair"));
+    }
+
+    seed_erc20_balance(
+        roles,
+        token,
+        pair_address,
+        U256::from(tokens) * U256::from(1_000_000_000_000_000_000u128),
+    )
+    .await?;
+
+    weth.transfer(
+        pair_address,
+        U256::from(weth_amount) * U256::from(1_000_000_000_000_000_000u128),
+    )
+    .from(deployer)
+    .send()
+    .await?
+    .get_receipt()
+    .await?;
+
+    // pair.mint(to) (selector 0x6a627842): sync reserves from balances
+    // and mint LP to the deployer.
+    let mut mint_calldata = alloy::primitives::hex!("6a627842").to_vec();
+    mint_calldata.extend_from_slice(&deployer.abi_encode());
+    provider
+        .send_transaction(
+            alloy::rpc::types::TransactionRequest::default()
+                .to(pair_address)
+                .from(deployer)
+                .input(mint_calldata.into()),
+        )
+        .await?
+        .get_receipt()
+        .await?;
+    Ok(())
 }
 
 /// Plant a functional UniswapV2 factory at the canonical mainnet

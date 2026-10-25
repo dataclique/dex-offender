@@ -18,7 +18,7 @@ fn wait_for_port(port: u16) {
 #[tokio::test]
 async fn deploys_paradigm_2021_levels() {
     let mut anvil = std::process::Command::new("anvil")
-        .args(["--port", "8905"])
+        .args(["--port", "8905", "--code-size-limit", "50000"])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .spawn()
@@ -47,6 +47,9 @@ async fn deploys_paradigm_2021_levels() {
         ("babysandbox", board.babysandbox.is_some()),
         ("jop", board.jop.is_some()),
         ("rever", board.rever.is_some()),
+        ("broker", board.broker.is_some()),
+        ("farmer", board.farmer.is_some()),
+        ("swap", board.swap.is_some()),
     ];
     for (name, ok) in expect_deployed {
         println!("{name}: {}", if ok { "DEPLOYED" } else { "FAILED" });

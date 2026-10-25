@@ -70,7 +70,7 @@ pub async fn set_up_paradigm_2021(roles: &Roles) -> eyre::Result<Paradigm2021> {
         upgrade: upgrade::Target::set_up(roles).await.ok(),
         market: market::Target::set_up(roles).await.ok(),
         secure: secure::Target::set_up(roles).await.ok(),
-        swap: None,
+        swap: swap::Target::set_up(roles).await.ok(),
         vault: vault::Target::set_up(roles).await.ok(),
         yield_aggregator: yield_aggregator::Target::set_up(roles).await.ok(),
     })
