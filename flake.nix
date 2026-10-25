@@ -78,34 +78,6 @@
                   enable = true;
                   packageOverrides = { inherit (channel) cargo rustfmt; };
                 };
-                # bind-attack-contracts = {
-                #   enable = true;
-                #   name = "Bind attack contracts";
-                #   description =
-                #     "Build attack/contracts/ contracts and generate Rust ABI bindings";
-                #   files = "attack/contracts/.*.sol$";
-                #   entry = ".devenv/profile/bin/bind-attack";
-                #   pass_filenames = false;
-                #   verbose = true;
-                # };
-                # bind-ctf-contracts = {
-                #   enable = true;
-                #   name = "Bind CTF contracts";
-                #   description =
-                #     "Compile CTF smart contracts and generate Rust ABI bindings";
-                #   files = "ctf/contracts/.*.sol$";
-                #   entry = ".devenv/profile/bin/bind-ctfs";
-                #   pass_filenames = false;
-                #   verbose = true;
-                # };
-                # deploy-levels = {
-                #   enable = true;
-                #   name = "Deploy levels";
-                #   files = "ctf/src/.*.rs";
-                #   entry = ".devenv/profile/bin/deploy-levels";
-                #   pass_filenames = false;
-                #   verbose = true;
-                # };
               };
             }
           ];
