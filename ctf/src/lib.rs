@@ -3,6 +3,7 @@ pub mod ethereum;
 pub mod level;
 pub mod roles;
 pub mod solana;
+pub mod sui;
 pub use level::*;
 pub use roles::*;
 

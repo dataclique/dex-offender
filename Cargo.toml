@@ -31,3 +31,5 @@ reqwest = "0.13"
 sui-rpc = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
 sui-transaction-builder = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
 sui-sdk-types = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
+ed25519-consensus = "2"
+blake2 = "0.10"
