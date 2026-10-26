@@ -603,6 +603,9 @@ pub struct SuiBoard {
     /// mysten-ctf sabotage_arena level.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mysten_sabotage_arena: Option<mysten_ctf::sabotage_arena::Target>,
+    /// mysten-ctf moving_window level.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mysten_moving_window: Option<mysten_ctf::moving_window::Target>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
