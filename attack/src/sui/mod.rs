@@ -2,3 +2,4 @@
 #![allow(unused)]
 
 pub mod lets_ctf;
+pub mod mysten_ctf;

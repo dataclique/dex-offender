@@ -587,6 +587,7 @@ impl Drop for SuiLocalnet {
 pub use crate::level::{Exploit, Level};
 
 pub mod lets_ctf;
+pub mod mysten_ctf;
 
 /// Deployed-Sui-level state mirrored into `ctfs.json` under `"sui"`.
 #[derive(
@@ -599,6 +600,9 @@ pub struct SuiBoard {
     /// lets-ctf check_in level.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub lets_ctf_check_in: Option<lets_ctf::check_in::Target>,
+    /// mysten-ctf sabotage_arena level.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mysten_sabotage_arena: Option<mysten_ctf::sabotage_arena::Target>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

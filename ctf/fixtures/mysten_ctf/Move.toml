@@ -1,0 +1,19 @@
+[package]
+name = "mysten_ctf"
+version = "0.0.1"
+edition = "2024.beta"
+
+# Harness build fixture: roots the pinned mysten-ctf contracts package.
+# - Sui override: the submodule's Move.lock pins framework commits that
+#   no longer exist upstream ("not our ref"); override to the
+#   framework/testnet tag our localnet genesis uses.
+# - usdc override: the submodule pins the mutable `master` rev; pinned
+#   to the current master commit for reproducibility.
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/testnet", override = true }
+MoveStdlib = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/move-stdlib", rev = "framework/testnet", override = true }
+usdc = { git = "https://github.com/circlefin/stablecoin-sui.git", subdir = "packages/usdc", rev = "23fff2ed82a7fdc26e408a56553b1e1d0ba7b06f", override = true }
+ctf = { local = "../../../lib/mysten-ctf/contracts" }
+
+[addresses]
+mysten_ctf = "0x0"
