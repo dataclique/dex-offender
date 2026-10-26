@@ -27,7 +27,7 @@ async fn publish_object_read_and_state_round_trip() {
             .expect("fixture bytecode (run sui move build)"),
     ];
 
-    let package = localnet
+    let outcome = localnet
         .publish(
             &roles.deployer,
             modules,
@@ -42,6 +42,8 @@ async fn publish_object_read_and_state_round_trip() {
         )
         .await
         .expect("publish smoke package");
+    let package = sui_sdk_types::Address::from_hex(&outcome.package)
+        .expect("package id parses");
     println!("smoke package published at {package}");
 
     // object read: the immutable package object must be retrievable;
@@ -73,7 +75,8 @@ async fn publish_object_read_and_state_round_trip() {
     );
 
     // state wiring: the board serializes into the exact ctfs.json shape
-    let board = SuiBoard { smoke: Some(SmokeTarget { package }) };
+    let board =
+        SuiBoard { smoke: Some(SmokeTarget { package }), ..Default::default() };
     let json = serde_json::to_value(&board).expect("board serialize");
     assert_eq!(
         json["smoke"]["package"].as_str().expect("package hex"),

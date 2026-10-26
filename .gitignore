@@ -1,5 +1,6 @@
 .tmp/
 target/
+result
 ctf/out
 ctf/cache
 attack/out

@@ -59,6 +59,33 @@ fn port_free(port: u16) -> bool {
 /// (scheme flag 0x00). Returns a typed error; correctness is exercised
 /// by the live lifecycle test (a wrong derivation would read as a zero
 /// gRPC balance after genesis pre-funding).
+/// Rewrite a compiled module's SELF address to zero — the canonical
+/// fresh-publish form. Packages whose upstream authors checked in a
+/// `Published.toml` (testnet `original-id`) compile with that concrete
+/// self-address embedded, which raw PTB publish rejects
+/// (`PUBLISH_ERROR_NON_ZERO_ADDRESS`: modules must self-address 0x0).
+/// Only the self module handle's address changes; code and external
+/// dependencies (0x1/0x2/…) are untouched.
+pub fn zero_self_address(module_bytes: &[u8]) -> eyre::Result<Vec<u8>> {
+    use move_binary_format::internals::ModuleIndex;
+    let mut module =
+        move_binary_format::CompiledModule::deserialize_with_defaults(
+            module_bytes,
+        )
+        .map_err(|e| eyre::eyre!("deserialize move module: {e:?}"))?;
+    // self_handle_idx() always returns the first module handle
+    let self_idx = module.self_handle_idx();
+    let addr_idx =
+        module.module_handles[self_idx.into_index()].address.into_index();
+    module.address_identifiers[addr_idx] =
+        move_core_types::account_address::AccountAddress::ZERO;
+    let mut out = Vec::with_capacity(module_bytes.len());
+    module
+        .serialize(&mut out)
+        .map_err(|e| eyre::eyre!("serialize move module: {e}"))?;
+    Ok(out)
+}
+
 fn derive_address(key: &SigningKey) -> eyre::Result<Address> {
     let mut hasher =
         Blake2bVar::new(32).map_err(|e| eyre::eyre!("blake2b init: {e:?}"))?;
@@ -169,6 +196,37 @@ pub struct SuiRoles {
     pub deployer: SuiActor,
     pub some_user: SuiActor,
     pub offender: SuiActor,
+}
+
+/// Result of a successful publish transaction.
+#[derive(Debug, Clone)]
+pub struct PublishOutcome {
+    /// The immutable package object id.
+    pub package: String,
+    /// Every object created by the transaction (UpgradeCap, package,
+    /// and any module `init` state), with their owner kinds
+    /// (proto `owner::OwnerKind` values).
+    pub created: Vec<CreatedObject>,
+}
+
+/// One created object from publish effects.
+#[derive(Debug, Clone)]
+pub struct CreatedObject {
+    pub id: String,
+    pub owner_kind: i32,
+}
+
+impl PublishOutcome {
+    /// The first created object owned as `kind` (proto OwnerKind),
+    /// excluding the package itself.
+    pub fn created_with_owner(&self, kind: i32) -> Option<&str> {
+        self.created
+            .iter()
+            .find(|object| {
+                object.owner_kind == kind && object.id != self.package
+            })
+            .map(|object| object.id.as_str())
+    }
 }
 
 /// A running local Sui network owned by this handle.
@@ -369,14 +427,16 @@ impl SuiLocalnet {
     }
 
     /// Publish compiled Move modules (bytecode) as a package from the
-    /// given role's key, returning the created package id. Signing uses
-    /// the in-harness key through the official sui-crypto signer.
+    /// given role's key. Signing uses the in-harness key through the
+    /// official sui-crypto signer. Returns the package id plus every
+    /// object created by the publish transaction and any module `init`
+    /// (e.g. shared challenge state), with ownership kinds.
     pub async fn publish(
         &self,
         role: &SuiActor,
         modules: Vec<Vec<u8>>,
         dependencies: Vec<Address>,
-    ) -> eyre::Result<Address> {
+    ) -> eyre::Result<PublishOutcome> {
         use sui_rpc::proto::sui::rpc::v2::changed_object::IdOperation;
         use sui_rpc::proto::sui::rpc::v2::owner::OwnerKind;
         use sui_rpc::proto::sui::rpc::v2::{
@@ -442,41 +502,37 @@ impl SuiLocalnet {
         if let Some(err) = status.error {
             return Err(eyre::eyre!("publish failed: {}", err));
         }
-        // exactly two objects are created on publish: the UpgradeCap
-        // (transferred to the role → address-owned) and the package
-        // (immutable → not address-owned)
-        let package_id = effects
+        // created objects: the UpgradeCap (address-owned), the package
+        // (immutable → not address-owned), plus anything a module
+        // `init` created (e.g. shared challenge state)
+        let created: Vec<CreatedObject> = effects
             .changed_objects
             .iter()
             .filter(|changed| {
                 changed.id_operation == Some(IdOperation::Created as i32)
             })
-            .find(|changed| {
-                changed.output_owner.as_ref().and_then(|owner| owner.kind)
-                    != Some(OwnerKind::Address as i32)
+            .filter_map(|changed| {
+                let id = changed.object_id.clone()?;
+                Some(CreatedObject {
+                    id,
+                    owner_kind: changed
+                        .output_owner
+                        .as_ref()
+                        .and_then(|owner| owner.kind)
+                        .unwrap_or_default(),
+                })
             })
-            .and_then(|changed| changed.object_id.clone())
+            .collect();
+        let package = created
+            .iter()
+            .find(|object| object.owner_kind != OwnerKind::Address as i32)
+            .map(|object| object.id.clone())
             .ok_or_else(|| {
-                let created: Vec<String> = effects
-                    .changed_objects
-                    .iter()
-                    .filter(|c| {
-                        c.id_operation == Some(IdOperation::Created as i32)
-                    })
-                    .map(|c| {
-                        format!(
-                            "{} owner={:?}",
-                            c.object_id.clone().unwrap_or_default(),
-                            c.output_owner.as_ref().and_then(|o| o.kind)
-                        )
-                    })
-                    .collect();
                 eyre::eyre!(
                     "publish created no package object; created: {created:?}"
                 )
             })?;
-        Address::from_hex(&package_id)
-            .map_err(|e| eyre::eyre!("parse package id: {e:?}"))
+        Ok(PublishOutcome { package, created })
     }
 
     /// The shared gRPC client (cloneable).
@@ -530,6 +586,8 @@ impl Drop for SuiLocalnet {
 // modules use the same shape as the other chains.
 pub use crate::level::{Exploit, Level};
 
+pub mod lets_ctf;
+
 /// Deployed-Sui-level state mirrored into `ctfs.json` under `"sui"`.
 #[derive(
     Debug, Default, Clone, PartialEq, serde::Serialize, serde::Deserialize,
@@ -538,6 +596,9 @@ pub struct SuiBoard {
     /// Smoke fixture package id (proves the publish round-trip).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub smoke: Option<SmokeTarget>,
+    /// lets-ctf check_in level.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub lets_ctf_check_in: Option<lets_ctf::check_in::Target>,
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
