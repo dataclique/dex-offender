@@ -28,5 +28,7 @@ borsh.workspace = true
 sui-rpc.workspace = true
 sui-transaction-builder.workspace = true
 sui-sdk-types.workspace = true
+sui-crypto.workspace = true
+base64.workspace = true
 ed25519-consensus.workspace = true
 blake2.workspace = true

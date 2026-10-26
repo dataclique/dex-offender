@@ -28,8 +28,10 @@ reqwest = "0.13"
 # (2026-10-23, actively maintained; tags: sui-transaction-builder-0.4.0).
 # Crate set: sui-rpc (JSON-RPC client), sui-transaction-builder (PTB),
 # sui-sdk-types (shared types).
-sui-rpc = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
-sui-transaction-builder = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
+sui-rpc = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["unstable"] }
+sui-transaction-builder = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["intents"] }
 sui-sdk-types = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5" }
+sui-crypto = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["ed25519"] }
+base64 = "0.22"
 ed25519-consensus = "2"
 blake2 = "0.10"

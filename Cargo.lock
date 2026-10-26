@@ -571,7 +571,7 @@ dependencies = [
  "alloy-serde",
  "alloy-sol-types",
  "alloy-trie",
- "itertools 0.14.0",
+ "itertools 0.13.0",
  "serde",
  "serde_json",
  "serde_with",
@@ -724,7 +724,7 @@ checksum = "df948f2f9530ed0325d789ad98aa08403aaeaf55ddd6eeaf0cda143e02afab39"
 dependencies = [
  "alloy-json-rpc",
  "alloy-transport",
- "itertools 0.14.0",
+ "itertools 0.13.0",
  "reqwest",
  "serde_json",
  "tower",
@@ -1835,6 +1835,7 @@ dependencies = [
  "agave-feature-set",
  "alloy",
  "async-trait",
+ "base64 0.22.1",
  "blake2",
  "borsh",
  "ed25519-consensus",
@@ -1849,6 +1850,7 @@ dependencies = [
  "solana-system-interface 3.3.0",
  "spl-token",
  "spl-token-2022-interface",
+ "sui-crypto",
  "sui-rpc",
  "sui-sdk-types",
  "sui-transaction-builder",
@@ -3957,7 +3959,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b570b25f7617e43d59005d0990ccb79e950a423952cea19671b7a876da390adf"
 dependencies = [
  "anyhow",
- "itertools 0.14.0",
+ "itertools 0.10.5",
  "proc-macro2",
  "quote",
  "syn 2.0.119",
@@ -7244,6 +7246,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "734676eb262c623cec13c3155096e08d1f8f29adce39ba17948b18dad1e54142"
 
 [[package]]
+name = "sui-crypto"
+version = "0.4.0"
+source = "git+https://github.com/MystenLabs/sui-rust-sdk?rev=1313d5112464ecc25d7407f42442adea08589fc5#1313d5112464ecc25d7407f42442adea08589fc5"
+dependencies = [
+ "base64ct",
+ "blst",
+ "ed25519-dalek",
+ "rand_core 0.6.4",
+ "signature",
+ "sui-sdk-types",
+]
+
+[[package]]
 name = "sui-rpc"
 version = "0.4.0"
 source = "git+https://github.com/MystenLabs/sui-rust-sdk?rev=1313d5112464ecc25d7407f42442adea08589fc5#1313d5112464ecc25d7407f42442adea08589fc5"
@@ -7261,6 +7276,7 @@ dependencies = [
  "prost-types",
  "serde",
  "serde_json",
+ "sui-crypto",
  "sui-sdk-types",
  "tap",
  "tokio",

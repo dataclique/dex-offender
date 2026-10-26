@@ -16,6 +16,8 @@ pub fn to_ether(amount: u64) -> U256 {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct CTFs {
     pub ethereum: ethereum::Ethereum,
+    #[serde(default)]
+    pub sui: sui::SuiBoard,
 }
 
 impl CTFs {

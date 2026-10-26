@@ -135,12 +135,14 @@ fn inject_accounts(
     Ok(out)
 }
 
-/// One role's handle: a signing key and its derived address on the
-/// running localnet (keys stay in-harness; nothing secret is printed
-/// or persisted beyond this process).
+/// One role's handle: a signing key (with its raw seed for the CLI
+/// signer wrapper), its derived address, and a gRPC client. Keys stay
+/// in-harness; nothing secret is printed or persisted beyond this
+/// process.
 pub struct SuiActor {
     pub address: Address,
     pub signing_key: SigningKey,
+    pub seed: [u8; 32],
     client: sui_rpc::Client,
 }
 
@@ -212,10 +214,15 @@ impl SuiLocalnet {
             .to_string();
 
         // three role keys, addresses derived in-harness
-        let mut keys: Vec<SigningKey> =
-            (0..3).map(|_| SigningKey::new(OsRng)).collect();
+        let mut keys: Vec<(SigningKey, [u8; 32])> = (0..3)
+            .map(|_| {
+                let mut seed = [0u8; 32];
+                rand::RngCore::fill_bytes(&mut OsRng, &mut seed);
+                (SigningKey::from(seed), seed)
+            })
+            .collect();
         let mut addresses = Vec::with_capacity(3);
-        for key in &keys {
+        for (key, _) in &keys {
             addresses.push(derive_address(key)?);
         }
 
@@ -312,20 +319,26 @@ impl SuiLocalnet {
 
         let localnet = Self { child, dir, client, torn_down: false };
 
+        let (deployer_key, deployer_seed) = keys.remove(0);
+        let (user_key, user_seed) = keys.remove(0);
+        let (offender_key, offender_seed) = keys.remove(0);
         let roles = SuiRoles {
             deployer: SuiActor {
                 address: addresses[0],
-                signing_key: keys.remove(0),
+                signing_key: deployer_key,
+                seed: deployer_seed,
                 client: localnet.client(),
             },
             some_user: SuiActor {
                 address: addresses[1],
-                signing_key: keys.remove(0),
+                signing_key: user_key,
+                seed: user_seed,
                 client: localnet.client(),
             },
             offender: SuiActor {
                 address: addresses[2],
-                signing_key: keys.remove(0),
+                signing_key: offender_key,
+                seed: offender_seed,
                 client: localnet.client(),
             },
         };
@@ -353,6 +366,117 @@ impl SuiLocalnet {
         }
 
         Ok((localnet, roles))
+    }
+
+    /// Publish compiled Move modules (bytecode) as a package from the
+    /// given role's key, returning the created package id. Signing uses
+    /// the in-harness key through the official sui-crypto signer.
+    pub async fn publish(
+        &self,
+        role: &SuiActor,
+        modules: Vec<Vec<u8>>,
+        dependencies: Vec<Address>,
+    ) -> eyre::Result<Address> {
+        use sui_rpc::proto::sui::rpc::v2::changed_object::IdOperation;
+        use sui_rpc::proto::sui::rpc::v2::owner::OwnerKind;
+        use sui_rpc::proto::sui::rpc::v2::{
+            ExecuteTransactionRequest, Transaction as ProtoTransaction,
+        };
+        use sui_transaction_builder::TransactionBuilder;
+
+        let mut client = self.client();
+        let mut builder = TransactionBuilder::new();
+        let cap = builder.publish(modules, dependencies);
+        // the publish result (UpgradeCap) must be consumed: transfer it
+        // to the publishing role (the standard publish pattern)
+        let recipient = builder.pure(&role.address);
+        builder.transfer_objects(vec![cap], recipient);
+        builder.set_sender(role.address);
+        let transaction = builder
+            .build(&mut client)
+            .await
+            .map_err(|e| eyre::eyre!("build publish transaction: {e}"))?;
+
+        // sign with the in-harness ed25519 key: construct the CLI-style
+        // `flag ‖ key` base64 encoding (flag 0x00 = ed25519) in memory
+        let mut flagged = Vec::with_capacity(33);
+        flagged.push(0x00);
+        flagged.extend_from_slice(&role.seed);
+        use base64::Engine as _;
+        let encoded =
+            base64::engine::general_purpose::STANDARD.encode(&flagged);
+        let keypair = sui_crypto::simple::SimpleKeypair::from_base64(&encoded)
+            .map_err(|e| eyre::eyre!("construct signer from role key: {e}"))?;
+        use sui_crypto::SuiSigner as _;
+        let signature = keypair
+            .sign_transaction(&transaction)
+            .map_err(|e| eyre::eyre!("sign publish transaction: {e}"))?;
+
+        let mut execution = client.execution_client();
+        // request the effect fields we read: whole-message masks for
+        // status and changed_objects (the default mask omits them)
+        use sui_rpc::field::{FieldMask, FieldMaskUtil};
+        let mask = FieldMask::from_paths([
+            "effects.status".to_string(),
+            "effects.changed_objects".to_string(),
+        ]);
+        let mut request = ExecuteTransactionRequest::const_default()
+            .with_transaction(ProtoTransaction::from(transaction))
+            .with_signatures(vec![
+                sui_rpc::proto::sui::rpc::v2::UserSignature::from(signature),
+            ]);
+        request.read_mask = Some(mask);
+        let response =
+            execution.execute_transaction(request).await?.into_inner();
+
+        // the created immutable object is the package
+        let executed = response.transaction.ok_or_else(|| {
+            eyre::eyre!("execution response missing transaction")
+        })?;
+        let effects = executed
+            .effects
+            .ok_or_else(|| eyre::eyre!("execution response missing effects"))?;
+        let status = effects
+            .status
+            .ok_or_else(|| eyre::eyre!("effects missing status"))?;
+        if let Some(err) = status.error {
+            return Err(eyre::eyre!("publish failed: {}", err));
+        }
+        // exactly two objects are created on publish: the UpgradeCap
+        // (transferred to the role → address-owned) and the package
+        // (immutable → not address-owned)
+        let package_id = effects
+            .changed_objects
+            .iter()
+            .filter(|changed| {
+                changed.id_operation == Some(IdOperation::Created as i32)
+            })
+            .find(|changed| {
+                changed.output_owner.as_ref().and_then(|owner| owner.kind)
+                    != Some(OwnerKind::Address as i32)
+            })
+            .and_then(|changed| changed.object_id.clone())
+            .ok_or_else(|| {
+                let created: Vec<String> = effects
+                    .changed_objects
+                    .iter()
+                    .filter(|c| {
+                        c.id_operation == Some(IdOperation::Created as i32)
+                    })
+                    .map(|c| {
+                        format!(
+                            "{} owner={:?}",
+                            c.object_id.clone().unwrap_or_default(),
+                            c.output_owner.as_ref().and_then(|o| o.kind)
+                        )
+                    })
+                    .collect();
+                eyre::eyre!(
+                    "publish created no package object; created: {created:?}"
+                )
+            })?;
+        Address::from_hex(&package_id)
+            .map_err(|e| eyre::eyre!("parse package id: {e:?}"))
     }
 
     /// The shared gRPC client (cloneable).
@@ -405,6 +529,28 @@ impl Drop for SuiLocalnet {
 // Re-export the chain-agnostic Level/Exploit contracts so Sui level
 // modules use the same shape as the other chains.
 pub use crate::level::{Exploit, Level};
+
+/// Deployed-Sui-level state mirrored into `ctfs.json` under `"sui"`.
+#[derive(
+    Debug, Default, Clone, PartialEq, serde::Serialize, serde::Deserialize,
+)]
+pub struct SuiBoard {
+    /// Smoke fixture package id (proves the publish round-trip).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub smoke: Option<SmokeTarget>,
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct SmokeTarget {
+    pub package: Address,
+}
+
+impl SuiBoard {
+    pub fn from_file() -> eyre::Result<Self> {
+        let ctfs = crate::CTFs::from_file()?;
+        Ok(ctfs.sui)
+    }
+}
 
 #[cfg(test)]
 mod tests {
