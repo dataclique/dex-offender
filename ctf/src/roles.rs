@@ -80,7 +80,15 @@ impl Roles {
         wallet.register_signer(some_user.clone());
         wallet.register_signer(offender.clone());
 
+        // Setup attempts can revert before broadcast. Fetch the pending nonce
+        // for each sequential send instead of reserving a nonce for a failed
+        // attempt and leaving later transactions queued behind a gap.
         let provider: ProviderT = ProviderBuilder::new()
+            .disable_recommended_fillers()
+            .with_gas_estimation()
+            .with_blob_gas_estimation()
+            .with_simple_nonce_management()
+            .fetch_chain_id()
             .wallet(wallet)
             .connect_http(url.parse()?)
             .erased();
