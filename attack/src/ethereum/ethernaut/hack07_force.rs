@@ -1,6 +1,13 @@
-//! Solution scaffold for Ethernaut level 07 — force.
+//! Ethernaut level 07 — Force.
 //!
-//! Force ETH in via selfdestruct.
+//! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
+//!
+//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Force.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Force.sol).
+//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/force.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/force.md).
+//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/ForceFactory.sol) · [Rust bindings](ctf::ethereum::ethernaut::lvl07_force).
+//!
+//! `target` contains the deployed instance address and any level-specific helpers.
+//! `offender` is your player account; sign transactions with `offender.address()`.
 
 use async_trait::async_trait;
 use ctf::Actor;

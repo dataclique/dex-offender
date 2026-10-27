@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! Sui harness-wiring smoke: publish the sui_smoke Move fixture from a
 //! genesis-funded role through the pure-SDK path (builder + in-harness
 //! signing + gRPC execution), read the package object back, persist the

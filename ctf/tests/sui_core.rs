@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! Sui chain-core lifecycle: guarded localnet start with genesis-funded
 //! in-harness roles, and teardown that frees the RPC port and removes
 //! scratch. Skips when SUI_LOCALNET_TEST isn't set (needs the

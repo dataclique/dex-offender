@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! lets-ctf check_in live deployment: publish the pinned package,
 //! locate the shared FlagString from init, verify the fresh level
 //! reads unsolved (ture_num == 0). Gated on SUI_LOCALNET_TEST.

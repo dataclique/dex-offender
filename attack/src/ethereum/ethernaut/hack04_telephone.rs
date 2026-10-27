@@ -1,6 +1,13 @@
-//! Solution scaffold for Ethernaut level 04 — telephone.
+//! Ethernaut level 04 — Telephone.
 //!
-//! Exploit tx.origin vs msg.sender to claim ownership.
+//! Goal: Make your offender account the owner of the `Telephone` contract.
+//!
+//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Telephone.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Telephone.sol).
+//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/telephone.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/telephone.md).
+//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/TelephoneFactory.sol) · [Rust bindings](ctf::ethereum::ethernaut::lvl04_telephone).
+//!
+//! `target` contains the deployed instance address and any level-specific helpers.
+//! `offender` is your player account; sign transactions with `offender.address()`.
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -1,7 +1,13 @@
-//! Example solution for Ethernaut level 01 — Fallback.
+//! Ethernaut level 01 — Fallback.
 //!
-//! Take ownership and drain the contract. This is the ONLY example —
-//! all other hacks are intentionally left blank for you to solve.
+//! Goal: Take ownership of `Fallback`, an Ether contribution contract, and reduce its Ether balance to zero.
+//!
+//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Fallback.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Fallback.sol).
+//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/fallback.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/fallback.md).
+//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/FallbackFactory.sol) · [Rust bindings](ctf::ethereum::ethernaut::lvl01_fallback).
+//!
+//! `target` contains the deployed instance address and any level-specific helpers.
+//! `offender` is your player account; sign transactions with `offender.address()`.
 
 use alloy::primitives::U256;
 use async_trait::async_trait;

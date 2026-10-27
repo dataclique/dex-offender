@@ -3,6 +3,7 @@ pub mod ethereum;
 pub mod level;
 pub mod roles;
 pub mod solana;
+#[cfg(feature = "sui")]
 pub mod sui;
 pub use level::*;
 pub use roles::*;
@@ -16,6 +17,7 @@ pub fn to_ether(amount: u64) -> U256 {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct CTFs {
     pub ethereum: ethereum::Ethereum,
+    #[cfg(feature = "sui")]
     #[serde(default)]
     pub sui: sui::SuiBoard,
 }

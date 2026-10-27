@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! mysten-ctf sabotage_arena + moving_window red-step tests: the
 //! moving_window module API does not exist yet (compile failure), and
 //! arena integration stays green.

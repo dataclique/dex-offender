@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! mysten-ctf sabotage_arena layout regressions (red step: parser
 //! module not yet implemented) + gated live deploy test.
 

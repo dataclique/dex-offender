@@ -1,9 +1,13 @@
 //! Ethernaut level 02 — Fallout.
 //!
-//! Claim ownership of the contract. The constructor used to be named
-//! `Fal1out()` (a typo for `Fallout()`), which in old Solidity (<0.5) made it
-//! the constructor. In the current 0.6 version it's just a regular function
-//! anyone can call to become the owner.
+//! Goal: Become the owner of `Fallout`, the contract that records users' Ether allocations. The owner must be your offender account.
+//!
+//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Fallout.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Fallout.sol).
+//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/fallout.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/fallout.md).
+//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/FalloutFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl02_fallout).
+//!
+//! `target` contains the deployed instance address and any level-specific helpers.
+//! `offender` is your player account; sign transactions with `offender.address()`.
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

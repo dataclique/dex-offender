@@ -53,7 +53,11 @@ async fn main() -> eyre::Result<()> {
         let delay = tokio::time::sleep(Duration::from_secs(2));
 
         println!("Saving levels to a file...");
-        let ctfs = ctf::CTFs { ethereum, sui: ctf::sui::SuiBoard::default() };
+        let ctfs = ctf::CTFs {
+            ethereum,
+            #[cfg(feature = "sui")]
+            sui: ctf::sui::SuiBoard::default(),
+        };
 
         std::fs::write("ctfs.json", serde_json::to_string_pretty(&ctfs)?)?;
 

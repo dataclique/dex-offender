@@ -1,3 +1,5 @@
+#![cfg(feature = "sui")]
+
 //! Sui Rust SDK boundary test: connect to a running localnet via the
 //! official MystenLabs/sui-rust-sdk client and perform a real read
 //! (latest checkpoint through the gRPC LedgerService). Skips when no

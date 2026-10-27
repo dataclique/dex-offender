@@ -8,6 +8,22 @@ edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = []
+# Experimental localnet work is opt-in; EVM practice needs no Move artifacts.
+sui = [
+  "dep:sui-rpc",
+  "dep:sui-transaction-builder",
+  "dep:sui-sdk-types",
+  "dep:bcs",
+  "dep:sui-crypto",
+  "dep:move-binary-format",
+  "dep:move-core-types",
+  "dep:base64",
+  "dep:ed25519-consensus",
+  "dep:blake2",
+]
+
 [dependencies]
 eyre.workspace = true
 rand.workspace = true
@@ -25,13 +41,13 @@ spl-token-2022-interface = "3"
 solana-system-interface = "3.3"
 spl-token.workspace = true
 borsh.workspace = true
-sui-rpc.workspace = true
-sui-transaction-builder.workspace = true
-sui-sdk-types.workspace = true
-bcs.workspace = true
-sui-crypto.workspace = true
-move-binary-format.workspace = true
-move-core-types.workspace = true
-base64.workspace = true
-ed25519-consensus.workspace = true
-blake2.workspace = true
+sui-rpc = { workspace = true, optional = true }
+sui-transaction-builder = { workspace = true, optional = true }
+sui-sdk-types = { workspace = true, optional = true }
+bcs = { workspace = true, optional = true }
+sui-crypto = { workspace = true, optional = true }
+move-binary-format = { workspace = true, optional = true }
+move-core-types = { workspace = true, optional = true }
+base64 = { workspace = true, optional = true }
+ed25519-consensus = { workspace = true, optional = true }
+blake2 = { workspace = true, optional = true }

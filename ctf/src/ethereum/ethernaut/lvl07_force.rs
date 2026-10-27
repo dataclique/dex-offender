@@ -1,6 +1,13 @@
 //! Ethernaut level 07 — Force.
 //!
-//! Force ETH into a contract with no payable functions using selfdestruct.
+//! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
+//!
+//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Force.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Force.sol).
+//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/force.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/force.md).
+//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/ForceFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl07_force).
+//!
+//! `target` contains the deployed instance address and any level-specific helpers.
+//! `offender` is your player account; sign transactions with `offender.address()`.
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, providers::Provider, sol};

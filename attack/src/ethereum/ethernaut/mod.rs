@@ -47,16 +47,103 @@ pub mod hack29_switch;
 #[cfg(test)]
 mod tests {
     use super::*;
+    use ctf::Level;
+
+    static LOCAL_CHAIN: tokio::sync::Mutex<()> =
+        tokio::sync::Mutex::const_new(());
+
+    // Each run deploys a fresh instance; no saved board or previous solutions.
+    async fn run<E: ctf::Exploit>(exploit: E) -> eyre::Result<()> {
+        let _guard = LOCAL_CHAIN.lock().await;
+        let roles = ctf::Roles::new(ctf::ANVIL_HTTP)?;
+        let target = E::Target::set_up(&roles).await?;
+
+        eyre::ensure!(
+            !target.check(&roles).await?,
+            "fresh level is already solved"
+        );
+
+        exploit.attack(&target, &roles.offender).await?;
+
+        eyre::ensure!(
+            target.check(&roles).await?,
+            "attack ran but the level is still unsolved"
+        );
+
+        println!("Solved {}", target.name());
+        Ok(())
+    }
 
     #[tokio::test]
-    async fn test() -> eyre::Result<()> {
-        println!("Initializing accounts...");
+    async fn fallout_starts_unsolved() -> eyre::Result<()> {
+        let _guard = LOCAL_CHAIN.lock().await;
         let roles = ctf::Roles::new(ctf::ANVIL_HTTP)?;
-
-        // Only the example solution runs as a test. To test your own solution,
-        // add a line like: ctf::check_exploit(&roles, hackNN::Exploit).await?;
-        ctf::check_exploit(&roles, hack01_fallback::Exploit).await?;
-
+        let target =
+            ctf::ethereum::ethernaut::lvl02_fallout::Target::set_up(&roles)
+                .await?;
+        eyre::ensure!(
+            !target.check(&roles).await?,
+            "fresh Fallout is already solved"
+        );
         Ok(())
+    }
+
+    #[tokio::test]
+    async fn fallback() -> eyre::Result<()> {
+        run(hack01_fallback::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn fallout() -> eyre::Result<()> {
+        run(hack02_fallout::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn coin_flip() -> eyre::Result<()> {
+        run(hack03_coin_flip::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn telephone() -> eyre::Result<()> {
+        run(hack04_telephone::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn token() -> eyre::Result<()> {
+        run(hack05_token::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn delegate() -> eyre::Result<()> {
+        run(hack06_delegate::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn force() -> eyre::Result<()> {
+        run(hack07_force::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn vault() -> eyre::Result<()> {
+        run(hack08_vault::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn king() -> eyre::Result<()> {
+        run(hack09_king::Exploit).await
+    }
+
+    #[tokio::test]
+    #[ignore = "Implement the blank hack module, then run this test with --ignored"]
+    async fn reentrancy() -> eyre::Result<()> {
+        run(hack10_reentrancy::Exploit).await
     }
 }

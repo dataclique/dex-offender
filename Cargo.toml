@@ -26,17 +26,27 @@ borsh = "1"
 reqwest = "0.13"
 # Official Sui Rust SDK — MystenLabs/sui-rust-sdk @ master 1313d51
 # (2026-10-23, actively maintained; tags: sui-transaction-builder-0.4.0).
-# Crate set: sui-rpc (JSON-RPC client), sui-transaction-builder (PTB),
+# Crate set: sui-rpc (gRPC client), sui-transaction-builder (PTB),
 # sui-sdk-types (shared types).
-sui-rpc = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["unstable"] }
-sui-transaction-builder = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["intents"] }
-sui-sdk-types = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["unstable"] }
+sui-rpc = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = [
+  "unstable",
+] }
+sui-transaction-builder = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = [
+  "intents",
+] }
+sui-sdk-types = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = [
+  "unstable",
+] }
 bcs = "0.1"
-sui-crypto = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = ["ed25519"] }
+sui-crypto = { git = "https://github.com/MystenLabs/sui-rust-sdk", rev = "1313d5112464ecc25d7407f42442adea08589fc5", features = [
+  "ed25519",
+] }
 # move-binary-format (Mysten workspace member at the framework rev;
 # serializer is behind the fuzzing feature)
-move-binary-format = { git = "https://github.com/MystenLabs/sui.git", rev = "987123842623d6cb0e772dc665789cfd69bdec9f", features = ["fuzzing"] }
-move-core-types = { git = "https://github.com/MystenLabs/sui.git", subdir = "external-crates/move/crates/move-core-types", rev = "987123842623d6cb0e772dc665789cfd69bdec9f" }
+move-binary-format = { git = "https://github.com/MystenLabs/sui.git", rev = "987123842623d6cb0e772dc665789cfd69bdec9f", features = [
+  "fuzzing",
+] }
+move-core-types = { git = "https://github.com/MystenLabs/sui.git", rev = "987123842623d6cb0e772dc665789cfd69bdec9f" }
 base64 = "0.22"
 ed25519-consensus = "2"
 blake2 = "0.10"
