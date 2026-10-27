@@ -1,13 +1,13 @@
-//! Ethernaut level 07 — Force.
+//! Ethernaut 07 — Force.
 //!
 //! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Force.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Force.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/force.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/force.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/ForceFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl07_force).
+//! Source: [Force.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack force -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/Force.sol
+//! [harness]: crate::ethereum::ethernaut::lvl07_force
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, providers::Provider, sol};

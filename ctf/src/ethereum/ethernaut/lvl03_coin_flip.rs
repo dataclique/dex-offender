@@ -1,13 +1,14 @@
-//! Ethernaut level 03 — Coin Flip.
+//! Ethernaut 03 — Coin Flip.
 //!
-//! Goal: Win at least ten consecutive guesses in the `CoinFlip` game without resetting the winning streak.
+//! Goal: Win at least ten consecutive guesses in the `CoinFlip` game without
+//! resetting the winning streak.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/CoinFlip.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/CoinFlip.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/coinflip.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/coinflip.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/CoinFlipFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl03_coin_flip).
+//! Source: [CoinFlip.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack coin_flip -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/CoinFlip.sol
+//! [harness]: crate::ethereum::ethernaut::lvl03_coin_flip
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

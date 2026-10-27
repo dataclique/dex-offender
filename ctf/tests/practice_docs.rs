@@ -1,4 +1,4 @@
-//! Practice entry points must link to their matching upstream challenge.
+//! Practice headers identify their contract without horizontal scrolling.
 
 use std::{fs, path::Path};
 
@@ -7,7 +7,6 @@ use std::{fs, path::Path};
 struct Challenge {
     deploy_id: String,
     instance_contract: String,
-    description: String,
 }
 
 #[derive(serde::Deserialize)]
@@ -16,7 +15,7 @@ struct GameData {
 }
 
 #[test]
-fn first_ten_ethernaut_hacks_link_to_their_contracts_and_challenges()
+fn first_ten_ethernaut_headers_name_their_contracts_and_fit_the_editor()
 -> eyre::Result<()> {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
     let hacks = root.join("attack/src/ethereum/ethernaut");
@@ -46,43 +45,43 @@ fn first_ten_ethernaut_hacks_link_to_their_contracts_and_challenges()
             .ok_or_else(|| {
                 eyre::eyre!("{name}: no matching upstream challenge")
             })?;
-        let source = fs::read_to_string(&path)?;
+        let relative = format!(
+            "../../../../lib/ethernaut/contracts/src/levels/{}",
+            challenge.instance_contract
+        );
+        eyre::ensure!(
+            hacks.join(&relative).is_file(),
+            "{name}: broken contract link"
+        );
 
-        for (label, relative) in [
-            (
-                "Source",
-                format!("contracts/src/levels/{}", challenge.instance_contract),
-            ),
-            (
-                "Challenge",
-                format!(
-                    "client/src/gamedata/en/descriptions/levels/{}",
-                    challenge.description
-                ),
-            ),
-        ] {
-            let link = format!("../../../../lib/ethernaut/{relative}");
-            let expected = format!("//! {label}: [local]({link})");
+        let harness = root
+            .join("ctf/src/ethereum/ethernaut")
+            .join(name.replacen("hack", "lvl", 1));
+        for file in [&path, &harness] {
+            let source = fs::read_to_string(file)?;
+            let header: Vec<_> = source
+                .lines()
+                .take_while(|line| line.starts_with("//!"))
+                .collect();
+            for line in &header {
+                eyre::ensure!(
+                    line.chars().count() <= 80,
+                    "{}: header exceeds 80 columns",
+                    file.display()
+                );
+            }
+            let expected = format!("//! {relative}");
             eyre::ensure!(
-                source.contains(&expected),
-                "{name}: missing matching {label} link"
+                header.contains(&expected.as_str()),
+                "{}: missing matching contract link",
+                file.display()
             );
             eyre::ensure!(
-                hacks.join(&link).is_file(),
-                "{name}: broken practice link {link}"
-            );
-            let upstream = format!(
-                "https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/{relative}"
-            );
-            eyre::ensure!(
-                source.contains(&upstream),
-                "{name}: missing pinned {label} link"
+                header.iter().any(|line| line.starts_with("//! Goal:")),
+                "{}: missing goal",
+                file.display()
             );
         }
-        eyre::ensure!(
-            source.contains("//! Goal:"),
-            "{name}: missing challenge goal"
-        );
     }
     eyre::ensure!(
         count == 10,

@@ -1,13 +1,14 @@
-//! Ethernaut level 08 — Vault.
+//! Ethernaut 08 — Vault.
 //!
-//! Goal: Unlock the password-protected `Vault` so that its `locked` flag becomes false.
+//! Goal: Unlock the password-protected `Vault` so that its `locked` flag
+//! becomes false.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Vault.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Vault.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/vault.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/vault.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/VaultFactory.sol) · [Rust bindings](ctf::ethereum::ethernaut::lvl08_vault).
+//! Source: [Vault.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack vault -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/Vault.sol
+//! [harness]: ctf::ethereum::ethernaut::lvl08_vault
 
 use async_trait::async_trait;
 use ctf::Actor;

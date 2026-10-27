@@ -1,13 +1,15 @@
-//! Ethernaut level 06 — Delegation.
+//! Ethernaut 06 — Delegation.
 //!
-//! Goal: Take ownership of the `Delegation` instance, which uses a companion `Delegate` contract. The checked owner belongs to `Delegation`, not `Delegate`.
+//! Goal: Take ownership of the `Delegation` instance, which uses a companion
+//! `Delegate` contract. The checked owner belongs to `Delegation`, not
+//! `Delegate`.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Delegation.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Delegation.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/delegate.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/delegate.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/DelegationFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl06_delegate).
+//! Source: [Delegation.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack delegate -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/Delegation.sol
+//! [harness]: crate::ethereum::ethernaut::lvl06_delegate
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

@@ -1,13 +1,14 @@
-//! Ethernaut level 02 — Fallout.
+//! Ethernaut 02 — Fallout.
 //!
-//! Goal: Become the owner of `Fallout`, the contract that records users' Ether allocations. The owner must be your offender account.
+//! Goal: Become the owner of `Fallout`, the contract that records users' Ether
+//! allocations. The owner must be your offender account.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Fallout.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Fallout.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/fallout.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/fallout.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/FalloutFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl02_fallout).
+//! Source: [Fallout.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack fallout -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/Fallout.sol
+//! [harness]: crate::ethereum::ethernaut::lvl02_fallout
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

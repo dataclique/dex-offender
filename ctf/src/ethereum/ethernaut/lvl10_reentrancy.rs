@@ -1,13 +1,14 @@
-//! Ethernaut level 10 — Re-entrancy.
+//! Ethernaut 10 — Re-entrancy.
 //!
-//! Goal: Empty the Ether held by `Reentrance`, a contract that records donations and lets users withdraw their balances.
+//! Goal: Empty the Ether held by `Reentrance`, a contract that records
+//! donations and lets users withdraw their balances.
 //!
-//! Source: [local](../../../../lib/ethernaut/contracts/src/levels/Reentrance.sol) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/contracts/src/levels/Reentrance.sol).
-//! Challenge: [local](../../../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/reentrancy.md) · [pinned upstream](https://github.com/OpenZeppelin/ethernaut/blob/d05643a40aa98c45d66247c69ffceab8f44dd8cb/client/src/gamedata/en/descriptions/levels/reentrancy.md).
-//! [Factory success check](../../../../lib/ethernaut/contracts/src/levels/ReentranceFactory.sol) · [Rust bindings](crate::ethereum::ethernaut::lvl10_reentrancy).
+//! Source: [Reentrance.sol][source]. [Rust harness][harness].
+//! Test: `cargo test -p attack reentrancy -- --ignored --nocapture`
 //!
-//! `target` contains the deployed instance address and any level-specific helpers.
-//! `offender` is your player account; sign transactions with `offender.address()`.
+//! [source]:
+//! ../../../../lib/ethernaut/contracts/src/levels/Reentrance.sol
+//! [harness]: crate::ethereum::ethernaut::lvl10_reentrancy
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, providers::Provider, sol};
