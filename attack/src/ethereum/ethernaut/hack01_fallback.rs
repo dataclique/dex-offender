@@ -3,12 +3,8 @@
 //! Goal: Take ownership of `Fallback`, an Ether contribution contract, and
 //! reduce its Ether balance to zero.
 //!
-//! Source: [Fallback.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Fallback.sol
 //! Test: `cargo test -p attack fallback -- --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Fallback.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl01_fallback
 
 use alloy::primitives::U256;
 use async_trait::async_trait;

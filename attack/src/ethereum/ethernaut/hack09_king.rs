@@ -3,12 +3,8 @@
 //! Goal: Claim the throne in `King` and prevent the original owner from
 //! reclaiming it during the level check.
 //!
-//! Source: [King.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/King.sol
 //! Test: `cargo test -p attack king -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/King.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl09_king
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -3,12 +3,8 @@
 //! Goal: Increase your offender account's `Token` balance above the twenty
 //! tokens it receives at setup.
 //!
-//! Source: [Token.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Token.sol
 //! Test: `cargo test -p attack token -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Token.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl05_token
 
 use async_trait::async_trait;
 use ctf::Actor;

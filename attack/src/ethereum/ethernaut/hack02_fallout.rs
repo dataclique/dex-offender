@@ -3,12 +3,8 @@
 //! Goal: Become the owner of `Fallout`, the contract that records users' Ether
 //! allocations. The owner must be your offender account.
 //!
-//! Source: [Fallout.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Fallout.sol
 //! Test: `cargo test -p attack fallout -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Fallout.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl02_fallout
 
 use async_trait::async_trait;
 use ctf::Actor;

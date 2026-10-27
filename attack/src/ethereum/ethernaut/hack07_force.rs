@@ -2,12 +2,8 @@
 //!
 //! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
 //!
-//! Source: [Force.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Force.sol
 //! Test: `cargo test -p attack force -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Force.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl07_force
 
 use async_trait::async_trait;
 use ctf::Actor;

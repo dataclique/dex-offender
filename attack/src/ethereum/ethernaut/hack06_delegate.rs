@@ -4,12 +4,8 @@
 //! `Delegate` contract. The checked owner belongs to `Delegation`, not
 //! `Delegate`.
 //!
-//! Source: [Delegation.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Delegation.sol
 //! Test: `cargo test -p attack delegate -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Delegation.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl06_delegate
 
 use async_trait::async_trait;
 use ctf::Actor;

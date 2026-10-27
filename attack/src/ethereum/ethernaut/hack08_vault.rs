@@ -3,12 +3,8 @@
 //! Goal: Unlock the password-protected `Vault` so that its `locked` flag
 //! becomes false.
 //!
-//! Source: [Vault.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Vault.sol
 //! Test: `cargo test -p attack vault -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Vault.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl08_vault
 
 use async_trait::async_trait;
 use ctf::Actor;

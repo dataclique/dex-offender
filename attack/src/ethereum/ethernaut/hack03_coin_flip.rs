@@ -3,12 +3,8 @@
 //! Goal: Win at least ten consecutive guesses in the `CoinFlip` game without
 //! resetting the winning streak.
 //!
-//! Source: [CoinFlip.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/CoinFlip.sol
 //! Test: `cargo test -p attack coin_flip -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/CoinFlip.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl03_coin_flip
 
 use async_trait::async_trait;
 use ctf::Actor;

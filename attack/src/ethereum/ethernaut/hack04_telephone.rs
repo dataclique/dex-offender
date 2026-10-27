@@ -2,12 +2,8 @@
 //!
 //! Goal: Make your offender account the owner of the `Telephone` contract.
 //!
-//! Source: [Telephone.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Telephone.sol
 //! Test: `cargo test -p attack telephone -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Telephone.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl04_telephone
 
 use async_trait::async_trait;
 use ctf::Actor;

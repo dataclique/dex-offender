@@ -3,12 +3,8 @@
 //! Goal: Empty the Ether held by `Reentrance`, a contract that records
 //! donations and lets users withdraw their balances.
 //!
-//! Source: [Reentrance.sol][source]. [Rust harness][harness].
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Reentrance.sol
 //! Test: `cargo test -p attack reentrancy -- --ignored --nocapture`
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Reentrance.sol
-//! [harness]: ctf::ethereum::ethernaut::lvl10_reentrancy
 
 use async_trait::async_trait;
 use ctf::Actor;
