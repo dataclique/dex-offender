@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 20 — denial.
+//! Ethernaut 20 — Denial.
 //!
-//! Consume all gas in receive() to block withdraw.
+//! Goal: Prevent `Denial.withdraw()` from succeeding with a gas limit of
+//! 1,000,000 while the contract still holds more than 100 wei.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Denial.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

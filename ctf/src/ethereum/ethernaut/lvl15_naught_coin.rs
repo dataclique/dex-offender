@@ -1,6 +1,9 @@
-//! Ethernaut level 15 — NaughtCoin.
+//! Ethernaut 15 — Naught Coin.
 //!
-//! Bypass the transfer lockup period of NaughtCoin.
+//! Goal: Move all of your offender account's `NaughtCoin` tokens away despite
+//! the ten-year transfer lock. Its final token balance must be zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/NaughtCoin.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

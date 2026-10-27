@@ -4,7 +4,6 @@
 //! reclaiming it during the level check.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/King.sol
-//! Test: `cargo test -p attack king -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

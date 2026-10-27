@@ -5,7 +5,6 @@
 //! `Delegate`.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Delegation.sol
-//! Test: `cargo test -p attack delegate -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

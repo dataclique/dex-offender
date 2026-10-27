@@ -1,6 +1,9 @@
-//! Ethernaut level 21 — Shop.
+//! Ethernaut 21 — Shop.
 //!
-//! Buy the Shop item for less than the asking price.
+//! Goal: Buy the item from `Shop` for less than its initial asking price of
+//! 100.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Shop.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

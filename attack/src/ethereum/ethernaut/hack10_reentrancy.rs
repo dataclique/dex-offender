@@ -4,7 +4,6 @@
 //! donations and lets users withdraw their balances.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Reentrance.sol
-//! Test: `cargo test -p attack reentrancy -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 13 — gatekeeper_one.
+//! Ethernaut 13 — Gatekeeper One.
 //!
-//! Pass 3 gates with gas tuning + type conversion.
+//! Goal: Pass all three gates of `GatekeeperOne` and register your offender
+//! account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperOne.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

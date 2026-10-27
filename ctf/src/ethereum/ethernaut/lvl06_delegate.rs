@@ -5,7 +5,6 @@
 //! `Delegate`.
 //!
 //! Source: [Delegation.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack delegate -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Delegation.sol

@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 15 — naught_coin.
+//! Ethernaut 15 — Naught Coin.
 //!
-//! Bypass transfer lockup via approve+transferFrom.
+//! Goal: Move all of your offender account's `NaughtCoin` tokens away despite
+//! the ten-year transfer lock. Its final token balance must be zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/NaughtCoin.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

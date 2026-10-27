@@ -1,6 +1,9 @@
-//! Ethernaut level 16 — Preservation.
+//! Ethernaut 16 — Preservation.
 //!
-//! Hijack the Preservation contract library address to claim ownership.
+//! Goal: Take ownership of `Preservation`, a timezone-recording contract that
+//! uses two `LibraryContract` instances.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Preservation.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

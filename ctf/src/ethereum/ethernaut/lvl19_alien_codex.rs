@@ -1,6 +1,9 @@
-//! Ethernaut level 19 — AlienCodex.
+//! Ethernaut 19 — Alien Codex.
 //!
-//! Claim ownership of AlienCodex by exploiting array length underflow.
+//! Goal: Make your offender account the owner of `AlienCodex`, a contract with
+//! a mutable codex array.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/AlienCodex.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

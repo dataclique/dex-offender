@@ -4,7 +4,6 @@
 //! tokens it receives at setup.
 //!
 //! Source: [Token.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack token -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Token.sol

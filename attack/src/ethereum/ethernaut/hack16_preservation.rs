@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 16 — preservation.
+//! Ethernaut 16 — Preservation.
 //!
-//! Hijack library delegatecall to set owner.
+//! Goal: Take ownership of `Preservation`, a timezone-recording contract that
+//! uses two `LibraryContract` instances.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Preservation.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

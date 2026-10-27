@@ -4,7 +4,6 @@
 //! allocations. The owner must be your offender account.
 //!
 //! Source: [Fallout.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack fallout -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Fallout.sol

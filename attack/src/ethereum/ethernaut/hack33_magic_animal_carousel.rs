@@ -1,17 +1,19 @@
-//! Solution scaffold for Ethernaut level 33 — Magic Animal Carousel.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 33 — Magic Animal Carousel.
+//!
+//! Goal: Break `MagicAnimalCarousel`'s animal-storage rule: after the checker
+//! stores "Goat" and spins, the current crate must not contain the expected
+//! animal encoding.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/MagicAnimalCarousel.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl33_magic_animal_carousel::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

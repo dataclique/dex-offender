@@ -1,6 +1,9 @@
-//! Ethernaut level 17 — Recovery.
+//! Ethernaut 17 — Recovery.
 //!
-//! Recover the address of a contract created by the Recovery factory.
+//! Goal: Recover all Ether from the lost `SimpleToken` created by `Recovery`.
+//! The token's Ether balance, not the factory's, must become zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Recovery.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

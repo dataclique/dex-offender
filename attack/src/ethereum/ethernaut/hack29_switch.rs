@@ -1,6 +1,8 @@
-//! Solution scaffold for Ethernaut level 29 — switch.
+//! Ethernaut 29 — Switch.
 //!
-//! Call via off-chain lookUp with flipped selector.
+//! Goal: Turn on `Switch`, leaving its `switchOn` flag true.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Switch.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

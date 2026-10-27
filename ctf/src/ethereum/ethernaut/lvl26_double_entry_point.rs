@@ -1,6 +1,10 @@
-//! Ethernaut level 26 — DoubleEntryPoint.
+//! Ethernaut 26 — DoubleEntryPoint.
 //!
-//! Detect the DoubleEntryPoint vulnerability using a Forta bot.
+//! Goal: Register a Forta detection bot for your offender account that blocks a
+//! legacy-token sweep from `CryptoVault` while preserving a positive vault
+//! balance of `DoubleEntryPoint` tokens.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/DoubleEntryPoint.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, primitives::U256, sol};

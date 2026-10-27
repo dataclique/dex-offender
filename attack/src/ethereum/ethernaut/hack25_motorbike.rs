@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 25 — motorbike.
+//! Ethernaut 25 — Motorbike.
 //!
-//! Selfdestruct the implementation engine.
+//! Goal: Leave the original `Engine` implementation behind the `Motorbike`
+//! proxy without contract code.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Motorbike.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

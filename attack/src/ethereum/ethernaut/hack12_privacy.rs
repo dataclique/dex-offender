@@ -1,6 +1,8 @@
-//! Solution scaffold for Ethernaut level 12 — privacy.
+//! Ethernaut 12 — Privacy.
 //!
-//! Read data[2] from storage to unlock.
+//! Goal: Unlock the `Privacy` contract so that its `locked` flag becomes false.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Privacy.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

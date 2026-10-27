@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 21 — shop.
+//! Ethernaut 21 — Shop.
 //!
-//! Return high price on isSold() check, buy low.
+//! Goal: Buy the item from `Shop` for less than its initial asking price of
+//! 100.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Shop.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -1,6 +1,8 @@
-//! Ethernaut level 12 — Privacy.
+//! Ethernaut 12 — Privacy.
 //!
-//! Read the private data key from storage to unlock the Privacy contract.
+//! Goal: Unlock the `Privacy` contract so that its `locked` flag becomes false.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Privacy.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

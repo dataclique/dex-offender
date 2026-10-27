@@ -1,6 +1,9 @@
-//! Ethernaut level 37 — Impersonator Two.
+//! Ethernaut 37 — Impersonator Two.
 //!
-//! Steal all the funds from the contract.
+//! Goal: Empty the Ether held by the locked `ImpersonatorTwo` contract, which
+//! starts with 0.001 ETH.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/ImpersonatorTwo.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

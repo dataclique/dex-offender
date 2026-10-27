@@ -1,17 +1,17 @@
-//! Solution scaffold for Ethernaut level 38 — UniqueNFT.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 38 — Unique NFT.
+//!
+//! Goal: Own more than one NFT from `UniqueNFT` in your offender account.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/UniqueNFT.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl38_unique_nft::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

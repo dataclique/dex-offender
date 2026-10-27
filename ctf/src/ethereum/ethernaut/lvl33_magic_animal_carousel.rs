@@ -1,6 +1,10 @@
-//! Ethernaut level 33 — Magic Animal Carousel.
+//! Ethernaut 33 — Magic Animal Carousel.
 //!
-//! Break the magic rule of the carousel.
+//! Goal: Break `MagicAnimalCarousel`'s animal-storage rule: after the checker
+//! stores "Goat" and spins, the current crate must not contain the expected
+//! animal encoding.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/MagicAnimalCarousel.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

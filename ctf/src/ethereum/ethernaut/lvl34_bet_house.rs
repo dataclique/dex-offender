@@ -1,6 +1,10 @@
-//! Ethernaut level 34 — Bet House.
+//! Ethernaut 34 — Bet House.
 //!
-//! Master the art of strategic gambling and become a bettor.
+//! Goal: Become a bettor in `BetHouse`, which uses a `Pool` and two `PoolToken`
+//! contracts. Your offender account receives five deposit tokens at setup;
+//! `isBettor(offender)` must become true.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/BetHouse.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

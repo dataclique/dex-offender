@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 23 — dex_two.
+//! Ethernaut 23 — Dex Two.
 //!
-//! Swap fake token to drain both real tokens.
+//! Goal: Drain both designated tokens from `DexTwo`. The DEX starts with 100 of
+//! each token, and your offender account starts with ten of each.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/DexTwo.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

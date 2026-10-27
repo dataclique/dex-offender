@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 14 — gatekeeper_two.
+//! Ethernaut 14 — Gatekeeper Two.
 //!
-//! Pass 3 gates with extcodesize + truncation.
+//! Goal: Pass all three gates of `GatekeeperTwo` and register your offender
+//! account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperTwo.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

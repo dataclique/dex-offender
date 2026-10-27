@@ -1,17 +1,22 @@
-//! Solution scaffold for Ethernaut level 31 — Stake.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 31 — Stake.
+//!
+//! Goal: Leave `Stake` with nonzero Ether and `totalStaked` greater than that
+//! balance. Your offender account must be recorded in `Stakers` but have zero
+//! `UserStake`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Stake.sol
+//!
+//! DummyWETH creation and the complete success predicate:
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/StakeFactory.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl31_stake::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

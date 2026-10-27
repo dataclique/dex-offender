@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 19 — alien_codex.
+//! Ethernaut 19 — Alien Codex.
 //!
-//! Underflow array length to write owner slot.
+//! Goal: Make your offender account the owner of `AlienCodex`, a contract with
+//! a mutable codex array.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/AlienCodex.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

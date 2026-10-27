@@ -1,6 +1,9 @@
-//! Ethernaut level 35 — Elliptic Token.
+//! Ethernaut 35 — Elliptic Token.
 //!
-//! Steve the $ETK tokens that ALICE just redeemed.
+//! Goal: Remove all of ALICE's `EllipticToken` tokens after her initial voucher
+//! redemption. Her final token balance must be zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/EllipticToken.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, primitives::U256, sol};

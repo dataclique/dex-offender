@@ -1,6 +1,9 @@
-//! Ethernaut level 20 — Denial.
+//! Ethernaut 20 — Denial.
 //!
-//! Prevent the Denial contract owner from withdrawing funds.
+//! Goal: Prevent `Denial.withdraw()` from succeeding with a gas limit of
+//! 1,000,000 while the contract still holds more than 100 wei.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Denial.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

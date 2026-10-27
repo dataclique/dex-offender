@@ -3,7 +3,6 @@
 //! Goal: Make your offender account the owner of the `Telephone` contract.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Telephone.sol
-//! Test: `cargo test -p attack telephone -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

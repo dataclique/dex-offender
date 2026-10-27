@@ -1,6 +1,9 @@
-//! Ethernaut level 23 — DexTwo.
+//! Ethernaut 23 — Dex Two.
 //!
-//! Drain both tokens from DexTwo by adding a fake token to the pool.
+//! Goal: Drain both designated tokens from `DexTwo`. The DEX starts with 100 of
+//! each token, and your offender account starts with ten of each.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/DexTwo.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

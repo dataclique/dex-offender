@@ -68,10 +68,11 @@ jobs:
       - name: Lint
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
 
-      - name: Check solutions on a fresh local chain
+      - name: Check all solutions on the saved deployment
         shell: bash
         run: |
-          anvil --quiet &
+          cargo run --bin deploy_levels --locked
+          anvil --load-state state.json --code-size-limit 50000 --quiet &
           anvil_pid=$!
           trap 'kill "$anvil_pid"; wait "$anvil_pid" || true' EXIT
           for attempt in {1..50}; do

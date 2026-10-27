@@ -1,7 +1,9 @@
-//! Ethernaut level 11 — Elevator.
+//! Ethernaut 11 — Elevator.
 //!
-//! Reach the top floor by returning different values from the Elevator
-//! interface.
+//! Goal: Make `Elevator` report `top == true`. Its source also defines the
+//! `Building` interface.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Elevator.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

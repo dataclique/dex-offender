@@ -3,7 +3,6 @@
 //! Goal: Make your offender account the owner of the `Telephone` contract.
 //!
 //! Source: [Telephone.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack telephone -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Telephone.sol

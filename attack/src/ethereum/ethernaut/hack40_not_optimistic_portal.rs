@@ -1,17 +1,19 @@
-//! Solution scaffold for Ethernaut level 40 — NotOptimisticPortal.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 40 — NotOptimisticPortal.
+//!
+//! Goal: Mint tokens through `NotOptimisticPortal`, a cross-chain portal
+//! initialized with a synthetic genesis header. Its token total supply must
+//! become positive.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/NotOptimisticPortal.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl40_not_optimistic_portal::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

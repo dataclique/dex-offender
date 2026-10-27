@@ -1,6 +1,9 @@
-//! Ethernaut level 25 — Motorbike.
+//! Ethernaut 25 — Motorbike.
 //!
-//! Destroy the Motorbike engine by selfdestructing its implementation.
+//! Goal: Leave the original `Engine` implementation behind the `Motorbike`
+//! proxy without contract code.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Motorbike.sol
 
 use crate::{Level, Roles};
 use alloy::{

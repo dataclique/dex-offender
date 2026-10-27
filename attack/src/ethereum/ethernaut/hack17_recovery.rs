@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 17 — recovery.
+//! Ethernaut 17 — Recovery.
 //!
-//! Compute CREATE address from nonce+deployer.
+//! Goal: Recover all Ether from the lost `SimpleToken` created by `Recovery`.
+//! The token's Ether balance, not the factory's, must become zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Recovery.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

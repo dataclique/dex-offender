@@ -4,59 +4,66 @@ Smart-contract CTFs with a Rust practice harness using
 [Alloy](https://github.com/alloy-rs/alloy). Write attacks in the existing
 `attack/` modules. Fallback is the only supplied solution.
 
-## Start hacking Ethernaut
+## Setup
 
-From the repository root, populate the pinned challenge sources and load the
-development environment:
+From the repository root:
 
 ```sh
 git submodule update --init --recursive
 direnv allow
+cargo run --bin deploy_levels
 ```
 
 Use direnv with nix-direnv. Without direnv, enter the environment manually with
 `nix develop --impure`.
 
-Run a plain local chain in one terminal:
+The deployment command creates `ctfs.json` and `state.json`, then stops its
+temporary Anvil. Start your practice chain from that saved deployment in a
+separate terminal:
 
 ```sh
-anvil
+anvil --state state.json --code-size-limit 50000
 ```
 
-In another terminal, open this repository so direnv loads its environment, then
-run the example:
+Keep it running. Tests connect to `http://127.0.0.1:8545`; they do not start
+Anvil or redeploy levels. `--state` loads the saved deployment and writes the
+updated state when Anvil exits, preserving completed levels between sessions.
+
+## Practice
+
+Run the watcher from the repository:
 
 ```sh
-cargo test -p attack fallback -- --nocapture
+watch-levels
 ```
 
-**Do not run `deploy_levels` or load `state.json` for these Ethernaut practice
-tests.** Each test deploys its own fresh instance on the running Anvil at
-`http://127.0.0.1:8545`.
+It reruns **all** registered Ethernaut tests when Rust sources change. Levels
+already solved on your chain print `Already solved` and do not rerun their
+attacks. Unsolved stubs fail their success checks until you implement them;
+those failures are your progress list, not build errors. No tests are ignored.
 
-## Work on a level
+The watcher explicitly watches `attack/src`, `ctf/src` and the Cargo manifests.
+It uses polling and disables ignore-file filtering for those paths so saves in
+hidden Git worktrees are detected, without watching build output or `.git/`.
 
-1. Open its existing `attack/src/ethereum/ethernaut/hackNN_name.rs` module.
-2. Read the goal and open the direct contract-source URL in that module's
-   header.
-3. Implement `Exploit::attack` in the same file.
-4. Run the test command shown in the header.
-
-The first ten Ethernaut levels have named practice tests. For example, after
-implementing the existing Fallout stub:
+For a single run without watching:
 
 ```sh
-cargo test -p attack fallout -- --ignored --nocapture
+cargo test -p attack -- --nocapture
 ```
 
-Unfinished attacks are ignored by default. Selecting one with `--ignored` runs
-its real success check, which fails until the attack solves the level. You do
-not need to create another hack module or wire another test for these levels.
+Open the existing `attack/src/ethereum/ethernaut/hackNN_name.rs` for the level
+you want to solve. Its header gives the goal and direct contract-source URL.
+Write your solution in `Exploit::attack`; the tests are already wired.
 
 `target` contains the deployed instance address and any helper addresses.
 `offender` is your player account. Use its provider and
 `.from(offender.address())` when sending transactions. Do not use real keys or
 funds.
+
+If tests report `connection refused` on port 8545, start the saved-state Anvil
+shown above. If you deploy a new set of levels, restart your practice chain with
+the matching new `state.json` so its addresses agree with `ctfs.json`.
 
 ## Where things live
 

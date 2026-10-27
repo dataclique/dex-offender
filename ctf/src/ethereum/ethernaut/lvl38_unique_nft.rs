@@ -1,6 +1,8 @@
-//! Ethernaut level 38 — UniqueNFT.
+//! Ethernaut 38 — Unique NFT.
 //!
-//! Own more than one NFT to prove you can outsmart the rules.
+//! Goal: Own more than one NFT from `UniqueNFT` in your offender account.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/UniqueNFT.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

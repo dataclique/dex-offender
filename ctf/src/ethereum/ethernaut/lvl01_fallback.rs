@@ -4,7 +4,6 @@
 //! reduce its Ether balance to zero.
 //!
 //! Source: [Fallback.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack fallback -- --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Fallback.sol

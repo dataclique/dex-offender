@@ -4,7 +4,6 @@
 //! reclaiming it during the level check.
 //!
 //! Source: [King.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack king -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/King.sol

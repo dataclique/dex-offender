@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 28 — gatekeeper_three.
+//! Ethernaut 28 — Gatekeeper Three.
 //!
-//! Contract with tricked constructor + receive.
+//! Goal: Pass the gates of `GatekeeperThree`, which uses a `SimpleTrick`
+//! helper, and register your offender account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperThree.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

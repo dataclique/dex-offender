@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 22 — dex.
+//! Ethernaut 22 — Dex.
 //!
-//! Alternate swaps to drain both tokens.
+//! Goal: Drain either designated token from `Dex`. The DEX starts with 100 of
+//! each token, and your offender account starts with ten of each.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Dex.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -77,6 +77,7 @@
               packages = [
                 pkgs.solc
                 pkgs.gcc
+                pkgs.cargo-watch
                 foundry-pkg
                 pkgs.go-ethereum
                 pkgs.nushell
@@ -101,6 +102,15 @@
               # NOTE: ABI bindings are generated via alloy sol! macros loading
               # ctf/abi/*.json artifacts (see scripts/build-abis.nu). forge
               # bind is no longer used.
+
+              scripts.watch-levels.exec = ''
+                set -e
+                cd "$(git -c core.fsmonitor=false rev-parse --show-toplevel)"
+                cargo watch --poll --no-vcs-ignores --no-dot-ignores \
+                  -w attack/src -w ctf/src \
+                  -w Cargo.toml -w attack/Cargo.toml -w ctf/Cargo.toml \
+                  -x 'test -p attack -- --nocapture'
+              '';
 
               scripts.deploy-levels.exec = ''
                 if [ -f state.json ]; then

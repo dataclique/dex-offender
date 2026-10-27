@@ -4,7 +4,6 @@
 //! donations and lets users withdraw their balances.
 //!
 //! Source: [Reentrance.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack reentrancy -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Reentrance.sol

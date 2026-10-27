@@ -1,6 +1,9 @@
-//! Ethernaut level 24 — PuzzleWallet.
+//! Ethernaut 24 — Puzzle Wallet.
 //!
-//! Become the owner and drain the PuzzleWallet proxy.
+//! Goal: Become the `admin` of `PuzzleProxy`, the proxy that runs the
+//! `PuzzleWallet` implementation.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/PuzzleWallet.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, primitives::U256, sol, sol_types::SolCall};

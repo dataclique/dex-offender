@@ -1,6 +1,12 @@
-//! Solution scaffold for Ethernaut level 24 — puzzle_wallet.
+//! Ethernaut 24 — Puzzle Wallet.
 //!
-//! Propose + execute to drain proxy balance.
+//! Goal: Become the `admin` of `PuzzleProxy`, the proxy that runs the
+//! `PuzzleWallet` implementation.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/PuzzleWallet.sol
+//!
+//! The proxy's base implementation:
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/helpers/UpgradeableProxy-08.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

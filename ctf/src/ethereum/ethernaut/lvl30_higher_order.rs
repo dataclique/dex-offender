@@ -1,6 +1,8 @@
-//! Ethernaut level 30 — HigherOrder.
+//! Ethernaut 30 — Higher Order.
 //!
-//! Become the Commander of the Higher Order.
+//! Goal: Make your offender account the `commander` of `HigherOrder`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/HigherOrder.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

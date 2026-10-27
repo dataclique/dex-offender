@@ -1,6 +1,9 @@
-//! Ethernaut level 28 — GatekeeperThree.
+//! Ethernaut 28 — Gatekeeper Three.
 //!
-//! Pass all gates of GatekeeperThree using contract-based tricks.
+//! Goal: Pass the gates of `GatekeeperThree`, which uses a `SimpleTrick`
+//! helper, and register your offender account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperThree.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

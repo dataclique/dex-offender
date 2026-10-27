@@ -1,6 +1,8 @@
-//! Ethernaut level 27 — GoodSamaritan.
+//! Ethernaut 27 — Good Samaritan.
 //!
-//! Drain the GoodSamaritan's wallet.
+//! Goal: Drain all `Coin` tokens from the `Wallet` managed by `GoodSamaritan`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GoodSamaritan.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

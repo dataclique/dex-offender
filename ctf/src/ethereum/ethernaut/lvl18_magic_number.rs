@@ -1,6 +1,10 @@
-//! Ethernaut level 18 — MagicNum.
+//! Ethernaut 18 — Magic Number.
 //!
-//! Deploy a runtime contract that returns 42 as its bytecode.
+//! Goal: Register a solver with `MagicNum` that returns the 32-byte
+//! representation of 42 from `whatIsTheMeaningOfLife()`. Its deployed runtime
+//! must be at most ten bytes.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/MagicNum.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

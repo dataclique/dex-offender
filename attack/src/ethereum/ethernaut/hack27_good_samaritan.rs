@@ -1,6 +1,8 @@
-//! Solution scaffold for Ethernaut level 27 — good_samaritan.
+//! Ethernaut 27 — Good Samaritan.
 //!
-//! Revert on coin transfer to drain wallet.
+//! Goal: Drain all `Coin` tokens from the `Wallet` managed by `GoodSamaritan`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GoodSamaritan.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

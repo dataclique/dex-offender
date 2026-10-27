@@ -34,6 +34,7 @@ pub async fn check_exploit<E: Exploit>(
     let level = E::Target::from_file()?;
 
     if level.check(roles).await? {
+        println!("Already solved: {}", level.name());
         return Ok(());
     }
     println!("\n\n{}", level.name());

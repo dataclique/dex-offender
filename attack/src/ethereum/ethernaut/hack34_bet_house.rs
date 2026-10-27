@@ -1,17 +1,19 @@
-//! Solution scaffold for Ethernaut level 34 — Bet House.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 34 — Bet House.
+//!
+//! Goal: Become a bettor in `BetHouse`, which uses a `Pool` and two `PoolToken`
+//! contracts. Your offender account receives five deposit tokens at setup;
+//! `isBettor(offender)` must become true.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/BetHouse.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl34_bet_house::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

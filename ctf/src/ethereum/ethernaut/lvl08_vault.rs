@@ -4,7 +4,6 @@
 //! becomes false.
 //!
 //! Source: [Vault.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack vault -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Vault.sol

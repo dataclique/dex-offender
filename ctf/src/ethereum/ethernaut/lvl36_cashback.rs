@@ -1,7 +1,11 @@
-//! Ethernaut level 36 — Cashback.
+//! Ethernaut 36 — Cashback.
 //!
-//! Max out cashback in every supported currency and get 2+ Super Cashback
-//! NFTs.
+//! Goal: Reach the maximum native-currency and FREE cashback balances in
+//! `Cashback`, own at least two Super Cashback NFTs including your
+//! address-derived NFT, and leave your account delegated to the Cashback
+//! instance as required by its factory check.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Cashback.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{

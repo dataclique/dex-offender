@@ -1,6 +1,10 @@
-//! Ethernaut level 31 — Stake.
+//! Ethernaut 31 — Stake.
 //!
-//! Drain the Stake contract (native ETH + WETH staking).
+//! Goal: Leave `Stake` with nonzero Ether and `totalStaked` greater than that
+//! balance. Your offender account must be recorded in `Stakers` but have zero
+//! `UserStake`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Stake.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

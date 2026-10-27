@@ -3,7 +3,6 @@
 //! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Force.sol
-//! Test: `cargo test -p attack force -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

@@ -4,7 +4,6 @@
 //! resetting the winning streak.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/CoinFlip.sol
-//! Test: `cargo test -p attack coin_flip -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

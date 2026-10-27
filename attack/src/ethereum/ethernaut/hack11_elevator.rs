@@ -1,6 +1,9 @@
-//! Solution scaffold for Ethernaut level 11 — elevator.
+//! Ethernaut 11 — Elevator.
 //!
-//! Return different values from isLastFloor().
+//! Goal: Make `Elevator` report `top == true`. Its source also defines the
+//! `Building` interface.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Elevator.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

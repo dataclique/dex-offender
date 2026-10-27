@@ -3,7 +3,6 @@
 //! Goal: Give the otherwise empty `Force` contract a positive Ether balance.
 //!
 //! Source: [Force.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack force -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/Force.sol

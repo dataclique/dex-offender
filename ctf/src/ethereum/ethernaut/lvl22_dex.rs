@@ -1,6 +1,9 @@
-//! Ethernaut level 22 — Dex.
+//! Ethernaut 22 — Dex.
 //!
-//! Drain both tokens from the Dex by exploiting the price calculation.
+//! Goal: Drain either designated token from `Dex`. The DEX starts with 100 of
+//! each token, and your offender account starts with ten of each.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Dex.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};

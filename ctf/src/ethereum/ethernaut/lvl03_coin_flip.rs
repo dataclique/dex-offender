@@ -4,7 +4,6 @@
 //! resetting the winning streak.
 //!
 //! Source: [CoinFlip.sol][source]. [Rust harness][harness].
-//! Test: `cargo test -p attack coin_flip -- --ignored --nocapture`
 //!
 //! [source]:
 //! ../../../../lib/ethernaut/contracts/src/levels/CoinFlip.sol

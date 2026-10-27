@@ -4,7 +4,6 @@
 //! allocations. The owner must be your offender account.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Fallout.sol
-//! Test: `cargo test -p attack fallout -- --ignored --nocapture`
 
 use async_trait::async_trait;
 use ctf::Actor;

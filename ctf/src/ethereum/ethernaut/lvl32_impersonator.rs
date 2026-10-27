@@ -1,6 +1,9 @@
-//! Ethernaut level 32 — Impersonator.
+//! Ethernaut 32 — Impersonator.
 //!
-//! Compromise the ECLocker so anyone can open the door.
+//! Goal: Clear the controller of the first `ECLocker` created by
+//! `Impersonator`, leaving `lockers(0).controller()` equal to the zero address.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Impersonator.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

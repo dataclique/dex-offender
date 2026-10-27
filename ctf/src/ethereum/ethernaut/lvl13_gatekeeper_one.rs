@@ -1,7 +1,9 @@
-//! Ethernaut level 13 — GatekeeperOne.
+//! Ethernaut 13 — Gatekeeper One.
 //!
-//! Pass all three gates of GatekeeperOne using gas estimation and type
-//! conversion tricks.
+//! Goal: Pass all three gates of `GatekeeperOne` and register your offender
+//! account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperOne.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

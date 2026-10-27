@@ -1,6 +1,10 @@
-//! Ethernaut level 40 — NotOptimisticPortal.
+//! Ethernaut 40 — NotOptimisticPortal.
 //!
-//! Mint some tokens for your wallet through the cross-chain portal.
+//! Goal: Mint tokens through `NotOptimisticPortal`, a cross-chain portal
+//! initialized with a synthetic genesis header. Its token total supply must
+//! become positive.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/NotOptimisticPortal.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, sol};

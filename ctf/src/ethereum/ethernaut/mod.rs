@@ -109,7 +109,6 @@ pub struct Ethernaut {
     pub level21: lvl21::Target,
     pub level22: lvl22::Target,
     pub level23: lvl23::Target,
-    // Levels 24-29: fields exist for from_file but set_up not yet wired
     pub level24: lvl24::Target,
     pub level25: lvl25::Target,
     pub level26: lvl26::Target,
@@ -185,7 +184,6 @@ pub async fn set_up_ethernaut(roles: &Roles) -> eyre::Result<Ethernaut> {
         level27: lvl27::Target::set_up(roles).await?,
         level28: lvl28::Target::set_up(roles).await?,
         level29: lvl29::Target::set_up(roles).await?,
-        // Levels 30-40: not yet deployable, use placeholder targets
         level30: lvl30::Target::set_up(roles).await?,
         level31: lvl31::Target::set_up(roles).await?,
         level32: lvl32::Target::set_up(roles).await?,

@@ -1,6 +1,10 @@
-//! Solution scaffold for Ethernaut level 26 — double_entry_point.
+//! Ethernaut 26 — DoubleEntryPoint.
 //!
-//! Deploy Forta bot to raise alerts.
+//! Goal: Register a Forta detection bot for your offender account that blocks a
+//! legacy-token sweep from `CryptoVault` while preserving a positive vault
+//! balance of `DoubleEntryPoint` tokens.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/DoubleEntryPoint.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

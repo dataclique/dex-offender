@@ -1,6 +1,8 @@
-//! Ethernaut level 39 — Forger.
+//! Ethernaut 39 — Forger.
 //!
-//! Make the total supply greater than 100 tokens.
+//! Goal: Make the total supply of the `Forger` token exceed 100 whole tokens.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Forger.sol
 
 use crate::{Level, Roles, to_ether};
 use alloy::{primitives::Address, sol};

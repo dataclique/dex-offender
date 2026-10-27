@@ -4,7 +4,6 @@
 //! reduce its Ether balance to zero.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Fallback.sol
-//! Test: `cargo test -p attack fallback -- --nocapture`
 
 use alloy::primitives::U256;
 use async_trait::async_trait;

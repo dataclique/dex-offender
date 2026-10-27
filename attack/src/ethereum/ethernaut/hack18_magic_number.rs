@@ -1,6 +1,10 @@
-//! Solution scaffold for Ethernaut level 18 — magic_number.
+//! Ethernaut 18 — Magic Number.
 //!
-//! Deploy 10-byte runtime returning 42.
+//! Goal: Register a solver with `MagicNum` that returns the 32-byte
+//! representation of 42 from `whatIsTheMeaningOfLife()`. Its deployed runtime
+//! must be at most ten bytes.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/MagicNum.sol
 
 use async_trait::async_trait;
 use ctf::Actor;

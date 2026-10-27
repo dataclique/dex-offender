@@ -1,17 +1,23 @@
-//! Solution scaffold for Ethernaut level 36 — Cashback.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 36 — Cashback.
+//!
+//! Goal: Reach the maximum native-currency and FREE cashback balances in
+//! `Cashback`, own at least two Super Cashback NFTs including your
+//! address-derived NFT, and leave your account delegated to the Cashback
+//! instance as required by its factory check.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Cashback.sol
+//!
+//! SuperCashbackNFT, FreedomCoin and their setup:
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/CashbackFactory.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl36_cashback::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

@@ -1,17 +1,18 @@
-//! Solution scaffold for Ethernaut level 35 — Elliptic Token.
-
-// TODO: implement the exploit, then declare this module in
-// `attack/src/ethernaut/mod.rs` to run its test.
+//! Ethernaut 35 — Elliptic Token.
+//!
+//! Goal: Remove all of ALICE's `EllipticToken` tokens after her initial voucher
+//! redemption. Her final token balance must be zero.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/EllipticToken.sol
 
 use async_trait::async_trait;
 use ctf::ethereum::ethernaut::lvl35_elliptic_token::*;
-use ethers::prelude::*;
 
-pub(crate) struct Exploit;
+pub struct Exploit;
 
 #[async_trait]
 impl ctf::Exploit for Exploit {
-        type Target = Target;
+    type Target = Target;
 
     async fn attack(
         self,

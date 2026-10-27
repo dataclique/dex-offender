@@ -1,7 +1,9 @@
-//! Ethernaut level 14 — GatekeeperTwo.
+//! Ethernaut 14 — Gatekeeper Two.
 //!
-//! Pass all three gates of GatekeeperTwo using extcodesize and type
-//! truncation tricks.
+//! Goal: Pass all three gates of `GatekeeperTwo` and register your offender
+//! account as its `entrant`.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperTwo.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};

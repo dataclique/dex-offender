@@ -1,6 +1,8 @@
-//! Ethernaut level 29 — Switch.
+//! Ethernaut 29 — Switch.
 //!
-//! Turn on the Switch by calling the flipSwitch function.
+//! Goal: Turn on `Switch`, leaving its `switchOn` flag true.
+//!
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Switch.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};
