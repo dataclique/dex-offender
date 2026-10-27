@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - master
       - 0xgleb/solutions
       - sojaleiss/solutions
   workflow_dispatch:
@@ -62,10 +63,22 @@ jobs:
           cache-on-failure: true
 
       - name: Build crates
-        run: cargo build --workspace --all-targets
+        run: cargo build --workspace --all-targets --locked
 
       - name: Lint
-        run: cargo clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
 
-      - name: Check solutions
-        run: cargo test -p attack -- --nocapture
+      - name: Check solutions on a fresh local chain
+        shell: bash
+        run: |
+          anvil --quiet &
+          anvil_pid=$!
+          trap 'kill "$anvil_pid"; wait "$anvil_pid" || true' EXIT
+          for attempt in {1..50}; do
+            if cast block-number --rpc-url http://127.0.0.1:8545; then
+              break
+            fi
+            sleep 0.1
+          done
+          cast block-number --rpc-url http://127.0.0.1:8545
+          cargo test -p attack --locked -- --nocapture

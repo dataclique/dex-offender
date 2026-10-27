@@ -79,6 +79,9 @@
                 pkgs.gcc
                 foundry-pkg
                 pkgs.go-ethereum
+                pkgs.nushell
+                pkgs.deno
+                pkgs.taplo
                 suiPkg
               ]
               ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];
@@ -112,10 +115,21 @@
                   enable = true;
                   fail_fast = true;
                   package = pkgs.nixfmt;
+                  excludes = [ "^lib/" ];
                 };
                 rustfmt = {
                   enable = true;
                   packageOverrides = { inherit (channel) cargo rustfmt; };
+                  excludes = [ "^lib/" ];
+                };
+                taplo = {
+                  enable = true;
+                  excludes = [ "^lib/" ];
+                };
+                denofmt = {
+                  enable = true;
+                  files = "\\.md$";
+                  excludes = [ "^lib/" ];
                 };
               };
             }

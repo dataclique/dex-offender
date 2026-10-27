@@ -1,91 +1,89 @@
 # DEX OFFENDER
 
-A compilation of smart contract CTF wargames with a Rust practice harness. Solve the challenges yourself in Rust using [alloy](https://github.com/alloy-rs/core) — no JavaScript required.
+Smart-contract CTFs with a Rust practice harness using
+[Alloy](https://github.com/alloy-rs/alloy). Write attacks in the existing
+`attack/` modules. Fallback is the only supplied solution.
 
-## Supported CTFs
+## Start hacking Ethernaut
 
-| CTF                                                                            | Levels | Status                                                            |
-| ------------------------------------------------------------------------------ | ------ | ----------------------------------------------------------------- |
-| [Ethernaut](https://ethernaut.openzeppelin.org/)                               | 40     | ✅ 40/40 deployable                                               |
-| [Damn Vulnerable DeFi](https://damnvulnerabledefi.xyz/)                        | 16     | ✅ 16/16 — 14 local + 2 fork via `FORK_URL`                       |
-| [Paradigm CTF 2023](https://github.com/paradigmxyz/paradigm-ctf-2023)          | 14 EVM | ✅ 9/14 deployable — 5 await undeployed helper contracts           |
-| [Paradigm CTF 2021](https://github.com/paradigmxyz/paradigm-ctf-2021)          | 16 EVM | ✅ 15/16 — upgrade blocked pending planted permissive USDC proxy   |
-| [Paradigm CTF 2022](https://github.com/paradigmxyz/paradigm-ctf-2022)          | 11 EVM | ✅ 11/11 — 7 local + 4 fork (`FORK_URL`, sats wants `FORK_BLOCK`)  |
-| [Ackee Bootcamp](https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp) | 5      | ✅ 4/5 full + lvl4 eval-check (init blocked on era-matched .so)    |
-| [Paradigm 2022 Solana](https://github.com/paradigmxyz/paradigm-ctf-2022)       | 4      | ✅ hana deployed (litesvm); 3 blocked on SBF toolchain             |
-| [Mysten CTF](https://github.com/MystenLabs/CTF)                                | 5      | 🔍 research in progress                                           |
-| [move_over_ctf](https://github.com/OpenZeppelin/move_over_ctf)                 | 8      | 🔍 research in progress                                           |
-| [lets-ctf](https://github.com/hoh-zone/lets-ctf)                               | 2+     | 🔍 research in progress                                           |
-| [neodyme solana-ctf](https://github.com/neodyme-labs/solana-ctf)               | 12     | 📋 submodule pinned                                               |
-| [sealevel-attacks](https://github.com/coral-xyz/sealevel-attacks)              | 11     | 📋 [educational examples](lib/sealevel-attacks/) — not CTF levels |
-
-## Quick start
+From the repository root, populate the pinned challenge sources and load the
+development environment:
 
 ```sh
-# 1. Enter the dev shell
+git submodule update --init --recursive
 direnv allow
-
-# 2. Deploy all levels to a local anvil
-cargo run --bin deploy_levels
-
-# 3. Start anvil with the saved state
-anvil --load-state state.json
-
-# 4. Run the example solution
-cargo test -p attack -- --nocapture
 ```
 
-## Solving a level
+Use direnv with nix-direnv. Without direnv, enter the environment manually with
+`nix develop --impure`.
 
-1. Find the level in `ctf/src/ethereum/<game>/lvlNN_name.rs`
-2. Create your solution in `attack/src/ethereum/<game>/hackNN_name.rs`
-3. Implement the `ctf::Exploit` trait's `attack` method
-4. Wire it into the test in `attack/src/ethereum/<game>/mod.rs`
-5. Run `cargo test -p attack -- --nocapture`
+Run a plain local chain in one terminal:
 
-See `attack/src/ethereum/ethernaut/hack01_fallback.rs` for the ONLY example — all other hack files are intentionally blank.
-
-## Architecture
-
-```
-ctf/src/
-  ethereum/           # EVM chain harness
-    ethernaut/        # Ethernaut levels
-    damn_vulnerable_defi/  # DVD levels
-    paradigm_2021/    # Paradigm 2021 levels
-    paradigm_2022/    # Paradigm 2022 levels
-    paradigm_2023/    # Paradigm 2023 levels
-  solana/             # Solana chain harness (litesvm)
-  roles.rs            # Actor/Roles (anvil keypairs)
-  level.rs            # Level + Exploit traits
-
-ctf/abi/              # ABI artifacts (forge-generated, consumed by sol!)
-lib/                  # Pinned upstream CTF submodules
-attack/src/           # Your solutions
+```sh
+anvil
 ```
 
-## ABI bindings
+In another terminal, open this repository so direnv loads its environment, then
+run the example:
 
-ABI bindings are generated via alloy's `sol!` macro loading JSON artifacts from `ctf/abi/`. Regenerate after contract changes:
+```sh
+cargo test -p attack fallback -- --nocapture
+```
+
+**Do not run `deploy_levels` or load `state.json` for these Ethernaut practice
+tests.** Each test deploys its own fresh instance on the running Anvil at
+`http://127.0.0.1:8545`.
+
+## Work on a level
+
+1. Open its existing `attack/src/ethereum/ethernaut/hackNN_name.rs` module.
+2. Read the goal and open the direct contract-source URL in that module's
+   header.
+3. Implement `Exploit::attack` in the same file.
+4. Run the test command shown in the header.
+
+The first ten Ethernaut levels have named practice tests. For example, after
+implementing the existing Fallout stub:
+
+```sh
+cargo test -p attack fallout -- --ignored --nocapture
+```
+
+Unfinished attacks are ignored by default. Selecting one with `--ignored` runs
+its real success check, which fails until the attack solves the level. You do
+not need to create another hack module or wire another test for these levels.
+
+`target` contains the deployed instance address and any helper addresses.
+`offender` is your player account. Use its provider and
+`.from(offender.address())` when sending transactions. Do not use real keys or
+funds.
+
+## Where things live
+
+- `attack/src/ethereum/<game>/`: existing attack modules.
+- `ctf/src/ethereum/<game>/`: Rust target types, Alloy bindings, setup and
+  checks.
+- `lib/<game>/`: pinned upstream contract sources and original challenge text.
+- `ctf/abi/`: checked-in Forge artifacts consumed by Alloy's `sol!` macro. ABI
+  JSON is not a replacement for reading the contract source.
+- `ctf/src/solana/`: LiteSVM harnesses.
+- `ctf/src/sui/`: experimental Sui integration, excluded from the default build.
+
+The checked-in ABI artifacts are enough to build the default Rust workspace.
+Regenerate them only when changing contract artifacts:
 
 ```sh
 nu scripts/build-abis.nu
 ```
 
-## Level status
+## Build and formatting
 
-- **Deployable**: `deploy_levels` successfully creates the challenge on local anvil
-- **Scaffold**: module + ABI + hack stub exist but deployment or setup needs work
-- **Fork-gated**: PuppetV3 + CurvyPuppet deploy via `FORK_URL`/`FORK_BLOCK`
-  (verified with the free public `eth.drpc.org` archive endpoint;
-  `ctf/tests/fork_levels.rs` runs them). electric-sheep stays
-  fork-blocked pending its own setup port.
+```sh
+cargo fmt --all --check
+cargo check --workspace --all-targets --locked
+cargo clippy --workspace --all-targets --locked -- -D warnings
+```
 
-## Local blockchain
-
-| Field    | Value                                                       |
-| -------- | ----------------------------------------------------------- |
-| Port     | 8545                                                        |
-| Mnemonic | test test test test test test test test test test test junk |
-| Offender | 0xa0Ee7A142d267C1f36714E4a8F75612F20a79720                  |
-| Deployer | 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266                  |
+The development shell installs formatter hooks configured directly in
+`flake.nix`: Nix formatting, Rust formatting, Taplo for TOML and `deno fmt` for
+Markdown. Keep pinned upstream sources in `lib/` unchanged.

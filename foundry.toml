@@ -7,4 +7,4 @@ cache_path = 'attack/cache'
 
 optimizer = true
 optimizer_runs = 9999
-ignored_error_codes = [ 2072, 5159, 9302 ]
+ignored_error_codes = [2072, 5159, 9302]
