@@ -92,7 +92,7 @@ impl Level for Target {
             .await?;
 
         let pool =
-            PuppetPool::deploy(provider, exchange, *token.address()).await?;
+            PuppetPool::deploy(provider, *token.address(), exchange).await?;
         token
             .transfer(*pool.address(), to_ether(100_000))
             .from(deployer.address())
