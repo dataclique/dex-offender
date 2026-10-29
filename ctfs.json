@@ -264,33 +264,35 @@
       },
       "free_rider": {
         "address": "0xe70f935c32da4db13e7876795f1e175465e6458e",
-        "token": "0xd9140951d8ae6e5f625a02f5908535e16e3af964"
+        "token": "0xd9140951d8ae6e5f625a02f5908535e16e3af964",
+        "recovery": "0x3904b8f5b0f49cd206b7d5aabee5d1f37ee15d8d"
       },
       "backdoor": {
-        "address": "0x56fc17a65ccfec6b7ad0ade9bd9416cb365b9be8",
-        "token": "0x2dd78fd9b8f40659af32ef98555b8b31bc97a351"
+        "address": "0xfe5f411481565fbf70d8d33d992c78196e014b90",
+        "token": "0x2625760c4a8e8101801d3a48ee64b2bea42f1e96"
       },
       "climber": {
-        "address": "0xd6b040736e948621c5b6e0a494473c47a6113ea8",
-        "token": "0x139e1d41943ee15dde4df876f9d0e7f85e26660a",
-        "timelock": "0x951ba25f6afd833b6839dfa70524179ef7a278d3"
+        "address": "0xade429ba898c34722e722415d722a70a297ce3a2",
+        "token": "0x7b4f352cd40114f12e82fc675b5ba8c7582fc513",
+        "timelock": "0x4cfed729a1adeb84e80273aaf4e5079e42dc95da"
       },
       "wallet_mining": {
-        "address": "0x0ab97c102dcb5cfd25672b406dd12f0bb5005f61",
-        "token": "0x3d63c50ad04dd5ae394cab562b7691dd5de7cf6f"
+        "address": "0xb4bc4651a2800b5bbf12ebac81e7c5857b4f56eb",
+        "token": "0xbbc18b580256a82dc0f9a86152b8b22e7c1c8005"
       },
       "puppet_v3": null,
       "curvy_puppet": null,
       "abi_smuggling": {
-        "address": "0xce0066b1008237625dddbe4a751827de037e53d2",
-        "token": "0x7b4f352cd40114f12e82fc675b5ba8c7582fc513"
+        "address": "0x87006e75a5b6be9d1bbf61ac8cd84f05d9140589",
+        "token": "0x82eda215fa92b45a3a76837c65ab862b6c7564a8"
       },
       "shards": {
-        "address": "0x4daf17c8142a483b2e2348f56ae0f2cfdae22cee"
+        "address": "0x24d41dbc3d60d0784f8a937c59fbde51440d5140"
       },
       "withdrawal": {
-        "address": "0xc976c932092eccd8f328ffd85066c0c05ed54044",
-        "token": "0x24d41dbc3d60d0784f8a937c59fbde51440d5140"
+        "address": "0xa779c1d17bc5230c07afdc51376cac1cb3dd5314",
+        "token": "0x618fb9dbd2bd6eb968b4c1af36af6cb0b45310ec",
+        "bridge": "0x5322471a7e37ac2b8902cfcba84d266b37d811a0"
       }
     }
   }
