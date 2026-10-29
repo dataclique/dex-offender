@@ -11,7 +11,7 @@ From the repository root:
 ```sh
 git submodule update --init --recursive
 direnv allow
-cargo run --bin deploy_levels
+cargo run -p ctf --bin deploy_levels
 ```
 
 Use direnv with nix-direnv. Without direnv, enter the environment manually with
@@ -37,33 +37,44 @@ Run the watcher from the repository:
 watch-levels
 ```
 
-It reruns **all** registered Ethernaut tests when Rust sources change. Levels
-already solved on your chain print `Already solved` and do not rerun their
-attacks. Unsolved stubs fail their success checks until you implement them;
-those failures are your progress list, not build errors. No tests are ignored.
+That is `cargo watch -x run` (plus the path list that makes saves in hidden Git
+worktrees count). Every save reruns the level runner against your chain:
 
-The watcher explicitly watches `attack/src`, `ctf/src` and the Cargo manifests.
-It uses polling and disables ignore-file filtering for those paths so saves in
-hidden Git worktrees are detected, without watching build output or `.git/`.
+- levels you already solved print `✓ already solved` and skip their attacks;
+- a level you just solved gets the full `CONGRATULATIONS` banner, in green;
+- unsolved stubs stay in the end-of-run `Next up:` list — the runner never stops
+  at them.
 
-For a single run without watching:
+The runner plays every registered level (Ethernaut, Damn Vulnerable DeFi,
+Paradigm 2023) and ends with a `Progress: X/N solved` summary. For a single run
+without watching:
 
 ```sh
-cargo test -p attack -- --nocapture
+cargo run
 ```
+
+It connects to your practice Anvil at `http://127.0.0.1:8545`; set
+`ATTACK_RPC_URL` to point it elsewhere. If it cannot reach the chain it tells
+you which command to start.
+
+`cargo test -p attack -- --nocapture` runs the same levels as one sequential
+test that stops at the first unsolved level — a strict progress gate; CI uses
+the runner instead.
 
 Open the existing `attack/src/ethereum/ethernaut/hackNN_name.rs` for the level
 you want to solve. Its header gives the goal and direct contract-source URL.
-Write your solution in `Exploit::attack`; the tests are already wired.
+Write your solution in `Exploit::attack`; it is already wired into the runner
+and the test.
 
 `target` contains the deployed instance address and any helper addresses.
 `offender` is your player account. Use its provider and
 `.from(offender.address())` when sending transactions. Do not use real keys or
 funds.
 
-If tests report `connection refused` on port 8545, start the saved-state Anvil
-shown above. If you deploy a new set of levels, restart your practice chain with
-the matching new `state.json` so its addresses agree with `ctfs.json`.
+If anything reports `connection refused` on port 8545, start the saved-state
+Anvil shown above. If you deploy a new set of levels, restart your practice
+chain with the matching new `state.json` so its addresses agree with
+`ctfs.json`.
 
 ## Where things live
 

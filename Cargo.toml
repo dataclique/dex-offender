@@ -3,6 +3,7 @@ too_many_arguments = "allow"
 
 [workspace]
 members = ["attack", "ctf"]
+default-members = ["attack"]
 resolver = "2"
 
 [workspace.package]

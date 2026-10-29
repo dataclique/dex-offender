@@ -68,10 +68,10 @@ jobs:
       - name: Lint
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
 
-      - name: Check all solutions on the saved deployment
+      - name: Run the level runner on the saved deployment
         shell: bash
         run: |
-          cargo run --bin deploy_levels --locked
+          cargo run -p ctf --bin deploy_levels --locked
           anvil --load-state state.json --code-size-limit 50000 --quiet &
           anvil_pid=$!
           trap 'kill "$anvil_pid"; wait "$anvil_pid" || true' EXIT
@@ -82,4 +82,4 @@ jobs:
             sleep 0.1
           done
           cast block-number --rpc-url http://127.0.0.1:8545
-          cargo test -p attack --locked -- --nocapture
+          cargo run --locked

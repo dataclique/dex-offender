@@ -109,16 +109,15 @@
                 cargo watch --poll --no-vcs-ignores --no-dot-ignores \
                   -w attack/src -w ctf/src \
                   -w Cargo.toml -w attack/Cargo.toml -w ctf/Cargo.toml \
-                  -x 'test -p attack -- --nocapture'
+                  -x run
               '';
 
               scripts.deploy-levels.exec = ''
                 if [ -f state.json ]; then
                   rm -v state.json
                 fi
-                cargo run --bin deploy_levels
+                cargo run -p ctf --bin deploy_levels
               '';
-
               # https://devenv.sh/pre-commit-hooks/
               git-hooks.hooks = {
                 nixfmt = {

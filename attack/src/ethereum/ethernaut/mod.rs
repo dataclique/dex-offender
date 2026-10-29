@@ -53,202 +53,47 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn fallback() -> eyre::Result<()> {
-        run(hack01_fallback::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn fallout() -> eyre::Result<()> {
-        run(hack02_fallout::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn coin_flip() -> eyre::Result<()> {
-        run(hack03_coin_flip::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn telephone() -> eyre::Result<()> {
-        run(hack04_telephone::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn token() -> eyre::Result<()> {
-        run(hack05_token::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn delegate() -> eyre::Result<()> {
-        run(hack06_delegate::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn force() -> eyre::Result<()> {
-        run(hack07_force::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn vault() -> eyre::Result<()> {
-        run(hack08_vault::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn king() -> eyre::Result<()> {
-        run(hack09_king::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn reentrancy() -> eyre::Result<()> {
-        run(hack10_reentrancy::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn elevator() -> eyre::Result<()> {
-        run(hack11_elevator::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn privacy() -> eyre::Result<()> {
-        run(hack12_privacy::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn gatekeeper_one() -> eyre::Result<()> {
-        run(hack13_gatekeeper_one::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn gatekeeper_two() -> eyre::Result<()> {
-        run(hack14_gatekeeper_two::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn naught_coin() -> eyre::Result<()> {
-        run(hack15_naught_coin::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn preservation() -> eyre::Result<()> {
-        run(hack16_preservation::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn recovery() -> eyre::Result<()> {
-        run(hack17_recovery::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn magic_number() -> eyre::Result<()> {
-        run(hack18_magic_number::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn alien_codex() -> eyre::Result<()> {
-        run(hack19_alien_codex::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn denial() -> eyre::Result<()> {
-        run(hack20_denial::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn shop() -> eyre::Result<()> {
-        run(hack21_shop::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn dex() -> eyre::Result<()> {
-        run(hack22_dex::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn dex_two() -> eyre::Result<()> {
-        run(hack23_dex_two::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn puzzle_wallet() -> eyre::Result<()> {
-        run(hack24_puzzle_wallet::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn motorbike() -> eyre::Result<()> {
-        run(hack25_motorbike::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn double_entry_point() -> eyre::Result<()> {
-        run(hack26_double_entry_point::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn good_samaritan() -> eyre::Result<()> {
-        run(hack27_good_samaritan::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn gatekeeper_three() -> eyre::Result<()> {
-        run(hack28_gatekeeper_three::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn switch() -> eyre::Result<()> {
-        run(hack29_switch::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn higher_order() -> eyre::Result<()> {
-        run(hack30_higher_order::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn stake() -> eyre::Result<()> {
-        run(hack31_stake::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn impersonator() -> eyre::Result<()> {
-        run(hack32_impersonator::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn magic_animal_carousel() -> eyre::Result<()> {
-        run(hack33_magic_animal_carousel::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn bet_house() -> eyre::Result<()> {
-        run(hack34_bet_house::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn elliptic_token() -> eyre::Result<()> {
-        run(hack35_elliptic_token::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn cashback() -> eyre::Result<()> {
-        run(hack36_cashback::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn impersonator_two() -> eyre::Result<()> {
-        run(hack37_impersonator_two::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn unique_nft() -> eyre::Result<()> {
-        run(hack38_unique_nft::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn forger() -> eyre::Result<()> {
-        run(hack39_forger::Exploit).await
-    }
-
-    #[tokio::test]
-    async fn not_optimistic_portal() -> eyre::Result<()> {
-        run(hack40_not_optimistic_portal::Exploit).await
+    async fn attack() -> eyre::Result<()> {
+        run(hack01_fallback::Exploit).await?;
+        run(hack02_fallout::Exploit).await?;
+        run(hack03_coin_flip::Exploit).await?;
+        run(hack04_telephone::Exploit).await?;
+        run(hack05_token::Exploit).await?;
+        run(hack06_delegate::Exploit).await?;
+        run(hack07_force::Exploit).await?;
+        run(hack08_vault::Exploit).await?;
+        run(hack09_king::Exploit).await?;
+        run(hack10_reentrancy::Exploit).await?;
+        run(hack11_elevator::Exploit).await?;
+        run(hack12_privacy::Exploit).await?;
+        run(hack13_gatekeeper_one::Exploit).await?;
+        run(hack14_gatekeeper_two::Exploit).await?;
+        run(hack15_naught_coin::Exploit).await?;
+        run(hack16_preservation::Exploit).await?;
+        run(hack17_recovery::Exploit).await?;
+        run(hack18_magic_number::Exploit).await?;
+        run(hack19_alien_codex::Exploit).await?;
+        run(hack20_denial::Exploit).await?;
+        run(hack21_shop::Exploit).await?;
+        run(hack22_dex::Exploit).await?;
+        run(hack23_dex_two::Exploit).await?;
+        run(hack24_puzzle_wallet::Exploit).await?;
+        run(hack25_motorbike::Exploit).await?;
+        run(hack26_double_entry_point::Exploit).await?;
+        run(hack27_good_samaritan::Exploit).await?;
+        run(hack28_gatekeeper_three::Exploit).await?;
+        run(hack29_switch::Exploit).await?;
+        run(hack30_higher_order::Exploit).await?;
+        run(hack31_stake::Exploit).await?;
+        run(hack32_impersonator::Exploit).await?;
+        run(hack33_magic_animal_carousel::Exploit).await?;
+        run(hack34_bet_house::Exploit).await?;
+        run(hack35_elliptic_token::Exploit).await?;
+        run(hack36_cashback::Exploit).await?;
+        run(hack37_impersonator_two::Exploit).await?;
+        run(hack38_unique_nft::Exploit).await?;
+        run(hack39_forger::Exploit).await?;
+        run(hack40_not_optimistic_portal::Exploit).await?;
+        Ok(())
     }
 }

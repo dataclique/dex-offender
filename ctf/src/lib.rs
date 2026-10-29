@@ -24,7 +24,10 @@ pub struct CTFs {
 
 impl CTFs {
     pub fn from_file() -> eyre::Result<Self> {
-        let ctf_json = std::fs::read_to_string("../ctfs.json")?;
+        // Works from the repository root (`cargo run`) and from the crate
+        // directory (`cargo test -p attack`).
+        let ctf_json = std::fs::read_to_string("ctfs.json")
+            .or_else(|_| std::fs::read_to_string("../ctfs.json"))?;
         let ctf: CTFs = serde_json::from_str(&ctf_json)?;
         Ok(ctf)
     }
