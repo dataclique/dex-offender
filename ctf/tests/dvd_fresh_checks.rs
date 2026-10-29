@@ -77,6 +77,28 @@ async fn free_rider_starts_unsolved() -> eyre::Result<()> {
 }
 
 #[tokio::test]
+async fn withdrawal_starts_unsolved() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&anvil.url())?;
+        let level = damn_vulnerable_defi::withdrawal::Target::set_up(&roles)
+            .await
+            .map_err(|error| {
+                eyre::eyre!("withdrawal setup failed: {error:#}")
+            })?;
+        eyre::ensure!(
+            !level.check(&roles).await?,
+            "withdrawal: fresh deployment reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}
+
+#[tokio::test]
 async fn puppet_starts_unsolved() -> eyre::Result<()> {
     let mut anvil = OwnedAnvil::spawn()?;
     let result: eyre::Result<()> = async {
