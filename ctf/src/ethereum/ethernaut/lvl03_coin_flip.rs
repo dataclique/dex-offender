@@ -52,7 +52,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = CoinFlip::new(self.address, provider.clone());
 
-        println!("Checking that you won 10 times in a row...");
         let consecutive_wins = contract.consecutiveWins().call().await?;
         Ok(consecutive_wins >= U256::from(10))
     }

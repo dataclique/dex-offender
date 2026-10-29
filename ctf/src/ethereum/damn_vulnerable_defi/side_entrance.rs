@@ -51,7 +51,6 @@ impl Level for Target {
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        println!("Checking that the pool is drained...");
         let balance = provider.get_balance(self.address).await?;
         Ok(balance == U256::ZERO)
     }

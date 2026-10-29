@@ -44,7 +44,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = UniqueNFT::new(self.address, provider.clone());
 
-        println!("Checking that you own more than one NFT...");
         let balance =
             contract.balanceOf(roles.offender.address()).call().await?;
         Ok(balance > U256::from(1))

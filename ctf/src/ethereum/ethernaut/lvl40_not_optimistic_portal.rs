@@ -61,7 +61,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = NotOptimisticPortal::new(self.address, provider.clone());
 
-        println!("Checking that tokens were minted...");
         // Mirror validateInstance: total supply must exceed zero.
         let supply = contract.totalSupply().call().await?;
         Ok(supply > U256::ZERO)

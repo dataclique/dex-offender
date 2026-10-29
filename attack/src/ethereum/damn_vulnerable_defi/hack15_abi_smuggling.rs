@@ -3,7 +3,7 @@
 //! Exploit the selector clash to sweep the vault.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::abi_smuggling::Target;
+use ctf::ethereum::damn_vulnerable_defi::abi_smuggling::*;
 
 pub struct Exploit;
 

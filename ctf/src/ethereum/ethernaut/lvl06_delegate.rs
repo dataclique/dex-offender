@@ -61,7 +61,6 @@ impl Level for Target {
         let delegation =
             Delegate::new(self.delegation_address, provider.clone());
 
-        println!("Checking that you became the owner...");
         let owner = delegation.owner().call().await?;
         Ok(owner == roles.offender.address())
     }

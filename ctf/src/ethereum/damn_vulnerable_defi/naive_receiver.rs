@@ -92,7 +92,6 @@ impl Level for Target {
         let provider = roles.provider();
         let pool = NaiveReceiverPool::new(self.address, provider.clone());
 
-        println!("Checking that the pool and receiver are drained...");
         let weth_addr = pool.weth().call().await?;
         let weth = WETH::new(weth_addr, provider.clone());
 

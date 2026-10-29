@@ -3,7 +3,7 @@
 //! Buy all NFTs for the price of one using a flash loan.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::free_rider::Target;
+use ctf::ethereum::damn_vulnerable_defi::free_rider::*;
 
 pub struct Exploit;
 

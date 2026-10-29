@@ -99,7 +99,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = DoubleEntryPoint::new(self.address, provider.clone());
 
-        println!("Checking that the player registered a detection bot...");
         // Mirror validateInstance: solved when the player set a Forta
         // detection bot and sweeping the legacy token still reverts
         // (raised alert) while the vault keeps its balance.

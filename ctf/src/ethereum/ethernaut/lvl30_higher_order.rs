@@ -44,7 +44,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = HigherOrder::new(self.address, provider.clone());
 
-        println!("Checking that you are the Commander...");
         let commander = contract.commander().call().await?;
         Ok(commander == roles.offender.address())
     }

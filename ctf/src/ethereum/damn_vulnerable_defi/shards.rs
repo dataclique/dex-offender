@@ -95,7 +95,6 @@ impl Level for Target {
         let marketplace =
             ShardsNFTMarketplace::new(self.address, provider.clone());
 
-        println!("Checking that the NFT is acquired...");
         // TODO: determine exact check from upstream test
         let _ = marketplace;
         Ok(false)

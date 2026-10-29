@@ -1,16 +1,16 @@
 //! Practice runner — the good part of the loop.
 //!
 //! `cargo watch -x run` (or the `watch-levels` shell script) reruns this on
-//! every save. It plays every registered level against your saved chain:
-//! already-solved levels are skipped, freshly solved levels get the
-//! CONGRATULATIONS banner, and unsolved stubs land in the end-of-run list.
-//! Connects to your practice Anvil at `http://127.0.0.1:8545` (override
-//! with `ATTACK_RPC_URL`).
+//! every save. Levels play in a fixed order — Ethernaut 1–40, then Paradigm
+//! 2023, then Damn Vulnerable DeFi (strictly harder) — and the run stops at
+//! the first level that is not solved: earlier levels are re-checked, a
+//! level you just solved gets the CONGRATULATIONS banner, and nothing after
+//! your current level is touched. Connects to your practice Anvil at
+//! `http://127.0.0.1:8545` (override with `ATTACK_RPC_URL`).
 
 use alloy::providers::Provider;
 use attack::ethereum::{damn_vulnerable_defi as dvd, ethernaut, paradigm_2023};
 use ctf::{Exploit, Level, Roles};
-use std::time::Instant;
 
 const RESET: &str = "\x1b[0m";
 const BOLD: &str = "\x1b[1m";
@@ -19,53 +19,63 @@ const GREEN: &str = "\x1b[32m";
 const YELLOW: &str = "\x1b[33m";
 const RED: &str = "\x1b[31m";
 
+const TOTAL: usize = 58;
+
 enum Outcome {
     AlreadySolved,
     NewlySolved,
     Unsolved,
-    Skipped(String),
+    Uncheckable(String),
     Failed(String),
-}
-
-struct Report {
-    name: &'static str,
-    outcome: Outcome,
 }
 
 async fn attempt<E: Exploit>(
     roles: &Roles,
     label: &'static str,
     exploit: E,
-) -> Report {
+) -> Outcome {
     let target = match E::Target::from_file() {
         Ok(target) => target,
         Err(error) => {
-            return Report {
-                name: label,
-                outcome: Outcome::Skipped(format!("{error:#}")),
-            };
+            return Outcome::Uncheckable(format!("{error:#}"));
         }
     };
-    let name = target.name();
+    let _ = label;
     match target.check(roles).await {
-        Ok(true) => Report { name, outcome: Outcome::AlreadySolved },
+        Ok(true) => Outcome::AlreadySolved,
         Ok(false) => match exploit.attack(&target, &roles.offender).await {
-            Err(error) => {
-                Report { name, outcome: Outcome::Failed(format!("{error:#}")) }
-            }
+            Err(error) => Outcome::Failed(format!("{error:#}")),
             Ok(()) => match target.check(roles).await {
-                Ok(true) => Report { name, outcome: Outcome::NewlySolved },
-                Ok(false) => Report { name, outcome: Outcome::Unsolved },
-                Err(error) => Report {
-                    name,
-                    outcome: Outcome::Failed(format!("{error:#}")),
-                },
+                Ok(true) => Outcome::NewlySolved,
+                Ok(false) => Outcome::Unsolved,
+                Err(error) => Outcome::Failed(format!("{error:#}")),
             },
         },
-        Err(error) => {
-            Report { name, outcome: Outcome::Skipped(format!("{error:#}")) }
-        }
+        Err(error) => Outcome::Uncheckable(format!("{error:#}")),
     }
+}
+
+/// First line only: full RPC error chains are noise in the status list.
+fn first_line(message: &str) -> &str {
+    message.lines().next().unwrap_or("unknown error")
+}
+
+/// The chain must actually contain the contracts the saved board points
+/// at. A mismatch (fresh deploy, stale anvil state) would otherwise turn
+/// every level into a misleading `cannot check` line.
+async fn verify_board_matches_chain(roles: &Roles) -> eyre::Result<()> {
+    let board = ctf::CTFs::from_file()?;
+    let probe = board.ethereum.ethernaut.level01.address;
+    let code = roles.provider().get_code_at(probe).await?;
+    eyre::ensure!(
+        !code.is_empty(),
+        "your chain has no contract at the board's level-01 address ({probe})\n\
+         The running Anvil does not match ctfs.json. Restart it from the\n\
+         matching state (mind your working directory):\n\
+         anvil --state state.json --code-size-limit 50000\n\
+         (redeploy first with: cargo run -p ctf --bin deploy_levels)"
+    );
+    Ok(())
 }
 
 fn congratulations(name: &str) {
@@ -85,57 +95,48 @@ sedthelevelyoupassedthelevelyoupassed
     );
 }
 
-fn summary(reports: &[Report], elapsed: std::time::Duration) {
-    let solved = reports
-        .iter()
-        .filter(|r| {
-            matches!(r.outcome, Outcome::AlreadySolved | Outcome::NewlySolved)
-        })
-        .count();
-    let unsolved: Vec<&str> = reports
-        .iter()
-        .filter(|r| matches!(r.outcome, Outcome::Unsolved))
-        .map(|r| r.name)
-        .collect();
-
-    println!();
-    for report in reports {
-        match &report.outcome {
-            Outcome::AlreadySolved => {
-                println!("{DIM}✓ {} — already solved{RESET}", report.name);
-            }
-            Outcome::NewlySolved => {
-                println!("{GREEN}✓ {} — solved just now{RESET}", report.name);
-            }
-            Outcome::Unsolved => {
-                println!("{YELLOW}✗ {} — still unsolved{RESET}", report.name);
-            }
-            Outcome::Skipped(reason) => {
-                println!("{DIM}– {} — skipped: {reason}{RESET}", report.name);
-            }
-            Outcome::Failed(reason) => {
-                println!(
-                    "{RED}! {} — attack failed: {reason}{RESET}",
-                    report.name
-                );
-            }
+/// Play one level in order. Returns false when the run stops here.
+async fn play_level<E: Exploit>(
+    roles: &Roles,
+    label: &'static str,
+    exploit: E,
+    solved: &mut usize,
+) -> bool {
+    match attempt(roles, label, exploit).await {
+        Outcome::AlreadySolved => {
+            println!("{DIM}✓ {label} — already solved{RESET}");
+            *solved += 1;
+            true
         }
-    }
-
-    println!();
-    if unsolved.is_empty() && reports.len() == solved {
-        println!(
-            "{GREEN}{BOLD}All {} levels solved. Legends only.{RESET}",
-            reports.len()
-        );
-    } else {
-        println!(
-            "{BOLD}Progress: {solved}/{} solved in {:.1}s{RESET}",
-            reports.len(),
-            elapsed.as_secs_f64()
-        );
-        if !unsolved.is_empty() {
-            println!("{YELLOW}Next up: {}{RESET}", unsolved.join(", "));
+        Outcome::NewlySolved => {
+            congratulations(label);
+            println!("{GREEN}✓ {label} — solved just now{RESET}");
+            *solved += 1;
+            true
+        }
+        Outcome::Unsolved => {
+            println!("{YELLOW}✗ {label} — your next level{RESET}");
+            println!("{YELLOW}Next up: {label}{RESET}");
+            println!("{BOLD}Progress: {solved}/{TOTAL} solved{RESET}");
+            false
+        }
+        Outcome::Uncheckable(reason) => {
+            println!(
+                "{RED}! {label} — cannot check: {}{RESET}",
+                first_line(&reason)
+            );
+            println!("{YELLOW}Blocked at: {label}{RESET}");
+            println!("{BOLD}Progress: {solved}/{TOTAL} solved{RESET}");
+            false
+        }
+        Outcome::Failed(reason) => {
+            println!(
+                "{RED}! {label} — attack failed: {}{RESET}",
+                first_line(&reason)
+            );
+            println!("{YELLOW}Next up: {label}{RESET}");
+            println!("{BOLD}Progress: {solved}/{TOTAL} solved{RESET}");
+            false
         }
     }
 }
@@ -155,12 +156,17 @@ async fn main() -> eyre::Result<()> {
         );
         return Err(error.into());
     }
+    verify_board_matches_chain(&roles).await?;
 
-    let started = Instant::now();
-    let mut reports = Vec::new();
+    // Ordered progression: Ethernaut 1-40, Paradigm 2023, then the
+    // strictly harder Damn Vulnerable DeFi suite last. The run stops at
+    // the first level that is not solved — nothing later is checked.
+    let mut solved = 0usize;
     macro_rules! play {
         ($label:literal, $exploit:expr) => {
-            reports.push(attempt(&roles, $label, $exploit).await);
+            if !play_level(&roles, $label, $exploit, &mut solved).await {
+                return Ok(());
+            }
         };
     }
 
@@ -210,6 +216,7 @@ async fn main() -> eyre::Result<()> {
         "NotOptimisticPortal",
         ethernaut::hack40_not_optimistic_portal::Exploit
     );
+    play!("Hello World", paradigm_2023::hack_hello_world::Exploit);
     play!("Unstoppable", dvd::hack01_unstoppable::Exploit);
     play!("Naive Receiver", dvd::hack02_naive_receiver::Exploit);
     play!("Truster", dvd::hack03_truster::Exploit);
@@ -227,13 +234,76 @@ async fn main() -> eyre::Result<()> {
     play!("ABI Smuggling", dvd::hack15_abi_smuggling::Exploit);
     play!("Shards", dvd::hack16_shards::Exploit);
     play!("Withdrawal", dvd::hack17_withdrawal::Exploit);
-    play!("Hello World", paradigm_2023::hack_hello_world::Exploit);
 
-    for report in &reports {
-        if matches!(report.outcome, Outcome::NewlySolved) {
-            congratulations(report.name);
+    println!("{GREEN}{BOLD}All {TOTAL} levels solved. Legends only.{RESET}");
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::{
+        net::{TcpListener, TcpStream},
+        process::{Child, Command, Stdio},
+        time::Duration,
+    };
+
+    struct OwnedAnvil {
+        child: Child,
+        port: u16,
+    }
+
+    impl OwnedAnvil {
+        fn spawn() -> std::io::Result<Self> {
+            let reservation = TcpListener::bind(("127.0.0.1", 0))?;
+            let port = reservation.local_addr()?.port();
+            drop(reservation);
+            let child = Command::new("anvil")
+                .args(["--port", &port.to_string(), "--quiet"])
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .spawn()?;
+            Ok(Self { child, port })
+        }
+
+        fn wait_ready(&mut self) -> std::io::Result<()> {
+            for _ in 0..100 {
+                if let Some(status) = self.child.try_wait()? {
+                    return Err(std::io::Error::other(format!(
+                        "owned Anvil exited: {status}"
+                    )));
+                }
+                if TcpStream::connect(("127.0.0.1", self.port)).is_ok() {
+                    return Ok(());
+                }
+                std::thread::sleep(Duration::from_millis(50));
+            }
+            Err(std::io::Error::other("owned Anvil never became ready"))
+        }
+
+        fn stop(&mut self) -> std::io::Result<()> {
+            if self.child.try_wait()?.is_none() {
+                self.child.kill()?;
+            }
+            self.child.wait()?;
+            Ok(())
         }
     }
-    summary(&reports, started.elapsed());
-    Ok(())
+
+    #[tokio::test]
+    async fn stale_board_against_empty_chain_is_rejected() {
+        let mut anvil = OwnedAnvil::spawn().expect("spawn owned anvil");
+        let result: eyre::Result<()> = async {
+            anvil.wait_ready()?;
+            let roles =
+                Roles::new(&format!("http://127.0.0.1:{}", anvil.port))?;
+            verify_board_matches_chain(&roles).await
+        }
+        .await;
+        anvil.stop().expect("stop owned anvil");
+        assert!(
+            result.is_err(),
+            "board addresses without code on-chain must be rejected"
+        );
+    }
 }

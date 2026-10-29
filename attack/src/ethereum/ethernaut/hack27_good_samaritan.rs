@@ -6,7 +6,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl27_good_samaritan::Target;
+use ctf::ethereum::ethernaut::lvl27_good_samaritan::*;
 
 pub struct Exploit;
 

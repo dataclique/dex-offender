@@ -45,7 +45,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = GatekeeperThree::new(self.address, provider.clone());
 
-        println!("Checking the entrant...");
         let entrant = contract.entrant().call().await?;
         Ok(entrant == roles.offender.address())
     }

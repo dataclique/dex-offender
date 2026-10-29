@@ -46,20 +46,17 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = MagicNum::new(self.address, provider.clone());
 
-        println!("Verifying that the solver variable is not empty...");
         let solver_address = contract.solver().call().await?;
         if solver_address == Address::ZERO {
             return Ok(false);
         }
 
-        println!("Checking the runtime bytecode size...");
         let code = provider.get_code_at(solver_address).await?;
         if code.len() > 10 {
             println!("Contract too large: {} bytes", code.len());
             return Ok(false);
         }
 
-        println!("Checking that it returns 42...");
         // Call whatIsTheMeaningOfLife() on the solver
         // The selector is keccak256("whatIsTheMeaningOfLife()")[0..4]
         let selector =

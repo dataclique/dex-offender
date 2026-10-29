@@ -8,7 +8,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl06_delegate::Target;
+use ctf::ethereum::ethernaut::lvl06_delegate::*;
 
 pub struct Exploit;
 

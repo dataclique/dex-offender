@@ -59,7 +59,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Token::new(self.address, provider.clone());
 
-        println!("Checking that you got more tokens...");
         let balance =
             contract.balanceOf(roles.offender.address()).call().await?;
         Ok(balance > U256::from(20))

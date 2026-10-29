@@ -83,7 +83,6 @@ impl Level for Target {
         let provider = roles.provider();
         let vault = UnstoppableVault::new(self.address, provider.clone());
 
-        println!("Checking that the vault has stopped offering flash loans...");
         // Completed when the vault can no longer service flash loans
         // (its internal accounting invariant is broken)
         let asset = vault.asset().call().await?;

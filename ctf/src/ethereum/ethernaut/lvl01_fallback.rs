@@ -66,11 +66,9 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Fallback::new(self.address, provider.clone());
 
-        println!("Checking that you claimed ownership of the contract...");
         let owner = contract.owner().call().await?;
         let is_owner = owner == roles.offender.address();
 
-        println!("Checking that you reduced its balance to 0...");
         let contract_balance = provider.get_balance(self.address).await?;
         let balance_reduced = contract_balance == U256::ZERO;
 

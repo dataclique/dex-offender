@@ -48,7 +48,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = NaughtCoin::new(self.address, provider.clone());
 
-        println!("Checking that you transferred all tokens...");
         let balance =
             contract.balanceOf(roles.offender.address()).call().await?;
         Ok(balance == U256::ZERO)

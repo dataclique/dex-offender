@@ -73,7 +73,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Impersonator::new(self.address, provider.clone());
 
-        println!("Checking that the lock controller was cleared...");
         // Mirror validateInstance: lockers(0).controller() == 0.
         let locker_addr = contract.lockers(U256::from(0)).call().await?;
         let locker = ECLocker::new(locker_addr, provider.clone());

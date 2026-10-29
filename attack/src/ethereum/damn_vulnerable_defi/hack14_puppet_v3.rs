@@ -3,7 +3,7 @@
 //! Drain the pool by manipulating the UniswapV3 price.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::puppet_v3::Target;
+use ctf::ethereum::damn_vulnerable_defi::puppet_v3::*;
 
 pub struct Exploit;
 

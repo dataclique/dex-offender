@@ -3,7 +3,7 @@
 //! Deploy wallets without governance approval and drain the deployer.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::wallet_mining::Target;
+use ctf::ethereum::damn_vulnerable_defi::wallet_mining::*;
 
 pub struct Exploit;
 

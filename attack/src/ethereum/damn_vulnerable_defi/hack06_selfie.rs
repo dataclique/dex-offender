@@ -3,7 +3,7 @@
 //! Use a flash loan to gain voting power and drain the pool.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::selfie::Target;
+use ctf::ethereum::damn_vulnerable_defi::selfie::*;
 
 pub struct Exploit;
 

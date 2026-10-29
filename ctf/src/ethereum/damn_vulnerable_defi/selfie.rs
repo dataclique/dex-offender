@@ -70,7 +70,6 @@ impl Level for Target {
         let provider = roles.provider();
         let pool = SelfiePool::new(self.address, provider.clone());
 
-        println!("Checking that the pool is drained...");
         let token_addr = pool.token().call().await?;
         let token = DamnValuableVotes::new(token_addr, provider.clone());
         let pool_balance = token.balanceOf(self.address).call().await?;

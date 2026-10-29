@@ -3,7 +3,7 @@
 //! Drain the ClimberVault by exploiting the timelock's scheduling logic.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::climber::Target;
+use ctf::ethereum::damn_vulnerable_defi::climber::*;
 
 pub struct Exploit;
 

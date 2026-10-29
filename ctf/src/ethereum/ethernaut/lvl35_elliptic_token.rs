@@ -78,7 +78,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = EllipticToken::new(self.address, provider.clone());
 
-        println!("Checking that you stole ALICE's tokens...");
         // ALICE = 0xA11CE84AcB91Ac59B0A4E2945C9157eF3Ab17D4e
         let alice = alloy::primitives::address!(
             "A11CE84AcB91Ac59B0A4E2945C9157eF3Ab17D4e"

@@ -45,7 +45,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Shop::new(self.address, provider.clone());
 
-        println!("Checking that you bought the item for less than 100...");
         let price = contract.price().call().await?;
         Ok(price < U256::from(100))
     }

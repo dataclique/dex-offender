@@ -175,7 +175,6 @@ impl Level for Target {
         let token = DamnValuableToken::new(self.token, provider.clone());
         let gateway = L1Gateway::new(self.address, provider.clone());
 
-        println!("Checking that withdrawals were finalized...");
         let bridge_balance = token.balanceOf(self.bridge).call().await?;
         if !(bridge_balance > to_ether(990_000)
             && bridge_balance < to_ether(1_000_000))

@@ -54,7 +54,6 @@ impl Level for Target {
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        println!("Checking the staking conditions...");
         // Solved when: ETH balance > 0, totalStaked > balance,
         // you're a staker, and your stake is 0
         let contract = Stake::new(self.address, provider.clone());

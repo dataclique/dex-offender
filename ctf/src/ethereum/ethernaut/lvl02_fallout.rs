@@ -61,7 +61,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Fallout::new(self.address, provider.clone());
 
-        println!("Checking that you claimed ownership of the contract...");
         let owner = contract.owner().call().await?;
         let is_owner = owner == roles.offender.address();
 

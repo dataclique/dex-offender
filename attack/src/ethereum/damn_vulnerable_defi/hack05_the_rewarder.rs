@@ -3,7 +3,7 @@
 //! Claim all rewards from the distributor.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::the_rewarder::Target;
+use ctf::ethereum::damn_vulnerable_defi::the_rewarder::*;
 
 pub struct Exploit;
 

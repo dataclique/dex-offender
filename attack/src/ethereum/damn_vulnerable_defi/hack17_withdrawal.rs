@@ -3,7 +3,7 @@
 //! Finalize cross-chain withdrawals safely.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::withdrawal::Target;
+use ctf::ethereum::damn_vulnerable_defi::withdrawal::*;
 
 pub struct Exploit;
 

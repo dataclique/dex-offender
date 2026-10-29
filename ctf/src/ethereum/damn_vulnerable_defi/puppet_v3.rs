@@ -201,7 +201,6 @@ impl Level for Target {
         let provider = roles.provider();
         let token = DamnValuableToken::new(self.token, provider.clone());
 
-        println!("Checking that the pool is drained...");
         Ok(token.balanceOf(self.address).call().await?
             == alloy::primitives::U256::ZERO)
     }

@@ -45,7 +45,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = AlienCodex::new(self.address, provider.clone());
 
-        println!("Checking that you claimed ownership...");
         let owner = contract.owner().call().await?;
         Ok(owner == roles.offender.address())
     }

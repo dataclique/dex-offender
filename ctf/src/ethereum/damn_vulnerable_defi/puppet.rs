@@ -115,7 +115,6 @@ impl Level for Target {
             provider.clone(),
         );
 
-        println!("Checking that the pool is drained...");
         Ok(token.balanceOf(self.address).call().await? == U256::ZERO)
     }
 }

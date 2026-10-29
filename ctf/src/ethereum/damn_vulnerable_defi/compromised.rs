@@ -83,7 +83,6 @@ impl Level for Target {
         let provider = roles.provider();
         let _exchange = Exchange::new(self.address, provider.clone());
 
-        println!("Checking that the exchange is drained...");
         let balance = provider.get_balance(self.address).await?;
 
         // Exchange must have 0 ETH

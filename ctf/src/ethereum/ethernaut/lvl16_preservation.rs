@@ -51,7 +51,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Preservation::new(self.address, provider.clone());
 
-        println!("Checking that you claimed ownership of the contract...");
         let owner = contract.owner().call().await?;
         Ok(owner == roles.offender.address())
     }

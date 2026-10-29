@@ -3,7 +3,7 @@
 //! Use the flash loan callback to steal all tokens.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::truster::Target;
+use ctf::ethereum::damn_vulnerable_defi::truster::*;
 
 pub struct Exploit;
 

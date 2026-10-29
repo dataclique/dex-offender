@@ -52,7 +52,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Telephone::new(self.address, provider.clone());
 
-        println!("Checking that you became the owner...");
         let owner = contract.owner().call().await?;
         Ok(owner == roles.offender.address())
     }

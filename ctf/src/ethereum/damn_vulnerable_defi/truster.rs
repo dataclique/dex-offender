@@ -58,7 +58,6 @@ impl Level for Target {
         let provider = roles.provider();
         let pool = TrusterLenderPool::new(self.address, provider.clone());
 
-        println!("Checking that all tokens were recovered...");
         let token_addr = pool.token().call().await?;
         let token = DamnValuableToken::new(token_addr, provider.clone());
 

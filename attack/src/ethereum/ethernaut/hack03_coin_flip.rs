@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl03_coin_flip::Target;
+use ctf::ethereum::ethernaut::lvl03_coin_flip::*;
 
 pub struct Exploit;
 

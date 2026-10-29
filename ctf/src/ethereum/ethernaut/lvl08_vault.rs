@@ -53,7 +53,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Vault::new(self.address, provider.clone());
 
-        println!("Checking that the contract is unlocked...");
         let locked = contract.locked().call().await?;
         Ok(!locked)
     }

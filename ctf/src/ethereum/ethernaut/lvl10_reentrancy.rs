@@ -72,7 +72,6 @@ impl Level for Target {
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        println!("Checking the contract balance...");
         let balance = provider.get_balance(self.address).await?;
         Ok(balance == alloy::primitives::U256::ZERO)
     }

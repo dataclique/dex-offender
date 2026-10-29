@@ -83,7 +83,6 @@ impl Level for Target {
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        println!("Checking that you became the proxy admin...");
         let proxy = PuzzleProxy::new(self.address, provider.clone());
         let admin = proxy.admin().call().await?;
         Ok(admin == roles.offender.address())

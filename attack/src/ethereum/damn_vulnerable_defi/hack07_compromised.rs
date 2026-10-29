@@ -3,7 +3,7 @@
 //! Compromise the oracle sources and drain the exchange.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::compromised::Target;
+use ctf::ethereum::damn_vulnerable_defi::compromised::*;
 
 pub struct Exploit;
 

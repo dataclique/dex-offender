@@ -3,7 +3,7 @@
 //! Make the vault stop offering flash loans.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::unstoppable::Target;
+use ctf::ethereum::damn_vulnerable_defi::unstoppable::*;
 
 pub struct Exploit;
 

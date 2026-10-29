@@ -278,7 +278,6 @@ impl Level for Target {
         let wallet_deployer =
             WalletDeployer::new(self.address, provider.clone());
 
-        println!("Checking that the wallets are mined and funds recovered...");
         // Mirror the upstream `_isSolved` conditions (balance + code parts).
         let cook = wallet_deployer.cook().call().await?;
         let cpy = wallet_deployer.cpy().call().await?;

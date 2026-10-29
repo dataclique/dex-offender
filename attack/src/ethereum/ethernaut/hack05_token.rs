@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl05_token::Target;
+use ctf::ethereum::ethernaut::lvl05_token::*;
 
 pub struct Exploit;
 

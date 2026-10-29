@@ -44,7 +44,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Switch::new(self.address, provider.clone());
 
-        println!("Checking that the switch is on...");
         let on = contract.switchOn().call().await?;
         Ok(on)
     }

@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl19_alien_codex::Target;
+use ctf::ethereum::ethernaut::lvl19_alien_codex::*;
 
 pub struct Exploit;
 

@@ -98,7 +98,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = BetHouse::new(self.address, provider.clone());
 
-        println!("Checking that you are a bettor...");
         let is_bettor =
             contract.isBettor(roles.offender.address()).call().await?;
         Ok(is_bettor)

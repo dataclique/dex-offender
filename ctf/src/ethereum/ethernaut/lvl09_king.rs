@@ -54,7 +54,6 @@ impl Level for Target {
         let deployer = &roles.deployer;
         let _contract = King::new(self.address, deployer.provider().clone());
 
-        println!("Attempting to reclaim the kingdom...");
         let result = deployer.transfer(self.address, to_ether(10)).await;
 
         Ok(result.is_err())

@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl28_gatekeeper_three::Target;
+use ctf::ethereum::ethernaut::lvl28_gatekeeper_three::*;
 
 pub struct Exploit;
 

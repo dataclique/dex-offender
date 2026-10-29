@@ -3,7 +3,7 @@
 //! Drain tokens from wallets via a proxy creation callback backdoor.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::backdoor::Target;
+use ctf::ethereum::damn_vulnerable_defi::backdoor::*;
 
 pub struct Exploit;
 

@@ -3,7 +3,7 @@
 //! Buy the Damn Valuable NFT for 1% of its price.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::shards::Target;
+use ctf::ethereum::damn_vulnerable_defi::shards::*;
 
 pub struct Exploit;
 

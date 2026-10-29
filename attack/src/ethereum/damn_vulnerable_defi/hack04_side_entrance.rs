@@ -3,7 +3,7 @@
 //! Use the pool's deposit/withdraw to drain all ETH.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::side_entrance::Target;
+use ctf::ethereum::damn_vulnerable_defi::side_entrance::*;
 
 pub struct Exploit;
 

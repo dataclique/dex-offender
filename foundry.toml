@@ -7,4 +7,9 @@ cache_path = 'attack/cache'
 
 optimizer = true
 optimizer_runs = 9999
-ignored_error_codes = [2072, 5159, 9302]
+ignored_error_codes = [2072, 5159, 9302, 6321]
+
+# Attack contracts are exploit scratchpads; forge's style lints are noise
+# there. Keep the solidity compiler quiet about unnamed returns too.
+[lint]
+exclude_lints = ["boolean-cst", "uninitialized-state", "unused-return"]

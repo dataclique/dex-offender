@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl25_motorbike::Target;
+use ctf::ethereum::ethernaut::lvl25_motorbike::*;
 
 pub struct Exploit;
 

@@ -46,7 +46,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = MagicAnimalCarousel::new(self.address, provider.clone());
 
-        println!("Checking that the carousel rule is broken...");
         // Mirror validateInstance: store a goat, spin, then the stored
         // animal must differ from the plain "Goat" encoding.
         contract

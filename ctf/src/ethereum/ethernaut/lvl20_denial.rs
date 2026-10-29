@@ -48,13 +48,11 @@ impl Level for Target {
         let deployer = &roles.deployer;
         let provider = roles.provider();
 
-        println!("Checking that the contract has more than 100 wei...");
         let balance = provider.get_balance(self.address).await?;
         if balance <= U256::from(100) {
             return Ok(false);
         }
 
-        println!("Checking that the owner cannot call withdraw()...");
         let contract = Denial::new(self.address, deployer.provider().clone());
         let result = contract
             .withdraw()

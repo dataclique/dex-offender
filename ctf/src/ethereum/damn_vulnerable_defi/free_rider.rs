@@ -174,7 +174,6 @@ impl Level for Target {
         let marketplace =
             FreeRiderNFTMarketplace::new(self.address, provider.clone());
 
-        println!("Checking that all NFTs are sold...");
         let offers_count = marketplace.offersCount().call().await?;
         let marketplace_eth = provider.get_balance(self.address).await?;
         let bounty_unclaimed = provider.get_balance(self.recovery).await?;

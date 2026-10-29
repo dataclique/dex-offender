@@ -3,7 +3,7 @@
 //! Drain all WETH from the pool and receiver.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::naive_receiver::Target;
+use ctf::ethereum::damn_vulnerable_defi::naive_receiver::*;
 
 pub struct Exploit;
 

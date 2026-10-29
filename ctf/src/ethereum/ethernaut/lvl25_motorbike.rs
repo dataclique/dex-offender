@@ -57,7 +57,6 @@ impl Level for Target {
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        println!("Checking that the engine is destroyed...");
         // Mirror MotorbikeFactory.validateInstance: the engine
         // implementation must no longer have code (selfdestructed).
         const EIP1967_IMPL_SLOT: B256 = alloy::primitives::b256!(

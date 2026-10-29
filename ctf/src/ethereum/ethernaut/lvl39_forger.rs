@@ -45,7 +45,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Forger::new(self.address, provider.clone());
 
-        println!("Checking that total supply > 100 ether...");
         let supply = contract.totalSupply().call().await?;
         Ok(supply > to_ether(100))
     }

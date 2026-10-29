@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl15_naught_coin::Target;
+use ctf::ethereum::ethernaut::lvl15_naught_coin::*;
 
 pub struct Exploit;
 

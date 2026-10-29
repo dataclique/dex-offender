@@ -45,7 +45,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Elevator::new(self.address, provider.clone());
 
-        println!("Checking if the elevator is at the top floor...");
         let top = contract.top().call().await?;
         Ok(top)
     }

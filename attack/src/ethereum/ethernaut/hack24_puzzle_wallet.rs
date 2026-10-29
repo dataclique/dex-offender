@@ -10,7 +10,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl24_puzzle_wallet::Target;
+use ctf::ethereum::ethernaut::lvl24_puzzle_wallet::*;
 
 pub struct Exploit;
 

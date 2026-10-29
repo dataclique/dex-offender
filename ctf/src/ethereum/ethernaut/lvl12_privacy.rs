@@ -49,7 +49,6 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = Privacy::new(self.address, provider.clone());
 
-        println!("Checking that you unlocked the contract...");
         let locked = contract.locked().call().await?;
         Ok(!locked)
     }

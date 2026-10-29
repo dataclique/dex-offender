@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl11_elevator::Target;
+use ctf::ethereum::ethernaut::lvl11_elevator::*;
 
 pub struct Exploit;
 

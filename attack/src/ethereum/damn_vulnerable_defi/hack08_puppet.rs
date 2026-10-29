@@ -3,7 +3,7 @@
 //! Drain the lending pool by manipulating the UniswapV1 price.
 
 use ctf::Actor;
-use ctf::ethereum::damn_vulnerable_defi::puppet::Target;
+use ctf::ethereum::damn_vulnerable_defi::puppet::*;
 
 pub struct Exploit;
 

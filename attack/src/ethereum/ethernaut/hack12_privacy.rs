@@ -6,7 +6,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl12_privacy::Target;
+use ctf::ethereum::ethernaut::lvl12_privacy::*;
 
 pub struct Exploit;
 

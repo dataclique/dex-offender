@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::ethernaut::lvl20_denial::Target;
+use ctf::ethereum::ethernaut::lvl20_denial::*;
 
 pub struct Exploit;
 

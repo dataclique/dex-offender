@@ -2,7 +2,7 @@
 
 use async_trait::async_trait;
 use ctf::Actor;
-use ctf::ethereum::paradigm_2023::hello_world::Target;
+use ctf::ethereum::paradigm_2023::hello_world::*;
 
 pub struct Exploit;
 

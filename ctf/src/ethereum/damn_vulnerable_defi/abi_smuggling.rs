@@ -85,7 +85,6 @@ impl Level for Target {
         let provider = roles.provider();
         let token = DamnValuableToken::new(self.token, provider.clone());
 
-        println!("Checking that the vault is swept...");
         Ok(token.balanceOf(self.address).call().await? == U256::ZERO)
     }
 }

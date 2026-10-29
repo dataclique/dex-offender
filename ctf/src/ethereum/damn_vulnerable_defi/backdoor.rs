@@ -91,7 +91,6 @@ impl Level for Target {
         let _registry = WalletRegistry::new(self.address, provider.clone());
         let token = DamnValuableToken::new(self.token, provider.clone());
 
-        println!("Checking that the registry is drained...");
         let balance = token.balanceOf(self.address).call().await?;
         let offender_balance =
             token.balanceOf(roles.offender.address()).call().await?;
