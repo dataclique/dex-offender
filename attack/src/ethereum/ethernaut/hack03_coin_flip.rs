@@ -9,6 +9,13 @@ use async_trait::async_trait;
 use ctf::Actor;
 use ctf::ethereum::ethernaut::lvl03_coin_flip::*;
 
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    CoinFlipExploit,
+    "contracts/out/"
+);
+
 pub struct Exploit;
 
 #[async_trait]
