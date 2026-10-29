@@ -7,25 +7,21 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     BasicForwarder,
     "abi/damn-vulnerable-defi/BasicForwarder.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     NaiveReceiverPool,
     "abi/damn-vulnerable-defi/NaiveReceiverPool.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     FlashLoanReceiver,
     "abi/damn-vulnerable-defi/FlashLoanReceiver.json"

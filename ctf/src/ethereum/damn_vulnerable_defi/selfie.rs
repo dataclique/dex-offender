@@ -7,19 +7,16 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableVotes,
     "abi/damn-vulnerable-defi/DamnValuableVotes.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SimpleGovernance,
     "abi/damn-vulnerable-defi/SimpleGovernance.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SelfiePool,
     "abi/damn-vulnerable-defi/SelfiePool.json"

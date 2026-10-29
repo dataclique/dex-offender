@@ -11,21 +11,18 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     BetHouse,
     "abi/ethernaut/BetHouse.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Pool,
     "abi/ethernaut/Pool.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     PoolToken,
     "abi/ethernaut/PoolToken.json"

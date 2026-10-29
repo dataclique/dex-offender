@@ -7,35 +7,30 @@ use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SystemConfiguration,
     "abi/paradigm-2023/SystemConfiguration.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     AccountManager,
     "abi/paradigm-2023/AccountManager.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Stablecoin,
     "abi/paradigm-2023/Stablecoin.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     AccountImpl,
     "abi/paradigm-2023/Account.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/dai-plus-plus.json"

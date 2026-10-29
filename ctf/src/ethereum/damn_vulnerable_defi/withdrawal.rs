@@ -7,37 +7,31 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     L1Gateway,
     "abi/damn-vulnerable-defi/L1Gateway.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     L1Forwarder,
     "abi/damn-vulnerable-defi/L1Forwarder.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     L2Handler,
     "abi/damn-vulnerable-defi/L2Handler.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     L2MessageStore,
     "abi/damn-vulnerable-defi/L2MessageStore.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     TokenBridge,
     "abi/damn-vulnerable-defi/TokenBridge.json"

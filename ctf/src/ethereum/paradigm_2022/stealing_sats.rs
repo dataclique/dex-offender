@@ -15,7 +15,6 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Setup,
     "abi/paradigm-2022/stealing-sats.json"

@@ -7,14 +7,12 @@ use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Router,
     "abi/paradigm-2023/Router.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/suspicious-charity.json"

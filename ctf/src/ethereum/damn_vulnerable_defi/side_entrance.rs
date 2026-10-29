@@ -7,7 +7,6 @@ use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SideEntranceLenderPool,
     "abi/damn-vulnerable-defi/SideEntranceLenderPool.json"

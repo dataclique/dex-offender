@@ -16,34 +16,29 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Weth,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     NonfungiblePositionManager,
     "abi/damn-vulnerable-defi/NonfungiblePositionManager.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV3Factory,
     "abi/damn-vulnerable-defi/UniswapV3Factory.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     PuppetV3Pool,
     "abi/damn-vulnerable-defi/PuppetV3Pool.json"

@@ -14,14 +14,12 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Setup,
     "abi/paradigm-2021/swap.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH9,
     "abi/paradigm-2021/weth9.json"

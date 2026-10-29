@@ -14,14 +14,12 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/dragon-tyrant.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     #[sol(ignore_unlinked)]
     Factory,
@@ -29,7 +27,6 @@ sol!(
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     NFTRenderer,
     "abi/paradigm-2023/NFTRenderer.json"

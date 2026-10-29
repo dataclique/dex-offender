@@ -7,25 +7,21 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableNFT,
     "abi/damn-vulnerable-defi/DamnValuableNFT.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     ShardsNFTMarketplace,
     "abi/damn-vulnerable-defi/ShardsNFTMarketplace.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     ShardsFeeVault,
     "abi/damn-vulnerable-defi/ShardsFeeVault.json"

@@ -7,19 +7,16 @@ use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     TheRewarderDistributor,
     "abi/damn-vulnerable-defi/TheRewarderDistributor.json"

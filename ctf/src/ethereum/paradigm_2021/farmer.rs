@@ -13,21 +13,18 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Setup,
     "abi/paradigm-2021/farmer.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Factory,
     "abi/damn-vulnerable-defi/UniswapV2Factory.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH9,
     "abi/paradigm-2021/weth9.json"

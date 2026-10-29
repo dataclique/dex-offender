@@ -7,31 +7,26 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     PuppetV2Pool,
     "abi/damn-vulnerable-defi/PuppetV2Pool.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2Factory,
     "abi/damn-vulnerable-defi/UniswapV2Factory.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2Router02,
     "abi/damn-vulnerable-defi/UniswapV2Router02.json"

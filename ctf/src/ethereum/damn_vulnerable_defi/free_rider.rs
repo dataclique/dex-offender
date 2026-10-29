@@ -7,43 +7,36 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableNFT,
     "abi/damn-vulnerable-defi/DamnValuableNFT.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2Factory,
     "abi/damn-vulnerable-defi/UniswapV2Factory.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2Router02,
     "abi/damn-vulnerable-defi/UniswapV2Router02.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     FreeRiderNFTMarketplace,
     "abi/damn-vulnerable-defi/FreeRiderNFTMarketplace.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     FreeRiderRecoveryManager,
     "abi/damn-vulnerable-defi/FreeRiderRecoveryManager.json"

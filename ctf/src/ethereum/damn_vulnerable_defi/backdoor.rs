@@ -7,25 +7,21 @@ use alloy::{primitives::Address, primitives::U256, primitives::address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Safe,
     "abi/damn-vulnerable-defi/Safe.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SafeProxyFactory,
     "abi/damn-vulnerable-defi/SafeProxyFactory.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WalletRegistry,
     "abi/damn-vulnerable-defi/WalletRegistry.json"

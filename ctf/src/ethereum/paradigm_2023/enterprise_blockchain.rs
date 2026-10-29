@@ -7,21 +7,18 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Bridge,
     "abi/paradigm-2023/Bridge.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     FlagToken,
     "abi/paradigm-2023/FlagToken.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/enterprise-blockchain.json"

@@ -11,28 +11,24 @@ use alloy::{primitives::Address, primitives::U256, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DoubleEntryPoint,
     "abi/ethernaut/DoubleEntryPoint.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     LegacyToken,
     "abi/ethernaut/LegacyToken.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     CryptoVault,
     "abi/ethernaut/CryptoVault.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Forta,
     "abi/ethernaut/Forta.json"

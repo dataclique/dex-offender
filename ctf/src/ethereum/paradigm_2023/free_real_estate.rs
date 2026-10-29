@@ -10,21 +10,18 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     InuToken,
     "abi/paradigm-2023/InuToken.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     MerkleDistributor,
     "abi/paradigm-2023/MerkleDistributor.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/free-real-estate.json"

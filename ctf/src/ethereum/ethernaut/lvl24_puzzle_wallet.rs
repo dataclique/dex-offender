@@ -10,14 +10,12 @@ use alloy::{primitives::Address, primitives::U256, sol, sol_types::SolCall};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     PuzzleWallet,
     "abi/ethernaut/PuzzleWallet.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     PuzzleProxy,
     "abi/ethernaut/PuzzleProxy.json"

@@ -11,14 +11,12 @@ use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Stake,
     "abi/ethernaut/Stake.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Weth,
     "abi/damn-vulnerable-defi/WETH.json"

@@ -13,7 +13,6 @@ use alloy::{primitives::Address, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Force,
     "abi/ethernaut/Force.json"

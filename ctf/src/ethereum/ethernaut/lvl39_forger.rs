@@ -9,7 +9,6 @@ use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Forger,
     "abi/ethernaut/Forger.json"

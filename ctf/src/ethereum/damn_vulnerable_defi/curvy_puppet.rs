@@ -14,35 +14,30 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Weth,
     "abi/damn-vulnerable-defi/WETH.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     CurvyPuppetOracle,
     "abi/damn-vulnerable-defi/CurvyPuppetOracle.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     CurvyPuppetLending,
     "abi/damn-vulnerable-defi/CurvyPuppetLending.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     interface IErc20 {
         function transfer(address to, uint256 amount) external returns (bool);
@@ -52,7 +47,6 @@ sol!(
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     interface IPermit2 {
         function approve(

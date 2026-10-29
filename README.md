@@ -100,7 +100,6 @@ In your Rust attack code, `sol!` paths are relative to the crate directory —
 use alloy::{sol, sol_types::SolContract};
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Example,
     "out/Example.sol/Example.json"

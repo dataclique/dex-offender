@@ -16,25 +16,21 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableToken,
     "abi/damn-vulnerable-defi/DamnValuableToken.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WalletDeployer,
     "abi/damn-vulnerable-defi/WalletDeployer.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     AuthorizerFactory,
     "abi/damn-vulnerable-defi/AuthorizerFactory.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     interface ICreateX {
         function deployCreate2(bytes32 salt, bytes memory initCode) external payable returns (address proxy);

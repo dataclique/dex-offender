@@ -12,25 +12,21 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     TrustfulOracleInitializer,
     "abi/damn-vulnerable-defi/TrustfulOracleInitializer.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     TrustfulOracle,
     "abi/damn-vulnerable-defi/TrustfulOracle.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Exchange,
     "abi/damn-vulnerable-defi/Exchange.json"
 );
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     DamnValuableNFT,
     "abi/damn-vulnerable-defi/DamnValuableNFT.json"

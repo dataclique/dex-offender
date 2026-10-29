@@ -11,21 +11,18 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Split,
     "abi/paradigm-2023/Split.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SplitWallet,
     "abi/paradigm-2023/SplitWallet.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Challenge,
     "abi/paradigm-2023/one-hundred-percent.json"

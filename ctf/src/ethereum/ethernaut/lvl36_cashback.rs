@@ -16,21 +16,18 @@ use alloy::{
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Cashback,
     "abi/ethernaut/Cashback.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     FreedomCoin,
     "abi/ethernaut/FreedomCoin.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     SuperCashbackNFT,
     "abi/ethernaut/SuperCashbackNFT.json"

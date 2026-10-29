@@ -259,21 +259,18 @@ pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
 }
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     V2Factory,
     "abi/damn-vulnerable-defi/UniswapV2Factory.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     MockErc20,
     "abi/paradigm-2021/mock-erc20.json"
 );
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     WETH9Token,
     "abi/paradigm-2021/weth9.json"

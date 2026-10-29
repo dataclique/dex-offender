@@ -7,7 +7,6 @@ use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
-    #[allow(missing_docs)]
     #[sol(rpc)]
     Setup,
     "abi/paradigm-2021/yield_aggregator.json"
