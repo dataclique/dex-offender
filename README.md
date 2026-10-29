@@ -71,6 +71,47 @@ and the test.
 `.from(offender.address())` when sending transactions. Do not use real keys or
 funds.
 
+### Attack helper contracts
+
+Need a Solidity contract for your attack (a fake `Building`, an exploit
+contract, anything)? Write it under `attack/contracts/<game>/` and build it with
+the root Foundry project:
+
+```sh
+forge build
+```
+
+The compiled artifact lands at `attack/out/<File>.sol/<Contract>.json`
+(gitignored — your solutions stay yours). Import level contracts in your
+Solidity via the root remappings:
+
+```solidity
+import "@ethernaut/Elevator.sol"; // lib/ethernaut/contracts/src/levels/
+import "@dvd/puppet/PuppetPool.sol"; // lib/damn-vulnerable-defi/src/
+```
+
+Also available: `@paradigm-2021/`, `@paradigm-2022/`, `@paradigm-2023/`, plus
+`@openzeppelin/contracts/` and the Uniswap/Safe libs from `lib/`.
+
+In your Rust attack code, `sol!` paths are relative to the crate directory —
+`attack/` — so the artifact path drops the `attack/` prefix:
+
+```rust
+use alloy::{sol, sol_types::SolContract};
+
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    Example,
+    "out/Example.sol/Example.json"
+);
+```
+
+(`forge build` first — the artifact must exist when `sol!` expands.) For the
+already-deployed level contracts you usually need no `sol!` at all: the ctf
+level modules re-export their bindings, e.g.
+`use ctf::ethereum::ethernaut::lvl11_elevator::*;` gives you `Elevator`.
+
 If anything reports `connection refused` on port 8545, start the saved-state
 Anvil shown above. If you deploy a new set of levels, restart your practice
 chain with the matching new `state.json` so its addresses agree with
