@@ -53,6 +53,8 @@ sol!(
 pub struct Target {
     pub address: Address,
     pub token: Address,
+    /// Holds the 45 ETH bounty until the player rescues the NFTs.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -64,7 +66,11 @@ impl Level for Target {
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
         let dvd = &ctfs.ethereum.damn_vulnerable_defi.free_rider;
-        Ok(Target { address: dvd.address, token: dvd.token })
+        Ok(Target {
+            address: dvd.address,
+            token: dvd.token,
+            recovery: dvd.recovery,
+        })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -129,8 +135,27 @@ impl Level for Target {
 
         // Get NFT address and deploy recovery manager
         let nft_addr = marketplace.token().call().await?;
-        let _nft = DamnValuableNFT::new(nft_addr, provider.clone());
-        let recovery = FreeRiderRecoveryManager::deploy_builder(
+        let nft = DamnValuableNFT::new(nft_addr, provider.clone());
+        nft.setApprovalForAll(marketplace_addr, true)
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        // The marketplace minted all NFTs to the deployer; list them at
+        // 15 ETH each like the challenge's initial state.
+        let ids: Vec<U256> = (0..6).map(U256::from).collect();
+        let prices: Vec<U256> = ids.iter().map(|_| to_ether(15)).collect();
+        marketplace
+            .offerMany(ids, prices)
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        let recovery_addr = FreeRiderRecoveryManager::deploy_builder(
             provider,
             offender.address(),
             nft_addr,
@@ -141,19 +166,27 @@ impl Level for Target {
         .from(deployer.address())
         .deploy()
         .await?;
-        let _ = recovery;
 
-        Ok(Target { address: marketplace_addr, token: *token.address() })
+        Ok(Target {
+            address: marketplace_addr,
+            token: *token.address(),
+            recovery: recovery_addr,
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
+        use alloy::providers::Provider;
+
         let provider = roles.provider();
         let marketplace =
             FreeRiderNFTMarketplace::new(self.address, provider.clone());
 
         println!("Checking that all NFTs are sold...");
         let offers_count = marketplace.offersCount().call().await?;
-
-        Ok(offers_count == U256::ZERO)
+        let marketplace_eth = provider.get_balance(self.address).await?;
+        let bounty_unclaimed = provider.get_balance(self.recovery).await?;
+        Ok(offers_count == U256::ZERO
+            && marketplace_eth < to_ether(90)
+            && bounty_unclaimed == U256::ZERO)
     }
 }

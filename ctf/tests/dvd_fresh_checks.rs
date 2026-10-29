@@ -55,6 +55,28 @@ impl OwnedAnvil {
 }
 
 #[tokio::test]
+async fn free_rider_starts_unsolved() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&anvil.url())?;
+        let level = damn_vulnerable_defi::free_rider::Target::set_up(&roles)
+            .await
+            .map_err(|error| {
+                eyre::eyre!("free_rider setup failed: {error:#}")
+            })?;
+        eyre::ensure!(
+            !level.check(&roles).await?,
+            "free_rider: fresh deployment reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}
+
+#[tokio::test]
 async fn puppet_starts_unsolved() -> eyre::Result<()> {
     let mut anvil = OwnedAnvil::spawn()?;
     let result: eyre::Result<()> = async {
