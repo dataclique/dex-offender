@@ -6,7 +6,9 @@ out = 'attack/out'
 cache_path = 'attack/cache'
 
 # Pinned upstream test sources compiled for harness-planted artifacts.
-remappings = ["@v2p-test/=lib/v2-periphery/contracts/test/"]
+remappings = [
+  "@v2p-test/=lib/damn-vulnerable-defi/lib/v2-periphery/contracts/test/",
+]
 
 optimizer = true
 optimizer_runs = 9999
