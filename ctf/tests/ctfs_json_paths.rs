@@ -5,6 +5,16 @@
 use std::{env, path::Path};
 
 #[test]
+fn checked_in_board_matches_current_schema() -> eyre::Result<()> {
+    let board: ctf::CTFs =
+        serde_json::from_str(include_str!("../../ctfs.json"))?;
+    let level = &board.ethereum.ethernaut.level06;
+    assert!(!level.delegate_address.is_zero());
+    assert_ne!(level.delegation_address, level.delegate_address);
+    Ok(())
+}
+
+#[test]
 fn loads_board_from_repository_root() -> eyre::Result<()> {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
     let crate_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
