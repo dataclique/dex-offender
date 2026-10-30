@@ -13,13 +13,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Stake,
-    "abi/ethernaut/Stake.json"
+    "../lib/ethernaut/contracts/out/Stake.sol/Stake.json"
 );
 
 sol!(
     #[sol(rpc)]
     Weth,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

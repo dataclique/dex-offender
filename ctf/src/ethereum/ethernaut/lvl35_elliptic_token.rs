@@ -12,7 +12,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     EllipticToken,
-    "abi/ethernaut/EllipticToken.json"
+    "../lib/ethernaut/contracts/out/EllipticToken.sol/EllipticToken.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

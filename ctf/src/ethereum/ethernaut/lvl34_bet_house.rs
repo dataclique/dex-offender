@@ -13,19 +13,19 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     BetHouse,
-    "abi/ethernaut/BetHouse.json"
+    "../lib/ethernaut/contracts/out/BetHouse.sol/BetHouse.json"
 );
 
 sol!(
     #[sol(rpc)]
     Pool,
-    "abi/ethernaut/Pool.json"
+    "../lib/ethernaut/contracts/out/BetHouse.sol/Pool.json"
 );
 
 sol!(
     #[sol(rpc)]
     PoolToken,
-    "abi/ethernaut/PoolToken.json"
+    "../lib/ethernaut/contracts/out/BetHouse.sol/PoolToken.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

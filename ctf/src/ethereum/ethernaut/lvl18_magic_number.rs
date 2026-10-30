@@ -13,7 +13,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     MagicNum,
-    "abi/ethernaut/MagicNum.json"
+    "../lib/ethernaut/contracts/out/MagicNum.sol/MagicNum.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

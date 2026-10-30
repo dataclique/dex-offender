@@ -18,17 +18,17 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     WalletDeployer,
-    "abi/damn-vulnerable-defi/WalletDeployer.json"
+    "../lib/damn-vulnerable-defi/out/WalletDeployer.sol/WalletDeployer.json"
 );
 sol!(
     #[sol(rpc)]
     AuthorizerFactory,
-    "abi/damn-vulnerable-defi/AuthorizerFactory.json"
+    "../lib/damn-vulnerable-defi/out/AuthorizerFactory.sol/AuthorizerFactory.json"
 );
 sol!(
     #[sol(rpc)]

@@ -12,13 +12,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Impersonator,
-    "abi/ethernaut/Impersonator.json"
+    "../lib/ethernaut/contracts/out/Impersonator.sol/Impersonator.json"
 );
 
 sol!(
     #[sol(rpc)]
     ECLocker,
-    "abi/ethernaut/ECLocker.json"
+    "../lib/ethernaut/contracts/out/Impersonator.sol/ECLocker.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

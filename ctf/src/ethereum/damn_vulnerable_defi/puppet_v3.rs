@@ -18,30 +18,30 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 
 sol!(
     #[sol(rpc)]
     Weth,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 
 sol!(
     #[sol(rpc)]
     NonfungiblePositionManager,
-    "abi/damn-vulnerable-defi/NonfungiblePositionManager.json"
+    "../lib/damn-vulnerable-defi/out/INonfungiblePositionManager.sol/INonfungiblePositionManager.json"
 );
 
 sol!(
     #[sol(rpc)]
     UniswapV3Factory,
-    "abi/damn-vulnerable-defi/UniswapV3Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV3Factory.sol/IUniswapV3Factory.json"
 );
 sol!(
     #[sol(rpc)]
     PuppetV3Pool,
-    "abi/damn-vulnerable-defi/PuppetV3Pool.json"
+    "../lib/damn-vulnerable-defi/out/PuppetV3Pool.sol/PuppetV3Pool.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

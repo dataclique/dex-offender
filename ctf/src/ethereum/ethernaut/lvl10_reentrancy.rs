@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Reentrance,
-    "abi/ethernaut/Reentrance.json"
+    "../lib/ethernaut/contracts/out/Reentrance.sol/Reentrance.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

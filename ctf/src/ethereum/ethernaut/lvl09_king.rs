@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     King,
-    "abi/ethernaut/King.json"
+    "../lib/ethernaut/contracts/out/King.sol/King.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

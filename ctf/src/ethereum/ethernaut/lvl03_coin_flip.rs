@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     CoinFlip,
-    "abi/ethernaut/CoinFlip.json"
+    "../lib/ethernaut/contracts/out/CoinFlip.sol/CoinFlip.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

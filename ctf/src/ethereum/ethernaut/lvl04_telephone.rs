@@ -15,7 +15,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Telephone,
-    "abi/ethernaut/Telephone.json"
+    "../lib/ethernaut/contracts/out/Telephone.sol/Telephone.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

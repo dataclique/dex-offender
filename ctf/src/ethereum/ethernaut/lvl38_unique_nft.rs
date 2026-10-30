@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     UniqueNFT,
-    "abi/ethernaut/UniqueNFT.json"
+    "../lib/ethernaut/contracts/out/UniqueNFT.sol/UniqueNFT.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

@@ -9,22 +9,22 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     DamnValuableNFT,
-    "abi/damn-vulnerable-defi/DamnValuableNFT.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableNFT.sol/DamnValuableNFT.json"
 );
 sol!(
     #[sol(rpc)]
     ShardsNFTMarketplace,
-    "abi/damn-vulnerable-defi/ShardsNFTMarketplace.json"
+    "../lib/damn-vulnerable-defi/out/ShardsNFTMarketplace.sol/ShardsNFTMarketplace.json"
 );
 sol!(
     #[sol(rpc)]
     ShardsFeeVault,
-    "abi/damn-vulnerable-defi/ShardsFeeVault.json"
+    "../lib/damn-vulnerable-defi/out/ShardsFeeVault.sol/ShardsFeeVault.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

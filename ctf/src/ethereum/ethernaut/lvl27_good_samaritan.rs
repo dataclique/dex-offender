@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     GoodSamaritan,
-    "abi/ethernaut/GoodSamaritan.json"
+    "../lib/ethernaut/contracts/out/GoodSamaritan.sol/GoodSamaritan.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -44,14 +44,14 @@ impl Level for Target {
         let provider = roles.provider();
         let contract = GoodSamaritan::new(self.address, provider.clone());
 
-        println!("Checking that the wallet is drained...");
         // The wallet is drained when the coin balance of the wallet is zero
         let coin = contract.coin().call().await?;
         let wallet = contract.wallet().call().await?;
 
-        // Read the wallet's coin balance via eth_call to balanceOf(wallet)
+        // Read the wallet's coin balance via eth_call to balances(wallet)
+        // — the Coin contract exposes a public mapping, not balanceOf.
         let selector =
-            alloy::primitives::keccak256("balanceOf(address)".as_bytes());
+            alloy::primitives::keccak256("balances(address)".as_bytes());
         let calldata =
             [&selector[..4], &[0u8; 12] as &[u8], wallet.as_slice()].concat();
         let tx = alloy::rpc::types::TransactionRequest::default()

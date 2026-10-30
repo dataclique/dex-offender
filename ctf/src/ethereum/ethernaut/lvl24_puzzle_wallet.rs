@@ -12,13 +12,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     PuzzleWallet,
-    "abi/ethernaut/PuzzleWallet.json"
+    "../lib/ethernaut/contracts/out/PuzzleWallet.sol/PuzzleWallet.json"
 );
 
 sol!(
     #[sol(rpc)]
     PuzzleProxy,
-    "abi/ethernaut/PuzzleProxy.json"
+    "../lib/ethernaut/contracts/out/PuzzleWallet.sol/PuzzleProxy.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

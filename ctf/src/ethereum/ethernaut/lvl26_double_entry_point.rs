@@ -13,25 +13,25 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DoubleEntryPoint,
-    "abi/ethernaut/DoubleEntryPoint.json"
+    "../lib/ethernaut/contracts/out/DoubleEntryPoint.sol/DoubleEntryPoint.json"
 );
 
 sol!(
     #[sol(rpc)]
     LegacyToken,
-    "abi/ethernaut/LegacyToken.json"
+    "../lib/ethernaut/contracts/out/DoubleEntryPoint.sol/LegacyToken.json"
 );
 
 sol!(
     #[sol(rpc)]
     CryptoVault,
-    "abi/ethernaut/CryptoVault.json"
+    "../lib/ethernaut/contracts/out/DoubleEntryPoint.sol/CryptoVault.json"
 );
 
 sol!(
     #[sol(rpc)]
     Forta,
-    "abi/ethernaut/Forta.json"
+    "../lib/ethernaut/contracts/out/DoubleEntryPoint.sol/Forta.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

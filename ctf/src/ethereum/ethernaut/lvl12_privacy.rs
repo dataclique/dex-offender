@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Privacy,
-    "abi/ethernaut/Privacy.json"
+    "../lib/ethernaut/contracts/out/Privacy.sol/Privacy.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Token,
-    "abi/ethernaut/Token.json"
+    "../lib/ethernaut/contracts/out/Token.sol/Token.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

@@ -9,22 +9,22 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     WETH,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 sol!(
     #[sol(rpc)]
     BasicForwarder,
-    "abi/damn-vulnerable-defi/BasicForwarder.json"
+    "../lib/damn-vulnerable-defi/out/BasicForwarder.sol/BasicForwarder.json"
 );
 sol!(
     #[sol(rpc)]
     NaiveReceiverPool,
-    "abi/damn-vulnerable-defi/NaiveReceiverPool.json"
+    "../lib/damn-vulnerable-defi/out/NaiveReceiverPool.sol/NaiveReceiverPool.json"
 );
 sol!(
     #[sol(rpc)]
     FlashLoanReceiver,
-    "abi/damn-vulnerable-defi/FlashLoanReceiver.json"
+    "../lib/damn-vulnerable-defi/out/FlashLoanReceiver.sol/FlashLoanReceiver.json"
 );
 
 pub const WETH_IN_POOL: u64 = 1000;

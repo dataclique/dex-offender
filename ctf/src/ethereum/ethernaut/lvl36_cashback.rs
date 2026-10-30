@@ -18,19 +18,19 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Cashback,
-    "abi/ethernaut/Cashback.json"
+    "../lib/ethernaut/contracts/out/Cashback.sol/Cashback.json"
 );
 
 sol!(
     #[sol(rpc)]
     FreedomCoin,
-    "abi/ethernaut/FreedomCoin.json"
+    "../lib/ethernaut/contracts/out/CashbackFactory.sol/FreedomCoin.json"
 );
 
 sol!(
     #[sol(rpc)]
     SuperCashbackNFT,
-    "abi/ethernaut/SuperCashbackNFT.json"
+    "../lib/ethernaut/contracts/out/CashbackFactory.sol/SuperCashbackNFT.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -109,14 +109,36 @@ impl Level for Target {
         let native =
             contract.balanceOf(offender, id(native_currency)).call().await?;
         let free = contract.balanceOf(offender, id(free_addr)).call().await?;
+        // Cheap non-reverting conditions first: an unsolved player holds no
+        // maxed cashback, so the NFT queries below usually never run.
+        if native != to_ether(1) || free != to_ether(500) {
+            return Ok(false);
+        }
         let nft = SuperCashbackNFT::new(
             contract.superCashbackNFT().call().await?,
             provider.clone(),
         );
-        let owner = nft
+        // ownerOf reverts with ERC721NonexistentToken until the NFT exists;
+        // that exact revert means unsolved — anything else is a real error.
+        let nonexistent_token_selector =
+            &alloy::primitives::keccak256(b"ERC721NonexistentToken(uint256)").0
+                [..4];
+        let owner = match nft
             .ownerOf(U256::from_be_bytes(offender.into_word().0))
             .call()
-            .await?;
+            .await
+        {
+            Ok(owner) => owner,
+            Err(error) => {
+                let revert_data = error
+                    .as_revert_data()
+                    .ok_or_else(|| eyre::eyre!("ownerOf failed: {error:#}"))?;
+                if revert_data.get(0..4) == Some(nonexistent_token_selector) {
+                    return Ok(false);
+                }
+                return Err(eyre::eyre!("ownerOf failed: {error:#}"));
+            }
+        };
         let nft_balance = nft.balanceOf(offender).call().await?;
 
         let code = provider.get_code_at(offender).await?;

@@ -1,14 +1,9 @@
 //! Ethernaut 06 — Delegation.
 //!
-//! Goal: Take ownership of the `Delegation` instance, which uses a companion
-//! `Delegate` contract. The checked owner belongs to `Delegation`, not
-//! `Delegate`.
+//! Goal: Take ownership of the `Delegation` instance, which delegatecalls
+//! into a companion `Delegate` contract.
 //!
-//! Source: [Delegation.sol][source]. [Rust harness][harness].
-//!
-//! [source]:
-//! ../../../../lib/ethernaut/contracts/src/levels/Delegation.sol
-//! [harness]: crate::ethereum::ethernaut::lvl06_delegate
+//! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Delegation.sol
 
 use crate::{Level, Roles};
 use alloy::{primitives::Address, sol};
@@ -17,12 +12,20 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Delegate,
-    "abi/ethernaut/Delegation.json"
+    "../lib/ethernaut/contracts/out/Delegation.sol/Delegate.json"
+);
+
+sol!(
+    #[sol(rpc)]
+    Delegation,
+    "../lib/ethernaut/contracts/out/Delegation.sol/Delegation.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub delegation_address: Address,
+    /// The `Delegate` implementation the proxy points at.
+    pub delegate_address: Address,
 }
 
 #[async_trait]
@@ -33,35 +36,37 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let delegation_address =
-            ctfs.ethereum.ethernaut.level06.delegation_address;
-        Ok(Target { delegation_address })
+        let t = &ctfs.ethereum.ethernaut.level06;
+        Ok(Target {
+            delegation_address: t.delegation_address,
+            delegate_address: t.delegate_address,
+        })
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
-        let deployer = &roles.deployer;
         let provider = roles.provider();
 
-        // Deploy the implementation contract
-        // Note: the Delegation artifact includes both contracts
-        let delegate = Delegate::deploy(provider, deployer.address()).await?;
-
-        // Deploy the proxy pointing to the implementation
+        println!("Deploying the Delegation challenge...");
+        // Mirror DelegationFactory: a Delegate owned by its deployer, then
+        // the Delegation proxy pointing at it.
+        let delegate =
+            Delegate::deploy(provider, roles.deployer.address()).await?;
         let delegation =
-            Delegate::deploy(provider, *delegate.address()).await?;
+            Delegation::deploy(provider, *delegate.address()).await?;
 
-        let owner = delegate.owner().call().await?;
-        assert_eq!(owner, deployer.address());
-
-        Ok(Target { delegation_address: *delegation.address() })
+        Ok(Target {
+            delegation_address: *delegation.address(),
+            delegate_address: *delegate.address(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
+        // pwn() executed through Delegation's delegatecall fallback writes
+        // the owner slot in Delegation's own storage — exactly what the
+        // factory validates.
         let delegation =
-            Delegate::new(self.delegation_address, provider.clone());
-
-        let owner = delegation.owner().call().await?;
-        Ok(owner == roles.offender.address())
+            Delegation::new(self.delegation_address, provider.clone());
+        Ok(delegation.owner().call().await? == roles.offender.address())
     }
 }

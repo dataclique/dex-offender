@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     HigherOrder,
-    "abi/ethernaut/HigherOrder.json"
+    "../lib/ethernaut/contracts/out/HigherOrder.sol/HigherOrder.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

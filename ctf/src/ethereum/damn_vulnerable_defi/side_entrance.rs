@@ -9,7 +9,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     SideEntranceLenderPool,
-    "abi/damn-vulnerable-defi/SideEntranceLenderPool.json"
+    "../lib/damn-vulnerable-defi/out/SideEntranceLenderPool.sol/SideEntranceLenderPool.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

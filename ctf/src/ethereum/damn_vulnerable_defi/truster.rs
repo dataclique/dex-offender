@@ -9,12 +9,12 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     TrusterLenderPool,
-    "abi/damn-vulnerable-defi/TrusterLenderPool.json"
+    "../lib/damn-vulnerable-defi/out/TrusterLenderPool.sol/TrusterLenderPool.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

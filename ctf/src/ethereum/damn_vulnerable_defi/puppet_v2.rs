@@ -9,27 +9,27 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     WETH,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 sol!(
     #[sol(rpc)]
     PuppetV2Pool,
-    "abi/damn-vulnerable-defi/PuppetV2Pool.json"
+    "../lib/damn-vulnerable-defi/out/PuppetV2Pool.sol/PuppetV2Pool.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV2Factory,
-    "abi/damn-vulnerable-defi/UniswapV2Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Factory.sol/IUniswapV2Factory.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV2Router02,
-    "abi/damn-vulnerable-defi/UniswapV2Router02.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Router02.sol/IUniswapV2Router02.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -60,19 +60,16 @@ impl Level for Target {
         let token = DamnValuableToken::deploy(provider).await?;
         let weth = WETH::deploy(provider).await?;
 
-        // Deploy UniswapV2 factory (feeToSetter = address(0))
-        let factory = UniswapV2Factory::deploy(provider, Address::ZERO).await?;
-        // Deploy router
-        let router = UniswapV2Router02::deploy(
-            provider,
-            *factory.address(),
-            *weth.address(),
-        )
-        .await?;
+        // Pinned UniswapV2 bytecode via raw creation txs (deployCode
+        // equivalent); bindings cover the typed calls.
+        let (factory_address, router_address) =
+            crate::uniswap::deploy_v2(roles, *weth.address()).await?;
+        let factory = UniswapV2Factory::new(factory_address, provider.clone());
+        let router = UniswapV2Router02::new(router_address, provider.clone());
 
         // Add liquidity: 100 token + 10 WETH
         token
-            .approve(*router.address(), to_ether(100))
+            .approve(router_address, to_ether(100))
             .from(deployer.address())
             .send()
             .await?
@@ -103,7 +100,7 @@ impl Level for Target {
             *weth.address(),
             *token.address(),
             pair,
-            *factory.address(),
+            factory_address,
         )
         .await?;
 

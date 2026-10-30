@@ -218,11 +218,12 @@ pub async fn plant_uniswap_v2_router_at(
     }
 
     let artifact: serde_json::Value = serde_json::from_str(include_str!(
-        "../abi/damn-vulnerable-defi/UniswapV2Router02.json"
+        "../../lib/damn-vulnerable-defi/builds/uniswap/UniswapV2Router02.json"
     ))?;
-    let hex = artifact["bytecode"]
-        .as_str()
-        .ok_or_else(|| eyre::eyre!("router artifact missing bytecode"))?;
+    let hex =
+        artifact["evm"]["bytecode"]["object"].as_str().ok_or_else(|| {
+            eyre::eyre!("router artifact missing evm.bytecode.object")
+        })?;
     let code: Bytes = hex.parse()?;
 
     // ctor args: (address _factory, address _WETH), abi-encoded
@@ -261,7 +262,7 @@ pub async fn plant_uniswap_v2_router(roles: &Roles) -> eyre::Result<Address> {
 sol!(
     #[sol(rpc)]
     V2Factory,
-    "abi/damn-vulnerable-defi/UniswapV2Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Factory.sol/IUniswapV2Factory.json"
 );
 
 sol!(

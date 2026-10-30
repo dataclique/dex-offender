@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Fallback,
-    "abi/ethernaut/Fallback.json"
+    "../lib/ethernaut/contracts/out/Fallback.sol/Fallback.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

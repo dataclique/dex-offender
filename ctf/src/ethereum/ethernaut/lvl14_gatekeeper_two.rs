@@ -12,7 +12,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     GatekeeperTwo,
-    "abi/ethernaut/GatekeeperTwo.json"
+    "../lib/ethernaut/contracts/out/GatekeeperTwo.sol/GatekeeperTwo.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

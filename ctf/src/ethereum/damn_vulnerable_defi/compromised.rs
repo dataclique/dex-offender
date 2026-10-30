@@ -14,22 +14,22 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     TrustfulOracleInitializer,
-    "abi/damn-vulnerable-defi/TrustfulOracleInitializer.json"
+    "../lib/damn-vulnerable-defi/out/TrustfulOracleInitializer.sol/TrustfulOracleInitializer.json"
 );
 sol!(
     #[sol(rpc)]
     TrustfulOracle,
-    "abi/damn-vulnerable-defi/TrustfulOracle.json"
+    "../lib/damn-vulnerable-defi/out/TrustfulOracle.sol/TrustfulOracle.json"
 );
 sol!(
     #[sol(rpc)]
     Exchange,
-    "abi/damn-vulnerable-defi/Exchange.json"
+    "../lib/damn-vulnerable-defi/out/Exchange.sol/Exchange.json"
 );
 sol!(
     #[sol(rpc)]
     DamnValuableNFT,
-    "abi/damn-vulnerable-defi/DamnValuableNFT.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableNFT.sol/DamnValuableNFT.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

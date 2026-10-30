@@ -66,6 +66,71 @@ fn port_free(port: u16) -> bool {
 /// (`PUBLISH_ERROR_NON_ZERO_ADDRESS`: modules must self-address 0x0).
 /// Only the self module handle's address changes; code and external
 /// dependencies (0x1/0x2/…) are untouched.
+/// Every address identifier embedded in a compiled module (the set of
+/// package addresses it references, including its own).
+pub fn address_identifiers(module_bytes: &[u8]) -> eyre::Result<Vec<Address>> {
+    let module = move_binary_format::CompiledModule::deserialize_with_defaults(
+        module_bytes,
+    )
+    .map_err(|e| eyre::eyre!("deserialize move module: {e:?}"))?;
+    Ok(module
+        .address_identifiers
+        .iter()
+        .map(|a| Address::new(a.as_slice().try_into().expect("32 bytes")))
+        .collect())
+}
+
+/// The module's original SELF address (before any zeroing) — the
+/// package's published id.
+pub fn original_self_address(module_bytes: &[u8]) -> eyre::Result<Address> {
+    use move_binary_format::internals::ModuleIndex;
+    let module = move_binary_format::CompiledModule::deserialize_with_defaults(
+        module_bytes,
+    )
+    .map_err(|e| eyre::eyre!("deserialize move module: {e:?}"))?;
+    let addr_idx =
+        module.module_handles[module.self_handle_idx().into_index()].address;
+    let addr = module.address_identifiers[addr_idx.into_index()];
+    Ok(Address::new(addr.as_slice().try_into().expect("32 bytes")))
+}
+
+/// Rewrite one embedded address identifier `from` → `to`. Returns a
+/// typed error when `from` is not referenced, so a dependency-rewrite
+/// can never silently no-op.
+pub fn rewrite_address(
+    module_bytes: &[u8],
+    from: Address,
+    to: Address,
+) -> eyre::Result<Vec<u8>> {
+    use move_binary_format::internals::ModuleIndex;
+    let mut module =
+        move_binary_format::CompiledModule::deserialize_with_defaults(
+            module_bytes,
+        )
+        .map_err(|e| eyre::eyre!("deserialize move module: {e:?}"))?;
+    let target =
+        move_core_types::account_address::AccountAddress::new(*to.inner());
+    let source =
+        move_core_types::account_address::AccountAddress::new(*from.inner());
+    let mut hits = 0;
+    for addr in &mut module.address_identifiers {
+        if *addr == source {
+            *addr = target;
+            hits += 1;
+        }
+    }
+    if hits == 0 {
+        return Err(eyre::eyre!(
+            "address {from} not referenced by this module"
+        ));
+    }
+    let mut out = Vec::with_capacity(module_bytes.len());
+    module
+        .serialize(&mut out)
+        .map_err(|e| eyre::eyre!("serialize move module: {e}"))?;
+    Ok(out)
+}
+
 pub fn zero_self_address(module_bytes: &[u8]) -> eyre::Result<Vec<u8>> {
     use move_binary_format::internals::ModuleIndex;
     let mut module =

@@ -9,17 +9,17 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableVotes,
-    "abi/damn-vulnerable-defi/DamnValuableVotes.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableVotes.sol/DamnValuableVotes.json"
 );
 sol!(
     #[sol(rpc)]
     SimpleGovernance,
-    "abi/damn-vulnerable-defi/SimpleGovernance.json"
+    "../lib/damn-vulnerable-defi/out/SimpleGovernance.sol/SimpleGovernance.json"
 );
 sol!(
     #[sol(rpc)]
     SelfiePool,
-    "abi/damn-vulnerable-defi/SelfiePool.json"
+    "../lib/damn-vulnerable-defi/out/SelfiePool.sol/SelfiePool.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

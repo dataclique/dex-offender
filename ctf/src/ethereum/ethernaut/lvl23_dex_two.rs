@@ -12,7 +12,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DexTwo,
-    "abi/ethernaut/DexTwo.json"
+    "../lib/ethernaut/contracts/out/DexTwo.sol/DexTwo.json"
+);
+
+sol!(
+    #[sol(rpc)]
+    SwappableTokenTwo,
+    "../lib/ethernaut/contracts/out/DexTwo.sol/SwappableTokenTwo.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -39,35 +45,96 @@ impl Level for Target {
 
         println!("Deploying the DexTwo contract...");
         let contract = DexTwo::deploy(provider).await?;
+        let dex_address = *contract.address();
 
-        // TODO: deploy SwappableTokenTwo instances and set up the pool
-        let _ = (deployer, offender);
+        // Mirror DexTwoFactory.createInstance (add_liquidity spelling).
+        let token1 = SwappableTokenTwo::deploy(
+            provider,
+            dex_address,
+            "Token 1".to_string(),
+            "TKN1".to_string(),
+            U256::from(110),
+        )
+        .await?;
+        let token2 = SwappableTokenTwo::deploy(
+            provider,
+            dex_address,
+            "Token 2".to_string(),
+            "TKN2".to_string(),
+            U256::from(110),
+        )
+        .await?;
 
-        Ok(Target { address: *contract.address() })
+        contract
+            .setTokens(*token1.address(), *token2.address())
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        for token in [&token1, &token2] {
+            token
+                .approve_0(dex_address, U256::from(100))
+                .from(deployer.address())
+                .send()
+                .await?
+                .watch()
+                .await?;
+        }
+        contract
+            .add_liquidity(*token1.address(), U256::from(100))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        contract
+            .add_liquidity(*token2.address(), U256::from(100))
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
+        for token in [&token1, &token2] {
+            token
+                .transfer(offender.address(), U256::from(10))
+                .from(deployer.address())
+                .send()
+                .await?
+                .watch()
+                .await?;
+        }
+
+        Ok(Target { address: dex_address })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
         let contract = DexTwo::new(self.address, provider.clone());
 
-        println!("Checking that you have stolen all tokens of both types...");
         let token1 = contract.token1().call().await?;
         let token2 = contract.token2().call().await?;
 
         let balance_of_selector =
             alloy::primitives::keccak256("balanceOf(address)".as_bytes());
-        let calldata1 =
-            [&balance_of_selector[..4], &[0u8; 12] as &[u8], token1.as_slice()]
-                .concat();
-        let calldata2 =
-            [&balance_of_selector[..4], &[0u8; 12] as &[u8], token2.as_slice()]
-                .concat();
+        let calldata1 = [
+            &balance_of_selector[..4],
+            &[0u8; 12] as &[u8],
+            self.address.as_slice(),
+        ]
+        .concat();
+        let calldata2 = [
+            &balance_of_selector[..4],
+            &[0u8; 12] as &[u8],
+            self.address.as_slice(),
+        ]
+        .concat();
 
         let tx1 = alloy::rpc::types::TransactionRequest::default()
-            .to(self.address)
+            .to(token1)
             .input(alloy::primitives::Bytes::from(calldata1).into());
         let tx2 = alloy::rpc::types::TransactionRequest::default()
-            .to(self.address)
+            .to(token2)
             .input(alloy::primitives::Bytes::from(calldata2).into());
 
         let result1 = provider.call(tx1.clone()).await?;

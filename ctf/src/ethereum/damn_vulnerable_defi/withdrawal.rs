@@ -9,32 +9,32 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     L1Gateway,
-    "abi/damn-vulnerable-defi/L1Gateway.json"
+    "../lib/damn-vulnerable-defi/out/L1Gateway.sol/L1Gateway.json"
 );
 sol!(
     #[sol(rpc)]
     L1Forwarder,
-    "abi/damn-vulnerable-defi/L1Forwarder.json"
+    "../lib/damn-vulnerable-defi/out/L1Forwarder.sol/L1Forwarder.json"
 );
 sol!(
     #[sol(rpc)]
     L2Handler,
-    "abi/damn-vulnerable-defi/L2Handler.json"
+    "../lib/damn-vulnerable-defi/out/L2Handler.sol/L2Handler.json"
 );
 sol!(
     #[sol(rpc)]
     L2MessageStore,
-    "abi/damn-vulnerable-defi/L2MessageStore.json"
+    "../lib/damn-vulnerable-defi/out/L2MessageStore.sol/L2MessageStore.json"
 );
 sol!(
     #[sol(rpc)]
     TokenBridge,
-    "abi/damn-vulnerable-defi/TokenBridge.json"
+    "../lib/damn-vulnerable-defi/out/TokenBridge.sol/TokenBridge.json"
 );
 
 pub const WITHDRAWALS_ROOT: [u8; 32] = [

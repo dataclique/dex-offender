@@ -9,37 +9,37 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     DamnValuableNFT,
-    "abi/damn-vulnerable-defi/DamnValuableNFT.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableNFT.sol/DamnValuableNFT.json"
 );
 sol!(
     #[sol(rpc)]
     WETH,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV2Factory,
-    "abi/damn-vulnerable-defi/UniswapV2Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Factory.sol/IUniswapV2Factory.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV2Router02,
-    "abi/damn-vulnerable-defi/UniswapV2Router02.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Router02.sol/IUniswapV2Router02.json"
 );
 sol!(
     #[sol(rpc)]
     FreeRiderNFTMarketplace,
-    "abi/damn-vulnerable-defi/FreeRiderNFTMarketplace.json"
+    "../lib/damn-vulnerable-defi/out/FreeRiderNFTMarketplace.sol/FreeRiderNFTMarketplace.json"
 );
 sol!(
     #[sol(rpc)]
     FreeRiderRecoveryManager,
-    "abi/damn-vulnerable-defi/FreeRiderRecoveryManager.json"
+    "../lib/damn-vulnerable-defi/out/FreeRiderRecoveryManager.sol/FreeRiderRecoveryManager.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -75,13 +75,11 @@ impl Level for Target {
 
         let token = DamnValuableToken::deploy(provider).await?;
         let weth = WETH::deploy(provider).await?;
-        let factory = UniswapV2Factory::deploy(provider, Address::ZERO).await?;
-        let router = UniswapV2Router02::deploy(
-            provider,
-            *factory.address(),
-            *weth.address(),
-        )
-        .await?;
+        // Pinned UniswapV2 bytecode, deployed like upstream deployCode.
+        let (factory_address, router_address) =
+            crate::uniswap::deploy_v2(roles, *weth.address()).await?;
+        let _factory = UniswapV2Factory::new(factory_address, provider.clone());
+        let router = UniswapV2Router02::new(router_address, provider.clone());
 
         // Add liquidity: 15000 DVT + 9000 WETH (use some_user — deployer
         // is depleted by prior levels)
@@ -94,7 +92,7 @@ impl Level for Target {
             .watch()
             .await?;
         token
-            .approve(*router.address(), to_ether(15_000))
+            .approve(router_address, to_ether(15_000))
             .from(liquidity_provider.address())
             .send()
             .await?

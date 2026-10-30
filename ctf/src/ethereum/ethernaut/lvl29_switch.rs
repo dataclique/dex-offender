@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Switch,
-    "abi/ethernaut/Switch.json"
+    "../lib/ethernaut/contracts/out/Switch.sol/Switch.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

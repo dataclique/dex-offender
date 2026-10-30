@@ -12,7 +12,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     AlienCodex,
-    "abi/ethernaut/AlienCodex.json"
+    "../lib/ethernaut/contracts/out/AlienCodex.sol/AlienCodex.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

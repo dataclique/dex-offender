@@ -16,13 +16,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Motorbike,
-    "abi/ethernaut/Motorbike.json"
+    "../lib/ethernaut/contracts/out/Motorbike.sol/Motorbike.json"
 );
 
 sol!(
     #[sol(rpc)]
     Engine,
-    "abi/ethernaut/Engine.json"
+    "../lib/ethernaut/contracts/out/Motorbike.sol/Engine.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

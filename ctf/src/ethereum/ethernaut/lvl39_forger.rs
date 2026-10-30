@@ -11,7 +11,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Forger,
-    "abi/ethernaut/Forger.json"
+    "../lib/ethernaut/contracts/out/Forger.sol/Forger.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

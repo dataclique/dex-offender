@@ -9,22 +9,22 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     Safe,
-    "abi/damn-vulnerable-defi/Safe.json"
+    "../lib/damn-vulnerable-defi/out/Safe.sol/Safe.json"
 );
 sol!(
     #[sol(rpc)]
     SafeProxyFactory,
-    "abi/damn-vulnerable-defi/SafeProxyFactory.json"
+    "../lib/damn-vulnerable-defi/out/SafeProxyFactory.sol/SafeProxyFactory.json"
 );
 sol!(
     #[sol(rpc)]
     WalletRegistry,
-    "abi/damn-vulnerable-defi/WalletRegistry.json"
+    "../lib/damn-vulnerable-defi/out/WalletRegistry.sol/WalletRegistry.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

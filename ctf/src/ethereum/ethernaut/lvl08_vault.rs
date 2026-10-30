@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Vault,
-    "abi/ethernaut/Vault.json"
+    "../lib/ethernaut/contracts/out/Vault.sol/Vault.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

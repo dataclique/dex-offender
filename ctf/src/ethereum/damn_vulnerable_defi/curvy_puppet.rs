@@ -16,25 +16,25 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 
 sol!(
     #[sol(rpc)]
     Weth,
-    "abi/damn-vulnerable-defi/WETH.json"
+    "../lib/damn-vulnerable-defi/out/WETH.sol/WETH.json"
 );
 
 sol!(
     #[sol(rpc)]
     CurvyPuppetOracle,
-    "abi/damn-vulnerable-defi/CurvyPuppetOracle.json"
+    "../lib/damn-vulnerable-defi/out/CurvyPuppetOracle.sol/CurvyPuppetOracle.json"
 );
 
 sol!(
     #[sol(rpc)]
     CurvyPuppetLending,
-    "abi/damn-vulnerable-defi/CurvyPuppetLending.json"
+    "../lib/damn-vulnerable-defi/out/CurvyPuppetLending.sol/CurvyPuppetLending.json"
 );
 
 sol!(

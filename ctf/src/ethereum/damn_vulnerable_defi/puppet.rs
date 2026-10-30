@@ -9,22 +9,22 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     DamnValuableToken,
-    "abi/damn-vulnerable-defi/DamnValuableToken.json"
+    "../lib/damn-vulnerable-defi/out/DamnValuableToken.sol/DamnValuableToken.json"
 );
 sol!(
     #[sol(rpc)]
     PuppetPool,
-    "abi/damn-vulnerable-defi/PuppetPool.json"
+    "../lib/damn-vulnerable-defi/out/PuppetPool.sol/PuppetPool.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV1Factory,
-    "abi/damn-vulnerable-defi/UniswapV1Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV1Factory.sol/IUniswapV1Factory.json"
 );
 sol!(
     #[sol(rpc)]
     UniswapV1Exchange,
-    "abi/damn-vulnerable-defi/UniswapV1Exchange.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV1Exchange.sol/IUniswapV1Exchange.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -51,15 +51,11 @@ impl Level for Target {
 
         println!("Deploying the Puppet challenge...");
 
-        let factory = UniswapV1Factory::deploy(provider).await?;
-        let template = UniswapV1Exchange::deploy(provider).await?;
-        factory
-            .initializeFactory(*template.address())
-            .from(deployer.address())
-            .send()
-            .await?
-            .watch()
-            .await?;
+        // Upstream deploys the pinned Uniswap V1 bytecode (deployCode);
+        // the factory binding covers the typed calls.
+        let (factory_address, _template) =
+            crate::uniswap::deploy_v1(roles).await?;
+        let factory = UniswapV1Factory::new(factory_address, provider.clone());
 
         let token = DamnValuableToken::deploy(provider).await?;
         factory

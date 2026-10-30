@@ -5,6 +5,7 @@ pub mod roles;
 pub mod solana;
 #[cfg(feature = "sui")]
 pub mod sui;
+pub mod uniswap;
 pub use level::*;
 pub use roles::*;
 

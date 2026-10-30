@@ -13,7 +13,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     NotOptimisticPortal,
-    "abi/ethernaut/NotOptimisticPortal.json"
+    "../lib/ethernaut/contracts/out/NotOptimisticPortal.sol/NotOptimisticPortal.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
