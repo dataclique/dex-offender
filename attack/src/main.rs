@@ -78,6 +78,255 @@ async fn verify_board_matches_chain(roles: &Roles) -> eyre::Result<()> {
     Ok(())
 }
 
+/// Upstream "completion" notes shown right after a level is newly solved
+/// (owner-approved: not a spoiler once the level is completed). Only
+/// Ethernaut ships these; Bet House has none upstream.
+const ETERNAUT_LEARNINGS: &[(&str, &str)] = &[
+    (
+        "Fallback",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/fallback_complete.md"
+        ),
+    ),
+    (
+        "Fallout",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/fallout_complete.md"
+        ),
+    ),
+    (
+        "Coin Flip",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/coinflip_complete.md"
+        ),
+    ),
+    (
+        "Telephone",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/telephone_complete.md"
+        ),
+    ),
+    (
+        "Token",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/token_complete.md"
+        ),
+    ),
+    (
+        "Delegation",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/delegate_complete.md"
+        ),
+    ),
+    (
+        "Force",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/force_complete.md"
+        ),
+    ),
+    (
+        "Vault",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/vault_complete.md"
+        ),
+    ),
+    (
+        "King",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/king_complete.md"
+        ),
+    ),
+    (
+        "Re-entrancy",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/reentrancy_complete.md"
+        ),
+    ),
+    (
+        "Elevator",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/elevator_complete.md"
+        ),
+    ),
+    (
+        "Privacy",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/privacy_complete.md"
+        ),
+    ),
+    (
+        "GatekeeperOne",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/gatekeeper1_complete.md"
+        ),
+    ),
+    (
+        "GatekeeperTwo",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/gatekeeper2_complete.md"
+        ),
+    ),
+    (
+        "NaughtCoin",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/naughtcoin_complete.md"
+        ),
+    ),
+    (
+        "Preservation",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/preservation_complete.md"
+        ),
+    ),
+    (
+        "Recovery",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/recovery_complete.md"
+        ),
+    ),
+    (
+        "MagicNum",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/magicnum_complete.md"
+        ),
+    ),
+    (
+        "AlienCodex",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/aliencodex_complete.md"
+        ),
+    ),
+    (
+        "Denial",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/denial_complete.md"
+        ),
+    ),
+    (
+        "Shop",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/shop_complete.md"
+        ),
+    ),
+    (
+        "Dex",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/dex_complete.md"
+        ),
+    ),
+    (
+        "DexTwo",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/dex2_complete.md"
+        ),
+    ),
+    (
+        "PuzzleWallet",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/puzzle_wallet_complete.md"
+        ),
+    ),
+    (
+        "Motorbike",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/motorbike_complete.md"
+        ),
+    ),
+    (
+        "DoubleEntryPoint",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/doubleentrypoint_complete.md"
+        ),
+    ),
+    (
+        "GoodSamaritan",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/goodsamaritan_complete.md"
+        ),
+    ),
+    (
+        "GatekeeperThree",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/gatekeeper3_complete.md"
+        ),
+    ),
+    (
+        "Switch",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/switch_complete.md"
+        ),
+    ),
+    (
+        "HigherOrder",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/higherorder_complete.md"
+        ),
+    ),
+    (
+        "Stake",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/stake_complete.md"
+        ),
+    ),
+    (
+        "Impersonator",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/impersonator_complete.md"
+        ),
+    ),
+    (
+        "Magic Animal Carousel",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/magicanimalcarousel_complete.md"
+        ),
+    ),
+    ("Bet House", ""),
+    (
+        "Elliptic Token",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/elliptic_token_complete.md"
+        ),
+    ),
+    (
+        "Cashback",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/cashback_complete.md"
+        ),
+    ),
+    (
+        "Impersonator Two",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/impersonator_two_complete.md"
+        ),
+    ),
+    (
+        "UniqueNFT",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/uniquenft_complete.md"
+        ),
+    ),
+    (
+        "Forger",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/forger_complete.md"
+        ),
+    ),
+    (
+        "NotOptimisticPortal",
+        include_str!(
+            "../../lib/ethernaut/client/src/gamedata/en/descriptions/levels/not_optimistic_portal_complete.md"
+        ),
+    ),
+];
+
+fn learnings_for(name: &str) -> Option<&'static str> {
+    ETERNAUT_LEARNINGS
+        .iter()
+        .find(|(level, _)| *level == name)
+        .map(|(_, text)| *text)
+        .filter(|text| !text.is_empty())
+}
+
 fn congratulations(name: &str) {
     println!(
         "
@@ -110,6 +359,9 @@ async fn play_level<E: Exploit>(
         }
         Outcome::NewlySolved => {
             congratulations(label);
+            if let Some(learnings) = learnings_for(label) {
+                println!("{DIM}What you learned:{RESET}\n{learnings}");
+            }
             println!("{GREEN}✓ {label} — solved just now{RESET}");
             *solved += 1;
             true
@@ -288,6 +540,15 @@ mod tests {
             self.child.wait()?;
             Ok(())
         }
+    }
+
+    #[test]
+    fn learnings_cover_solved_levels_but_not_missing_notes() {
+        let fallback = learnings_for("Fallback");
+        assert!(fallback.is_some(), "Fallback ships upstream notes");
+        assert!(!fallback.unwrap().trim().is_empty());
+        assert!(learnings_for("Bet House").is_none(), "no upstream notes");
+        assert!(learnings_for("Puppet").is_none(), "DVD ships no notes");
     }
 
     #[tokio::test]
