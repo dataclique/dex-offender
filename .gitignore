@@ -2,6 +2,7 @@
 .worktrees/
 state.json
 ctfs.json
+ctf/abi/
 target/
 result
 ctf/out
