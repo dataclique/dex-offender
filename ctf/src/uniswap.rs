@@ -60,7 +60,9 @@ const V2_ROUTER02_BUILD: &str = include_str!(
 );
 
 /// Deploy a Uniswap V1 factory (with a fresh template exchange) and the
-/// template itself, as dvd's Puppet test does with deployCode.
+/// template itself, as dvd's Puppet test does with deployCode. The factory
+/// takes no constructor args; the template is registered afterwards via
+/// `initializeFactory`.
 pub async fn deploy_v1(roles: &Roles) -> eyre::Result<(Address, Address)> {
     let template = deploy_code(
         roles,
@@ -68,12 +70,9 @@ pub async fn deploy_v1(roles: &Roles) -> eyre::Result<(Address, Address)> {
         &[],
     )
     .await?;
-    let factory = deploy_code(
-        roles,
-        standard_json_creation_code(V1_FACTORY_BUILD)?,
-        &[template.abi_encode()],
-    )
-    .await?;
+    let factory =
+        deploy_code(roles, standard_json_creation_code(V1_FACTORY_BUILD)?, &[])
+            .await?;
     Ok((factory, template))
 }
 

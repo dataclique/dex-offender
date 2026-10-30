@@ -12,19 +12,19 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     InuToken,
-    "abi/paradigm-2023/InuToken.json"
+    "../lib/paradigm-ctf-2023/free-real-estate/challenge/project/out/InuToken.sol/InuToken.json"
 );
 
 sol!(
     #[sol(rpc)]
     MerkleDistributor,
-    "abi/paradigm-2023/MerkleDistributor.json"
+    "../lib/paradigm-ctf-2023/free-real-estate/challenge/project/out/MerkleDistributor.sol/MerkleDistributor.json"
 );
 
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/free-real-estate.json"
+    "../lib/paradigm-ctf-2023/free-real-estate/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

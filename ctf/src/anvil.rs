@@ -62,9 +62,8 @@ pub const MAINNET_WETH9: Address =
 
 /// Plant a functional WETH9 at the canonical mainnet address.
 ///
-/// Runtime bytecode is compiled from the Uniswap v2-periphery WETH9
-/// source (pinned in the damn-vulnerable-defi submodule) and shipped as
-/// the forge artifact `ctf/abi/paradigm-2021/weth9.json`.
+/// Runtime bytecode is compiled from the pinned Uniswap v2-periphery test
+/// source (attack/contracts/harness/WETH9.sol → attack/out).
 pub async fn plant_weth9(roles: &Roles) -> eyre::Result<()> {
     // Already planted? Skip so repeated deployments stay idempotent.
     let existing = roles
@@ -76,8 +75,9 @@ pub async fn plant_weth9(roles: &Roles) -> eyre::Result<()> {
         return Ok(());
     }
 
-    let artifact: serde_json::Value =
-        serde_json::from_str(include_str!("../abi/paradigm-2021/weth9.json"))?;
+    let artifact: serde_json::Value = serde_json::from_str(include_str!(
+        "../../attack/out/WETH9.sol/WETH9.json"
+    ))?;
     let hex =
         artifact["deployedBytecode"]["object"].as_str().ok_or_else(|| {
             eyre::eyre!("weth9 artifact missing deployedBytecode.object")
@@ -105,7 +105,7 @@ pub async fn plant_eth_usd_feed(roles: &Roles) -> eyre::Result<()> {
     }
 
     let artifact: serde_json::Value = serde_json::from_str(include_str!(
-        "../abi/paradigm-2023/MockEthUsdFeed.json"
+        "../../attack/out/MockEthUsdFeed.sol/MockEthUsdFeed.json"
     ))?;
     let hex =
         artifact["deployedBytecode"]["object"].as_str().ok_or_else(|| {
@@ -149,8 +149,8 @@ pub const MAINNET_UNISWAP_V2_ROUTER: Address =
 pub const MAINNET_UNISWAP_V2_ROUTER01: Address =
     address!("f164fC0Ec4E93095b804a4795bBe1e041497b92a");
 
-/// Plant the MockERC20 runtime (built from `.tmp/mock-erc20`, embedded
-/// at `abi/paradigm-2021/mock-erc20.json`) at `addr`. Balances are
+/// Plant the MockERC20 runtime (attack/contracts/harness/MockERC20.sol,
+/// built into attack/out) at `addr`. Balances are
 /// seeded separately via [`seed_erc20_balance`].
 pub async fn plant_mock_erc20(
     roles: &Roles,
@@ -161,7 +161,7 @@ pub async fn plant_mock_erc20(
         return Ok(());
     }
     let artifact: serde_json::Value = serde_json::from_str(include_str!(
-        "../abi/paradigm-2021/mock-erc20.json"
+        "../../attack/out/MockERC20.sol/MockERC20.json"
     ))?;
     // deployedBytecode: planting the creation bytecode would execute its
     // constructor prefix (CODECOPY + RETURN) on every call and return the
@@ -268,13 +268,13 @@ sol!(
 sol!(
     #[sol(rpc)]
     MockErc20,
-    "abi/paradigm-2021/mock-erc20.json"
+    "../attack/out/MockERC20.sol/MockERC20.json"
 );
 
 sol!(
     #[sol(rpc)]
     WETH9Token,
-    "abi/paradigm-2021/weth9.json"
+    "../attack/out/WETH9.sol/WETH9.json"
 );
 
 /// Create the WETH/`token` pair via the planted factory, give it
@@ -358,11 +358,12 @@ pub async fn plant_uniswap_v2_factory(roles: &Roles) -> eyre::Result<Address> {
     }
 
     let artifact: serde_json::Value = serde_json::from_str(include_str!(
-        "../abi/damn-vulnerable-defi/UniswapV2Factory.json"
+        "../../lib/damn-vulnerable-defi/builds/uniswap/UniswapV2Factory.json"
     ))?;
-    let hex = artifact["bytecode"]
-        .as_str()
-        .ok_or_else(|| eyre::eyre!("factory artifact missing bytecode"))?;
+    let hex =
+        artifact["evm"]["bytecode"]["object"].as_str().ok_or_else(|| {
+            eyre::eyre!("factory artifact missing evm.bytecode.object")
+        })?;
     let code: Bytes = hex.parse()?;
 
     // The factory constructor takes feeToSetter; append the deployer

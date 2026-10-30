@@ -1,3 +1,5 @@
+#![cfg(feature = "paradigm-legacy")]
+
 //! Paradigm 2022 rescue: fork deploy (real SushiSwap MasterChef +
 //! SushiRouter + WETH) + unsolved check, and the no-fork guard.
 

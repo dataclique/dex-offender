@@ -10,6 +10,9 @@ edition = "2024"
 
 [features]
 default = []
+# 2021/2022 Setups are compiled from per-challenge pinned sources; the
+# sol! bindings live behind this feature until those build units land.
+paradigm-legacy = []
 # Experimental localnet work is opt-in; EVM practice needs no Move artifacts.
 sui = [
   "dep:sui-rpc",

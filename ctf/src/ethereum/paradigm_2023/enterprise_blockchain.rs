@@ -9,19 +9,19 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Bridge,
-    "abi/paradigm-2023/Bridge.json"
+    "../lib/paradigm-ctf-2023/enterprise-blockchain/challenge/project/out/Bridge.sol/Bridge.json"
 );
 
 sol!(
     #[sol(rpc)]
     FlagToken,
-    "abi/paradigm-2023/FlagToken.json"
+    "../lib/paradigm-ctf-2023/enterprise-blockchain/challenge/project/out/BridgedERC20.sol/FlagToken.json"
 );
 
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/enterprise-blockchain.json"
+    "../lib/paradigm-ctf-2023/enterprise-blockchain/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

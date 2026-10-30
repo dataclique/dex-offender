@@ -53,9 +53,16 @@ impl Level for Target {
 
         // Upstream deploys the pinned Uniswap V1 bytecode (deployCode);
         // the factory binding covers the typed calls.
-        let (factory_address, _template) =
+        let (factory_address, template) =
             crate::uniswap::deploy_v1(roles).await?;
         let factory = UniswapV1Factory::new(factory_address, provider.clone());
+        factory
+            .initializeFactory(template)
+            .from(deployer.address())
+            .send()
+            .await?
+            .watch()
+            .await?;
 
         let token = DamnValuableToken::deploy(provider).await?;
         factory

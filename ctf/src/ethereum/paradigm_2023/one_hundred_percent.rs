@@ -13,19 +13,19 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Split,
-    "abi/paradigm-2023/Split.json"
+    "../lib/paradigm-ctf-2023/one-hundred-percent/challenge/project/out/Split.sol/Split.json"
 );
 
 sol!(
     #[sol(rpc)]
     SplitWallet,
-    "abi/paradigm-2023/SplitWallet.json"
+    "../lib/paradigm-ctf-2023/one-hundred-percent/challenge/project/out/SplitWallet.sol/SplitWallet.json"
 );
 
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/one-hundred-percent.json"
+    "../lib/paradigm-ctf-2023/one-hundred-percent/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

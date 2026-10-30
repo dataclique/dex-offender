@@ -12,7 +12,7 @@ sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     Factory,
-    "abi/damn-vulnerable-defi/UniswapV2Factory.json"
+    "../lib/damn-vulnerable-defi/out/IUniswapV2Factory.sol/IUniswapV2Factory.json"
 );
 
 fn wait_for_port(port: u16) {

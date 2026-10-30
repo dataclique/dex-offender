@@ -113,7 +113,7 @@ impl Level for Target {
 
         // Authorizer via CreateX create2 + proxy.
         let authorizer_factory_code: Bytes = read_creation_code(include_str!(
-            "../../../abi/damn-vulnerable-defi/AuthorizerFactory.json"
+        "../../../../lib/damn-vulnerable-defi/out/AuthorizerFactory.sol/AuthorizerFactory.json"
         ))?
         .parse()?;
         let factory_addr = createx
@@ -160,10 +160,10 @@ impl Level for Target {
         // Safe singleton + proxy factory via the Safe Singleton Factory
         // (calldata = 32 zero bytes + creation code; returns the address).
         let safe_code = read_creation_code(include_str!(
-            "../../../abi/damn-vulnerable-defi/Safe.json"
+            "../../../../lib/damn-vulnerable-defi/out/Safe.sol/Safe.json"
         ))?;
         let proxy_factory_code = read_creation_code(include_str!(
-            "../../../abi/damn-vulnerable-defi/SafeProxyFactory.json"
+            "../../../../lib/damn-vulnerable-defi/out/SafeProxyFactory.sol/SafeProxyFactory.json"
         ))?;
         let singleton_call = |code: String| {
             let mut data = vec![0u8; 32];
@@ -224,7 +224,7 @@ impl Level for Target {
         // WalletDeployer via CreateX create2 with appended ctor args.
         let mut wd_code = alloy::primitives::hex::decode(
             read_creation_code(include_str!(
-                "../../../abi/damn-vulnerable-defi/WalletDeployer.json"
+        "../../../../lib/damn-vulnerable-defi/out/WalletDeployer.sol/WalletDeployer.json"
             ))?
             .trim_start_matches("0x"),
         )?;

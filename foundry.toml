@@ -5,6 +5,9 @@ test = 'attack/test'
 out = 'attack/out'
 cache_path = 'attack/cache'
 
+# Pinned upstream test sources compiled for harness-planted artifacts.
+remappings = ["@v2p-test/=lib/v2-periphery/contracts/test/"]
+
 optimizer = true
 optimizer_runs = 9999
 ignored_error_codes = [2072, 5159, 9302, 6321]

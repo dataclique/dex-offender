@@ -16,20 +16,20 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/dragon-tyrant.json"
+    "../lib/paradigm-ctf-2023/dragon-tyrant/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 sol!(
     #[sol(rpc)]
     #[sol(ignore_unlinked)]
     Factory,
-    "abi/paradigm-2023/Factory.json"
+    "../lib/paradigm-ctf-2023/dragon-tyrant/challenge/project/out/Factory.sol/Factory.json"
 );
 
 sol!(
     #[sol(rpc)]
     NFTRenderer,
-    "abi/paradigm-2023/NFTRenderer.json"
+    "../lib/paradigm-ctf-2023/dragon-tyrant/challenge/project/out/NFTRenderer.sol/NFTRenderer.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -63,7 +63,7 @@ impl Level for Target {
         // placeholder in the creation code.
         let renderer = NFTRenderer::deploy(provider).await?;
         let artifact: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../abi/paradigm-2023/Factory.json"
+            "../../../../lib/paradigm-ctf-2023/dragon-tyrant/challenge/project/out/Factory.sol/Factory.json"
         ))?;
         let unlinked =
             artifact["bytecode"]["object"].as_str().ok_or_else(|| {

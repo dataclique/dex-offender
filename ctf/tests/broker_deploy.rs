@@ -1,3 +1,5 @@
+#![cfg(feature = "paradigm-legacy")]
+
 //! Paradigm 2021 broker: full setup on planted WETH9 + UniswapV2
 //! factory, verified unsolved.
 

@@ -9,7 +9,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/dodont.json"
+    "../lib/paradigm-ctf-2023/dodont/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

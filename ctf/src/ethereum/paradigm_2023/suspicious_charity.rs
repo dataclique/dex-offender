@@ -9,13 +9,13 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Router,
-    "abi/paradigm-2023/Router.json"
+    "../lib/paradigm-ctf-2023/suspicious-charity/challenge/project/out/Router.sol/Router.json"
 );
 
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/suspicious-charity.json"
+    "../lib/paradigm-ctf-2023/suspicious-charity/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

@@ -9,31 +9,31 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     SystemConfiguration,
-    "abi/paradigm-2023/SystemConfiguration.json"
+    "../lib/paradigm-ctf-2023/dai-plus-plus/challenge/project/out/SystemConfiguration.sol/SystemConfiguration.json"
 );
 
 sol!(
     #[sol(rpc)]
     AccountManager,
-    "abi/paradigm-2023/AccountManager.json"
+    "../lib/paradigm-ctf-2023/dai-plus-plus/challenge/project/out/AccountManager.sol/AccountManager.json"
 );
 
 sol!(
     #[sol(rpc)]
     Stablecoin,
-    "abi/paradigm-2023/Stablecoin.json"
+    "../lib/paradigm-ctf-2023/dai-plus-plus/challenge/project/out/Stablecoin.sol/Stablecoin.json"
 );
 
 sol!(
     #[sol(rpc)]
     AccountImpl,
-    "abi/paradigm-2023/Account.json"
+    "../lib/paradigm-ctf-2023/dai-plus-plus/challenge/project/out/Account.sol/Account.json"
 );
 
 sol!(
     #[sol(rpc)]
     Challenge,
-    "abi/paradigm-2023/dai-plus-plus.json"
+    "../lib/paradigm-ctf-2023/dai-plus-plus/challenge/project/out/Challenge.sol/Challenge.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
