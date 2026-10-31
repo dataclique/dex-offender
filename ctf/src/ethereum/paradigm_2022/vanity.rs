@@ -9,7 +9,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Setup,
-    "abi/paradigm-2022/vanity.json"
+    "../lib/paradigm-ctf-2022/vanity/public/out/Setup.sol/Setup.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

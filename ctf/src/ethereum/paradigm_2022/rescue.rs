@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Setup,
-    "abi/paradigm-2022/rescue.json"
+    "../lib/paradigm-ctf-2022/rescue/public/out/Setup.sol/Setup.json"
 );
 
 const MAINNET_SUSHISWAP_MASTERCHEF: Address =

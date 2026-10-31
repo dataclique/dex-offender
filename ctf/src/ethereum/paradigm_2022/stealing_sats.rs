@@ -17,7 +17,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Setup,
-    "abi/paradigm-2022/stealing-sats.json"
+    "../lib/paradigm-ctf-2022/stealing-sats/public/out/Setup.sol/Setup.json"
 );
 
 const MAINNET_WBTC: Address =

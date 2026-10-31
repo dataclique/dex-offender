@@ -15,7 +15,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Setup,
-    "abi/paradigm-2021/farmer.json"
+    "../lib/paradigm-ctf-2021/farmer/public/out/Setup.sol/Setup.json"
 );
 
 sol!(
@@ -27,7 +27,7 @@ sol!(
 sol!(
     #[sol(rpc)]
     WETH9,
-    "abi/paradigm-2021/weth9.json"
+    "../attack/out/WETH9.sol/WETH9.json"
 );
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]

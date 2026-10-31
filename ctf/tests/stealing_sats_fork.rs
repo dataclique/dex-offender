@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2022 stealing-sats: fork deploy at the verified 2022-era
 //! block (TARGET holds ~0.29 WBTC at 15707136) + unsolved check, and
 //! the no-fork guard failing fast.

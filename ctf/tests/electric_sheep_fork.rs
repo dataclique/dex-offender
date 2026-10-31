@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2022 electric-sheep: fork deploy + unsolved check, and the
 //! no-fork guard failing fast.
 

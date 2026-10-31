@@ -16,7 +16,7 @@ use async_trait::async_trait;
 sol!(
     #[sol(rpc)]
     Setup,
-    "abi/paradigm-2022/hint-finance.json"
+    "../lib/paradigm-ctf-2022/hint-finance/public/out/Setup.sol/Setup.json"
 );
 
 const MAINNET_UNISWAP_V2_ROUTER01: Address =

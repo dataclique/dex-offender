@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Focused deployment verification for the Paradigm CTF 2021 section.
 
 use std::time::Duration;

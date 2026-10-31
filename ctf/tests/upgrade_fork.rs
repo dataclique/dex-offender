@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2021 upgrade: fork-only — deploy + call upgrade() on a
 //! mainnet fork, verify isSolved() reads false before any exploit.
 

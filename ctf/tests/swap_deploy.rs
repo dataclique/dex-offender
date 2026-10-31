@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2021 swap: full setup on planted stablecoin mocks (DAI,
 //! TUSD, USDC, USDT), Router01-address router bytecode, factory, WETH9
 //! and four seeded pairs; verified unsolved.

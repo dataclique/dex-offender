@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2022 hint-finance: fork deploy (real Router01 + token
 //! pairs) + unsolved check, and the no-fork guard failing fast.
 

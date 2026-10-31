@@ -7,35 +7,58 @@
 # Requires: forge on PATH (devenv shell provides it) and initialized
 # submodules (git submodule update --init --recursive).
 
-def build-root [root: string] {
-  print $"forge build --root ($root)"
-  let build = (do { forge build --root $root } | complete)
-  if $build.exit_code != 0 {
-    print $build.stderr
-    error make {msg: $"forge build failed for ($root)"}
-  }
+# 2021 challenges with their pinned upstream solc versions (build.sh).
+const P2021_SOLC = {
+  bank: '0.4.24'
+  vault: '0.4.16'
+  lockbox: '0.4.24'
+  babysandbox: '0.7.0'
+  market: '0.7.0'
+  upgrade: '0.6.12'
+  secure: '0.5.12'
+  jop: '0.7.6'
+  rever: '0.8.0'
+  swap: '0.4.24'
+  babyrev: '0.4.24'
+  bouncer: '0.8.0'
+  hello: '0.8.0'
+  farmer: '0.8.0'
+  yield_aggregator: '0.8.0'
+  broker: '0.8.0'
 }
 
-def main [...roots: string] {
+def record-failure [failed: list<string>, root: string, build: record] {
+  print ($build.stderr | lines | last 1)
+  $failed | append $root
+}
+
+def main [] {
   let p2023 = (glob 'lib/paradigm-ctf-2023/*/challenge/project')
-  let all = if ($roots | is-empty) {
-    [
-      lib/ethernaut/contracts
-      lib/damn-vulnerable-defi
-    ] | append $p2023
-  } else {
-    $roots
-  }
+  let p2022 = (glob 'lib/paradigm-ctf-2022/*/public' | where {|p|
+    ($p | path join 'contracts' | path exists)
+  })
+  let p2021 = ($P2021_SOLC | columns | each {|c| $"lib/paradigm-ctf-2021/($c)/public" })
+  let roots = (
+    [lib/ethernaut/contracts lib/damn-vulnerable-defi]
+    | append $p2023
+    | append $p2022
+    | append $p2021
+  )
+
   mut failed = []
-  for $root in $all {
+  for $root in $roots {
     print $"forge build --root ($root)"
-    let build = (do { forge build --root $root } | complete)
-    if $build.exit_code != 0 {
-      # token-locker (2023) still fails upstream with stack-too-deep.
-      if not ($root | str contains 'token-locker') {
-        $failed = ($failed | append $root)
-      }
-      print ($build.stderr | lines | last 1)
+    let solc = ($P2021_SOLC | get -o ($root | path dirname | path basename))
+    let build = if ($root | str contains '/paradigm-ctf-2021/') {
+      do { forge build --root $root --contracts contracts --remappings 'private=../private/' --remappings 'public=contracts/' --use $"solc:($solc)" } | complete
+    } else if (($root | path join 'contracts') | path exists) {
+      do { forge build --root $root --contracts contracts } | complete
+    } else {
+      do { forge build --root $root } | complete
+    }
+    # token-locker (2023) still fails upstream with stack-too-deep.
+    if $build.exit_code != 0 and not ($root | str contains 'token-locker') {
+      $failed = (record-failure $failed $root $build)
     }
   }
   if not ($failed | is-empty) {

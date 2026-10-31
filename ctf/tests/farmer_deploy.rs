@@ -1,5 +1,3 @@
-#![cfg(feature = "paradigm-legacy")]
-
 //! Paradigm 2021 farmer: full setup on planted COMP/DAI mocks,
 //! Router02, factory, WETH9 and seeded pairs; verified unsolved.
 
