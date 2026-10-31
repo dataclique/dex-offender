@@ -29,7 +29,7 @@ impl ctf::Exploit for Exploit {
             keccak256("pwn()").into_iter().take(4).collect::<Vec<u8>>();
 
         let tx = TransactionRequest::default()
-            .gas_limit(30_000_000)
+            .gas_limit(10_000_000)
             .with_input(selector)
             .from(offender.address())
             .to(target.delegation_address);
