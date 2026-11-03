@@ -1,6 +1,10 @@
 //! Solution scaffold for DVD — Unstoppable.
 //!
-//! Make the vault stop offering flash loans.
+//! Goal: Make the vault stop offering flash loans.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/unstoppable/UnstoppableVault.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/DamnValuableToken.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::unstoppable::*;

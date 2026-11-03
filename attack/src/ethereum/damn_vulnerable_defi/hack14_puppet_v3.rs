@@ -1,6 +1,11 @@
 //! Solution scaffold for DVD — PuppetV3.
 //!
-//! Drain the pool by manipulating the UniswapV3 price.
+//! Goal: Empty the lending pool's token balance.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/puppet-v3/PuppetV3Pool.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/puppet-v3/INonfungiblePositionManager.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/DamnValuableToken.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::puppet_v3::*;

@@ -99,9 +99,9 @@
                 toolchainPackage = channel.toolchain;
               };
 
-              # NOTE: ABI bindings are generated via alloy sol! macros loading
-              # ctf/abi/*.json artifacts (see scripts/build-abis.nu). forge
-              # bind is no longer used.
+              # Alloy sol! reads the upstream projects' out/ artifacts directly.
+              # Build them with nu scripts/build-contracts.nu; root forge build
+              # compiles attack helpers. No copied ABI directory or forge bind.
 
               scripts.watch-levels.exec = ''
                 set -e

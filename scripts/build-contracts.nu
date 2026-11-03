@@ -27,11 +27,6 @@ const P2021_SOLC = {
   broker: '0.8.0'
 }
 
-def record-failure [failed: list<string>, root: string, build: record] {
-  print ($build.stderr | lines | last 1)
-  $failed | append $root
-}
-
 def main [] {
   let p2023 = (glob 'lib/paradigm-ctf-2023/*/challenge/project')
   let p2022 = (glob 'lib/paradigm-ctf-2022/*/public' | where {|p|
@@ -50,15 +45,21 @@ def main [] {
     print $"forge build --root ($root)"
     let solc = ($P2021_SOLC | get -o ($root | path dirname | path basename))
     let build = if ($root | str contains '/paradigm-ctf-2021/') {
-      do { forge build --root $root --contracts contracts --remappings 'private=../private/' --remappings 'public=contracts/' --use $"solc:($solc)" } | complete
+      do { ^forge build --root $root --contracts contracts --remappings 'private=../private/' --remappings 'public=contracts/' --use $"solc:($solc)" } | complete
     } else if (($root | path join 'contracts') | path exists) {
-      do { forge build --root $root --contracts contracts } | complete
+      do { ^forge build --root $root --contracts contracts } | complete
     } else {
-      do { forge build --root $root } | complete
+      do { ^forge build --root $root } | complete
     }
-    # token-locker (2023) still fails upstream with stack-too-deep.
-    if $build.exit_code != 0 and not ($root | str contains 'token-locker') {
-      $failed = (record-failure $failed $root $build)
+    print --no-newline $build.stdout
+    print --stderr --no-newline $build.stderr
+    if $build.exit_code != 0 {
+      if ($root | path expand) == ('lib/paradigm-ctf-2023/token-locker/challenge/project' | path expand) {
+        # No Rust binding uses this optional project; do not hide its failure.
+        print --stderr $"WARNING: optional Token Locker build failed: ($root)"
+      } else {
+        $failed = ($failed | append $root)
+      }
     }
   }
   if not ($failed | is-empty) {

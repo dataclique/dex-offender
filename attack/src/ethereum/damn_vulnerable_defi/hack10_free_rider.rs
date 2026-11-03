@@ -1,6 +1,12 @@
 //! Solution scaffold for DVD — FreeRider.
 //!
-//! Buy all NFTs for the price of one using a flash loan.
+//! Goal: Recover all six NFTs through the recovery manager and claim
+//! the bounty.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/free-rider/FreeRiderNFTMarketplace.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/free-rider/FreeRiderRecoveryManager.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/DamnValuableNFT.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::free_rider::*;

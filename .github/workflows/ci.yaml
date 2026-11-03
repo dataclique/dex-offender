@@ -52,8 +52,13 @@ jobs:
       - name: Check Solidity formatting
         run: forge fmt --check
 
-      - name: Build contracts
+      - name: Build attack helper contracts
         run: forge build
+
+      - uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
+
+      - name: Build upstream challenge contracts in place
+        run: nix develop --impure --command nu scripts/build-contracts.nu
 
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
