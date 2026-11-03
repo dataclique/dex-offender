@@ -1,7 +1,8 @@
 //! Role accounts for the local anvil chain (alloy-based).
 //!
-//! One shared [`DynProvider`] whose wallet filler has all three role signers
-//! registered; transactions select the signer via the `from` field.
+//! Each actor has a [`DynProvider`] whose wallet defaults to that actor.
+//! All three local signers remain registered for explicit `from` overrides;
+//! [`Roles::provider`] keeps the deployer default for challenge setup.
 
 use alloy::{
     network::{EthereumWallet, TransactionBuilder},
@@ -16,7 +17,7 @@ pub const ANVIL_HTTP: &str = "http://127.0.0.1:8545";
 
 pub type ProviderT = DynProvider;
 
-/// One role's handle: the shared filled provider plus the role's address.
+/// One role's handle: its role-default provider and address.
 #[derive(Clone)]
 pub struct Actor {
     provider: Arc<ProviderT>,
@@ -80,34 +81,30 @@ impl Roles {
         wallet.register_signer(some_user.clone());
         wallet.register_signer(offender.clone());
 
-        // Setup attempts can revert before broadcast. Fetch the pending nonce
-        // for each sequential send instead of reserving a nonce for a failed
-        // attempt and leaving later transactions queued behind a gap.
-        let provider: ProviderT = ProviderBuilder::new()
-            .disable_recommended_fillers()
-            .with_gas_estimation()
-            .with_blob_gas_estimation()
-            .with_simple_nonce_management()
-            .fetch_chain_id()
-            .wallet(wallet)
-            .connect_http(url.parse()?)
-            .erased();
-
-        let provider = Arc::new(provider);
+        let actor = |signer: &PrivateKeySigner| -> eyre::Result<Actor> {
+            let mut role_wallet = wallet.clone();
+            role_wallet.set_default_signer(signer.address())?;
+            // Failed pre-broadcast attempts must not reserve a cached nonce
+            // and leave subsequent sequential transactions behind a gap.
+            let provider = ProviderBuilder::new()
+                .disable_recommended_fillers()
+                .with_gas_estimation()
+                .with_blob_gas_estimation()
+                .with_simple_nonce_management()
+                .fetch_chain_id()
+                .wallet(role_wallet)
+                .connect_http(url.parse()?)
+                .erased();
+            Ok(Actor::new(Arc::new(provider), signer.address()))
+        };
+        let deployer = actor(&deployer)?;
+        let some_user = actor(&some_user)?;
+        let offender = actor(&offender)?;
         Ok(Roles {
-            deployer: Actor {
-                provider: provider.clone(),
-                address: deployer.address(),
-            },
-            some_user: Actor {
-                provider: provider.clone(),
-                address: some_user.address(),
-            },
-            offender: Actor {
-                provider: provider.clone(),
-                address: offender.address(),
-            },
-            provider,
+            provider: deployer.provider.clone(),
+            deployer,
+            some_user,
+            offender,
         })
     }
 
