@@ -62,7 +62,7 @@ async fn fresh_recovery_holds_funded_lost_token_and_reports_unsolved()
         let lost = lvl17_recovery::lost_token_address_for_test(target.address);
         let balance = roles.provider().get_balance(lost).await?;
         eyre::ensure!(
-            balance == alloy::primitives::U256::from(1_000_000_000_000u64),
+            balance == alloy::primitives::utils::parse_ether("0.001")?,
             "setup must fund the lost token with 0.001 ETH, got {balance}"
         );
         eyre::ensure!(

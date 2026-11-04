@@ -21,7 +21,7 @@ sol!(
 
 /// Ether the factory's createInstance seeds the lost token with (its
 /// minimum msg.value).
-const LOST_TOKEN_FUNDING: u64 = 1_000_000_000_000; // 0.001 ether
+const LOST_TOKEN_FUNDING: u64 = 1_000_000_000_000_000; // 0.001 ether
 
 /// The lost `SimpleToken` address: the Recovery instance's second
 /// contract creation (nonce 1) — the same packed CREATE derivation the

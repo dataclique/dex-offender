@@ -47,10 +47,9 @@ impl Level for Target {
         let provider = roles.provider();
 
         println!("Deploying the Delegation challenge...");
-        // Mirror DelegationFactory: a Delegate owned by its deployer, then
-        // the Delegation proxy pointing at it.
-        let delegate =
-            Delegate::deploy(provider, roles.deployer.address()).await?;
+        // Mirror DelegationFactory: the Delegate implementation is owned by
+        // address(0), and the Delegation proxy points at it.
+        let delegate = Delegate::deploy(provider, Address::ZERO).await?;
         let delegation =
             Delegation::deploy(provider, *delegate.address()).await?;
 
