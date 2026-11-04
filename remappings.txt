@@ -1,7 +1,11 @@
 @openzeppelin-solc06/contracts/=lib/openzeppelin-contracts-06/contracts/
-@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
 @ethernaut/=lib/ethernaut/contracts/src/levels/
 @dvd/=lib/damn-vulnerable-defi/src/
 @paradigm-2021/=lib/paradigm-ctf-2021/
 @paradigm-2022/=lib/paradigm-ctf-2022/
 @paradigm-2023/=lib/paradigm-ctf-2023/
+openzeppelin-contracts-06/=lib/ethernaut/contracts/lib/openzeppelin-contracts-06/contracts/
+openzeppelin-contracts-08/=lib/ethernaut/contracts/lib/openzeppelin-contracts-08/contracts/
+openzeppelin-contracts-v4.6.0/=lib/ethernaut/contracts/lib/openzeppelin-contracts-v4.6.0/contracts/
+openzeppelin-contracts-v5.4.0/=lib/ethernaut/contracts/lib/openzeppelin-contracts-v5.4.0/contracts/
+@openzeppelin/contracts/=lib/ethernaut/contracts/lib/openzeppelin-contracts-v5.4.0/contracts/

@@ -22,21 +22,11 @@ contract MockEthUsdFeed {
         return 1;
     }
 
-    function getRoundData(
-        uint80
-    )
-        external
-        view
-        returns (uint80, int256, uint256, uint256, uint80)
-    {
+    function getRoundData(uint80) external view returns (uint80, int256, uint256, uint256, uint80) {
         return (latestRound, answer, startedAt, updatedAt, latestRound);
     }
 
-    function latestRoundData()
-        external
-        view
-        returns (uint80, int256, uint256, uint256, uint80)
-    {
+    function latestRoundData() external view returns (uint80, int256, uint256, uint256, uint80) {
         return (latestRound, answer, startedAt, updatedAt, latestRound);
     }
 }
