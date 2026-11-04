@@ -10,6 +10,7 @@ ctf/cache
 attack/out
 attack/cache
 ctf/fixtures/sui_smoke/build
+**/cache/**
 
 .direnv
 .devenv
