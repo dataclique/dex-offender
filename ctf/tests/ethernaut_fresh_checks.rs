@@ -82,9 +82,11 @@ fresh_check!(dex_fresh, ethernaut::lvl22_dex::Target);
 fresh_check!(dex_two_fresh, ethernaut::lvl23_dex_two::Target);
 fresh_check!(good_samaritan_fresh, ethernaut::lvl27_good_samaritan::Target);
 fresh_check!(cashback_fresh, ethernaut::lvl36_cashback::Target);
+fresh_check!(preservation_fresh, ethernaut::lvl16_preservation::Target);
 
 // Delegation deployed the same contract twice; its fresh regression pins
-// that the level's two contracts are actually distinct.
+// that the level's two contracts are actually distinct. Preservation must
+// deploy two real LibraryContract instances behind its timezone slots.
 #[tokio::test]
 async fn delegation_deploys_distinct_contracts() -> eyre::Result<()> {
     let mut anvil = OwnedAnvil::spawn()?;
@@ -109,6 +111,47 @@ async fn delegation_deploys_distinct_contracts() -> eyre::Result<()> {
         eyre::ensure!(
             !level.check(&roles).await?,
             "fresh delegation reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}
+
+#[tokio::test]
+async fn preservation_deploys_real_libraries() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let url = format!("http://127.0.0.1:{}", anvil.port);
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&url)?;
+        let target =
+            ethernaut::lvl16_preservation::Target::set_up(&roles).await?;
+        use alloy::providers::Provider;
+        let contract = ethernaut::lvl16_preservation::Preservation::new(
+            target.address,
+            roles.provider(),
+        );
+        let (library1, library2) = (
+            contract.timeZone1Library().call().await?,
+            contract.timeZone2Library().call().await?,
+        );
+        let (code1, code2) = (
+            roles.provider().get_code_at(library1).await?,
+            roles.provider().get_code_at(library2).await?,
+        );
+        eyre::ensure!(
+            !code1.is_empty() && !code2.is_empty(),
+            "Preservation timezone libraries have no code"
+        );
+        eyre::ensure!(
+            library1 != library2,
+            "Preservation timezone libraries must be distinct instances"
+        );
+        eyre::ensure!(
+            !target.check(&roles).await?,
+            "fresh Preservation reports solved"
         );
         Ok(())
     }

@@ -14,6 +14,11 @@ sol!(
     Preservation,
     "../lib/ethernaut/contracts/out/Preservation.sol/Preservation.json"
 );
+sol!(
+    #[sol(rpc)]
+    LibraryContract,
+    "../lib/ethernaut/contracts/out/Preservation.sol/LibraryContract.json"
+);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
@@ -36,11 +41,14 @@ impl Level for Target {
         let provider = roles.provider();
 
         println!("Deploying the Preservation contract...");
-        // TODO: deploy LibraryContract instances and pass to Preservation
+        // Mirror PreservationFactory: two real LibraryContract instances
+        // back the timezone slots.
+        let time_zone1_library = LibraryContract::deploy(provider).await?;
+        let time_zone2_library = LibraryContract::deploy(provider).await?;
         let contract = Preservation::deploy(
             provider,
-            alloy::primitives::Address::ZERO,
-            alloy::primitives::Address::ZERO,
+            *time_zone1_library.address(),
+            *time_zone2_library.address(),
         )
         .await?;
 
