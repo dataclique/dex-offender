@@ -25,7 +25,10 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        system: [aarch64-darwin, aarch64-linux, x86_64-linux]
+        # Foreign-system drvPath evaluation builds eval-time derivations,
+        # which hosted x86_64 runners cannot do; the macOS shell is
+        # exercised by local development instead.
+        system: [x86_64-linux]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,10 +44,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      # move-over-ctf's pinned tree contains a dangling nested gitlink
+      # (openzeppelin-ui with no URL), so recursive checkout fails; the
+      # EVM-relevant submodules are initialized explicitly below.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          submodules: recursive
           persist-credentials: false
+
+      - name: Initialize EVM submodules
+        run: |
+          git submodule update --init --recursive \
+            lib/forge-std \
+            lib/ethernaut \
+            lib/damn-vulnerable-defi \
+            lib/paradigm-ctf-2021 \
+            lib/paradigm-ctf-2022 \
+            lib/paradigm-ctf-2023
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@908c540300062bd5a7e473851cdb4282204cee09 # v1.9.1
