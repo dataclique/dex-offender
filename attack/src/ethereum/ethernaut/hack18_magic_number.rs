@@ -4,6 +4,25 @@
 //! representation of 42 from `whatIsTheMeaningOfLife()`. Its deployed runtime
 //! must be at most ten bytes.
 //!
+//
+// Upstream hint:
+//
+// To solve this level, you only need to provide the Ethernaut with a
+// `Solver`, a contract that responds to `whatIsTheMeaningOfLife()` with the
+// right 32 byte number.
+//
+// Easy right?
+// Well... there's a catch.
+//
+// The solver's code needs to be really tiny. Really reaaaaaallly tiny. Like
+// freakin' really really itty-bitty tiny: 10 bytes at most.
+//
+// Hint: Perhaps its time to leave the comfort of the Solidity compiler
+// momentarily, and build this one by hand O_o.
+// That's right: Raw EVM bytecode.
+//
+// Good luck!
+//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/MagicNum.sol
 
 use async_trait::async_trait;

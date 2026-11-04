@@ -3,6 +3,14 @@
 //! Goal: Become the owner of `Fallout`, the contract that records users' Ether
 //! allocations. The owner must be your offender account.
 //!
+//
+// Upstream hint:
+//
+// Claim ownership of the contract below to complete this level.
+//
+// Things that might help
+// * Solidity Remix IDE
+//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Fallout.sol
 
 use async_trait::async_trait;

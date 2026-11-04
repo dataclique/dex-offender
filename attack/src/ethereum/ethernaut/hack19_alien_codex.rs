@@ -3,6 +3,17 @@
 //! Goal: Make your offender account the owner of `AlienCodex`, a contract with
 //! a mutable codex array.
 //!
+//
+// Upstream hint:
+//
+// You've uncovered an Alien contract. Claim ownership to complete the level.
+//
+// Things that might help
+// * Understanding how array storage works
+// * Understanding [ABI
+// specifications](https://solidity.readthedocs.io/en/v0.4.21/abi-spec.html)
+// * Using a very `underhanded` approach
+//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/AlienCodex.sol
 
 use async_trait::async_trait;

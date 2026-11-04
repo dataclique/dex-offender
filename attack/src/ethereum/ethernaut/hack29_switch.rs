@@ -2,6 +2,14 @@
 //!
 //! Goal: Turn on `Switch`, leaving its `switchOn` flag true.
 //!
+//
+// Upstream hint:
+//
+// Just have to flip the switch. Can't be that hard, right?
+//
+// ##### Things that might help:
+// Understanding how `CALLDATA` is encoded.
+//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Switch.sol
 
 use async_trait::async_trait;

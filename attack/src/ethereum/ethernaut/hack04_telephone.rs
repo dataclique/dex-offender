@@ -2,6 +2,15 @@
 //!
 //! Goal: Make your offender account the owner of the `Telephone` contract.
 //!
+//
+// Upstream hint:
+//
+// Claim ownership of the contract below to complete this level.
+//
+// Things that might help
+// * See the ["?"](https://ethernaut.openzeppelin.com/help) page above,
+// section "Beyond the console"
+//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Telephone.sol
 
 use async_trait::async_trait;
