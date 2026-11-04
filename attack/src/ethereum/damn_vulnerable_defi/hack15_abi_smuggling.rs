@@ -1,6 +1,11 @@
 //! Solution scaffold for DVD — ABI Smuggling.
 //!
-//! Exploit the selector clash to sweep the vault.
+//! Goal: Empty the vault's token balance.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/abi-smuggling/SelfAuthorizedVault.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/abi-smuggling/AuthorizedExecutor.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/DamnValuableToken.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::abi_smuggling::*;

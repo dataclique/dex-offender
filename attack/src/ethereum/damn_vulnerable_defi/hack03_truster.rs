@@ -1,6 +1,10 @@
 //! Solution scaffold for DVD — Truster.
 //!
-//! Use the flash loan callback to steal all tokens.
+//! Goal: Empty the pool and recover at least 1,000,000 DVT to the player.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/truster/TrusterLenderPool.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/DamnValuableToken.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::truster::*;

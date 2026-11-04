@@ -1,6 +1,12 @@
 //! Solution scaffold for DVD — Naive Receiver.
 //!
-//! Drain all WETH from the pool and receiver.
+//! Goal: Empty the pool's and receiver's WETH balances.
+//!
+//! Contracts:
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/naive-receiver/NaiveReceiverPool.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/naive-receiver/FlashLoanReceiver.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/naive-receiver/BasicForwarder.sol
+//! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/naive-receiver/Multicall.sol
 
 use ctf::Actor;
 use ctf::ethereum::damn_vulnerable_defi::naive_receiver::*;
