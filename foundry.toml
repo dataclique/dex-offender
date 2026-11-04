@@ -12,9 +12,10 @@ remappings = [
 
 optimizer = true
 optimizer_runs = 9999
-ignored_error_codes = [2072, 5159, 9302, 6321]
+ignored_error_codes = [2072, 1878, 2018, 2394, 5159, 6321, 9302]
 
-# Attack contracts are exploit scratchpads; forge's style lints are noise
-# there. Keep the solidity compiler quiet about unnamed returns too.
+# Attack contracts are exploit scratchpads; forge's lints are noise there
+# (locked ether and unchecked transfers are frequently the point).
 [lint]
+ignore = ["attack/contracts/**"]
 exclude_lints = ["boolean-cst", "uninitialized-state", "unused-return"]
