@@ -54,171 +54,246 @@
         "address": "0x4ed7c70f96b99c776995fb64377f0d4ab3b0e1c1"
       },
       "level18": {
-        "address": "0xa85233c63b9ee964add6f2cffe00fd84eb32338f"
-      },
-      "level19": {
         "address": "0x4a679253410272dd5232b3ff7cf5dbb88f295319"
       },
-      "level20": {
+      "level19": {
         "address": "0x7a2088a1bfc9d81c55368ae168c2c02570cb814f"
       },
-      "level21": {
-        "address": "0xc5a5c42992decbae36851359345fe25997f5c42d"
+      "level20": {
+        "address": "0x09635f643e140090a9a8dcd712ed6285858cebef"
       },
-      "level22": {
+      "level21": {
         "address": "0x67d269191c92caf3cd7723f116c85e6e9bf55933"
       },
+      "level22": {
+        "address": "0xe6e340d132b5f46d1e472debcd681b2abc16e57e"
+      },
       "level23": {
-        "address": "0x998abeb3e57409262ae5b751f60747921b33613e"
+        "address": "0x70e0ba845a1a0f2da3359c97e0285013525ffc49"
       },
       "level24": {
-        "address": "0x1291be112d480055dafd8a610b7d1e203891c274"
+        "address": "0x5f3f1dbd7b74c6b46e8c44f98792a1daf8d69154"
       },
       "level25": {
-        "address": "0x82e01223d51eb87e16a03e24687edf0f294da6f1"
+        "address": "0x2bdcc0de6be1f7d2ee689a0342d76f52e8efaba3"
       },
       "level26": {
-        "address": "0xc351628eb244ec633d5f21fbd6621e1a683b1181"
+        "address": "0xfd471836031dc5108809d173a067e8486b9047a3"
       },
       "level27": {
-        "address": "0xb0d4afd8879ed9f52b28595d31b441d079b2ca07"
-      },
-      "level28": {
         "address": "0x162a433068f51e18b7d13932f27e66a3f99e6890"
       },
-      "level29": {
+      "level28": {
         "address": "0x922d6956c99e12dfeb3224dea977d0939758a1fe"
       },
-      "level30": {
+      "level29": {
         "address": "0x5081a39b8a5f0e35a8d959395a630b68b74dd30f"
       },
-      "level31": {
-        "address": "0xdbc43ba45381e02825b14322cddd15ec4b3164e6"
+      "level30": {
+        "address": "0x1fa02b2d6a771842690194cf62d91bdd92bfe28d"
       },
-      "level32": {
+      "level31": {
         "address": "0x04c89607413713ec9775e14b954286519d836fef"
       },
+      "level32": {
+        "address": "0x4c4a2f8c81640e47606d3fd77b353e87ba015584"
+      },
       "level33": {
-        "address": "0x21df544947ba3e8b3c32561399e88b52dc8b2823"
+        "address": "0x2e2ed0cfd3ad2f1d34481277b3204d807ca2f8c2"
       },
       "level34": {
-        "address": "0x51a1ceb83b83f1985a81c295d1ff28afef186e02"
+        "address": "0x36b58f5c1969b7b6591d752ea6f5486d069010ab"
       },
       "level35": {
-        "address": "0x202cce504e04bed6fc0521238ddf04bc9e8e15ab"
+        "address": "0xf4b146fba71f41e0592668ffbf264f1d186b2ca8"
       },
       "level36": {
-        "address": "0x2b0d36facd61b71cc05ab8f3d2355ec3631c0dd5",
-        "free": "0x4ee6ecad1c2dae9f525404de8555724e3c35d07b"
+        "address": "0xfbc22278a96299d91d41c453234d97b4f5eb9b2d",
+        "free": "0xbec49fa140acaa83533fb00a2bb19bddd0290f25"
       },
       "level37": {
-        "address": "0x46b142dd1e924fab83ecc3c08e4d46e82f005e0e"
+        "address": "0xc9a43158891282a2b1475592d5719c001986aaec"
       },
       "level38": {
-        "address": "0x4c2f7092c2ae51d986befee378e50bd4db99c901"
-      },
-      "level39": {
         "address": "0x7a9ec1d04904907de0ed7b6839ccdd59c3716ac9"
       },
-      "level40": {
+      "level39": {
         "address": "0x49fd2be640db2910c2fab69bb8531ab6e76127ff"
+      },
+      "level40": {
+        "address": "0x4631bcabd6df18d94796344963cb60d44a4136b6"
       }
     },
     "paradigm_2023": {
       "hello_world": {
-        "address": "0x4631bcabd6df18d94796344963cb60d44a4136b6"
+        "address": "0x86a2ee8faf9a840f7a2c64ca3d51209f9a02081d"
       },
       "cosmic_radiation": {
-        "address": "0x86a2ee8faf9a840f7a2c64ca3d51209f9a02081d"
+        "address": "0xa4899d35897033b927acfcf422bc745916139776"
       },
       "grains_of_sand": null,
       "black_sheep": null,
       "dai_plus_plus": {
-        "address": "0x38a024c0b412b9d1db8bc398140d00f5af3093d4"
+        "address": "0x5fc748f1feb28d7b76fa1c6b07d8ba2d5535177c"
       },
       "dodont": null,
       "dragon_tyrant": {
-        "address": "0xe8d2a1e88c91dcd5433208d4152cc4f399a7e91d"
-      },
-      "dropper": {
         "address": "0x5067457698fd6fa1c6964e416b3f42713513b3dd"
       },
+      "dropper": {
+        "address": "0x18e317a7d70d8fbf8e6e893616b52390ebbdb629"
+      },
       "enterprise_blockchain": {
-        "address": "0xd5ac451b0c50b9476107823af206ed814a2e2580"
+        "address": "0xf8e31cb472bc70500f08cd84917e5a1912ec8397"
       },
       "free_real_estate": {
-        "address": "0xd0141e899a65c95a556fe2b27e5982a6de7fdd7a"
+        "address": "0x07882ae1ecb7429a84f1d53048d35c4bb2056877"
       },
       "hopping_into_place": null,
       "one_hundred_percent": {
-        "address": "0xfaaddc93baf78e89dcf37ba67943e1be8f37bb8c"
+        "address": "0x276c216d241856199a83bf27b2286659e5b877d3"
       },
       "skill_based_game": null,
       "suspicious_charity": {
-        "address": "0x3347b4d90ebe72befb30444c9966b2b990ae9fcb"
+        "address": "0x3155755b79aa083bd953911c92705b7aa82a18f9"
+      }
+    },
+    "paradigm_2021": {
+      "hello": {
+        "address": "0xb82008565fdc7e44609fa118a4a681e92581e680"
+      },
+      "upgrade": null,
+      "babyrev": {
+        "address": "0x927b167526babb9be047421db732c663a0b77b11"
+      },
+      "babysandbox": {
+        "address": "0x32eece76c2c2e8758584a83ee2f522d4788fea0f"
+      },
+      "bank": {
+        "address": "0x2a810409872afc346f9b5b26571fd6ec42ea4849"
+      },
+      "bouncer": {
+        "address": "0xb9beecd1a582768711de1ee7b0a1d582d9d72a6c"
+      },
+      "broker": {
+        "address": "0xf32d39ff9f6aa7a7a64d7a4f00a54826ef791a55"
+      },
+      "farmer": {
+        "address": "0xd42912755319665397ff090fbb63b1a31ae87cee"
+      },
+      "jop": {
+        "address": "0x01c1def3b91672704716159c9041aeca392ddffb"
+      },
+      "lockbox": {
+        "address": "0xfcdb4564c18a9134002b9771816092c9693622e3"
+      },
+      "market": {
+        "address": "0x638a246f0ec8883ef68280293ffe8cfbabe61b44"
+      },
+      "rever": {
+        "address": "0x02b0b4efd909240fcb2eb5fae060dc60d112e3a4"
+      },
+      "secure": {
+        "address": "0x6c2d83262ff84cbadb3e416d527403135d757892"
+      },
+      "swap": {
+        "address": "0xc582bc0317dbb0908203541971a358c44b1f3766"
+      },
+      "vault": {
+        "address": "0xb2b580ce436e6f77a5713d80887e14788ef49c9a"
+      },
+      "yield_aggregator": {
+        "address": "0xb377a2eed7566ac9fcb0ba673604f9bf875e2bab"
+      }
+    },
+    "paradigm_2022": {
+      "electric_sheep": null,
+      "fun_reversing_challenge": {
+        "address": "0x66f625b8c4c635af8b74ece2d7ed0d58b4af3c3d"
+      },
+      "hint_finance": null,
+      "just_in_time": {
+        "address": "0x8bce54ff8ab45cb075b044ae117b8fd91f9351ab"
+      },
+      "lockbox2": {
+        "address": "0x74cf9087ad26d541930bac724b7ab21ba8f00a27"
+      },
+      "merkledrop": {
+        "address": "0xefab0beb0a557e452b398035ea964948c750b2fd"
+      },
+      "random": {
+        "address": "0xaca81583840b1bf2ddf6cde824ada250c1936b4d"
+      },
+      "rescue": null,
+      "sourcecode": {
+        "address": "0x70bda08dbe07363968e9ee53d899dfe48560605b"
+      },
+      "stealing_sats": null,
+      "vanity": {
+        "address": "0x26b862f640357268bd2d9e95bc81553a2aa81d7e"
       }
     },
     "damn_vulnerable_defi": {
       "unstoppable": {
-        "address": "0xb82008565fdc7e44609fa118a4a681e92581e680"
+        "address": "0x5d42ebdbba61412295d7b0302d6f50ac449ddb4f"
       },
       "naive_receiver": {
-        "address": "0xd6e1afe5ca8d00a2efc01b89997abe2de47fdfaf",
-        "receiver": "0x99dbe4aea58e518c50a1c04ae9b48c9f6354612f"
+        "address": "0x2b5a4e5493d4a54e717057b127cf0c000c876f9b",
+        "receiver": "0x413b1afca96a3df5a686d8bfbf93d30688a7f7d9"
       },
       "truster": {
-        "address": "0x5feaebfb4439f3516c74939a9d04e95afe82c4ae"
+        "address": "0x5133bbdfcca3eb4f739d599ee4ec45cbcd0e16c5"
       },
       "side_entrance": {
-        "address": "0x19ceccd6942ad38562ee10bafd44776ceb67e923"
+        "address": "0x8f4ec854dd12f1fe79500a1f53d0cbb30f9b6134"
       },
       "the_rewarder": {
-        "address": "0x32eece76c2c2e8758584a83ee2f522d4788fea0f"
+        "address": "0xac47e91215fb80462139756f43438402998e4a3a"
       },
       "selfie": {
-        "address": "0x6c2d83262ff84cbadb3e416d527403135d757892"
+        "address": "0xac9fcba56e42d5960f813b9d0387f3d3bc003338"
       },
       "compromised": {
-        "address": "0x5302e909d1e93e30f05b5d6eea766363d14f9892"
+        "address": "0xf090f16dec8b6d24082edd25b1c8d26f2bc86128"
       },
       "puppet": {
-        "address": "0x870526b7973b56163a6997bb7c886f5e4ea53638"
+        "address": "0xccf1769d8713099172642eb55ddffc0c5a444fe9"
       },
       "puppet_v2": {
-        "address": "0xefab0beb0a557e452b398035ea964948c750b2fd",
-        "token": "0xc582bc0317dbb0908203541971a358c44b1f3766"
+        "address": "0x7b4f352cd40114f12e82fc675b5ba8c7582fc513",
+        "token": "0x56fc17a65ccfec6b7ad0ade9bd9416cb365b9be8"
       },
       "free_rider": {
-        "address": "0xab7b4c595d3ce8c85e16da86630f2fc223b05057",
-        "token": "0x26b862f640357268bd2d9e95bc81553a2aa81d7e",
-        "recovery": "0x2b5a4e5493d4a54e717057b127cf0c000c876f9b"
+        "address": "0xc9952fc93fa9be383ccb39008c786b9f94eac95d",
+        "token": "0x87006e75a5b6be9d1bbf61ac8cd84f05d9140589",
+        "recovery": "0x70ee76691bdd9696552af8d4fd634b3cf79dd529"
       },
       "backdoor": {
-        "address": "0x1780bcf4103d3f501463ad3414c7f4b654bb7afd",
-        "token": "0x821f3361d454cc98b7555221a06be563a7e2e0a6"
+        "address": "0x67ad6ea566ba6b0fc52e97bc25ce46120fdac04c",
+        "token": "0x162700d1613dfec978032a909de02643bc55df1a"
       },
       "climber": {
-        "address": "0x8f4ec854dd12f1fe79500a1f53d0cbb30f9b6134",
-        "token": "0xc66ab83418c20a65c3f8e83b3d11c8c3a6097b6f",
-        "timelock": "0x140c9cd4905639ace2fa761bfb8140db23dcd001"
+        "address": "0x976c214741b4657bd99dfd38a5c0e3ac5c99d903",
+        "token": "0x8bee2037448f096900fd9affc427d38ae6cc0350",
+        "timelock": "0x8fee1caaccb93f019b48d4405d7429ca3a1d7145"
       },
       "wallet_mining": {
-        "address": "0x3e78da6c0af0cef1c37704ec976577534aba26c1",
-        "token": "0xd710a67624ad831683c86a48291c597ade30f787"
+        "address": "0x800f816b6208d9087ad7cc314ae2ab757e8fbafc",
+        "token": "0x2bb8b93f585b43b06f3d523bf30c203d3b6d4bd4"
       },
       "puppet_v3": null,
       "curvy_puppet": null,
       "abi_smuggling": {
-        "address": "0xac47e91215fb80462139756f43438402998e4a3a",
-        "token": "0x12bcb546bc60ff39f1adfc7ce4605d5bd6a6a876"
+        "address": "0xcc4c41415fc68b2fbf70102742a83cde435e0ca7",
+        "token": "0x8d81a3dcd17030cd5f23ac7370e4efb10d2b3ca4"
       },
       "shards": {
-        "address": "0x8ac5ee52f70ae01db914be459d8b3d50126fd6ae"
+        "address": "0xf66cfdf074d2ffd6a4037be3a669ed04380aef2b"
       },
       "withdrawal": {
-        "address": "0x5ffe31e4676d3466268e28a75e51d1efa4298620",
-        "token": "0x4eab29997d332a666c3c366217ab177cf9a7c436",
-        "bridge": "0xc32609c91d6b6b51d48f2611308fef121b02041f"
+        "address": "0xf5c3953ae4639806fcbcc3196f71dd81b0da4348",
+        "token": "0x20d7b364e8ed1f4260b5b90c41c2dec3c1f6d367",
+        "bridge": "0xc6b407503de64956ad3cf5ab112ca4f56aa13517"
       }
     }
   }
