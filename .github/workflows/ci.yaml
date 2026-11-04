@@ -36,9 +36,6 @@ jobs:
       - uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
       - name: Evaluate development shell
         run: nix eval --impure --raw .#devShells.${{ matrix.system }}.default.drvPath
-      - name: Start native development shell
-        if: matrix.system == 'x86_64-linux'
-        run: nix develop --impure --command cargo --version
 
   ci:
     runs-on: ubuntu-latest
@@ -52,6 +49,8 @@ jobs:
           persist-credentials: false
 
       - name: Initialize EVM submodules
+        # hana's canonical LFS objects are gone (404 server-side); the EVM
+        # build never needs them, so LFS smudging is skipped for pointers.
         run: |
           git submodule update --init --recursive \
             lib/forge-std \
@@ -60,6 +59,8 @@ jobs:
             lib/paradigm-ctf-2021 \
             lib/paradigm-ctf-2022 \
             lib/paradigm-ctf-2023
+        env:
+          GIT_LFS_SKIP_SMUDGE: '1'
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@908c540300062bd5a7e473851cdb4282204cee09 # v1.9.1
@@ -73,7 +74,9 @@ jobs:
       - uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
 
       - name: Build upstream challenge contracts in place
-        run: nix develop --impure --command nu scripts/build-contracts.nu
+        # forge comes from foundry-toolchain; the Linux dev shell cannot
+        # build the foundry.nix package, so only nushell comes from nixpkgs.
+        run: nix --accept-flake-config run nixpkgs#nushell -- scripts/build-contracts.nu
 
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
