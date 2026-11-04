@@ -11,6 +11,8 @@ From the repository root:
 ```sh
 git submodule update --init --recursive
 direnv allow
+forge build
+nu scripts/build-contracts.nu
 cargo run -p ctf --bin deploy_levels
 ```
 
@@ -25,9 +27,10 @@ separate terminal:
 anvil --state state.json --code-size-limit 50000
 ```
 
-Keep it running. Tests connect to `http://127.0.0.1:8545`; they do not start
-Anvil or redeploy levels. `--state` loads the saved deployment and writes the
-updated state when Anvil exits, preserving completed levels between sessions.
+Keep it running. The Ethernaut progression test connects to
+`http://127.0.0.1:8545`; it does not start Anvil or redeploy levels. `--state`
+loads the saved deployment and writes the updated state when Anvil exits,
+preserving completed levels between sessions.
 
 ## Practice
 
@@ -42,11 +45,12 @@ worktrees count). Every save reruns the level runner against your chain:
 
 - levels you already solved print `✓ already solved` and skip their attacks;
 - a level you just solved gets the full `CONGRATULATIONS` banner, in green;
-- unsolved stubs stay in the end-of-run `Next up:` list — the runner never stops
-  at them.
+- the run stops at the first unsolved or failed level and prints `Next up:`; an
+  uncheckable level prints `Blocked at:` instead. Later levels are not touched.
 
-The runner plays every registered level (Ethernaut, Damn Vulnerable DeFi,
-Paradigm 2023) and ends with a `Progress: X/N solved` summary. For a single run
+Progression is Ethernaut 1–40, then Paradigm 2023 Hello World, then Damn
+Vulnerable DeFi. The runner prints `Progress: X/N solved` when it stops at a
+level, or an all-solved message after completing every level. For a single run
 without watching:
 
 ```sh
@@ -57,9 +61,9 @@ It connects to your practice Anvil at `http://127.0.0.1:8545`; set
 `ATTACK_RPC_URL` to point it elsewhere. If it cannot reach the chain it tells
 you which command to start.
 
-`cargo test -p attack -- --nocapture` runs the same levels as one sequential
-test that stops at the first unsolved level — a strict progress gate; CI uses
-the runner instead.
+`cargo test -p attack -- --nocapture` runs Ethernaut as one sequential test that
+fails at the first unsolved level — a strict progress gate. CI uses the runner
+instead.
 
 Open the existing `attack/src/ethereum/ethernaut/hackNN_name.rs` for the level
 you want to solve. Its header gives the goal and direct contract-source URL.
@@ -67,9 +71,10 @@ Write your solution in `Exploit::attack`; it is already wired into the runner
 and the test.
 
 `target` contains the deployed instance address and any helper addresses.
-`offender` is your player account. Use its provider and
-`.from(offender.address())` when sending transactions. Do not use real keys or
-funds.
+`offender` is your player account. Its provider defaults to the offender: use
+`offender.provider()` for deployments and calls. Explicit `.from(...)` overrides
+are supported; `roles.provider()` defaults to the deployer for setup. Do not use
+real keys or funds.
 
 ### Attack helper contracts
 
@@ -122,17 +127,17 @@ chain with the matching new `state.json` so its addresses agree with
 - `ctf/src/ethereum/<game>/`: Rust target types, Alloy bindings, setup and
   checks.
 - `lib/<game>/`: pinned upstream contract sources and original challenge text.
-- `ctf/abi/`: checked-in Forge artifacts consumed by Alloy's `sol!` macro. ABI
-  JSON is not a replacement for reading the contract source.
+- `lib/<game>/out/` (or the challenge's own `out/`): generated upstream Forge
+  artifacts consumed directly by Alloy's `sol!` macro. These are not committed.
 - `ctf/src/solana/`: LiteSVM harnesses.
 - `ctf/src/sui/`: experimental Sui integration, excluded from the default build.
 
-The checked-in ABI artifacts are enough to build the default Rust workspace.
-Regenerate them only when changing contract artifacts:
-
-```sh
-nu scripts/build-abis.nu
-```
+Rust compilation requires the generated artifacts. The setup commands build
+attack helpers with root `forge build` and upstream contracts in place with
+`nu scripts/build-contracts.nu`; no artifact-copy step is needed. Rerun them
+after updating submodule pins or contract sources. The build script also
+attempts the unregistered Paradigm 2023 Token Locker project; its known
+stack-too-deep failure is reported as a warning, not a successful build.
 
 ## Build and formatting
 
