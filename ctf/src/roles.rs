@@ -97,9 +97,11 @@ impl Roles {
                 .erased();
             Ok(Actor::new(Arc::new(provider), signer.address()))
         };
+
         let deployer = actor(&deployer)?;
         let some_user = actor(&some_user)?;
         let offender = actor(&offender)?;
+
         Ok(Roles {
             provider: deployer.provider.clone(),
             deployer,
