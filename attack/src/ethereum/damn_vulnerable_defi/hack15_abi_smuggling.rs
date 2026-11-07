@@ -1,6 +1,7 @@
 //! Solution scaffold for DVD — ABI Smuggling.
 //!
-//! Goal: Empty the vault's token balance.
+//! Goal: Empty the vault and send 1,000,000 DVT to the recovery account
+//! (target.recovery).
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/abi-smuggling/SelfAuthorizedVault.sol

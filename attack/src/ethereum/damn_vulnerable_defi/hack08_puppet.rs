@@ -1,6 +1,7 @@
 //! Solution scaffold for DVD — Puppet.
 //!
-//! Goal: Empty the lending pool's token balance.
+//! Goal: Empty the lending pool and send its 100,000 DVT to the recovery
+//! account (target.recovery) in ONE transaction.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/puppet/PuppetPool.sol

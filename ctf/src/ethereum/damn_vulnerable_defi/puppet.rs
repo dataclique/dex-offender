@@ -3,7 +3,7 @@
 //! Drain the PuppetPool by manipulating the UniswapV1 price oracle.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, sol};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -30,6 +30,9 @@ sol!(
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
+    pub token: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -40,8 +43,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.ethereum.damn_vulnerable_defi.puppet.address;
-        Ok(Target { address })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.puppet.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -107,17 +109,23 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: *pool.address() })
+        Ok(Target {
+            address: *pool.address(),
+            token: *token.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
+        let offender = &roles.offender;
         let provider = roles.provider();
-        let pool = PuppetPool::new(self.address, provider.clone());
-        let token = DamnValuableToken::new(
-            pool.token().call().await?,
-            provider.clone(),
-        );
+        let token = DamnValuableToken::new(self.token, provider.clone());
 
-        Ok(token.balanceOf(self.address).call().await? == U256::ZERO)
+        // Upstream: a single player transaction; the pool is empty and the
+        // recovery account holds at least the initial pool balance.
+        Ok(token.balanceOf(self.address).call().await? == U256::ZERO
+            && provider.get_transaction_count(offender.address()).await? == 1
+            && token.balanceOf(self.recovery).call().await?
+                >= to_ether(100_000))
     }
 }

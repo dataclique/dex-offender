@@ -1,6 +1,7 @@
 //! Solution scaffold for DVD — Naive Receiver.
 //!
-//! Goal: Empty the pool's and receiver's WETH balances.
+//! Goal: Empty the pool and the receiver, sending all 1,010 WETH to the
+//! recovery account (target.recovery) in at most two transactions.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/naive-receiver/NaiveReceiverPool.sol

@@ -32,6 +32,8 @@ pub struct Target {
     pub address: Address,
     pub token: Address,
     pub timelock: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -42,12 +44,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let dvd = &ctfs.ethereum.damn_vulnerable_defi.climber;
-        Ok(Target {
-            address: dvd.address,
-            token: dvd.token,
-            timelock: dvd.timelock,
-        })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.climber.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -105,6 +102,7 @@ impl Level for Target {
             address: proxy_addr,
             token: *token.address(),
             timelock: timelock_addr,
+            recovery: super::recovery_account(),
         })
     }
 
@@ -112,6 +110,10 @@ impl Level for Target {
         let provider = roles.provider();
         let token = DamnValuableToken::new(self.token, provider.clone());
 
-        Ok(token.balanceOf(self.address).call().await? == U256::ZERO)
+        // Upstream: the vault is empty and the recovery account holds the
+        // entire vault balance.
+        Ok(token.balanceOf(self.address).call().await? == U256::ZERO
+            && token.balanceOf(self.recovery).call().await?
+                == to_ether(10_000_000))
     }
 }

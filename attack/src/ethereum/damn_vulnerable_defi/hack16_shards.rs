@@ -1,7 +1,7 @@
 //! Solution scaffold for DVD — Shards.
 //!
 //! Goal: Recover marketplace fee tokens to the designated recovery account
-//! (anvil account 4, 0x90F8…b906) in ONE transaction, preserving staking
+//! (target.recovery) in ONE transaction, preserving staking
 //! rewards and ending with no tokens on your offender.
 //!
 //! Contracts:

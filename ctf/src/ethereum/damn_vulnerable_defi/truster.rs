@@ -3,7 +3,7 @@
 //! Use the pool's flash loan callback to steal all tokens.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, sol};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -20,6 +20,9 @@ sol!(
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
+    pub token: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -30,8 +33,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.ethereum.damn_vulnerable_defi.truster.address;
-        Ok(Target { address })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.truster.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -51,22 +53,26 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: *pool.address() })
+        Ok(Target {
+            address: *pool.address(),
+            token: *token.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
+        let offender = &roles.offender;
         let provider = roles.provider();
         let pool = TrusterLenderPool::new(self.address, provider.clone());
+        let token = DamnValuableToken::new(self.token, provider.clone());
+        let pool_token = pool.token().call().await?;
+        eyre::ensure!(pool_token == self.token, "board token mismatch");
 
-        let token_addr = pool.token().call().await?;
-        let token = DamnValuableToken::new(token_addr, provider.clone());
-
-        let pool_balance = token.balanceOf(self.address).call().await?;
-        let offender_balance =
-            token.balanceOf(roles.offender.address()).call().await?;
-
-        // All tokens moved from pool to offender
-        Ok(pool_balance == U256::ZERO
-            && offender_balance >= to_ether(1_000_000))
+        // Upstream: one player transaction; the pool is empty and the
+        // recovery account holds the entire pool balance.
+        Ok(token.balanceOf(self.address).call().await? == U256::ZERO
+            && provider.get_transaction_count(offender.address()).await? == 1
+            && token.balanceOf(self.recovery).call().await?
+                == to_ether(1_000_000))
     }
 }

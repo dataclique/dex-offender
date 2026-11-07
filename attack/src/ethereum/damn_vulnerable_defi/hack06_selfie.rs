@@ -1,7 +1,7 @@
 //! Solution scaffold for DVD — Selfie.
 //!
-//! Goal: Empty the pool and recover at least 1,500,000 tokens to the
-//! player.
+//! Goal: Empty the pool and send 1,500,000 tokens to the recovery account
+//! (target.recovery).
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/selfie/SelfiePool.sol

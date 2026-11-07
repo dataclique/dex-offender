@@ -35,6 +35,9 @@ sol!(
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
+    pub oracle: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -45,8 +48,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.ethereum.damn_vulnerable_defi.compromised.address;
-        Ok(Target { address })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.compromised.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -76,16 +78,27 @@ impl Level for Target {
             .deploy()
             .await?;
 
-        Ok(Target { address: exchange_addr })
+        Ok(Target {
+            address: exchange_addr,
+            oracle: oracle_addr,
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
+        let offender = &roles.offender;
         let provider = roles.provider();
-        let _exchange = Exchange::new(self.address, provider.clone());
+        let exchange = Exchange::new(self.address, provider.clone());
+        let oracle = TrustfulOracle::new(self.oracle, provider.clone());
 
-        let balance = provider.get_balance(self.address).await?;
-
-        // Exchange must have 0 ETH
-        Ok(balance == U256::ZERO)
+        // Upstream: exchange drained to the recovery account, the player
+        // holds no NFTs, and the oracle median is unchanged.
+        let nft_addr = exchange.token().call().await?;
+        let nft = DamnValuableNFT::new(nft_addr, provider.clone());
+        Ok(provider.get_balance(self.address).await? == U256::ZERO
+            && provider.get_balance(self.recovery).await? == to_ether(999)
+            && nft.balanceOf(offender.address()).call().await? == U256::ZERO
+            && oracle.getMedianPrice("DVNFT".to_string()).call().await?
+                == to_ether(999))
     }
 }

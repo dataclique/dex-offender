@@ -1,6 +1,8 @@
 //! Solution scaffold for DVD — Compromised.
 //!
-//! Goal: Empty the exchange's ETH balance.
+//! Goal: Drain the exchange's 999 ETH to the recovery account
+//! (target.recovery), holding no NFTs and leaving the oracle median
+//! unchanged.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/compromised/Exchange.sol

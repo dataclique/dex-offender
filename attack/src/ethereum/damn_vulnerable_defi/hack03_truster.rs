@@ -1,6 +1,7 @@
 //! Solution scaffold for DVD — Truster.
 //!
-//! Goal: Empty the pool and recover at least 1,000,000 DVT to the player.
+//! Goal: Empty the pool and recover 1,000,000 DVT to the recovery account
+//! (target.recovery) in ONE transaction.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/truster/TrusterLenderPool.sol

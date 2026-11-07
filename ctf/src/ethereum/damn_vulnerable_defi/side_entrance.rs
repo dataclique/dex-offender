@@ -15,6 +15,8 @@ sol!(
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -25,8 +27,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.ethereum.damn_vulnerable_defi.side_entrance.address;
-        Ok(Target { address })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.side_entrance.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -45,13 +46,19 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: *pool.address() })
+        Ok(Target {
+            address: *pool.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
+        // Upstream: the pool is empty and the recovery account holds the
+        // full initial ETH.
         let balance = provider.get_balance(self.address).await?;
-        Ok(balance == U256::ZERO)
+        let recovered = provider.get_balance(self.recovery).await?;
+        Ok(balance == U256::ZERO && recovered == to_ether(1000))
     }
 }

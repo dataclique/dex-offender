@@ -36,6 +36,8 @@ sol!(
 pub struct Target {
     pub address: Address,
     pub token: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -46,8 +48,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let dvd = &ctfs.ethereum.damn_vulnerable_defi.puppet_v2;
-        Ok(Target { address: dvd.address, token: dvd.token })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.puppet_v2.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -120,13 +121,21 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: *pool.address(), token: *token.address() })
+        Ok(Target {
+            address: *pool.address(),
+            token: *token.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
         let token = DamnValuableToken::new(self.token, provider.clone());
 
-        Ok(token.balanceOf(self.address).call().await? == U256::ZERO)
+        // Upstream: the pool is empty and the recovery account holds the
+        // entire initial pool balance.
+        Ok(token.balanceOf(self.address).call().await? == U256::ZERO
+            && token.balanceOf(self.recovery).call().await?
+                == to_ether(1_000_000))
     }
 }

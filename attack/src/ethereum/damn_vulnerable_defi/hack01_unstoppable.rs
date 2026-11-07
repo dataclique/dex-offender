@@ -1,6 +1,7 @@
 //! Solution scaffold for DVD — Unstoppable.
 //!
-//! Goal: Make the vault stop offering flash loans.
+//! Goal: Break the vault so its monitor pauses it and hands ownership back
+//! to the deployer.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/unstoppable/UnstoppableVault.sol

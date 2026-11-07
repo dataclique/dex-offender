@@ -3,7 +3,7 @@
 //! Make the vault stop offering flash loans.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, sol};
+use alloy::{primitives::Address, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -83,15 +83,10 @@ impl Level for Target {
         let provider = roles.provider();
         let vault = UnstoppableVault::new(self.address, provider.clone());
 
-        // Completed when the vault can no longer service flash loans
-        // (its internal accounting invariant is broken)
-        let asset = vault.asset().call().await?;
-        let total_supply = vault.totalSupply().call().await?;
-        let asset_balance = DamnValuableToken::new(asset, provider.clone())
-            .balanceOf(self.address)
-            .call()
-            .await?;
-
-        Ok(asset_balance > total_supply && total_supply > U256::ZERO)
+        // Upstream: the monitor pauses the vault and returns ownership to
+        // the deployer once the invariant breaks.
+        let paused = vault.paused().call().await?;
+        let owner = vault.owner().call().await?;
+        Ok(paused && owner == roles.deployer.address())
     }
 }

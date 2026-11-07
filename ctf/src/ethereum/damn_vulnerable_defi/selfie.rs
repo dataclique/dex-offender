@@ -25,6 +25,9 @@ sol!(
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct Target {
     pub address: Address,
+    pub token: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -35,8 +38,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let address = ctfs.ethereum.damn_vulnerable_defi.selfie.address;
-        Ok(Target { address })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.selfie.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -63,20 +65,21 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: *pool.address() })
+        Ok(Target {
+            address: *pool.address(),
+            token: *token.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
-        let pool = SelfiePool::new(self.address, provider.clone());
+        let token = DamnValuableVotes::new(self.token, provider.clone());
 
-        let token_addr = pool.token().call().await?;
-        let token = DamnValuableVotes::new(token_addr, provider.clone());
-        let pool_balance = token.balanceOf(self.address).call().await?;
-        let offender_balance =
-            token.balanceOf(roles.offender.address()).call().await?;
-
-        Ok(pool_balance == U256::ZERO
-            && offender_balance >= to_ether(1_500_000))
+        // Upstream: the pool is empty and the recovery account holds the
+        // entire pool balance.
+        Ok(token.balanceOf(self.address).call().await? == U256::ZERO
+            && token.balanceOf(self.recovery).call().await?
+                == to_ether(1_500_000))
     }
 }

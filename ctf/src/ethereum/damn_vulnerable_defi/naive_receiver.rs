@@ -3,7 +3,7 @@
 //! Drain all WETH from the pool and the flash loan receiver in ≤2 txs.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, sol};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -34,6 +34,8 @@ pub const WETH_IN_RECEIVER: u64 = 10;
 pub struct Target {
     pub address: Address,
     pub receiver: Address,
+    /// The designated recovery account.
+    pub recovery: Address,
 }
 
 #[async_trait]
@@ -44,8 +46,7 @@ impl Level for Target {
 
     fn from_file() -> eyre::Result<Self> {
         let ctfs = crate::CTFs::from_file()?;
-        let dvd = &ctfs.ethereum.damn_vulnerable_defi.naive_receiver;
-        Ok(Target { address: dvd.address, receiver: dvd.receiver })
+        Ok(ctfs.ethereum.damn_vulnerable_defi.naive_receiver.clone())
     }
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
@@ -85,25 +86,34 @@ impl Level for Target {
             .watch()
             .await?;
 
-        Ok(Target { address: pool_addr, receiver: *receiver.address() })
+        Ok(Target {
+            address: pool_addr,
+            receiver: *receiver.address(),
+            recovery: super::recovery_account(),
+        })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
+        let offender = &roles.offender;
         let provider = roles.provider();
         let pool = NaiveReceiverPool::new(self.address, provider.clone());
 
         let weth_addr = pool.weth().call().await?;
         let weth = WETH::new(weth_addr, provider.clone());
 
+        // Upstream: the player used at most two transactions; the pool and
+        // receiver are empty and the recovery account holds everything.
         let pool_balance = weth.balanceOf(self.address).call().await?;
         let receiver_balance = weth.balanceOf(self.receiver).call().await;
-
-        // Both pool and receiver must be empty
         let receiver_empty = match receiver_balance {
             Ok(b) => b == U256::ZERO,
             Err(_) => true, // receiver self-destructed
         };
-
-        Ok(pool_balance == U256::ZERO && receiver_empty)
+        let nonce = provider.get_transaction_count(offender.address()).await?;
+        Ok(pool_balance == U256::ZERO
+            && receiver_empty
+            && nonce <= 2
+            && weth.balanceOf(self.recovery).call().await?
+                == to_ether(WETH_IN_POOL + WETH_IN_RECEIVER))
     }
 }
