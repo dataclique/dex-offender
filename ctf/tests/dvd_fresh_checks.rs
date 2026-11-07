@@ -99,6 +99,52 @@ async fn withdrawal_starts_unsolved() -> eyre::Result<()> {
 }
 
 #[tokio::test]
+async fn shards_starts_unsolved_with_upstream_state() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&anvil.url())?;
+        let level =
+            damn_vulnerable_defi::shards::Target::set_up(&roles).await?;
+        let marketplace =
+            damn_vulnerable_defi::shards::ShardsNFTMarketplace::new(
+                level.address,
+                roles.provider(),
+            );
+        let token = damn_vulnerable_defi::shards::DamnValuableToken::new(
+            level.token,
+            roles.provider(),
+        );
+        // Upstream initial state: one open offer, fee escrow in the
+        // marketplace, staking rewards intact, player holds nothing.
+        eyre::ensure!(
+            marketplace.offerCount().call().await? == 1,
+            "shards: seller offer missing"
+        );
+        eyre::ensure!(
+            marketplace.feesInBalance().call().await?
+                > alloy::primitives::U256::ZERO,
+            "shards: no fee escrow"
+        );
+        eyre::ensure!(
+            token.balanceOf(level.staking).call().await?
+                == alloy::primitives::U256::from(
+                    100_000_000_000_000_000_000_000u128
+                ),
+            "shards: staking rewards wrong"
+        );
+        eyre::ensure!(
+            !level.check(&roles).await?,
+            "shards: fresh deployment reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}
+
+#[tokio::test]
 async fn puppet_starts_unsolved() -> eyre::Result<()> {
     let mut anvil = OwnedAnvil::spawn()?;
     let result: eyre::Result<()> = async {
