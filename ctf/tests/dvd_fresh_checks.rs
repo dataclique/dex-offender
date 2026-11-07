@@ -116,3 +116,56 @@ async fn puppet_starts_unsolved() -> eyre::Result<()> {
     anvil.stop()?;
     result
 }
+
+#[tokio::test]
+async fn the_rewarder_starts_unsolved_with_upstream_state() -> eyre::Result<()>
+{
+    let mut anvil = OwnedAnvil::spawn()?;
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&anvil.url())?;
+        let level = damn_vulnerable_defi::the_rewarder::Target::set_up(&roles)
+            .await
+            .map_err(|error| {
+                eyre::eyre!("the_rewarder setup failed: {error:#}")
+            })?;
+        let dvt = damn_vulnerable_defi::the_rewarder::DamnValuableToken::new(
+            level.dvt,
+            roles.provider(),
+        );
+        let weth = damn_vulnerable_defi::the_rewarder::WETH::new(
+            level.weth,
+            roles.provider(),
+        );
+        let distributor =
+            damn_vulnerable_defi::the_rewarder::TheRewarderDistributor::new(
+                level.address,
+                roles.provider(),
+            );
+        // Upstream initial state: both batches exist, ~all funds still in
+        // the distributor (only Alice claimed), and the level is unsolved.
+        eyre::ensure!(
+            dvt.balanceOf(level.address).call().await?
+                > alloy::primitives::U256::from(9_000_000_000_000_000_000u64),
+            "the_rewarder: distributor DVT balance not upstream-like"
+        );
+        eyre::ensure!(
+            weth.balanceOf(level.address).call().await?
+                > alloy::primitives::U256::from(900_000_000_000_000_000u64),
+            "the_rewarder: distributor WETH balance not upstream-like"
+        );
+        eyre::ensure!(
+            distributor.getNextBatchNumber(level.dvt).call().await?
+                == alloy::primitives::U256::from(1u64),
+            "the_rewarder: DVT batch missing"
+        );
+        eyre::ensure!(
+            !level.check(&roles).await?,
+            "the_rewarder: fresh deployment reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}

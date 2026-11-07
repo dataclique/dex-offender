@@ -1,8 +1,7 @@
 //! Solution scaffold for DVD — The Rewarder.
 //!
 //! Goal: Recover as much DVT and WETH as possible from the distributor
-//! into the designated recovery account.
-//! Harness status: distribution setup and completion check are unfinished.
+//! into the designated recovery account (`some_user`).
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/the-rewarder/TheRewarderDistributor.sol
