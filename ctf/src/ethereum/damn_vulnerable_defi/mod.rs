@@ -48,7 +48,6 @@ pub struct DamnVulnerableDeFi {
     pub free_rider: free_rider::Target,
     pub backdoor: backdoor::Target,
     pub climber: climber::Target,
-    // wallet_mining: set_up requires Safe factory + CreateX raw tx deploy (TODO)
     pub wallet_mining: Option<wallet_mining::Target>,
     // puppet_v3: requires mainnet fork at block 15450164
     pub puppet_v3: Option<puppet_v3::Target>,

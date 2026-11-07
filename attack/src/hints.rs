@@ -292,19 +292,19 @@ fn render_links(line: &str) -> String {
     let mut out = String::new();
     let mut index = 0;
     while index < chars.len() {
-        if chars[index] == '[' {
-            if let Some((label, url, next)) = parse_link(&chars, index) {
-                if label == url {
-                    out.push_str(&url);
-                } else {
-                    out.push_str(&label);
-                    out.push_str(" (");
-                    out.push_str(&url);
-                    out.push(')');
-                }
-                index = next;
-                continue;
+        if chars[index] == '['
+            && let Some((label, url, next)) = parse_link(&chars, index)
+        {
+            if label == url {
+                out.push_str(&url);
+            } else {
+                out.push_str(&label);
+                out.push_str(" (");
+                out.push_str(&url);
+                out.push(')');
             }
+            index = next;
+            continue;
         }
         out.push(chars[index]);
         index += 1;
