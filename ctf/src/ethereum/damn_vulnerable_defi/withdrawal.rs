@@ -3,7 +3,7 @@
 //! Finalize cross-chain withdrawals safely via the L1 gateway.
 
 use crate::{Level, Roles, to_ether};
-use alloy::{primitives::Address, primitives::U256, sol};
+use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
 
 sol!(
@@ -95,7 +95,6 @@ impl Level for Target {
 
     async fn set_up(roles: &Roles) -> eyre::Result<Self> {
         let deployer = &roles.deployer;
-        let some_user = &roles.some_user;
         let offender = &roles.offender;
         let provider = roles.provider();
 
@@ -126,12 +125,17 @@ impl Level for Target {
             .watch()
             .await?;
 
-        // Deploy L1 token bridge
+        // Deploy L1 token bridge; the upstream L2 token bridge is a
+        // dedicated makeAddr — mirrored with a fixed local address (anvil
+        // account #5).
+        let l2_token_bridge = alloy::primitives::address!(
+            "9965507D1a55bcC2695C58ba16FB37d819B0A4dc"
+        );
         let bridge = TokenBridge::deploy(
             provider,
             *token.address(),
             *forwarder.address(),
-            some_user.address(), // L2 token bridge (placeholder)
+            l2_token_bridge,
         )
         .await?;
 
@@ -143,6 +147,25 @@ impl Level for Target {
             .await?
             .watch()
             .await?;
+        // Upstream vm.store: totalDeposits (slot 0) matches the funded
+        // balance.
+        let deposits = to_ether(1_000_000);
+        let stored = provider
+            .client()
+            .request::<_, bool>(
+                "anvil_setStorageAt",
+                (
+                    *bridge.address(),
+                    alloy::primitives::U256::ZERO,
+                    alloy::hex::encode_prefixed(deposits.to_be_bytes::<32>()),
+                ),
+            )
+            .await?;
+        eyre::ensure!(stored, "anvil_setStorageAt did not report success");
+        eyre::ensure!(
+            bridge.totalDeposits().call().await? == deposits,
+            "totalDeposits does not match the funded bridge balance"
+        );
 
         // Set withdrawals root in gateway
         gateway
