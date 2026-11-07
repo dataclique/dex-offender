@@ -10,6 +10,7 @@
 
 use alloy::providers::Provider;
 use attack::ethereum::{damn_vulnerable_defi as dvd, ethernaut, paradigm_2023};
+use attack::hints;
 use ctf::{Exploit, Level, Roles};
 
 const RESET: &str = "\x1b[0m";
@@ -360,7 +361,10 @@ async fn play_level<E: Exploit>(
         Outcome::NewlySolved => {
             congratulations(label);
             if let Some(learnings) = learnings_for(label) {
-                println!("{DIM}What you learned:{RESET}\n{learnings}");
+                println!(
+                    "{DIM}What you learned:{RESET}\n{}",
+                    hints::render_markdown(learnings)
+                );
             }
             println!("{GREEN}✓ {label} — solved just now{RESET}");
             *solved += 1;
