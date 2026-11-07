@@ -61,7 +61,12 @@ impl Level for Target {
         let total_staked = contract.totalStaked().call().await?;
         let is_staker =
             contract.Stakers(roles.offender.address()).call().await?;
+        let user_stake =
+            contract.UserStake(roles.offender.address()).call().await?;
 
-        Ok(eth_balance > U256::ZERO && total_staked > eth_balance && is_staker)
+        Ok(eth_balance > U256::ZERO
+            && total_staked > eth_balance
+            && is_staker
+            && user_stake == U256::ZERO)
     }
 }

@@ -39,7 +39,10 @@ impl Level for Target {
         println!("Deploying the Denial contract...");
         let contract = Denial::deploy(provider).await?;
 
-        deployer.transfer(*contract.address(), U256::from(1_000_000)).await?;
+        // DenialFactory funds the instance with its 0.001 ether minimum.
+        deployer
+            .transfer(*contract.address(), U256::from(1_000_000_000_000_000u64))
+            .await?;
 
         Ok(Target { address: *contract.address() })
     }
