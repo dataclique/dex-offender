@@ -1,9 +1,8 @@
 //! Solution scaffold for DVD — Shards.
 //!
-//! Goal: Recover marketplace tokens to the designated recovery account
-//! in one transaction, preserving staking rewards and leaving the player
-//! with no tokens.
-//! Harness status: marketplace setup and completion check are unfinished.
+//! Goal: Recover marketplace fee tokens to the designated recovery account
+//! (anvil account 4, 0x90F8…b906) in ONE transaction, preserving staking
+//! rewards and ending with no tokens on your offender.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/shards/ShardsNFTMarketplace.sol

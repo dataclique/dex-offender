@@ -23,6 +23,16 @@ pub mod wallet_mining;
 pub mod withdrawal;
 
 use crate::{Level as _, Roles};
+use alloy::primitives::Address;
+
+/// The upstream `recovery` account, mapped to a fixed local address (anvil
+/// account #4 — well-known dev key, never used by the harness itself).
+pub fn recovery_account() -> Address {
+    Address::new([
+        0x90, 0xF7, 0x9b, 0xf6, 0xEB, 0x2c, 0x4f, 0x87, 0x03, 0x65, 0xE7, 0x85,
+        0x98, 0x2E, 0x1f, 0x10, 0x1E, 0x93, 0xb9, 0x06,
+    ])
+}
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct DamnVulnerableDeFi {

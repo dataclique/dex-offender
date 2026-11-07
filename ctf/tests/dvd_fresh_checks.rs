@@ -215,3 +215,50 @@ async fn the_rewarder_starts_unsolved_with_upstream_state() -> eyre::Result<()>
     anvil.stop()?;
     result
 }
+
+#[tokio::test]
+async fn backdoor_starts_unsolved_with_upstream_state() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&anvil.url())?;
+        let level =
+            damn_vulnerable_defi::backdoor::Target::set_up(&roles).await?;
+        let registry = damn_vulnerable_defi::backdoor::WalletRegistry::new(
+            level.address,
+            roles.provider(),
+        );
+        let token = damn_vulnerable_defi::backdoor::DamnValuableToken::new(
+            level.token,
+            roles.provider(),
+        );
+        // Upstream initial state: registry funded, all four users are
+        // beneficiaries with no wallets yet.
+        eyre::ensure!(
+            token.balanceOf(level.address).call().await?
+                == alloy::primitives::U256::from(
+                    40_000_000_000_000_000_000u128
+                ),
+            "backdoor: registry not funded like upstream"
+        );
+        for user in &level.users {
+            eyre::ensure!(
+                registry.beneficiaries(*user).call().await?,
+                "backdoor: beneficiary not registered"
+            );
+            eyre::ensure!(
+                registry.wallets(*user).call().await?
+                    == alloy::primitives::Address::ZERO,
+                "backdoor: wallet pre-registered"
+            );
+        }
+        eyre::ensure!(
+            !level.check(&roles).await?,
+            "backdoor: fresh deployment reports solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}

@@ -3,6 +3,7 @@
 //! Recover marketplace fee tokens to the designated recovery account in a
 //! single transaction, preserving staking rewards.
 
+use super::recovery_account;
 use crate::{Level, Roles};
 use alloy::{primitives::Address, primitives::U256, providers::Provider, sol};
 use async_trait::async_trait;
@@ -220,13 +221,4 @@ impl Level for Target {
             && token.balanceOf(offender.address()).call().await? == U256::ZERO
             && provider.get_transaction_count(offender.address()).await? == 1)
     }
-}
-
-/// The upstream `recovery` account, mapped to a fixed local address (anvil
-/// account #4 — well-known dev key, never used by the harness).
-pub fn recovery_account() -> Address {
-    Address::new([
-        0x90, 0xF7, 0x9b, 0xf6, 0xEB, 0x2c, 0x4f, 0x87, 0x03, 0x65, 0xE7, 0x85,
-        0x98, 0x2E, 0x1f, 0x10, 0x1E, 0x93, 0xb9, 0x06,
-    ])
 }

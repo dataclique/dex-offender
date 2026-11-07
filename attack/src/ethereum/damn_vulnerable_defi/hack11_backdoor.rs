@@ -1,7 +1,8 @@
 //! Solution scaffold for DVD — Backdoor.
 //!
-//! Goal: Empty the registry's token balance and recover at least 40 DVT
-//! to the player.
+//! Goal: Register wallets for all four beneficiaries and drain the
+//! registry's 40 DVT to the designated recovery account (anvil account 4,
+//! 0x90F8…b906) in ONE transaction.
 //!
 //! Contracts:
 //! https://github.com/theredguild/damn-vulnerable-defi/blob/64fddf9f96de2782f8868898d68673acb295119c/src/backdoor/WalletRegistry.sol
