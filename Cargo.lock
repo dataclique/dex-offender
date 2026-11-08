@@ -1234,6 +1234,7 @@ dependencies = [
  "ctf",
  "eyre",
  "serde",
+ "serde_json",
  "tokio",
 ]
 
