@@ -11,6 +11,12 @@ use ctf::ethereum::ethernaut::lvl20_denial::*;
 
 pub struct Exploit;
 
+alloy::sol!(
+    #[sol(rpc)]
+    DenialExploit,
+    "out/DenialExploit.sol/DenialExploit.json"
+);
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -20,8 +26,7 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        DenialExploit::deploy(offender.provider(), target.address).await?;
         Ok(())
     }
 }

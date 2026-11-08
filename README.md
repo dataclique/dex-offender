@@ -110,9 +110,7 @@ In your Rust attack code, `sol!` paths are relative to the crate directory —
 `attack/` — so the artifact path drops the `attack/` prefix:
 
 ```rust
-use alloy::{sol, sol_types::SolContract};
-
-sol!(
+alloy::sol!(
     #[sol(rpc)]
     Example,
     "out/Example.sol/Example.json"
