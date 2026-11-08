@@ -239,61 +239,88 @@
       },
       "naive_receiver": {
         "address": "0x413b1afca96a3df5a686d8bfbf93d30688a7f7d9",
-        "receiver": "0x02df3a3f960393f5b349e40a599feda91a7cc1a7"
+        "receiver": "0x02df3a3f960393f5b349e40a599feda91a7cc1a7",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "truster": {
-        "address": "0x71089ba41e478702e1904692385be3972b2cbf9e"
+        "address": "0x71089ba41e478702e1904692385be3972b2cbf9e",
+        "token": "0x5133bbdfcca3eb4f739d599ee4ec45cbcd0e16c5",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "side_entrance": {
-        "address": "0xc66ab83418c20a65c3f8e83b3d11c8c3a6097b6f"
+        "address": "0xc66ab83418c20a65c3f8e83b3d11c8c3a6097b6f",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "the_rewarder": {
-        "address": "0x9bcc604d4381c5b0ad12ff3bf32bede063416bc7"
+        "address": "0x63fea6e447f120b8faf85b53cdad8348e645d80e",
+        "dvt": "0x12bcb546bc60ff39f1adfc7ce4605d5bd6a6a876",
+        "weth": "0xac47e91215fb80462139756f43438402998e4a3a",
+        "recovery": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
       },
       "selfie": {
-        "address": "0x38a70c040ca5f5439ad52d0e821063b0ec0b52b6"
+        "address": "0x56d13eb21a625eda8438f55df2c31dc3632034f5",
+        "token": "0xf090f16dec8b6d24082edd25b1c8d26f2bc86128",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "compromised": {
-        "address": "0xd9140951d8ae6e5f625a02f5908535e16e3af964"
+        "address": "0x071586ba1b380b00b793cc336fe01106b0bfbe6d",
+        "oracle": "0x72b26437b2d7556459d6c01cf5fa8d2e15592f1e",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "puppet": {
-        "address": "0x3904b8f5b0f49cd206b7d5aabee5d1f37ee15d8d"
+        "address": "0xfe5f411481565fbf70d8d33d992c78196e014b90",
+        "token": "0x3904b8f5b0f49cd206b7d5aabee5d1f37ee15d8d",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "puppet_v2": {
-        "address": "0xce0066b1008237625dddbe4a751827de037e53d2",
-        "token": "0x2625760c4a8e8101801d3a48ee64b2bea42f1e96"
+        "address": "0x8fc8cfb7f7362e44e472c690a6e025b80e406458",
+        "token": "0xade429ba898c34722e722415d722a70a297ce3a2",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "free_rider": {
-        "address": "0xdde063ebe8e85d666ad99f731b4dbf8c98f29708",
-        "token": "0x51c65cd0cdb1a8a8b79dfc2ee965b1ba0bb8fc89",
-        "recovery": "0x8b190573374637f144ac8d37375d97fd84cbd3a0"
+        "address": "0x9385556b571ab92bf6dc9a0dbd75429dd4d56f91",
+        "token": "0xc9952fc93fa9be383ccb39008c786b9f94eac95d",
+        "recovery": "0x114e375b6fcc6d6fcb68c7a1d407e652c54f25fb"
       },
       "backdoor": {
-        "address": "0x114e375b6fcc6d6fcb68c7a1d407e652c54f25fb",
-        "token": "0x67ad6ea566ba6b0fc52e97bc25ce46120fdac04c"
+        "address": "0x942ed2fa862887dc698682cc6a86355324f0f01e",
+        "token": "0x8bee2037448f096900fd9affc427d38ae6cc0350",
+        "users": [
+          "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+          "0x976ea74026e726554db657fa54763abd0c3a0aa9",
+          "0x14dc79964da2c08b23698b3d3cc7ca32193d9955",
+          "0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f"
+        ],
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "climber": {
-        "address": "0x8bee2037448f096900fd9affc427d38ae6cc0350",
-        "token": "0x942ed2fa862887dc698682cc6a86355324f0f01e",
-        "timelock": "0x72a2e04a66336bc6a394a7808402968d65e9335a"
+        "address": "0xa722bda6968f50778b973ae2701e90200c564b49",
+        "token": "0xc7cdb7a2e5dda1b7a0e792fe1ef08ed20a6f56d4",
+        "timelock": "0x6ac55cb8a12c28fce596e6816703921d10b3cf1a",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "wallet_mining": {
-        "address": "0x4aa5e89641cf24bd9b2c5e60b72fc6c013124cb6",
-        "token": "0xb7ca895f81f20e05a5eb11b05cbaab3dae5e23cd"
+        "address": "0xa62d0d65a7d38ba4214bfe0f94739898e2ca377d",
+        "token": "0x325c8df4cfb5b068675aff8f62aa668d1dec3c4b"
       },
       "puppet_v3": null,
       "curvy_puppet": null,
       "abi_smuggling": {
-        "address": "0xa722bda6968f50778b973ae2701e90200c564b49",
-        "token": "0xcc4c41415fc68b2fbf70102742a83cde435e0ca7"
+        "address": "0x0aec7c174554af8aec3680bb58431f6618311510",
+        "token": "0xe1708fa6bb2844d5384613ef0846f9bc1e8ec55e",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5"
       },
       "shards": {
-        "address": "0xfc4ee541377f3b6641c23cbe82f6f04388290421"
+        "address": "0x70e5370b8981abc6e14c91f4ace823954efc8ea3",
+        "token": "0x286b8decd5ed79c962b2d8f4346cd97ff0e2c352",
+        "staking": "0x4000f8820522ac96c4221b299876e3e53bcc8525",
+        "recovery": "0x83fe138bb5ee06874ffea9082e76d4a3480992f5",
+        "initial_tokens_in_marketplace": "0x28a857425466f80000"
       },
       "withdrawal": {
-        "address": "0x90b97e83e22afa2e6a96b3549a0e495d5bae61af",
-        "token": "0xf5c3953ae4639806fcbcc3196f71dd81b0da4348",
-        "bridge": "0x3a622db2db50f463df562dc5f341545a64c580fc"
+        "address": "0x0c626fc4a447b01554518550e30600136864640b",
+        "token": "0x33e45b187da34826abceda1039231be46f1b05af",
+        "bridge": "0xf342e904702b1d021f03f519d6d9614916b03f37"
       }
     }
   }

@@ -1,4 +1,5 @@
 [profile.default]
+ffi = true
 libs = ['lib']
 src = 'attack/contracts'
 test = 'attack/test'
