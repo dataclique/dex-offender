@@ -3,15 +3,6 @@
 //! Goal: Buy the item from `Shop` for less than its initial asking price of
 //! 100.
 //!
-//
-// Upstream hint:
-//
-// Сan you get the item from the shop for less than the price asked?
-//
-// ##### Things that might help:
-// * `Shop` expects to be used from a `Buyer`
-// * Understanding restrictions of view functions
-//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Shop.sol
 
 use async_trait::async_trait;

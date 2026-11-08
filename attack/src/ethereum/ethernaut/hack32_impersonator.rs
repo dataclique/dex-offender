@@ -3,16 +3,6 @@
 //! Goal: Clear the controller of the first `ECLocker` created by
 //! `Impersonator`, leaving `lockers(0).controller()` equal to the zero address.
 //!
-//
-// Upstream hint:
-//
-// SlockDotIt’s new product, **ECLocker**, integrates IoT gate locks with
-// Solidity smart contracts, utilizing Ethereum ECDSA for authorization. When
-// a valid signature is sent to the lock, the system emits an `Open` event,
-// unlocking doors for the authorized controller. SlockDotIt has hired you to
-// assess the security of this product before its launch. Can you compromise
-// the system in a way that anyone can open the door?
-//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Impersonator.sol
 
 use async_trait::async_trait;

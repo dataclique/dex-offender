@@ -76,6 +76,9 @@ and the test.
 are supported; `roles.provider()` defaults to the deployer for setup. Do not use
 real keys or funds.
 
+Every Ethernaut level carries its upstream hint out of sight: call `hint!();`
+anywhere inside your `attack()` to print it when you want it.
+
 ### Attack helper contracts
 
 Need a Solidity contract for your attack (a fake `Building`, an exploit

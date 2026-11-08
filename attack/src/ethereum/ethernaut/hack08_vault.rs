@@ -3,11 +3,6 @@
 //! Goal: Unlock the password-protected `Vault` so that its `locked` flag
 //! becomes false.
 //!
-//
-// Upstream hint:
-//
-// Unlock the vault to pass the level!
-//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Vault.sol
 
 use async_trait::async_trait;

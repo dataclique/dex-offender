@@ -4,15 +4,6 @@
 //! contracts. Your offender account receives five deposit tokens at setup;
 //! `isBettor(offender)` must become true.
 //!
-//
-// Upstream hint:
-//
-// Welcome to the Bet House.
-//
-// You start with 5 Pool Deposit Tokens (PDT).
-//
-// Could you master the art of strategic gambling and become a bettor?
-//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/BetHouse.sol
 
 use async_trait::async_trait;

@@ -3,16 +3,6 @@
 //! Goal: Pass the gates of `GatekeeperThree`, which uses a `SimpleTrick`
 //! helper, and register your offender account as its `entrant`.
 //!
-//
-// Upstream hint:
-//
-// Cope with gates and become an entrant.
-//
-// ##### Things that might help:
-// * Recall return values of low-level functions.
-// * Be attentive with semantic.
-// * Refresh how storage works in Ethereum.
-//!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/GatekeeperThree.sol
 
 use async_trait::async_trait;
