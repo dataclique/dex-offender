@@ -19,7 +19,12 @@ impl Target {
         _roles: &SolRoles,
     ) -> eyre::Result<Self> {
         let program_id = PROGRAM_ID.parse::<Pubkey>()?;
-        let so = "lib/solana-auditors-bootcamp/Capture-the-Flag/level-1/target/deploy/level_1.so";
+        // Workspace-root-relative, resolved at compile time so the level
+        // works regardless of the test binary's working directory.
+        let so = concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../lib/solana-auditors-bootcamp/Capture-the-Flag/level-1/target/deploy/level_1.so"
+        );
         chain.deploy_program_from_file(program_id, so)?;
         Ok(Self { program_id })
     }

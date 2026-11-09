@@ -124,6 +124,52 @@ Anvil shown above. If you deploy a new set of levels, restart your practice
 chain with the matching new `state.json` so its addresses agree with
 `ctfs.json`.
 
+## Solana levels
+
+Solana wargames live under `attack/src/solana/<game>/` — Ackee Bootcamp
+(`ackee/hack1_ancient_vault.rs` … `hack5_guardian_escrow.rs`) and Paradigm 2022
+(`paradigm2022/hack_hana.rs`). Each stub header names the goal and the pinned
+upstream sources; no solutions ship.
+
+There is no chain to start and no board to deploy: every run spins an in-process
+LiteSVM, deploys the pinned `.so` programs, and funds the three roles fresh.
+Play with:
+
+```sh
+cargo test -p attack solana -- --nocapture
+```
+
+Like the EVM gate, it plays in order (Bootcamp 1–5, then hana) and stops at the
+first unsolved level. Progress isn't persisted — your stubs are the progress:
+once `attack()` solves a level, every later run replays through it.
+
+Inside `attack(target, &roles)` you have the same three roles as on EVM
+(`roles.deployer`, `roles.some_user`, `roles.offender`, 1000 SOL each):
+
+```rust
+use solana_sdk::instruction::{AccountMeta, Instruction};
+
+let ix = Instruction::new_with_bincode(
+    target.program_id,
+    &discriminator_and_data, // Anchor 8-byte discriminator + args
+    vec![AccountMeta::new(roles.offender.pubkey(), true)],
+);
+let logs = roles.offender.send(&[ix])?; // program logs on success
+```
+
+Common pieces: PDAs come from
+`Pubkey::find_program_address(&[seeds],
+&target.program_id)`; raw account bytes
+via `roles.chain.get_account(&pubkey)`; Anchor's instruction discriminator is
+`sha256("global:<Name>")[..8]` for accounts and `sha256("global:<method>")[..8]`
+for instructions; the level's `Target` struct carries the addresses its
+completion check observes. For multi-signer transactions use
+`roles.chain.send_signed(&[&kp1, &kp2], &ixs)`.
+
+`hint!()` exists there too, but no Solana level has a registered hint yet. Level
+4 (Vesting) is partially playable — its header documents the exact runtime
+blocker.
+
 ## Where things live
 
 - `attack/src/ethereum/<game>/`: existing attack modules.

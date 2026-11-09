@@ -1,6 +1,9 @@
-//! Solution scaffold for Ackee Bootcamp Level 1 — Ancient Vault.
+//! Ackee Bootcamp 1 — Ancient Vault.
 //!
-//! Access the ancient vault.
+//! Goal: Open the ancient vault.
+//!
+//! Sources:
+//! https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp/tree/bc0d25cce79b482599a2dde37c3fb112e17e9d0d/Capture-the-Flag/level-1
 
 pub struct Exploit;
 
