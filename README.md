@@ -157,14 +157,76 @@ let ix = Instruction::new_with_bincode(
 let logs = roles.offender.send(&[ix])?; // program logs on success
 ```
 
-Common pieces: PDAs come from
-`Pubkey::find_program_address(&[seeds],
-&target.program_id)`; raw account bytes
-via `roles.chain.get_account(&pubkey)`; Anchor's instruction discriminator is
-`sha256("global:<Name>")[..8]` for accounts and `sha256("global:<method>")[..8]`
-for instructions; the level's `Target` struct carries the addresses its
-completion check observes. For multi-signer transactions use
-`roles.chain.send_signed(&[&kp1, &kp2], &ixs)`.
+### Bindings for a level's program
+
+There is no Anchor client dependency in this workspace — bindings are
+hand-rolled from the level's IDL, which ships in the submodule:
+`lib/solana-auditors-bootcamp/Capture-the-Flag/level-N/target/idl/level_N.json`.
+The IDL lists every instruction's args and accounts, and every account's fields
+and PDA seeds. Three rules do the rest:
+
+- instruction discriminator: `sha256("global:<method>")[..8]` — e.g.
+  `sha256("global:initialize")[..8]`, prepended to the borsh-encoded args;
+- account discriminator: `sha256("account:<Struct>")[..8]` — the first 8 bytes
+  of every Anchor account's data;
+- args are borsh: numbers little-endian, strings/vecs as `u32` length prefix
+  - bytes.
+
+```rust
+use solana_sdk::hash::hash;
+
+fn ix_discriminator(method: &str) -> [u8; 8] {
+    let h = hash(format!("global:{method}").as_bytes());
+    let mut d = [0u8; 8];
+    d.copy_from_slice(&h.as_ref()[..8]);
+    d
+}
+
+let mut data = ix_discriminator("initialize").to_vec();
+data.extend_from_slice(&(name.len() as u32).to_le_bytes());
+data.extend_from_slice(name.as_bytes());
+```
+
+For anything beyond strings, derive the arg struct with the workspace's `borsh`
+crate (`#[derive(borsh::BorshSerialize)]`) and append `&args.try_to_vec()?`
+after the discriminator.
+
+### Reading program state
+
+Accounts are plain bytes: fetch and borsh-decode, skipping the 8-byte account
+discriminator first.
+
+```rust
+use borsh::BorshDeserialize;
+
+let raw = roles
+    .chain
+    .get_account(&vault_pda)
+    .ok_or_else(|| eyre::eyre!("vault account missing"))?;
+let vault = Vault::deserialize(&mut &raw[8..])?;
+```
+
+Define `Vault` yourself with `#[derive(BorshDeserialize)]` mirroring the IDL
+(field order matters).
+
+### Writing program state
+
+On Solana, state only changes through the program's own instructions — that's
+the challenge path. Send them as any role; when an instruction creates an
+account, its keypair co-signs alongside the payer via
+`roles.chain.send_signed(&[&payer, &new_account], &[ix])?`. The harness also
+exposes `chain.set_account` (a raw override) — that exists for level plumbing
+and tests, not for solving.
+
+### Deploying your own attack program
+
+For these suites you don't need one: everything an exploit does — crafting
+arbitrary instructions, signing as several actors, driving CPI order — happens
+client-side in `attack()`. An on-chain helper would need an SBF toolchain, which
+this repo deliberately doesn't ship (that absence is exactly what blocks
+building otter-world/otterswap). If you ever do build a `.so` elsewhere,
+`roles.chain.deploy_program(id, &elf)` loads it into the in-process SVM under
+any keypair you choose, and it becomes callable like any other program.
 
 `hint!()` exists there too, but no Solana level has a registered hint yet. Level
 4 (Vesting) is partially playable — its header documents the exact runtime
