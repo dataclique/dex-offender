@@ -3,12 +3,13 @@
 //!
 //! ## Running levels
 //!
-//! Unlike the EVM board, Solana levels run on an in-process LiteSVM
-//! chain created fresh for every run — there is no saved chain state.
-//! `cargo test -p attack solana -- --nocapture` plays the wargames in
-//! order (Ackee Bootcamp 1–5, then Paradigm 2022 hana) and stops at the
-//! first unsolved level, just like the Ethernaut progression gate. Your
-//! solutions live in these stubs, so every later run replays them.
+//! Use the same watcher as Ethereum: `watch-levels` (or `cargo run`).
+//! Flip `const TRACK` in `attack/src/main.rs` to `Track::Solana` to
+//! switch tracks — the banners, progression gate and save-rerun flow
+//! are identical. Every run spins a fresh in-process LiteSVM per level
+//! and deploys the pinned `.so` programs; there is no saved chain state.
+//! The stubs are the progress: once your `attack()` solves a level,
+//! every later run replays through it.
 //!
 //! ## Writing an attack
 //!
