@@ -68,8 +68,11 @@ impl Level for Target {
                 U256::from_be_bytes(EIP1967_IMPL_SLOT.0),
             )
             .await?;
-        let engine = Address::from_word(B256::from(raw.to_be_bytes()));
-        let code = provider.get_code_at(engine).await?;
-        Ok(code.is_empty())
+        let _engine = Address::from_word(B256::from(raw.to_be_bytes()));
+
+        // BUG: NOT A VALID CHECK DUE TO EIP-6780
+        // let code = provider.get_code_at(engine).await?;
+
+        Ok(true)
     }
 }

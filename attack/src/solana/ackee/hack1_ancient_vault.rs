@@ -25,7 +25,8 @@ pub async fn attack(
 ) -> eyre::Result<()> {
     // Starter context from the upstream exploit harness:
     // offender is the funded fresh keypair; the vault PDA is
-    // let vault = target.vault_pda();
+    let vault = target.vault_pda();
+    println!("Vault: {vault}");
 
     // TODO: exploit the level
     let _ = (target, offender);
