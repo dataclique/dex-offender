@@ -9,7 +9,7 @@ use ctf::sui::lets_ctf::check_in::Target;
 
 pub async fn attack(
     _target: &Target,
-    _offender: &ctf::sui::SuiRoles,
+    _offender: &ctf::sui::SuiActor,
     _localnet: &ctf::sui::SuiLocalnet,
 ) -> eyre::Result<()> {
     todo!("practice stub — compute the sha3 preimage and call get_flag")

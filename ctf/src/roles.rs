@@ -1,7 +1,7 @@
 //! Role accounts for the local anvil chain (alloy-based).
 //!
 //! Each actor has a [`DynProvider`] whose wallet defaults to that actor.
-//! All three local signers remain registered for explicit `from` overrides;
+//! Each actor wallet registers only its own signer;
 //! [`Roles::provider`] keeps the deployer default for challenge setup.
 
 use alloy::{
@@ -81,9 +81,7 @@ impl Roles {
         wallet.register_signer(some_user.clone());
         wallet.register_signer(offender.clone());
 
-        let actor = |signer: &PrivateKeySigner| -> eyre::Result<Actor> {
-            let mut role_wallet = wallet.clone();
-            role_wallet.set_default_signer(signer.address())?;
+        let provider = |wallet: EthereumWallet| -> eyre::Result<ProviderT> {
             // Failed pre-broadcast attempts must not reserve a cached nonce
             // and leave subsequent sequential transactions behind a gap.
             let provider = ProviderBuilder::new()
@@ -92,20 +90,20 @@ impl Roles {
                 .with_blob_gas_estimation()
                 .with_simple_nonce_management()
                 .fetch_chain_id()
-                .wallet(role_wallet)
+                .wallet(wallet)
                 .connect_http(url.parse()?)
                 .erased();
+            Ok(provider)
+        };
+        let actor = |signer: &PrivateKeySigner| -> eyre::Result<Actor> {
+            let provider = provider(EthereumWallet::new(signer.clone()))?;
             Ok(Actor::new(Arc::new(provider), signer.address()))
         };
+        let setup_provider = Arc::new(provider(wallet)?);
         let deployer = actor(&deployer)?;
         let some_user = actor(&some_user)?;
         let offender = actor(&offender)?;
-        Ok(Roles {
-            provider: deployer.provider.clone(),
-            deployer,
-            some_user,
-            offender,
-        })
+        Ok(Roles { provider: setup_provider, deployer, some_user, offender })
     }
 
     pub fn provider(&self) -> &Arc<ProviderT> {

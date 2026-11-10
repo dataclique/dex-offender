@@ -9,7 +9,7 @@ Smart-contract CTFs with a Rust practice harness using
 From the repository root:
 
 ```sh
-git submodule update --init --recursive
+git submodule update --init --recursive --force
 git -c submodule.lib/move-over-ctf.update=checkout submodule update --init lib/move-over-ctf
 direnv allow
 forge build

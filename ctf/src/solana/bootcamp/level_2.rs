@@ -12,7 +12,7 @@
 //! earlier `InvalidProgramId` failure was our passing a non-canonical
 //! system program id; fixed via the all-zero address.)
 
-use crate::solana::SolChain;
+use crate::solana::{SolActor, SolChain};
 use solana_sdk::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
@@ -25,8 +25,8 @@ pub const PROGRAM_ID: &str = "5pFB5g5WvBcL5fkaLY5Nz9cqEAxnkRPVgc3DCTKFY7uK";
 #[derive(Clone)]
 pub struct Target {
     pub program_id: Pubkey,
-    pub user1: Arc<Keypair>,
-    pub user2: Arc<Keypair>,
+    pub user1: SolActor,
+    pub user2: SolActor,
     pub explorer1: Pubkey,
     pub explorer2: Pubkey,
 }
@@ -68,7 +68,13 @@ impl Target {
         let explorer1 = explorer_pda(&program_id, &user1.pubkey());
         let explorer2 = explorer_pda(&program_id, &user2.pubkey());
 
-        Ok(Self { program_id, user1, user2, explorer1, explorer2 })
+        Ok(Self {
+            program_id,
+            user1: SolActor { keypair: user1, chain: chain.clone() },
+            user2: SolActor { keypair: user2, chain: chain.clone() },
+            explorer1,
+            explorer2,
+        })
     }
 
     /// Evaluation: `reveal_secret` succeeds only when the challenge is
@@ -85,6 +91,8 @@ impl Target {
                 AccountMeta::new(self.explorer2, false),
             ],
         );
-        chain.send_signed(&[&self.user1, &self.user2], &[ix]).is_ok()
+        chain
+            .send_signed(&[&self.user1.keypair, &self.user2.keypair], &[ix])
+            .is_ok()
     }
 }

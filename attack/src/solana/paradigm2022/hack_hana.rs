@@ -10,9 +10,9 @@ pub struct Exploit;
 
 pub async fn attack(
     target: &ctf::solana::hana::Target,
-    roles: &ctf::solana::SolRoles,
+    offender: &ctf::solana::SolActor,
 ) -> eyre::Result<()> {
     // TODO: exploit the level
-    let _ = (target, roles);
+    let _ = (target, offender);
     Ok(())
 }

@@ -440,7 +440,7 @@ async fn solana_track() -> eyre::Result<()> {
                 println!("{GREEN}✓ {} — already solved{RESET}", $label);
                 solved += 1;
             } else {
-                $attack(&target, &roles).await?;
+                $attack(&target, &roles.offender).await?;
                 if target.check(&chain) {
                     congratulations($label);
                     println!("{GREEN}✓ {} — solved just now{RESET}", $label);

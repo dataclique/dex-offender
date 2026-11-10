@@ -13,9 +13,9 @@
 //!
 //! ## Writing an attack
 //!
-//! `ctf::solana` provides the same three roles as the EVM harness
-//! (`SolRoles`: deployer, some_user, offender — each funded 1000 SOL).
-//! Each `SolActor` sends transactions with its own keypair, e.g.:
+//! Attack callbacks receive only the offender's `SolActor`. Setup roles
+//! and chain administration stay in the runner. The actor signs as itself
+//! and can read account data, e.g.:
 //!
 //! ```ignore
 //! use solana_sdk::instruction::{AccountMeta, Instruction};
@@ -23,17 +23,79 @@
 //! let ix = Instruction::new_with_bincode(
 //!     target.program_id,
 //!     &discriminator_and_data, // Anchor 8-byte discriminator + args
-//!     vec![AccountMeta::new(roles.offender.pubkey(), true)],
+//!     vec![AccountMeta::new(offender.pubkey(), true)],
 //! );
-//! roles.offender.send(&[ix])?; // returns program logs on success
+//! offender.send(&[ix])?; // returns program logs on success
 //! ```
 //!
-//! Raw account bytes come back through `roles.chain.get_account(&pubkey)`
+//! Raw account bytes come back through `offender.get_account(&pubkey)`
 //! (deserialize the level's Anchor accounts yourself, or parse the
 //! fields the check reads). PDAs are derived with
 //! `Pubkey::find_program_address(&[seeds], &program_id)`; each level's
 //! `Target` carries the addresses its check observes. Solana levels have
 //! no registered hints — `hint!()` reports that.
+//!
+//! Level 2 also exposes its two player-owned explorers as `SolActor`
+//! handles. They can co-sign with `user1.send_signed(&[&user2], &ixs)`.
+//!
+//! ## Role boundary
+//!
+//! Attack callbacks cannot receive setup roles.
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::bootcamp::level_1::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::ackee::hack1_ancient_vault::attack(target, roles).await
+//! }
+//! ```
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::bootcamp::level_2::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::ackee::hack2_monster_battle::attack(target, roles).await
+//! }
+//! ```
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::bootcamp::level_3::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::ackee::hack3_hidden_faction::attack(target, roles).await
+//! }
+//! ```
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::bootcamp::level_4::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::ackee::hack4_vesting::attack(target, roles).await
+//! }
+//! ```
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::bootcamp::level_5::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::ackee::hack5_guardian_escrow::attack(target, roles).await
+//! }
+//! ```
+//!
+//! ```compile_fail
+//! async fn cannot_pass_setup_roles(
+//!     target: &ctf::solana::hana::Target,
+//!     roles: &ctf::solana::SolRoles,
+//! ) -> eyre::Result<()> {
+//!     attack::solana::paradigm2022::hack_hana::attack(target, roles).await
+//! }
+//! ```
+//!
 
 pub mod ackee;
 pub mod paradigm2022;
@@ -55,7 +117,7 @@ mod practice {
             if target.check(&chain) {
                 println!("✓ {} — already solved", $label);
             } else {
-                $attack(&target, &roles).await?;
+                $attack(&target, &roles.offender).await?;
                 eyre::ensure!(
                     target.check(&chain),
                     "{}: attack ran but the level is not solved — stopping here",

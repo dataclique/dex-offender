@@ -85,13 +85,21 @@ async fn verify_senders(stdout: ChildStdout) -> eyre::Result<SocketAddr> {
         }
     }
     // Setup stays deployer-default; explicit from overrides still select
-    // any of the registered local role signers.
+    // any local role signer; actor providers cannot select another role.
     let contract = Telephone::deploy(roles.provider()).await?;
     eyre::ensure!(
         contract.owner().call().await? == roles.deployer.address(),
         "shared provider changed default sender"
     );
-    let overridden = Telephone::deploy_builder(roles.offender.provider())
+    let unauthorized = Telephone::deploy_builder(roles.offender.provider())
+        .from(roles.some_user.address())
+        .deploy()
+        .await;
+    eyre::ensure!(
+        unauthorized.is_err(),
+        "offender provider must not sign as another role"
+    );
+    let overridden = Telephone::deploy_builder(roles.provider())
         .from(roles.some_user.address())
         .deploy()
         .await?;

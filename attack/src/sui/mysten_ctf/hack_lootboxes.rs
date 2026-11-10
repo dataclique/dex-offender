@@ -9,7 +9,7 @@ use ctf::sui::mysten_ctf::lootboxes::Target;
 
 pub async fn attack(
     _target: &Target,
-    _roles: &ctf::sui::SuiRoles,
+    _offender: &ctf::sui::SuiActor,
     _localnet: &ctf::sui::SuiLocalnet,
 ) -> eyre::Result<()> {
     todo!("practice stub — open boxes until the flag appears")

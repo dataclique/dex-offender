@@ -18,12 +18,12 @@ pub struct Exploit;
 
 pub async fn attack(
     target: &ctf::solana::bootcamp::level_3::Target,
-    roles: &ctf::solana::SolRoles,
+    offender: &ctf::solana::SolActor,
 ) -> eyre::Result<()> {
     // Starter context from the upstream exploit harness: a fresh member
-    // keypair (roles.offender is funded and usable directly).
+    // keypair (offender is funded and usable directly).
 
     // TODO: exploit the level
-    let _ = (target, roles);
+    let _ = (target, offender);
     Ok(())
 }

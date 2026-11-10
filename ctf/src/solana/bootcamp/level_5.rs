@@ -153,7 +153,8 @@ fn mint_to(
 pub struct Target {
     pub program_id: Pubkey,
     /// The vesting recipient / evaluation caller (offender).
-    pub hacker: Arc<Keypair>,
+    pub hacker: Pubkey,
+    hacker_signer: Arc<Keypair>,
     pub mint: Pubkey,
     pub hacker_ata: Pubkey,
 }
@@ -267,7 +268,13 @@ impl Target {
             println!("initialize CPI status: {e}");
         }
 
-        Ok(Self { program_id, hacker, mint: mint.pubkey(), hacker_ata })
+        Ok(Self {
+            program_id,
+            hacker: hacker.pubkey(),
+            hacker_signer: hacker,
+            mint: mint.pubkey(),
+            hacker_ata,
+        })
     }
 
     /// Evaluation: `obtain_secret` succeeds only with the correct secret
@@ -283,11 +290,11 @@ impl Target {
             self.program_id,
             &data,
             vec![
-                AccountMeta::new_readonly(self.hacker.pubkey(), true),
+                AccountMeta::new_readonly(self.hacker, true),
                 AccountMeta::new(self.hacker_ata, false),
                 AccountMeta::new(self.mint, false),
             ],
         );
-        chain.send_signed(&[&self.hacker], &[ix]).is_ok()
+        chain.send_signed(&[&self.hacker_signer], &[ix]).is_ok()
     }
 }

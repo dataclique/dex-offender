@@ -8,7 +8,7 @@
 //! the IDL, and the vault is yours to probe once it exists.
 //!
 //! Upstream starter (`tests/exploit.ts`): a freshly funded keypair —
-//! that is `roles.offender` here — and the vault PDA derivation.
+//! that is `offender` here — and the vault PDA derivation.
 //!
 //! Sources:
 //! https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp/blob/bc0d25cce79b482599a2dde37c3fb112e17e9d0d/Capture-the-Flag/level-1/target/idl/level_1.json
@@ -21,13 +21,13 @@ pub struct Exploit;
 
 pub async fn attack(
     target: &ctf::solana::bootcamp::level_1::Target,
-    roles: &ctf::solana::SolRoles,
+    offender: &ctf::solana::SolActor,
 ) -> eyre::Result<()> {
     // Starter context from the upstream exploit harness:
-    // roles.offender is the funded fresh keypair; the vault PDA is
+    // offender is the funded fresh keypair; the vault PDA is
     // let vault = target.vault_pda();
 
     // TODO: exploit the level
-    let _ = (target, roles);
+    let _ = (target, offender);
     Ok(())
 }

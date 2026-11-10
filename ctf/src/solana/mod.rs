@@ -7,8 +7,8 @@
 use solana_sdk::instruction::Instruction;
 use solana_sdk::message::Message;
 use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signature::Keypair;
-use solana_sdk::signer::Signer;
+use solana_sdk::signature::{Keypair, Signature};
+use solana_sdk::signer::{Signer, SignerError};
 use solana_sdk::transaction::Transaction;
 use std::sync::{Arc, Mutex};
 
@@ -210,9 +210,23 @@ impl SolChain for LiteSvmChain {
     }
 }
 
-/// One role's handle: the shared chain plus the role's keypair.
+/// One actor's signing and account-reading capabilities.
+/// The actor does not expose its private key or chain administration.
+///
+/// ```compile_fail
+/// fn no_private_key(actor: &ctf::solana::SolActor) {
+///     let _ = &actor.keypair;
+/// }
+/// ```
+///
+/// ```compile_fail
+/// fn no_chain_administration(actor: &ctf::solana::SolActor) {
+///     let _ = &actor.chain;
+/// }
+/// ```
+#[derive(Clone)]
 pub struct SolActor {
-    pub keypair: Keypair,
+    keypair: Arc<Keypair>,
     chain: Arc<dyn SolChain>,
 }
 
@@ -222,7 +236,43 @@ impl SolActor {
     }
 
     pub fn send(&self, ixs: &[Instruction]) -> eyre::Result<Vec<String>> {
-        self.chain.send(&self.keypair, ixs)
+        self.send_signed(&[], ixs)
+    }
+
+    /// Read account data without exposing chain administration methods.
+    pub fn get_account(&self, addr: &Pubkey) -> Option<Vec<u8>> {
+        self.chain.get_account(addr)
+    }
+
+    /// Sign with this actor and any additional player-owned keypairs.
+    pub fn send_signed(
+        &self,
+        additional_signers: &[&dyn Signer],
+        ixs: &[Instruction],
+    ) -> eyre::Result<Vec<String>> {
+        let mut signers: Vec<&dyn Signer> = vec![self];
+        signers.extend_from_slice(additional_signers);
+        let message = Message::new(ixs, Some(&self.pubkey()));
+        let mut tx = Transaction::new_unsigned(message);
+        tx.try_sign(signers.as_slice(), self.chain.latest_blockhash())?;
+        self.chain.send_transaction(tx)
+    }
+}
+
+impl Signer for SolActor {
+    fn try_pubkey(&self) -> Result<Pubkey, SignerError> {
+        self.keypair.try_pubkey()
+    }
+
+    fn try_sign_message(
+        &self,
+        message: &[u8],
+    ) -> Result<Signature, SignerError> {
+        self.keypair.try_sign_message(message)
+    }
+
+    fn is_interactive(&self) -> bool {
+        false
     }
 }
 
@@ -236,9 +286,9 @@ pub struct SolRoles {
 
 impl SolRoles {
     pub fn new(chain: Arc<dyn SolChain>) -> Self {
-        let deployer = Keypair::new();
-        let some_user = Keypair::new();
-        let offender = Keypair::new();
+        let deployer = Arc::new(Keypair::new());
+        let some_user = Arc::new(Keypair::new());
+        let offender = Arc::new(Keypair::new());
 
         // Fund each with 1000 SOL
         for kp in [&deployer, &some_user, &offender] {
@@ -259,3 +309,73 @@ impl SolRoles {
 pub use crate::level::{
     Exploit as SolExploit, Level as SolLevel, check_exploit,
 };
+
+#[cfg(test)]
+mod role_boundary_tests {
+    use super::*;
+
+    #[test]
+    fn actor_signs_only_its_own_identity() -> eyre::Result<()> {
+        let chain = Arc::new(LiteSvmChain::new());
+        let roles = SolRoles::new(chain.clone());
+        let deployer = roles.deployer.pubkey();
+        let before = chain.svm.lock().unwrap().get_account(&deployer).unwrap();
+        let transfer = solana_system_interface::instruction::transfer(
+            &deployer,
+            &roles.offender.pubkey(),
+            1_000_000,
+        );
+        assert!(roles.offender.send(&[transfer]).is_err());
+        let after = chain.svm.lock().unwrap().get_account(&deployer).unwrap();
+        assert_eq!(before.lamports, after.lamports);
+
+        let message = b"actor identity";
+        let signature = roles.offender.try_sign_message(message)?;
+        assert!(signature.verify(roles.offender.pubkey().as_ref(), message));
+        assert!(!signature.verify(deployer.as_ref(), message));
+        Ok(())
+    }
+
+    #[test]
+    fn actor_can_create_accounts_with_player_owned_cosigners()
+    -> eyre::Result<()> {
+        let chain = Arc::new(LiteSvmChain::new());
+        let roles = SolRoles::new(chain.clone());
+        let account = Keypair::new();
+        let create = solana_system_interface::instruction::create_account(
+            &roles.offender.pubkey(),
+            &account.pubkey(),
+            10_000_000,
+            0,
+            &Pubkey::default(),
+        );
+        roles.offender.send_signed(&[&account], &[create])?;
+        let created =
+            chain.svm.lock().unwrap().get_account(&account.pubkey()).unwrap();
+        assert_eq!(created.lamports, 10_000_000);
+        assert_eq!(created.owner, Pubkey::default());
+        assert_eq!(
+            roles.offender.get_account(&account.pubkey()),
+            Some(Vec::new())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn player_actor_handles_can_cosign_without_exposing_keys()
+    -> eyre::Result<()> {
+        let chain = Arc::new(LiteSvmChain::new());
+        let roles = SolRoles::new(chain.clone());
+        let recipient = Pubkey::new_unique();
+        let transfer = solana_system_interface::instruction::transfer(
+            &roles.some_user.pubkey(),
+            &recipient,
+            10_000_000,
+        );
+        roles.offender.send_signed(&[&roles.some_user], &[transfer])?;
+        let received =
+            chain.svm.lock().unwrap().get_account(&recipient).unwrap();
+        assert_eq!(received.lamports, 10_000_000);
+        Ok(())
+    }
+}

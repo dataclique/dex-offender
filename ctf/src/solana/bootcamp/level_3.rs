@@ -60,7 +60,8 @@ fn member_ata(owner: &Pubkey, mint: &Pubkey) -> Pubkey {
 pub struct Target {
     pub program_id: Pubkey,
     /// The faction authority (also the evaluation member).
-    pub authority: Arc<Keypair>,
+    pub authority: Pubkey,
+    authority_signer: Arc<Keypair>,
     pub faction: Pubkey,
     pub mint: Pubkey,
 }
@@ -121,14 +122,20 @@ impl Target {
         // tx via send_signed.
         chain.send_signed(&[&authority, &mint], &[init_ix, topup_ix])?;
 
-        Ok(Self { program_id, authority, faction, mint: mint.pubkey() })
+        Ok(Self {
+            program_id,
+            authority: authority.pubkey(),
+            authority_signer: authority,
+            faction,
+            mint: mint.pubkey(),
+        })
     }
 
     /// Evaluation: `show_faction_secret` succeeds only when the member
     /// holds exactly one faction token AND supplied the correct secret.
     /// Failing tx (e.g. missing token or wrong secret) = unsolved.
     pub fn check(&self, chain: &Arc<dyn SolChain>) -> bool {
-        let member = self.authority.pubkey();
+        let member = self.authority;
         let ata = member_ata(&member, &self.mint);
         let ix = Instruction::new_with_bytes(
             self.program_id,
@@ -140,6 +147,6 @@ impl Target {
                 AccountMeta::new(self.mint, false),
             ],
         );
-        chain.send_signed(&[&self.authority], &[ix]).is_ok()
+        chain.send_signed(&[&self.authority_signer], &[ix]).is_ok()
     }
 }
