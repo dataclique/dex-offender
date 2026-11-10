@@ -7,7 +7,7 @@
 
 use crate::{Level, Roles};
 use alloy::{
-    primitives::{Address, B256, U256},
+    primitives::{Address, B256, U256, b256},
     providers::Provider,
     sol,
 };
@@ -59,8 +59,8 @@ impl Level for Target {
 
         // Mirror MotorbikeFactory.validateInstance: the engine
         // implementation must no longer have code (selfdestructed).
-        const EIP1967_IMPL_SLOT: B256 = alloy::primitives::b256!(
-            "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+        const EIP1967_IMPL_SLOT: B256 = b256!(
+            "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
         );
         let raw = provider
             .get_storage_at(

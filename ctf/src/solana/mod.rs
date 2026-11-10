@@ -122,7 +122,10 @@ impl SolChain for LiteSvmChain {
         id: Pubkey,
         path: &str,
     ) -> eyre::Result<()> {
-        let elf = std::fs::read(path)?;
+        let elf = std::fs::read(path).map_err(|e| {
+            eyre::eyre!("Failed to read program path {path}: {e}")
+        })?;
+
         self.deploy_program(id, &elf)
     }
 

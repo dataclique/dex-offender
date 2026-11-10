@@ -409,7 +409,7 @@ enum Track {
     Solana,
 }
 
-const TRACK: Track = Track::Solana;
+const TRACK: Track = Track::Ethereum;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
