@@ -10,11 +10,16 @@ From the repository root:
 
 ```sh
 git submodule update --init --recursive
+git -c submodule.lib/move-over-ctf.update=checkout submodule update --init lib/move-over-ctf
 direnv allow
 forge build
 nu scripts/build-contracts.nu
 cargo run -p ctf --bin deploy_levels
 ```
+
+`move-over-ctf` is initialized separately without recursion because its pinned
+upstream revision contains an `openzeppelin-ui` gitlink without a URL. Its
+challenge sources are preserved; the unused nested UI checkout is skipped.
 
 Use direnv with nix-direnv. Without direnv, enter the environment manually with
 `nix develop --impure`.

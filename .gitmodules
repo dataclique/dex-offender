@@ -49,6 +49,9 @@
 [submodule "lib/move-over-ctf"]
 	path = lib/move-over-ctf
 	url = https://github.com/OpenZeppelin/move_over_ctf
+	# Upstream has a dangling openzeppelin-ui gitlink with no URL.
+	# Initialize this reference repository explicitly without recursion.
+	update = none
 [submodule "lib/lets-ctf"]
 	path = lib/lets-ctf
 	url = https://github.com/hoh-zone/lets-ctf
