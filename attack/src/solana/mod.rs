@@ -1,42 +1,12 @@
 //! Solana solution scaffolds, one directory per wargame (mirroring the
 //! EVM layout under `attack/src/ethereum/`).
 //!
-//! ## Running levels
-//!
-//! Use the same watcher as Ethereum: `watch-levels` (or `cargo run`).
-//! Flip `const TRACK` in `attack/src/main.rs` to `Track::Solana` to
-//! switch tracks — the banners, progression gate and save-rerun flow
-//! are identical. Every run spins a fresh in-process LiteSVM per level
-//! and deploys the pinned `.so` programs; there is no saved chain state.
-//! The stubs are the progress: once your `attack()` solves a level,
-//! every later run replays through it.
-//!
-//! ## Writing an attack
-//!
-//! Attack callbacks receive only the offender's `SolActor`. Setup roles
-//! and chain administration stay in the runner. The actor signs as itself
-//! and can read account data, e.g.:
-//!
-//! ```ignore
-//! use solana_sdk::instruction::{AccountMeta, Instruction};
-//!
-//! let ix = Instruction::new_with_bincode(
-//!     target.program_id,
-//!     &discriminator_and_data, // Anchor 8-byte discriminator + args
-//!     vec![AccountMeta::new(offender.pubkey(), true)],
-//! );
-//! offender.send(&[ix])?; // returns program logs on success
-//! ```
-//!
-//! Raw account bytes come back through `offender.get_account(&pubkey)`
-//! (deserialize the level's Anchor accounts yourself, or parse the
-//! fields the check reads). PDAs are derived with
-//! `Pubkey::find_program_address(&[seeds], &program_id)`; each level's
-//! `Target` carries the addresses its check observes. Solana levels have
-//! no registered hints — `hint!()` reports that.
-//!
-//! Level 2 also exposes its two player-owned explorers as `SolActor`
-//! handles. They can co-sign with `user1.send_signed(&[&user2], &ixs)`.
+//! Only Ackee Bootcamp 1 is enabled in the runner. Start Surfpool and
+//! deploy the first level as described in the repository README.
+//! Attack callbacks receive only the offender's `SolActor`, which implements
+//! Solana's native `Signer` trait and exposes `rpc_client() -> &RpcClient`.
+//! Build transactions with the Solana SDK and use that client directly.
+//! Later level scaffolds remain available but are not run or deployed.
 //!
 //! ## Role boundary
 //!
@@ -102,78 +72,22 @@ pub mod paradigm2022;
 
 #[cfg(test)]
 mod practice {
-    use crate::solana::{ackee, paradigm2022};
-    use ctf::solana::{LiteSvmChain, SolChain, SolRoles, bootcamp, hana};
-    use std::sync::Arc;
-
-    /// Set up on a fresh chain, then either observe the already-solved
-    /// state or run the player's attack and require it to solve the
-    /// level. The first unsolved level aborts the whole progression.
-    macro_rules! play {
-        ($label:expr, $chain:expr, $set_up:expr, $attack:expr) => {{
-            let chain: Arc<dyn SolChain> = $chain;
-            let roles = SolRoles::new(chain.clone());
-            let target = $set_up(&chain, &roles)?;
-            if target.check(&chain) {
-                println!("✓ {} — already solved", $label);
-            } else {
-                $attack(&target, &roles.offender).await?;
-                eyre::ensure!(
-                    target.check(&chain),
-                    "{}: attack ran but the level is not solved — stopping here",
-                    $label
-                );
-                println!("✓ {} — solved just now", $label);
-            }
-        }};
-    }
+    use crate::solana::ackee::hack1_ancient_vault;
+    use ctf::solana::{SolActor, bootcamp::level_1, rpc};
 
     #[tokio::test]
+    #[ignore = "requires the deployed local Surfpool described in README.md"]
     async fn solana_progression() -> eyre::Result<()> {
-        play!(
-            "Ackee Bootcamp 1 — Ancient Vault",
-            Arc::new(LiteSvmChain::new()),
-            bootcamp::level_1::Target::set_up,
-            ackee::hack1_ancient_vault::attack
+        let offender =
+            SolActor::from_file(&rpc::rpc_url()?, rpc::keypair_path())?;
+        let target = level_1::Target::from_rpc(offender.rpc_client()).await?;
+        if !target.check_rpc(offender.rpc_client()).await? {
+            hack1_ancient_vault::attack(&target, &offender).await?;
+        }
+        eyre::ensure!(
+            target.check_rpc(offender.rpc_client()).await?,
+            "Ancient Vault is not solved"
         );
-
-        play!(
-            "Ackee Bootcamp 2 — Monster Battle",
-            Arc::new(LiteSvmChain::new()),
-            bootcamp::level_2::Target::set_up,
-            ackee::hack2_monster_battle::attack
-        );
-
-        play!(
-            "Ackee Bootcamp 3 — Hidden Faction",
-            Arc::new(LiteSvmChain::new()),
-            bootcamp::level_3::Target::set_up,
-            ackee::hack3_hidden_faction::attack
-        );
-
-        play!(
-            "Ackee Bootcamp 4 — Vesting",
-            Arc::new(LiteSvmChain::new()),
-            bootcamp::level_4::Target::set_up,
-            ackee::hack4_vesting::attack
-        );
-
-        play!(
-            "Ackee Bootcamp 5 — Guardian Escrow",
-            Arc::new(LiteSvmChain::new()),
-            bootcamp::level_5::Target::set_up,
-            ackee::hack5_guardian_escrow::attack
-        );
-
-        // hana's prebuilt program is a legacy (solana 1.9-era) binary.
-        play!(
-            "Paradigm 2022 — hana",
-            Arc::new(LiteSvmChain::with_legacy_programs()),
-            hana::Target::set_up,
-            paradigm2022::hack_hana::attack
-        );
-
-        println!("All Solana levels solved");
         Ok(())
     }
 }

@@ -12,7 +12,7 @@
 //! earlier `InvalidProgramId` failure was our passing a non-canonical
 //! system program id; fixed via the all-zero address.)
 
-use crate::solana::{SolActor, SolChain};
+use crate::solana::{LiteSvmActor, SolChain};
 use solana_sdk::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
@@ -25,8 +25,8 @@ pub const PROGRAM_ID: &str = "5pFB5g5WvBcL5fkaLY5Nz9cqEAxnkRPVgc3DCTKFY7uK";
 #[derive(Clone)]
 pub struct Target {
     pub program_id: Pubkey,
-    pub user1: SolActor,
-    pub user2: SolActor,
+    pub user1: LiteSvmActor,
+    pub user2: LiteSvmActor,
     pub explorer1: Pubkey,
     pub explorer2: Pubkey,
 }
@@ -70,8 +70,8 @@ impl Target {
 
         Ok(Self {
             program_id,
-            user1: SolActor { keypair: user1, chain: chain.clone() },
-            user2: SolActor { keypair: user2, chain: chain.clone() },
+            user1: LiteSvmActor { keypair: user1, chain: chain.clone() },
+            user2: LiteSvmActor { keypair: user2, chain: chain.clone() },
             explorer1,
             explorer2,
         })

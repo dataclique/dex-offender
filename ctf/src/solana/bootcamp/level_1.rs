@@ -3,6 +3,7 @@
 //! Access the ancient vault by calling the `access_vault` instruction.
 
 use crate::solana::{SolChain, SolRoles};
+use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_sdk::pubkey::Pubkey;
 use std::sync::Arc;
 
@@ -14,6 +15,28 @@ pub struct Target {
 }
 
 impl Target {
+    /// Load the deployed first level without redeploying or resetting accounts.
+    pub async fn from_rpc(rpc: &RpcClient) -> eyre::Result<Self> {
+        let program_id = PROGRAM_ID.parse::<Pubkey>()?;
+        let account = rpc
+            .get_account_with_commitment(&program_id, rpc.commitment())
+            .await?
+            .value;
+        eyre::ensure!(
+            account.is_some_and(|account| account.executable),
+            "Ancient Vault is not deployed; run cargo run -p ctf --bin deploy_solana_levels"
+        );
+        Ok(Self { program_id })
+    }
+
+    pub async fn check_rpc(&self, rpc: &RpcClient) -> eyre::Result<bool> {
+        let account = rpc
+            .get_account_with_commitment(&self.vault_pda(), rpc.commitment())
+            .await?
+            .value;
+        Ok(account.is_some_and(|account| account.owner == self.program_id))
+    }
+
     pub fn set_up(
         chain: &Arc<dyn SolChain>,
         _roles: &SolRoles,

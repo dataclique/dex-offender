@@ -24,6 +24,8 @@ challenge sources are preserved; the unused nested UI checkout is skipped.
 Use direnv with nix-direnv. Without direnv, enter the environment manually with
 `nix develop --impure`.
 
+## Ethereum
+
 The deployment command creates `ctfs.json` and `state.json`, then stops its
 temporary Anvil. Start your practice chain from that saved deployment in a
 separate terminal:
@@ -36,6 +38,18 @@ Keep it running. The Ethernaut progression test connects to
 `http://127.0.0.1:8545`; it does not start Anvil or redeploy levels. `--state`
 loads the saved deployment and writes the updated state when Anvil exits,
 preserving completed levels between sessions.
+
+## Solana
+
+```sh
+# First start: load the prepared initial accounts into persistent storage.
+surfpool start --offline --no-deploy \
+  --db solana-state.sqlite --surfnet-id dex-offender
+
+# Subsequent starts: resume progress without reapplying initial accounts.
+surfpool start --offline --no-deploy \
+  --db solana-state.sqlite --surfnet-id dex-offender
+```
 
 ## Practice
 

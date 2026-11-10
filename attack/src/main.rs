@@ -4,12 +4,12 @@
 //! every save. Flip `TRACK` below to switch between the Ethereum and
 //! Solana tracks. Levels play in a fixed order — Ethernaut 1–40, then
 //! Paradigm 2023, then Damn Vulnerable DeFi (strictly harder) on Ethereum;
-//! Ackee Bootcamp 1–5 then Paradigm 2022 hana on Solana — and the run stops
+//! Ackee Bootcamp 1 on Solana (later Solana levels are disabled) — and the run stops
 //! at the first level that is not solved: earlier levels are re-checked, a
 //! level you just solved gets the CONGRATULATIONS banner, and nothing after
 //! your current level is touched. Connects to your practice Anvil at
 //! `http://127.0.0.1:8545` (override with `ATTACK_RPC_URL`) on Ethereum;
-//! Solana spins a fresh in-process LiteSVM per level.
+//! Solana connects to the persistent local Surfpool RPC endpoint.
 
 use alloy::providers::Provider;
 use attack::ethereum::{damn_vulnerable_defi as dvd, ethernaut, paradigm_2023};
@@ -419,83 +419,28 @@ async fn main() -> eyre::Result<()> {
     }
 }
 
-/// The Solana track: Ackee Bootcamp 1-5, then Paradigm 2022 hana. Every
-/// run spins a fresh in-process LiteSVM per level and deploys the pinned
-/// `.so` programs; your stubs are the persistent progress. Same gate as
-/// Ethereum: the run stops at the first unsolved level.
+/// Only Ancient Vault is enabled while the persistent Solana setup is verified.
 async fn solana_track() -> eyre::Result<()> {
-    use attack::solana::{ackee, paradigm2022};
-    use ctf::solana::{LiteSvmChain, SolChain, SolRoles, bootcamp, hana};
-    use std::sync::Arc;
+    use attack::solana::ackee::hack1_ancient_vault;
+    use ctf::solana::{SolActor, bootcamp::level_1, rpc};
 
-    let total = 6usize;
-    let mut solved = 0usize;
-
-    macro_rules! play {
-        ($label:literal, $chain:expr, $set_up:expr, $attack:expr) => {{
-            let chain: Arc<dyn SolChain> = $chain;
-            let roles = SolRoles::new(chain.clone());
-            let target = $set_up(&chain, &roles)?;
-            if target.check(&chain) {
-                println!("{GREEN}✓ {} — already solved{RESET}", $label);
-                solved += 1;
-            } else {
-                $attack(&target, &roles.offender).await?;
-                if target.check(&chain) {
-                    congratulations($label);
-                    println!("{GREEN}✓ {} — solved just now{RESET}", $label);
-                    solved += 1;
-                } else {
-                    println!("{YELLOW}✗ {} — not solved yet{RESET}", $label);
-                    println!("\n{BOLD}Next up:{RESET} {}", $label);
-                    println!("{DIM}Progress: {solved}/{total} solved{RESET}");
-                    return Ok(());
-                }
-            }
-        }};
+    let offender = SolActor::from_file(&rpc::rpc_url()?, rpc::keypair_path())?;
+    let target = level_1::Target::from_rpc(offender.rpc_client()).await?;
+    let label = "Ackee Bootcamp 1 — Ancient Vault";
+    if target.check_rpc(offender.rpc_client()).await? {
+        println!("{GREEN}✓ {label} — already solved{RESET}");
+        return Ok(());
     }
 
-    play!(
-        "Ackee Bootcamp 1 — Ancient Vault",
-        Arc::new(LiteSvmChain::new()),
-        bootcamp::level_1::Target::set_up,
-        ackee::hack1_ancient_vault::attack
-    );
-    play!(
-        "Ackee Bootcamp 2 — Monster Battle",
-        Arc::new(LiteSvmChain::new()),
-        bootcamp::level_2::Target::set_up,
-        ackee::hack2_monster_battle::attack
-    );
-    play!(
-        "Ackee Bootcamp 3 — Hidden Faction",
-        Arc::new(LiteSvmChain::new()),
-        bootcamp::level_3::Target::set_up,
-        ackee::hack3_hidden_faction::attack
-    );
-    play!(
-        "Ackee Bootcamp 4 — Vesting",
-        Arc::new(LiteSvmChain::new()),
-        bootcamp::level_4::Target::set_up,
-        ackee::hack4_vesting::attack
-    );
-    play!(
-        "Ackee Bootcamp 5 — Guardian Escrow",
-        Arc::new(LiteSvmChain::new()),
-        bootcamp::level_5::Target::set_up,
-        ackee::hack5_guardian_escrow::attack
-    );
-    // hana's prebuilt program is a legacy (solana 1.9-era) binary.
-    play!(
-        "Paradigm 2022 — hana",
-        Arc::new(LiteSvmChain::with_legacy_programs()),
-        hana::Target::set_up,
-        paradigm2022::hack_hana::attack
-    );
-
-    println!(
-        "{GREEN}{BOLD}All {solved}/{total} levels solved. Legends only.{RESET}"
-    );
+    hack1_ancient_vault::attack(&target, &offender).await?;
+    if target.check_rpc(offender.rpc_client()).await? {
+        congratulations(label);
+        println!("{GREEN}✓ {label} — solved just now{RESET}");
+    } else {
+        println!("{YELLOW}✗ {label} — not solved yet{RESET}");
+        println!("\n{BOLD}Next up:{RESET} {label}");
+        println!("{DIM}Progress: 0/1 enabled levels solved{RESET}");
+    }
     Ok(())
 }
 

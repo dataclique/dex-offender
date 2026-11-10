@@ -83,6 +83,7 @@
                 pkgs.nushell
                 pkgs.deno
                 pkgs.taplo
+                pkgs.surfpool
                 suiPkg
               ]
               ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];

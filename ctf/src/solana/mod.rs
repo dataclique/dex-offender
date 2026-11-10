@@ -16,6 +16,9 @@ pub use litesvm;
 
 pub mod bootcamp;
 pub mod hana;
+pub mod rpc;
+
+pub use rpc::SolActor;
 
 /// Abstraction over the Solana execution environment.
 /// Default impl wraps `litesvm::LiteSVM` (in-process, no binary needed).
@@ -214,23 +217,23 @@ impl SolChain for LiteSvmChain {
 /// The actor does not expose its private key or chain administration.
 ///
 /// ```compile_fail
-/// fn no_private_key(actor: &ctf::solana::SolActor) {
+/// fn no_private_key(actor: &ctf::solana::LiteSvmActor) {
 ///     let _ = &actor.keypair;
 /// }
 /// ```
 ///
 /// ```compile_fail
-/// fn no_chain_administration(actor: &ctf::solana::SolActor) {
+/// fn no_chain_administration(actor: &ctf::solana::LiteSvmActor) {
 ///     let _ = &actor.chain;
 /// }
 /// ```
 #[derive(Clone)]
-pub struct SolActor {
+pub struct LiteSvmActor {
     keypair: Arc<Keypair>,
     chain: Arc<dyn SolChain>,
 }
 
-impl SolActor {
+impl LiteSvmActor {
     pub fn pubkey(&self) -> Pubkey {
         self.keypair.pubkey()
     }
@@ -259,7 +262,7 @@ impl SolActor {
     }
 }
 
-impl Signer for SolActor {
+impl Signer for LiteSvmActor {
     fn try_pubkey(&self) -> Result<Pubkey, SignerError> {
         self.keypair.try_pubkey()
     }
@@ -279,9 +282,9 @@ impl Signer for SolActor {
 /// Three roles mirroring the EVM harness.
 pub struct SolRoles {
     pub chain: Arc<dyn SolChain>,
-    pub deployer: SolActor,
-    pub some_user: SolActor,
-    pub offender: SolActor,
+    pub deployer: LiteSvmActor,
+    pub some_user: LiteSvmActor,
+    pub offender: LiteSvmActor,
 }
 
 impl SolRoles {
@@ -297,9 +300,12 @@ impl SolRoles {
 
         Self {
             chain: chain.clone(),
-            deployer: SolActor { keypair: deployer, chain: chain.clone() },
-            some_user: SolActor { keypair: some_user, chain: chain.clone() },
-            offender: SolActor { keypair: offender, chain },
+            deployer: LiteSvmActor { keypair: deployer, chain: chain.clone() },
+            some_user: LiteSvmActor {
+                keypair: some_user,
+                chain: chain.clone(),
+            },
+            offender: LiteSvmActor { keypair: offender, chain },
         }
     }
 }
