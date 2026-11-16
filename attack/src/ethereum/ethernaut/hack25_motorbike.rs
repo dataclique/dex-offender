@@ -1,7 +1,8 @@
 //! Ethernaut 25 — Motorbike.
 //!
-//! Goal: Leave the original `Engine` implementation behind the `Motorbike`
-//! proxy without contract code.
+//! Goal: Take the `Engine` implementation's funded ether through its
+//! upgrade path — EIP-6780 keeps its code alive, so the solved state is
+//! the ether leaving it.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Motorbike.sol
 

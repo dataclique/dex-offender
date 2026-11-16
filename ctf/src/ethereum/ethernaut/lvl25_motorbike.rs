@@ -1,7 +1,9 @@
 //! Ethernaut 25 — Motorbike.
 //!
-//! Goal: Leave the original `Engine` implementation behind the `Motorbike`
-//! proxy without contract code.
+//! Goal: Take the `Engine` implementation's funded ether through its
+//! upgrade path. Under EIP-6780 (Cancun) selfdestruct no longer removes
+//! deployed code, so the observable solved state is the engine's ether
+//! leaving via selfdestruct's balance transfer.
 //!
 //! https://github.com/OpenZeppelin/ethernaut/blob/d05643a/contracts/src/levels/Motorbike.sol
 
@@ -51,14 +53,23 @@ impl Level for Target {
         let engine = Engine::deploy(provider).await?;
         let motorbike = Motorbike::deploy(provider, *engine.address()).await?;
 
+        // EIP-6780 keeps the engine's code alive, so its selfdestruct is
+        // observed through the ether it carries away: fund the engine at
+        // deploy; solved = that ether leaving it.
+        provider
+            .client()
+            .request::<_, ()>(
+                "anvil_setBalance",
+                (*engine.address(), U256::from(1_000_000_000_000_000_000u64)),
+            )
+            .await?;
+
         Ok(Target { address: *motorbike.address() })
     }
 
     async fn check(&self, roles: &Roles) -> eyre::Result<bool> {
         let provider = roles.provider();
 
-        // Mirror MotorbikeFactory.validateInstance: the engine
-        // implementation must no longer have code (selfdestructed).
         const EIP1967_IMPL_SLOT: B256 = alloy::primitives::b256!(
             "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
         );
@@ -69,7 +80,9 @@ impl Level for Target {
             )
             .await?;
         let engine = Address::from_word(B256::from(raw.to_be_bytes()));
-        let code = provider.get_code_at(engine).await?;
-        Ok(code.is_empty())
+
+        // Solved when selfdestruct took the engine's funded ether.
+        let balance = provider.get_balance(engine).await?;
+        Ok(balance.is_zero())
     }
 }

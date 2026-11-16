@@ -84,6 +84,61 @@ fresh_check!(good_samaritan_fresh, ethernaut::lvl27_good_samaritan::Target);
 fresh_check!(cashback_fresh, ethernaut::lvl36_cashback::Target);
 fresh_check!(preservation_fresh, ethernaut::lvl16_preservation::Target);
 
+// Motorbike under EIP-6780: the engine is funded at deploy and the solved
+// state is that selfdestruct took its ether — never fresh, always after.
+#[tokio::test]
+async fn motorbike_check_tracks_engine_ether_not_code() -> eyre::Result<()> {
+    let mut anvil = OwnedAnvil::spawn()?;
+    let url = format!("http://127.0.0.1:{}", anvil.port);
+    let result: eyre::Result<()> = async {
+        anvil.wait_ready()?;
+        let roles = Roles::new(&url)?;
+        let target = ethernaut::lvl25_motorbike::Target::set_up(&roles).await?;
+
+        use alloy::{
+            primitives::{Address, B256, U256},
+            providers::Provider,
+        };
+        const EIP1967_IMPL_SLOT: B256 = alloy::primitives::b256!(
+            "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+        );
+        let raw = roles
+            .provider()
+            .get_storage_at(
+                target.address,
+                U256::from_be_bytes(EIP1967_IMPL_SLOT.0),
+            )
+            .await?;
+        let engine = Address::from_word(B256::from(raw.to_be_bytes()));
+
+        let funded = roles.provider().get_balance(engine).await?;
+        eyre::ensure!(
+            funded == U256::from(1_000_000_000_000_000_000u64),
+            "setup must fund the engine: got {funded}"
+        );
+        eyre::ensure!(
+            !target.check(&roles).await?,
+            "funded engine must report unsolved"
+        );
+
+        // Simulate the solved state on this owned chain: selfdestruct took
+        // the engine's ether away.
+        roles
+            .provider()
+            .client()
+            .request::<_, ()>("anvil_setBalance", (engine, U256::from(0u64)))
+            .await?;
+        eyre::ensure!(
+            target.check(&roles).await?,
+            "drained engine must report solved"
+        );
+        Ok(())
+    }
+    .await;
+    anvil.stop()?;
+    result
+}
+
 // Delegation deployed the same contract twice; its fresh regression pins
 // that the level's two contracts are actually distinct. Preservation must
 // deploy two real LibraryContract instances behind its timezone slots.
