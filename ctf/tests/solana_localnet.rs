@@ -132,12 +132,12 @@ async fn verify_level_one(
         &recipient,
         10_000_000,
     );
-    let tx = Transaction::try_new_signed_with_payer(
+    let tx = Transaction::new_signed_with_payer(
         &[transfer],
         Some(&offender.pubkey()),
         &[&offender],
         client.get_latest_blockhash().await?,
-    )?;
+    );
     client.send_and_confirm_transaction(&tx).await?;
     eyre::ensure!(
         client.get_balance(&recipient).await? == 10_000_000,
