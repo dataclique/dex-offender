@@ -24,7 +24,7 @@ impl Target {
             .value;
         eyre::ensure!(
             account.is_some_and(|account| account.executable),
-            "Ancient Vault is not deployed; run cargo run -p ctf --bin deploy_solana_levels"
+            "Ancient Vault is not deployed; run cargo run -p ctf --bin deploy_levels -- solana"
         );
         Ok(Self { program_id })
     }

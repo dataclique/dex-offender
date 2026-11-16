@@ -14,8 +14,11 @@ git -c submodule.lib/move-over-ctf.update=checkout submodule update --init lib/m
 direnv allow
 forge build
 nu scripts/build-contracts.nu
-cargo run -p ctf --bin deploy_levels
 ```
+
+`cargo run -p ctf --bin deploy_levels` deploys both chains by default; the
+Solana side needs Surfpool running (see the Solana section for the one-line
+startup), or use `-- ethereum` until you start it.
 
 `move-over-ctf` is initialized separately without recursion because its pinned
 upstream revision contains an `openzeppelin-ui` gitlink without a URL. Its
@@ -150,20 +153,41 @@ Solana wargames live under `attack/src/solana/<game>/` — Ackee Bootcamp
 (`paradigm2022/hack_hana.rs`). Each stub header names the goal and the pinned
 upstream sources; no solutions ship.
 
-There is no chain to start and no board to deploy: every run spins an in-process
-LiteSVM, deploys the pinned `.so` programs, and funds the three roles fresh.
-Play with:
+### Localnet and deployment
+
+The Solana track runs on a persistent local [Surfpool](https://surfpool.dev)
+chain — the anvil equivalent. Start it once in the background:
 
 ```sh
-cargo test -p attack solana -- --nocapture
+surfpool start --offline --no-deploy --no-tui --no-studio \
+  --host 127.0.0.1 --port 8899 --ws-port 8900 \
+  --db .solana/surfpool --surfnet-id dex-offender
 ```
 
-Like the EVM gate, it plays in order (Bootcamp 1–5, then hana) and stops at the
-first unsolved level. Progress isn't persisted — your stubs are the progress:
-once `attack()` solves a level, every later run replays through it.
+Its state lives under `.solana/` and survives restarts. Then deploy with the
+same bin as Ethereum — no flag deploys both chains, `-- ethereum` or `--
+solana`
+picks one:
 
-Inside `attack(target, &roles)` you have the same three roles as on EVM
-(`roles.deployer`, `roles.some_user`, `roles.offender`, 1000 SOL each):
+```sh
+cargo run -p ctf --bin deploy_levels -- solana
+```
+
+This deploys the Ancient Vault at its canonical program id, creates your
+offender identity at `.solana/offender.json` (created once, never replaced) and
+airdrops it. The `solana` CLI is not needed; point one at the chain with
+`solana --url http://127.0.0.1:8899` if you want it.
+
+### Playing
+
+Flip `const TRACK` in `attack/src/main.rs` to `Track::Solana` and use the same
+`watch-levels` loop: every save replays the current level against the persistent
+chain, with the same banners and stop-at-first-unsolved gate. Progress is the
+chain state itself — your solved levels stay solved across runs, and your
+identity persists through `.solana/offender.json`.
+
+Inside `attack(target, offender)` — `offender` is your `SolActor`, whose
+`rpc_client()` talks to the localnet and whose keypair signs:
 
 ```rust
 use solana_sdk::instruction::{AccountMeta, Instruction};
@@ -171,9 +195,15 @@ use solana_sdk::instruction::{AccountMeta, Instruction};
 let ix = Instruction::new_with_bincode(
     target.program_id,
     &discriminator_and_data, // Anchor 8-byte discriminator + args
-    vec![AccountMeta::new(roles.offender.pubkey(), true)],
+    vec![AccountMeta::new(offender.pubkey(), true)],
 );
-let logs = roles.offender.send(&[ix])?; // program logs on success
+let message = Message::new(&[ix], Some(&offender.pubkey()));
+let tx = Transaction::new(
+    &[offender],
+    message,
+    offender.rpc_client().get_latest_blockhash().await?,
+);
+offender.rpc_client().send_and_confirm_transaction(&tx).await?;
 ```
 
 ### Bindings for a level's program
@@ -218,11 +248,12 @@ discriminator first.
 ```rust
 use borsh::BorshDeserialize;
 
-let raw = roles
-    .chain
+let raw = offender
+    .rpc_client()
     .get_account(&vault_pda)
+    .await?
     .ok_or_else(|| eyre::eyre!("vault account missing"))?;
-let vault = Vault::deserialize(&mut &raw[8..])?;
+let vault = Vault::deserialize(&mut &raw.data[8..])?;
 ```
 
 Define `Vault` yourself with `#[derive(BorshDeserialize)]` mirroring the IDL
@@ -231,11 +262,9 @@ Define `Vault` yourself with `#[derive(BorshDeserialize)]` mirroring the IDL
 ### Writing program state
 
 On Solana, state only changes through the program's own instructions — that's
-the challenge path. Send them as any role; when an instruction creates an
-account, its keypair co-signs alongside the payer via
-`roles.chain.send_signed(&[&payer, &new_account], &[ix])?`. The harness also
-exposes `chain.set_account` (a raw override) — that exists for level plumbing
-and tests, not for solving.
+the challenge path. Send them signed by your offender as shown above; extra
+signers (e.g. a freshly created account's keypair) join the same transaction's
+signer list.
 
 ### Deploying your own attack program
 
@@ -244,8 +273,8 @@ arbitrary instructions, signing as several actors, driving CPI order — happens
 client-side in `attack()`. An on-chain helper would need an SBF toolchain, which
 this repo deliberately doesn't ship (that absence is exactly what blocks
 building otter-world/otterswap). If you ever do build a `.so` elsewhere,
-`roles.chain.deploy_program(id, &elf)` loads it into the in-process SVM under
-any keypair you choose, and it becomes callable like any other program.
+Surfpool's `surfnet_writeProgram` RPC (the same one the deployer uses) loads it
+at a fixed address on your localnet.
 
 `hint!()` exists there too, but no Solana level has a registered hint yet. Level
 4 (Vesting) is partially playable — its header documents the exact runtime

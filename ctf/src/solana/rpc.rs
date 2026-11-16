@@ -45,7 +45,7 @@ impl SolActor {
         let path = path.as_ref();
         let keypair = read_keypair_file(path).map_err(|_| {
             eyre::eyre!(
-                "cannot load offender keypair at {}; run cargo run -p ctf --bin deploy_solana_levels",
+                "cannot load offender keypair at {}; run cargo run -p ctf --bin deploy_levels",
                 path.display()
             )
         })?;

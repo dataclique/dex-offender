@@ -14,6 +14,37 @@ use tokio::{
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
+    let args = std::env::args().skip(1).collect::<Vec<_>>();
+    let chain =
+        parse_chain(&args.iter().map(String::as_str).collect::<Vec<_>>())?;
+    if matches!(chain, Chain::Ethereum | Chain::All) {
+        deploy_ethereum().await?;
+    }
+    if matches!(chain, Chain::Solana | Chain::All) {
+        deploy_solana().await?;
+    }
+    Ok(())
+}
+
+/// Deploy the Ancient Vault level onto the persistent Solana localnet.
+async fn deploy_solana() -> eyre::Result<()> {
+    println!("Setting up Solana CTFs...");
+    let url = ctf::solana::rpc::rpc_url()?;
+    let keypair_path = ctf::solana::rpc::keypair_path();
+    let offender =
+        ctf::solana::rpc::deploy_level_one(&url, &keypair_path).await?;
+    println!(
+        "Ancient Vault ready at {}",
+        ctf::solana::bootcamp::level_1::PROGRAM_ID
+    );
+    println!("RPC: {url}");
+    println!("Offender: {}", offender.pubkey());
+    println!("Offender keypair: {}", keypair_path.display());
+    println!("Solana deployment complete (only level 1 is enabled).");
+    Ok(())
+}
+
+async fn deploy_ethereum() -> eyre::Result<()> {
     // Non-secret override for isolated deployment runs; practice uses 8545.
     let port = match std::env::var("DEPLOY_PORT") {
         Ok(value) => value
@@ -125,6 +156,39 @@ async fn main() -> eyre::Result<()> {
         "Deployment complete: ctfs.json and state.json saved; owned Anvil stopped."
     );
     Ok(())
+}
+
+/// Which chains a deployment run covers; the default is both.
+enum Chain {
+    All,
+    Ethereum,
+    Solana,
+}
+
+fn parse_chain(args: &[&str]) -> eyre::Result<Chain> {
+    eyre::ensure!(
+        args.len() <= 2,
+        "pass at most one chain: ethereum, solana, or none for both"
+    );
+    let chain = match args {
+        [] => return Ok(Chain::All),
+        [single] => *single,
+        [flag, value] => {
+            eyre::ensure!(
+                *flag == "--chain",
+                "pass at most one chain: ethereum, solana, or none for both"
+            );
+            *value
+        }
+        _ => unreachable!("bounded above"),
+    };
+    match chain {
+        "ethereum" => Ok(Chain::Ethereum),
+        "solana" => Ok(Chain::Solana),
+        other => Err(eyre!(
+            "unknown chain {other:?}; use ethereum, solana, or no flag for both"
+        )),
+    }
 }
 
 async fn confirm_owned_listener<R: AsyncBufRead + Unpin>(
@@ -369,5 +433,30 @@ mod tests {
         let mut lines =
             BufReader::new(&b"Listening on 127.0.0.1:18891\n"[..]).lines();
         confirm_owned_listener(&mut lines, "127.0.0.1:18891".parse()?).await
+    }
+
+    #[test]
+    fn no_arguments_deploy_every_chain() -> eyre::Result<()> {
+        assert!(matches!(parse_chain(&[])?, Chain::All));
+        Ok(())
+    }
+
+    #[test]
+    fn chain_arguments_select_one_chain() -> eyre::Result<()> {
+        assert!(matches!(parse_chain(&["ethereum"])?, Chain::Ethereum));
+        assert!(matches!(parse_chain(&["solana"])?, Chain::Solana));
+        assert!(matches!(
+            parse_chain(&["--chain", "ethereum"])?,
+            Chain::Ethereum
+        ));
+        assert!(matches!(parse_chain(&["--chain", "solana"])?, Chain::Solana));
+        Ok(())
+    }
+
+    #[test]
+    fn unknown_or_extra_arguments_are_rejected() {
+        assert!(parse_chain(&["cardano"]).is_err());
+        assert!(parse_chain(&["ethereum", "solana"]).is_err());
+        assert!(parse_chain(&["--chain"]).is_err());
     }
 }
