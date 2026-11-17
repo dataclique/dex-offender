@@ -1320,6 +1320,7 @@ dependencies = [
  "ctf",
  "eyre",
  "serde",
+ "solana-sdk",
  "tokio",
 ]
 
