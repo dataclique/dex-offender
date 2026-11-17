@@ -36,7 +36,9 @@ pub fn keypair_path() -> PathBuf {
 /// The offender's native RPC client and signing capability. No setup roles.
 #[derive(Clone)]
 pub struct SolActor {
-    keypair: Arc<Keypair>,
+    /// The actor's signing keypair, exposed for building transactions
+    /// that need additional signatures alongside this actor as payer.
+    pub keypair: Arc<Keypair>,
     rpc_client: Arc<RpcClient>,
 }
 

@@ -1,0 +1,20 @@
+[package]
+name = "bootcamp-level-1-cpi"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+
+[features]
+default = ["cpi"]
+cpi = ["no-entrypoint", "no-idl"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+anchor-debug = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-gen = "0.4.1"
+anchor-lang = "0.31.1"
+# Anchor 0.31's generated IDL helpers use the pre-2.3 AccountInfo API.
+solana-account-info = "=2.2.1"

@@ -25,33 +25,34 @@ sui = [
 ]
 
 [dependencies]
+agave-feature-set.workspace = true
+alloy.workspace = true
+async-trait.workspace = true
+base64 = { workspace = true, optional = true }
+bcs = { workspace = true, optional = true }
+blake2 = { workspace = true, optional = true }
+bootcamp-level-1-cpi = { path = "../cpi/bootcamp-level-1" }
+borsh.workspace = true
+ed25519-consensus = { workspace = true, optional = true }
 eyre.workspace = true
+hex.workspace = true
+litesvm.workspace = true
+move-binary-format = { workspace = true, optional = true }
+move-core-types = { workspace = true, optional = true }
 rand.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-async-trait.workspace = true
-tokio.workspace = true
-alloy.workspace = true
-litesvm.workspace = true
-agave-feature-set.workspace = true
-solana-sdk.workspace = true
-solana-rpc-client.workspace = true
-solana-rpc-client-api.workspace = true
-solana-commitment-config.workspace = true
-hex.workspace = true
 solana-account = "4"
 solana-address = "2.7"
-spl-token-2022-interface = "3"
+solana-commitment-config.workspace = true
+solana-rpc-client.workspace = true
+solana-rpc-client-api.workspace = true
+solana-sdk.workspace = true
 solana-system-interface = "3.3"
 spl-token.workspace = true
-borsh.workspace = true
-sui-rpc = { workspace = true, optional = true }
-sui-transaction-builder = { workspace = true, optional = true }
-sui-sdk-types = { workspace = true, optional = true }
-bcs = { workspace = true, optional = true }
+spl-token-2022-interface = "3"
 sui-crypto = { workspace = true, optional = true }
-move-binary-format = { workspace = true, optional = true }
-move-core-types = { workspace = true, optional = true }
-base64 = { workspace = true, optional = true }
-ed25519-consensus = { workspace = true, optional = true }
-blake2 = { workspace = true, optional = true }
+sui-rpc = { workspace = true, optional = true }
+sui-sdk-types = { workspace = true, optional = true }
+sui-transaction-builder = { workspace = true, optional = true }
+tokio.workspace = true
