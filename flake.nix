@@ -76,13 +76,15 @@
             {
               packages = [
                 pkgs.solc
-                pkgs.gcc
+                # Clang on Darwin preserves the unwind tables GCC loses.
+                pkgs.stdenv.cc
                 pkgs.cargo-watch
                 foundry-pkg
                 pkgs.go-ethereum
                 pkgs.nushell
                 pkgs.deno
                 pkgs.taplo
+                pkgs.solana-cli
                 pkgs.surfpool
                 suiPkg
               ]

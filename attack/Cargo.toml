@@ -22,5 +22,4 @@ serde.workspace = true
 serde_json.workspace = true
 solana-rpc-client-api.workspace = true
 solana-rpc-client.workspace = true
-solana-sdk.workspace = true
 tokio.workspace = true
