@@ -8,7 +8,7 @@
 //! the IDL, and the vault is yours to probe once it exists.
 //!
 //! Upstream starter (`tests/exploit.ts`): a freshly funded keypair —
-//! that is `offender` here — and the vault PDA derivation.
+//! that is the offender identity here — and the vault PDA derivation.
 //!
 //! Sources:
 //! https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp/blob/bc0d25cce79b482599a2dde37c3fb112e17e9d0d/Capture-the-Flag/level-1/target/idl/level_1.json
@@ -17,17 +17,27 @@
 //! (HINTS are the upstream's progressive spoilers — open only if you
 //! want them.)
 
+use anchor_client::{Client, Cluster};
+use ctf::solana::bootcamp::level_1::*;
+
 pub struct Exploit;
 
 pub async fn attack(
-    target: &ctf::solana::bootcamp::level_1::Target,
+    target: &Target,
     offender: &ctf::solana::SolActor,
 ) -> eyre::Result<()> {
     // Starter context from the upstream exploit harness:
     // offender is the funded fresh keypair; the vault PDA is
-    // let vault = target.vault_pda();
+    let vault = target.vault_pda();
+    println!("Vault: {vault}");
+
+    // Typed program handle — the sol! equivalent for Anchor programs.
+    // Level 1's types (instruction args, account structs) are re-exported
+    // from this level module via the CPI crate.
+    let client = Client::new(Cluster::Localnet, offender.keypair.clone());
+    let program = client.program(target.program_id)?;
 
     // TODO: exploit the level
-    let _ = (target, offender);
+    let _ = program;
     Ok(())
 }
