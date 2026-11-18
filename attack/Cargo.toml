@@ -14,9 +14,13 @@ sui = ["ctf/sui"]
 [dependencies]
 ctf.path = "../ctf"
 
-async-trait.workspace = true
 alloy.workspace = true
+anchor-client = "1.2.2"
+async-trait.workspace = true
 eyre.workspace = true
 serde.workspace = true
+serde_json.workspace = true
+solana-rpc-client-api.workspace = true
+solana-rpc-client.workspace = true
 solana-sdk.workspace = true
 tokio.workspace = true
