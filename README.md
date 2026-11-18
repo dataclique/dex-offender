@@ -156,7 +156,7 @@ upstream sources; no solutions ship.
 ### Localnet and deployment
 
 The Solana track runs on a persistent local [Surfpool](https://surfpool.dev)
-chain — the anvil equivalent. Start it once in the background:
+chain. Start it once in the background:
 
 ```sh
 surfpool start --offline --no-deploy --no-tui --no-studio \
@@ -164,9 +164,8 @@ surfpool start --offline --no-deploy --no-tui --no-studio \
   --db .solana/surfpool --surfnet-id dex-offender
 ```
 
-Its state lives under `.solana/` and survives restarts. Then deploy with the
-same bin as Ethereum — no flag deploys both chains, `-- ethereum` or `--
-solana`
+Its state lives under `.solana/` and survives restarts. Then deploy with
+`deploy_levels` — no flag deploys both chains, `-- ethereum` or `-- solana`
 picks one:
 
 ```sh
@@ -210,9 +209,9 @@ offender.rpc_client().send_and_confirm_transaction(&tx).await?;
 
 Anchor programs get typed bindings two ways, both already wired:
 
-**`anchor-client` (recommended — the `sol!` equivalent):** the `attack` crate
-depends on `anchor-client`. Build a typed program handle and call instructions
-with Rust types, no manual discriminators:
+**`anchor-client` (recommended):** the `attack` crate depends on
+`anchor-client`. Build a typed program handle and call instructions with Rust
+types, no manual discriminators:
 
 ```rust
 use anchor_client::{Client, Cluster};
