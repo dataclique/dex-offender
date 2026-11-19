@@ -136,10 +136,10 @@
                   "--db .solana/surfpool --surfnet-id dex-offender"
                 ];
 
-                deploy-levels = {
-                  exec = "nu ${./scripts/deploy-on-up.nu}";
-                  process-compose.availability.exit_on_end = true;
-                };
+                # A one-shot process: it completes and stays Completed —
+                # do NOT set availability.exit_on_end here, that shuts the
+                # whole project down when this process ends.
+                deploy-levels.exec = "nu ${./scripts/deploy-on-up.nu}";
               };
               # https://devenv.sh/pre-commit-hooks/
               git-hooks.hooks = {
