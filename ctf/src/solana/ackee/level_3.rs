@@ -1,12 +1,12 @@
 //! Ackee Bootcamp CTF — Level 3: Hidden Faction.
 //!
-//! Join the faction, obtain exactly one faction token, and reveal the
-//! faction secret. Setup initializes the faction and its Token-2022
-//! mint under a persistent creator identity; `obtain_faction_token`
-//! requires that faction authority's co-signature, so the attack
-//! receives it from the target. Evaluation submits the player's
-//! discovered secret to `show_faction_secret` — the program alone
-//! judges it, and no answer material lives here.
+//! `show_faction_secret` must succeed for the member; reaching that
+//! state is the exploit. Setup initializes the faction and its
+//! Token-2022 mint under a persistent creator identity;
+//! `obtain_faction_token` requires that faction authority's
+//! co-signature, so the attack receives it from the target. Evaluation
+//! submits the player's discovered secret to `show_faction_secret` —
+//! the program alone judges it, and no answer material lives here.
 
 use crate::solana::{ackee::Keyfile, rpc};
 use serde::{Deserialize, Serialize};

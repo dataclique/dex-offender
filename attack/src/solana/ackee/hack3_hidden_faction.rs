@@ -2,11 +2,8 @@
 //!
 //! Goal: Make `show_faction_secret` succeed for a member who holds
 //! exactly one faction token — join the faction, obtain the token, and
-//! reveal the secret.
-//!
-//! Upstream starter (`tests/exploit.ts`): one fresh member keypair —
-//! here the offender is the member, and the faction authority that
-//! co-signs joins is exposed by the target.
+//! reveal the secret. The offender is the joining member; the faction
+//! authority that co-signs joins is exposed by the target.
 //!
 //! Sources (readable source fragment upstream):
 //! https://github.com/Ackee-Blockchain/Solana-Auditors-Bootcamp/tree/bc0d25cce79b482599a2dde37c3fb112e17e9d0d/Capture-the-Flag/level-3/src-fragment

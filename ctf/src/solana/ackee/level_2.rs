@@ -1,10 +1,10 @@
 //! Ackee Bootcamp CTF — Level 2: Monster Battle.
 //!
-//! Battle monsters, heal allies, and make `reveal_secret` succeed for
-//! both explorers: each needs enough experience and monsters defeated,
-//! and the two secrets (obtained in level 1) must match. The explorers
-//! start uninitialized — initializing them is part of the exploit, so
-//! no answer material lives here.
+//! `reveal_secret` must succeed for both explorers. Each needs enough
+//! experience and monsters defeated, and the two supplied secrets must
+//! match — discovering values the program accepts is part of the
+//! exploit, and no answer material lives here. The explorers start
+//! uninitialized.
 //!
 //! Setup deploys the program and funds the two persistent user
 //! identities; their `EXPLORER` PDAs derive from the program and user
