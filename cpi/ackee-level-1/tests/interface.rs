@@ -1,8 +1,12 @@
+// anchor_lang::solana_program::system_program is exactly what the generated
+// interface embeds, so the test compares against it despite the deprecation.
+#![allow(deprecated)]
+
+use ackee_level_1_cpi::{accounts, instruction};
 use anchor_lang::solana_program::{
     instruction::AccountMeta, pubkey::Pubkey, system_program,
 };
 use anchor_lang::{InstructionData, ToAccountMetas};
-use bootcamp_level_1_cpi::{accounts, instruction};
 
 #[test]
 fn access_vault_preserves_idl_accounts_and_instruction_bytes() {
