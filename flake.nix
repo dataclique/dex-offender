@@ -121,6 +121,26 @@
                 fi
                 cargo run -p ctf --bin deploy_levels
               '';
+
+              # https://devenv.sh/processes/ — `devenv up` starts the
+              # practice chains and runs the idempotent Solana level
+              # deployment once Surfpool is healthy. The Ethereum deploy
+              # stays behind the manual deploy-levels script above: it
+              # redeploys from scratch and overwrites state.json.
+              processes = {
+                anvil.exec = "anvil --state state.json --code-size-limit 50000";
+
+                surfpool.exec = pkgs.lib.concatStringsSep " " [
+                  "surfpool start --offline --no-deploy --no-tui --no-studio"
+                  "--host 127.0.0.1 --port 8899 --ws-port 8900"
+                  "--db .solana/surfpool --surfnet-id dex-offender"
+                ];
+
+                deploy-levels = {
+                  exec = "nu ${./scripts/deploy-on-up.nu}";
+                  process-compose.availability.exit_on_end = true;
+                };
+              };
               # https://devenv.sh/pre-commit-hooks/
               git-hooks.hooks = {
                 nixfmt = {

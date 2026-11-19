@@ -16,9 +16,11 @@ forge build
 nu scripts/build-contracts.nu
 ```
 
-`cargo run -p ctf --bin deploy_levels` deploys both chains by default; the
-Solana side needs Surfpool running (see the Solana section for the one-line
-startup), or use `-- ethereum` until you start it.
+`devenv up` starts both practice chains: Anvil on `http://127.0.0.1:8545` from
+the saved `state.json`, Surfpool on `http://127.0.0.1:8899` from the persistent
+`.solana/surfpool` store, and it runs the idempotent Solana level deployment
+once Surfpool is healthy. `cargo run -p ctf --bin deploy_levels` stays available
+for manual deploys; `-- ethereum` or `-- solana` picks one chain.
 
 `move-over-ctf` is initialized separately without recursion because its pinned
 upstream revision contains an `openzeppelin-ui` gitlink without a URL. Its
@@ -30,29 +32,21 @@ Use direnv with nix-direnv. Without direnv, enter the environment manually with
 ## Ethereum
 
 The deployment command creates `ctfs.json` and `state.json`, then stops its
-temporary Anvil. Start your practice chain from that saved deployment in a
-separate terminal:
+temporary Anvil. `devenv up` (or `devenv up anvil`) keeps your practice chain
+running from that saved deployment; without it, start the chain yourself in a
+separate terminal with `anvil --state state.json --code-size-limit 50000`.
 
-```sh
-anvil --state state.json --code-size-limit 50000
-```
-
-Keep it running. The Ethernaut progression test connects to
-`http://127.0.0.1:8545`; it does not start Anvil or redeploy levels. `--state`
-loads the saved deployment and writes the updated state when Anvil exits,
-preserving completed levels between sessions.
+The Ethernaut progression test connects to `http://127.0.0.1:8545`; it does not
+start Anvil or redeploy levels. `--state` loads the saved deployment and writes
+the updated state when Anvil exits, preserving completed levels between
+sessions.
 
 ## Solana
 
-```sh
-# First start: load the prepared initial accounts into persistent storage.
-surfpool start --offline --no-deploy \
-  --db solana-state.sqlite --surfnet-id dex-offender
-
-# Subsequent starts: resume progress without reapplying initial accounts.
-surfpool start --offline --no-deploy \
-  --db solana-state.sqlite --surfnet-id dex-offender
-```
+`devenv up` (or `devenv up surfpool`) starts Surfpool on `http://127.0.0.1:8899`
+from the persistent `.solana/surfpool` store in the checkout you run it from,
+and deploys the Ackee levels once it is healthy. See the Solana levels section
+for the underlying commands and the state/identity layout.
 
 ## Practice
 
@@ -158,14 +152,18 @@ upstream sources; no solutions ship.
 The Solana track runs on a persistent local [Surfpool](https://surfpool.dev)
 chain. Start it once in the background:
 
+`devenv up` runs this for you (see Setup); the underlying process is:
+
 ```sh
 surfpool start --offline --no-deploy --no-tui --no-studio \
   --host 127.0.0.1 --port 8899 --ws-port 8900 \
   --db .solana/surfpool --surfnet-id dex-offender
 ```
 
-Its state lives under `.solana/` and survives restarts. Then deploy with
-`deploy_levels` — no flag deploys both chains, `-- ethereum` or `-- solana`
+State lives in the checkout's `.solana/` and survives restarts, so only one
+checkout can run the chain at a time. The `devenv up` deployment binds to the
+offender identity and setup actors of the checkout it runs from. Manual deploys
+use `deploy_levels` — no flag deploys both chains, `-- ethereum` or `-- solana`
 picks one:
 
 ```sh
