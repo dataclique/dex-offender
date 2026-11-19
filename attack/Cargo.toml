@@ -15,11 +15,14 @@ sui = ["ctf/sui"]
 ctf.path = "../ctf"
 
 alloy.workspace = true
-anchor-client = "1.2.2"
+# The blocking client embeds a tokio runtime that cannot be dropped
+# inside the async runner, so attacks use anchor-client's async client.
+anchor-client = { version = "1.2.2", features = ["async"] }
 async-trait.workspace = true
 eyre.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 solana-rpc-client-api.workspace = true
 solana-rpc-client.workspace = true
+solana-sdk.workspace = true
 tokio.workspace = true
