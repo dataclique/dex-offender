@@ -14,7 +14,7 @@ pub struct Target {
     pub program_id: Pubkey,
 }
 
-pub use bootcamp_level_1_cpi::*;
+pub use ackee_level_1_cpi::*;
 
 impl Target {
     /// Load the deployed first level without redeploying or resetting accounts.

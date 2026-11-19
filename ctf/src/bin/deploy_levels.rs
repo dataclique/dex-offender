@@ -26,7 +26,7 @@ async fn main() -> eyre::Result<()> {
     Ok(())
 }
 
-/// Deploy the Ancient Vault level onto the persistent Solana localnet.
+/// Deploy the Ackee Bootcamp levels onto the persistent Solana localnet.
 async fn deploy_solana() -> eyre::Result<()> {
     println!("Setting up Solana CTFs...");
     let url = ctf::solana::rpc::rpc_url()?;
@@ -35,12 +35,21 @@ async fn deploy_solana() -> eyre::Result<()> {
         ctf::solana::rpc::deploy_level_one(&url, &keypair_path).await?;
     println!(
         "Ancient Vault ready at {}",
-        ctf::solana::bootcamp::level_1::PROGRAM_ID
+        ctf::solana::ackee::level_1::PROGRAM_ID
     );
     println!("RPC: {url}");
     println!("Offender: {}", offender.pubkey());
     println!("Offender keypair: {}", keypair_path.display());
-    println!("Solana deployment complete (only level 1 is enabled).");
+    let actors = ctf::solana::ackee::AckeeActors::load_or_create(
+        &ctf::solana::rpc::ackee_actors_path(),
+    )?;
+    ctf::solana::ackee::deploy_levels_two_to_five(
+        offender.rpc_client(),
+        offender.keypair.as_ref(),
+        &actors,
+    )
+    .await?;
+    println!("Ackee levels 1-5 ready. Play with: cargo run");
     Ok(())
 }
 

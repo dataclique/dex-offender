@@ -13,6 +13,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ackee-level-1-cpi"
+version = "0.1.0"
+dependencies = [
+ "anchor-gen",
+ "anchor-lang 0.31.3",
+ "solana-account-info 2.2.1",
+]
+
+[[package]]
 name = "adler2"
 version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2033,15 +2042,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "119771309b95163ec7aaf79810da82f7cd0599c19722d48b9c03894dca833966"
 
 [[package]]
-name = "bootcamp-level-1-cpi"
-version = "0.1.0"
-dependencies = [
- "anchor-gen",
- "anchor-lang 0.31.3",
- "solana-account-info 2.2.1",
-]
-
-[[package]]
 name = "borsh"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2578,13 +2578,13 @@ dependencies = [
 name = "ctf"
 version = "0.1.0"
 dependencies = [
+ "ackee-level-1-cpi",
  "agave-feature-set 4.3.2",
  "alloy",
  "async-trait",
  "base64 0.22.1",
  "bcs",
  "blake2",
- "bootcamp-level-1-cpi",
  "borsh 1.8.1",
  "ed25519-consensus",
  "eyre",

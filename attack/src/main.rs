@@ -4,7 +4,7 @@
 //! every save. Flip `TRACK` below to switch between the Ethereum and
 //! Solana tracks. Levels play in a fixed order — Ethernaut 1–40, then
 //! Paradigm 2023, then Damn Vulnerable DeFi (strictly harder) on Ethereum;
-//! Ackee Bootcamp 1 on Solana (later Solana levels are disabled) — and the run stops
+//! Ackee 1–5 on Solana — and the run stops
 //! at the first level that is not solved: earlier levels are re-checked, a
 //! level you just solved gets the CONGRATULATIONS banner, and nothing after
 //! your current level is touched. Connects to your practice Anvil at
@@ -419,28 +419,178 @@ async fn main() -> eyre::Result<()> {
     }
 }
 
-/// Only Ancient Vault is enabled while the persistent Solana setup is verified.
+/// Ackee Bootcamp levels 1–5 on the persistent Surfpool chain, played
+/// in order with the same outcome semantics as the Ethereum track.
 async fn solana_track() -> eyre::Result<()> {
-    use attack::solana::ackee::hack1_ancient_vault;
-    use ctf::solana::{SolActor, bootcamp::level_1, rpc};
+    use attack::solana::ackee::{
+        hack1_ancient_vault, hack2_monster_battle, hack3_hidden_faction,
+        hack4_vesting, hack5_guardian_escrow,
+    };
+    use ctf::solana::ackee::{
+        self, level_1, level_2, level_3, level_4, level_5,
+    };
+    use ctf::solana::{SolActor, rpc};
+    use eyre::WrapErr as _;
 
     let offender = SolActor::from_file(&rpc::rpc_url()?, rpc::keypair_path())?;
-    let target = level_1::Target::from_rpc(offender.rpc_client()).await?;
-    let label = "Ackee Bootcamp 1 — Ancient Vault";
-    if target.check_rpc(offender.rpc_client()).await? {
-        println!("{GREEN}✓ {label} — already solved{RESET}");
-        return Ok(());
+    let actors = ackee::AckeeActors::load_or_create(&rpc::ackee_actors_path())
+        .wrap_err_with(|| {
+            "cannot load Ackee setup identities; \
+             run cargo run -p ctf --bin deploy_levels -- solana"
+        })?;
+    let rpc = offender.rpc_client();
+    let hacker = offender.keypair.as_ref();
+    let mut solved = 0usize;
+
+    macro_rules! play {
+        ($label:literal, $load:expr, $check:expr, $attack:expr, $hint:expr) => {{
+            let label: &str = $label;
+            let hint: Option<&str> = $hint;
+            let outcome = match $load.await {
+                Err(error) => Outcome::Uncheckable(format!("{error:#}")),
+                Ok(target) => {
+                    let check = &$check;
+                    let attack = $attack;
+                    match check(target.clone()).await {
+                        Err(error) => {
+                            Outcome::Uncheckable(format!("{error:#}"))
+                        }
+                        Ok(true) => Outcome::AlreadySolved,
+                        Ok(false) => match attack(&target, &offender).await {
+                            Err(error) => Outcome::Failed(format!("{error:#}")),
+                            Ok(()) => match check(target.clone()).await {
+                                Err(error) => {
+                                    Outcome::Uncheckable(format!("{error:#}"))
+                                }
+                                Ok(true) => Outcome::NewlySolved,
+                                Ok(false) => Outcome::Unsolved,
+                            },
+                        },
+                    }
+                }
+            };
+            match outcome {
+                Outcome::AlreadySolved => {
+                    println!("{DIM}✓ {label} — already solved{RESET}");
+                    solved += 1;
+                }
+                Outcome::NewlySolved => {
+                    congratulations(label);
+                    println!("{GREEN}✓ {label} — solved just now{RESET}");
+                    solved += 1;
+                }
+                Outcome::Unsolved => {
+                    println!("{YELLOW}✗ {label} — not solved yet{RESET}");
+                    if let Some(hint) = hint {
+                        println!("{DIM}{hint}{RESET}");
+                    }
+                    println!("\n{BOLD}Next up:{RESET} {label}");
+                    println!(
+                        "{DIM}Progress: {solved}/5 enabled levels solved{RESET}"
+                    );
+                    return Ok(());
+                }
+                Outcome::Uncheckable(reason) => {
+                    println!(
+                        "{RED}! {label} — cannot check: {}{RESET}",
+                        first_line(&reason)
+                    );
+                    println!("{YELLOW}Blocked at: {label}{RESET}");
+                    println!("{BOLD}Progress: {solved}/5 solved{RESET}");
+                    return Ok(());
+                }
+                Outcome::Failed(reason) => {
+                    println!(
+                        "{RED}! {label} — attack failed: {}{RESET}",
+                        first_line(&reason)
+                    );
+                    println!("\n{BOLD}Next up:{RESET} {label}");
+                    println!("{BOLD}Progress: {solved}/5 solved{RESET}");
+                    return Ok(());
+                }
+            }
+        }};
     }
 
-    hack1_ancient_vault::attack(&target, &offender).await?;
-    if target.check_rpc(offender.rpc_client()).await? {
-        congratulations(label);
-        println!("{GREEN}✓ {label} — solved just now{RESET}");
-    } else {
-        println!("{YELLOW}✗ {label} — not solved yet{RESET}");
-        println!("\n{BOLD}Next up:{RESET} {label}");
-        println!("{DIM}Progress: 0/1 enabled levels solved{RESET}");
-    }
+    play!(
+        "Ackee 1 — Ancient Vault",
+        async { level_1::Target::from_rpc(rpc).await },
+        |target: level_1::Target| async move { target.check_rpc(rpc).await },
+        hack1_ancient_vault::attack,
+        None::<&str>
+    );
+
+    play!(
+        "Ackee 2 — Monster Battle",
+        async { level_2::Target::from_rpc(rpc, &actors.level_2).await },
+        |target: level_2::Target| async move { target.check_rpc(rpc).await },
+        hack2_monster_battle::attack,
+        None::<&str>
+    );
+
+    play!(
+        "Ackee 3 — Hidden Faction",
+        async { level_3::Target::from_rpc(rpc, &actors.level_3).await },
+        |target: level_3::Target| async move {
+            target
+                .check_rpc(
+                    rpc,
+                    hacker,
+                    attack::solana::player_answer(3).as_deref(),
+                )
+                .await
+        },
+        hack3_hidden_faction::attack,
+        Some(
+            "reveal the faction secret, save it as plain text in \
+             .solana/answers/ackee-level-3.txt, and rerun"
+        )
+    );
+
+    play!(
+        "Ackee 4 — Vesting",
+        async { level_4::Target::from_rpc(rpc, &actors.level_4).await },
+        |target: level_4::Target| async move {
+            target
+                .check_rpc(
+                    rpc,
+                    hacker,
+                    attack::solana::player_answer(4).as_deref(),
+                )
+                .await
+        },
+        hack4_vesting::attack,
+        Some(
+            "reveal the secret, save it as plain text in \
+             .solana/answers/ackee-level-4.txt, and rerun"
+        )
+    );
+
+    play!(
+        "Ackee 5 — Guardian Escrow",
+        async {
+            level_5::Target::from_rpc(rpc, &actors.level_5, &offender.pubkey())
+                .await
+        },
+        |target: level_5::Target| async move {
+            target
+                .check_rpc(
+                    rpc,
+                    hacker,
+                    attack::solana::player_answer(5).as_deref(),
+                )
+                .await
+        },
+        hack5_guardian_escrow::attack,
+        Some(
+            "reveal the secret, save it as plain text in \
+             .solana/answers/ackee-level-5.txt, and rerun"
+        )
+    );
+
+    println!(
+        "{GREEN}{BOLD}All 5 Ackee levels solved ({solved}/5). Legends only.{RESET}"
+    );
     Ok(())
 }
 

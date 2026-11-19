@@ -2,7 +2,7 @@
 too_many_arguments = "allow"
 
 [workspace]
-members = ["attack", "cpi/bootcamp-level-1", "ctf"]
+members = ["attack", "cpi/ackee-level-1", "ctf"]
 default-members = ["attack"]
 resolver = "2"
 

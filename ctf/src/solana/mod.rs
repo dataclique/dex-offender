@@ -14,7 +14,7 @@ use std::sync::{Arc, Mutex};
 
 pub use litesvm;
 
-pub mod bootcamp;
+pub mod ackee;
 pub mod hana;
 pub mod rpc;
 
@@ -49,7 +49,7 @@ pub trait SolChain: Send + Sync {
         tx: solana_sdk::transaction::Transaction,
     ) -> eyre::Result<Vec<String>>;
     /// Send a transaction signed by multiple keypairs (evaluation flows
-    /// that require two signers, e.g. bootcamp level 2's reveal_secret).
+    /// that require two signers, e.g. ackee level 2's reveal_secret).
     fn send_signed(
         &self,
         signers: &[&Keypair],

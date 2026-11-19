@@ -1,14 +1,17 @@
 //! Native Solana RPC access for the persistent local Surfpool.
 
-use crate::solana::bootcamp::level_1;
+use crate::solana::ackee::level_1;
 use eyre::WrapErr;
 use solana_commitment_config::CommitmentConfig;
 use solana_rpc_client::nonblocking::rpc_client::RpcClient;
 use solana_rpc_client_api::request::RpcRequest;
 use solana_sdk::{
+    instruction::Instruction,
+    message::Message,
     pubkey::Pubkey,
     signature::{Keypair, Signature, read_keypair_file},
     signer::{Signer, SignerError},
+    transaction::Transaction,
 };
 use std::{
     fs::OpenOptions,
@@ -18,6 +21,12 @@ use std::{
 };
 
 pub const LOCAL_RPC_URL: &str = "http://127.0.0.1:8899";
+
+/// Path of the persistent Ackee setup identities for levels 2-5,
+/// created once by deployment and never replaced.
+pub fn ackee_actors_path() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../.solana/ackee-actors.json")
+}
 
 pub fn rpc_url() -> eyre::Result<String> {
     match std::env::var("SOLANA_RPC_URL") {
@@ -114,6 +123,77 @@ fn create_offender_keypair(path: &Path) -> eyre::Result<()> {
     Ok(())
 }
 
+/// Write a prebuilt program at a fixed address using Surfpool's
+/// documented writeProgram RPC, or verify an existing deployment.
+/// Returns true when the program was written. No upgrade authority is
+/// supplied. https://solana.com/docs/tools/surfpool/rpc/cheatcodes#surfnet_writeprogram
+pub async fn write_program_if_absent(
+    rpc: &RpcClient,
+    program_id: &str,
+    so_path: &str,
+) -> eyre::Result<bool> {
+    let id: Pubkey = program_id.parse()?;
+    let existing =
+        rpc.get_account_with_commitment(&id, rpc.commitment()).await?.value;
+    if let Some(account) = existing {
+        eyre::ensure!(
+            account.executable,
+            "program at {program_id} is not executable"
+        );
+        return Ok(false);
+    }
+    let elf = std::fs::read(so_path).wrap_err_with(|| {
+        format!("cannot read {so_path}; initialize submodules")
+    })?;
+    let _: serde_json::Value = rpc
+        .send(
+            RpcRequest::Custom { method: "surfnet_writeProgram" },
+            serde_json::json!([program_id, hex::encode(elf), 0]),
+        )
+        .await?;
+    Ok(true)
+}
+
+/// Airdrop enough for the address to hold at least `min_lamports`.
+pub async fn fund_at_least(
+    rpc: &RpcClient,
+    address: &Pubkey,
+    min_lamports: u64,
+) -> eyre::Result<()> {
+    let balance = rpc.get_balance(address).await?;
+    if balance >= min_lamports {
+        return Ok(());
+    }
+    let blockhash = rpc.get_latest_blockhash().await?;
+    let signature =
+        rpc.request_airdrop(address, min_lamports - balance).await?;
+    rpc.confirm_transaction_with_spinner(
+        &signature,
+        &blockhash,
+        rpc.commitment(),
+    )
+    .await?;
+    Ok(())
+}
+
+/// Build, sign, and confirm a transaction on the persistent chain.
+/// `payer` signs and pays; `extra_signers` co-sign (e.g. fresh-account
+/// keypairs).
+pub async fn send_instructions(
+    rpc: &RpcClient,
+    payer: &Keypair,
+    instructions: &[Instruction],
+    extra_signers: &[&Keypair],
+) -> eyre::Result<()> {
+    let mut signers = vec![payer];
+    signers.extend_from_slice(extra_signers);
+    let message = Message::new(instructions, Some(&payer.pubkey()));
+    let transaction =
+        Transaction::new(&signers, message, rpc.get_latest_blockhash().await?);
+    rpc.send_and_confirm_transaction(&transaction).await?;
+    Ok(())
+}
+
 /// Initialize only Ancient Vault on the already-running local Surfpool.
 /// Existing program state and the offender identity are preserved on reruns.
 pub async fn deploy_level_one(
@@ -127,31 +207,15 @@ pub async fn deploy_level_one(
     rpc.get_health().await.wrap_err_with(|| {
         format!("cannot reach Surfpool at {url}; start it using README.md")
     })?;
-    let program_id: Pubkey = level_1::PROGRAM_ID.parse()?;
-    let existing = rpc
-        .get_account_with_commitment(&program_id, rpc.commitment())
-        .await?
-        .value;
-    if let Some(account) = existing {
-        eyre::ensure!(
-            account.executable,
-            "Ancient Vault address is not executable"
-        );
-    } else {
-        let elf = std::fs::read(concat!(
+    write_program_if_absent(
+        &rpc,
+        level_1::PROGRAM_ID,
+        concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/../lib/solana-auditors-bootcamp/Capture-the-Flag/level-1/target/deploy/level_1.so"
-        )).wrap_err("cannot read the pinned Ancient Vault program; initialize submodules")?;
-        // Surfpool's documented writeProgram RPC creates the fixed-address
-        // program and program-data accounts. No upgrade authority is supplied.
-        // https://solana.com/docs/tools/surfpool/rpc/cheatcodes#surfnet_writeprogram
-        let _: serde_json::Value = rpc
-            .send(
-                RpcRequest::Custom { method: "surfnet_writeProgram" },
-                serde_json::json!([level_1::PROGRAM_ID, hex::encode(elf), 0]),
-            )
-            .await?;
-    }
+        ),
+    )
+    .await?;
     level_1::Target::from_rpc(&rpc).await?;
     create_offender_keypair(keypair_path.as_ref())?;
     let offender = SolActor::from_file(url, keypair_path)?;

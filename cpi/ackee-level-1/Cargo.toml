@@ -1,5 +1,5 @@
 [package]
-name = "bootcamp-level-1-cpi"
+name = "ackee-level-1-cpi"
 version = "0.1.0"
 edition.workspace = true
 publish = false

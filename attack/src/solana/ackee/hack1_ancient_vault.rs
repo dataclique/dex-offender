@@ -1,4 +1,4 @@
-//! Ackee Bootcamp 1 — Ancient Vault.
+//! Ackee 1 — Ancient Vault.
 //!
 //! Goal: Make the program create its `ancient_vault` account — the vault
 //! PDA (seed `ancient_vault`) existing on chain is the solved state.
@@ -18,7 +18,7 @@
 //! want them.)
 
 use anchor_client::{Client, Cluster};
-use ctf::solana::bootcamp::level_1::*;
+use ctf::solana::ackee::level_1::*;
 
 pub struct Exploit;
 
