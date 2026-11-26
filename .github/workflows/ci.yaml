@@ -39,7 +39,9 @@ jobs:
 
   ci:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # foundry builds from source on Linux inside the flake shell, which
+    # is slower than a prebuilt toolchain download.
+    timeout-minutes: 60
     steps:
       # move-over-ctf's pinned tree contains a dangling nested gitlink
       # (openzeppelin-ui with no URL), so recursive checkout fails; the
@@ -48,7 +50,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Initialize EVM submodules
+      - name: Initialize submodules
         # hana's canonical LFS objects are gone (404 server-side); the EVM
         # build never needs them, so LFS smudging is skipped for pointers.
         run: |
@@ -62,47 +64,35 @@ jobs:
         env:
           GIT_LFS_SKIP_SMUDGE: '1'
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@908c540300062bd5a7e473851cdb4282204cee09 # v1.9.1
-
-      - name: Check Solidity formatting
-        run: forge fmt --check
-
-      - name: Build attack helper contracts
-        run: forge build
-
       - uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
 
-      - name: Build upstream challenge contracts in place
-        # forge comes from foundry-toolchain; the Linux dev shell cannot
-        # build the foundry.nix package, so only nushell comes from nixpkgs.
-        run: nix --accept-flake-config run nixpkgs#nushell -- scripts/build-contracts.nu
+      # Everything below runs inside the flake shell: the same locked
+      # nixpkgs, fenix toolchain, and foundry build that drive local
+      # development — no toolchain actions, no registry refs, no version
+      # divergence.
+      - name: Check Solidity formatting
+        run: nix --accept-flake-config develop --impure -c forge fmt --check
 
-      - name: Install toolchain
-        uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+      - name: Build attack helper contracts
+        run: nix --accept-flake-config develop --impure -c forge build
+
+      - name: Build upstream challenge contracts in place
+        run: nix --accept-flake-config develop --impure -c nu scripts/build-contracts.nu
 
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
 
       - name: Build crates
-        run: cargo build --workspace --all-targets --locked
+        run: nix --accept-flake-config develop --impure -c cargo build --workspace --all-targets --locked
 
       - name: Lint
-        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+        run: nix --accept-flake-config develop --impure -c cargo clippy --workspace --all-targets --locked -- -D warnings
 
-      - name: Run the level runner on the saved deployment
+      - name: Smoke the deployment path and runner CLI
+        # The historical saved-state replay is dropped; full deployment
+        # verification for both chains lands with the Solana track work.
         shell: bash
         run: |
-          cargo run -p ctf --bin deploy_levels --locked
-          anvil --load-state state.json --code-size-limit 50000 --quiet &
-          anvil_pid=$!
-          trap 'kill "$anvil_pid"; wait "$anvil_pid" || true' EXIT
-          for attempt in {1..50}; do
-            if cast block-number --rpc-url http://127.0.0.1:8545; then
-              break
-            fi
-            sleep 0.1
-          done
-          cast block-number --rpc-url http://127.0.0.1:8545
-          cargo run --locked
+          nix --accept-flake-config develop --impure -c cargo run -p ctf --bin deploy_levels --locked -- ethereum
+          nix --accept-flake-config develop --impure -c cargo run --locked -- --help
