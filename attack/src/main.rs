@@ -1,8 +1,8 @@
 //! Practice runner — the good part of the loop.
 //!
 //! `cargo watch -x run` (or the `watch-levels` shell script) reruns this on
-//! every save. Flip `TRACK` below to switch between the Ethereum and
-//! Solana tracks. Levels play in a fixed order — Ethernaut 1–40, then
+//! every save; pass `--track <ethereum|solana>` to select the track —
+//! there is no default. Levels play in a fixed order — Ethernaut 1–40, then
 //! Paradigm 2023, then Damn Vulnerable DeFi (strictly harder) on Ethereum;
 //! Ackee 1–5 on Solana — and the run stops
 //! at the first level that is not solved: earlier levels are re-checked, a
@@ -14,6 +14,7 @@
 use alloy::providers::Provider;
 use attack::ethereum::{damn_vulnerable_defi as dvd, ethernaut, paradigm_2023};
 use attack::hints;
+use clap::Parser;
 use ctf::{Exploit, Level, Roles};
 
 const RESET: &str = "\x1b[0m";
@@ -400,20 +401,25 @@ async fn play_level<E: Exploit>(
     }
 }
 
-/// Which wargame track the runner plays. Flip this const to switch
-/// tracks — everything else (watch-levels, banners, progression gate)
-/// works the same on both.
-#[allow(dead_code)]
+/// Which wargame track the runner plays. Selected with the `--track`
+/// argument; every invocation states its track explicitly.
+#[derive(Clone, Copy, clap::ValueEnum)]
 enum Track {
     Ethereum,
     Solana,
 }
 
-const TRACK: Track = Track::Solana;
+#[derive(clap::Parser)]
+#[command(about = "DEX Offender practice runner")]
+struct Args {
+    /// Track to run.
+    #[arg(long, value_enum)]
+    track: Track,
+}
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
-    match TRACK {
+    match Args::parse().track {
         Track::Ethereum => ethereum_track().await,
         Track::Solana => solana_track().await,
     }
@@ -740,6 +746,25 @@ mod tests {
             self.child.wait()?;
             Ok(())
         }
+    }
+
+    #[test]
+    fn track_arg_is_required_and_validated() {
+        use clap::Parser as _;
+        let parsed = Args::try_parse_from(["attack", "--track", "ethereum"])
+            .expect("ethereum parses");
+        assert!(matches!(parsed.track, Track::Ethereum));
+        let parsed = Args::try_parse_from(["attack", "--track", "solana"])
+            .expect("solana parses");
+        assert!(matches!(parsed.track, Track::Solana));
+        assert!(
+            Args::try_parse_from(["attack"]).is_err(),
+            "the track must be stated explicitly"
+        );
+        assert!(
+            Args::try_parse_from(["attack", "--track", "cardano"]).is_err(),
+            "unknown tracks are rejected"
+        );
     }
 
     #[test]

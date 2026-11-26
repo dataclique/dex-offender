@@ -53,6 +53,8 @@ jobs:
       - name: Initialize submodules
         # hana's canonical LFS objects are gone (404 server-side); the EVM
         # build never needs them, so LFS smudging is skipped for pointers.
+        # solana-auditors-bootcamp ships the prebuilt .so and IDL the cpi
+        # crate compiles against.
         run: |
           git submodule update --init --recursive \
             lib/forge-std \
@@ -60,7 +62,8 @@ jobs:
             lib/damn-vulnerable-defi \
             lib/paradigm-ctf-2021 \
             lib/paradigm-ctf-2022 \
-            lib/paradigm-ctf-2023
+            lib/paradigm-ctf-2023 \
+            lib/solana-auditors-bootcamp
         env:
           GIT_LFS_SKIP_SMUDGE: '1'
 
@@ -89,10 +92,16 @@ jobs:
       - name: Lint
         run: nix --accept-flake-config develop --impure -c cargo clippy --workspace --all-targets --locked -- -D warnings
 
-      - name: Smoke the deployment path and runner CLI
-        # The historical saved-state replay is dropped; full deployment
-        # verification for both chains lands with the Solana track work.
+      - name: Verify level deployment on both chains
+        # Ethereum: deploy_levels spins its own owned, port-reserved
+        # Anvil. Solana: the isolated Surfpool fixture
+        # (ctf/tests/solana_localnet.rs) reserves a free port, spawns its
+        # own instance, health-gates it, deploys every level, and asserts
+        # unsolved-on-fresh plus idempotent redeployment. The runner CLI
+        # is smoke-checked; its track selection is covered by unit
+        # tests. Chain state stays out of the tree entirely.
         shell: bash
         run: |
           nix --accept-flake-config develop --impure -c cargo run -p ctf --bin deploy_levels --locked -- ethereum
+          nix --accept-flake-config develop --impure -c cargo test -p ctf --test solana_localnet --locked -- --ignored --nocapture
           nix --accept-flake-config develop --impure -c cargo run --locked -- --help

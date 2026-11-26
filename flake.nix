@@ -108,11 +108,19 @@
 
               scripts.watch-levels.exec = ''
                 set -e
+                track="$1"
+                case "$track" in
+                  ethereum|solana) ;;
+                  *)
+                    echo "usage: watch-levels <ethereum|solana>" >&2
+                    exit 1
+                    ;;
+                esac
                 cd "$(git -c core.fsmonitor=false rev-parse --show-toplevel)"
                 cargo watch --poll --no-vcs-ignores --no-dot-ignores \
                   -w attack/src -w ctf/src \
                   -w Cargo.toml -w attack/Cargo.toml -w ctf/Cargo.toml \
-                  -x run
+                  -x "run -- --track $track"
               '';
 
               scripts.deploy-levels.exec = ''

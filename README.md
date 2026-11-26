@@ -50,10 +50,11 @@ for the underlying commands and the state/identity layout.
 
 ## Practice
 
-Run the watcher from the repository:
+Run the watcher from the repository (the track is explicit — there is no
+default):
 
 ```sh
-watch-levels
+watch-levels ethereum
 ```
 
 That is `cargo watch -x run` (plus the path list that makes saves in hidden Git
@@ -70,7 +71,7 @@ level, or an all-solved message after completing every level. For a single run
 without watching:
 
 ```sh
-cargo run
+cargo run -- --track ethereum
 ```
 
 It connects to your practice Anvil at `http://127.0.0.1:8545`; set
@@ -180,11 +181,11 @@ with `solana --url http://127.0.0.1:8899` if you want it.
 
 ### Playing
 
-Flip `const TRACK` in `attack/src/main.rs` to `Track::Solana` and use the same
-`watch-levels` loop: every save replays the current level against the persistent
-chain, with the same banners and stop-at-first-unsolved gate. Progress is the
-chain state itself — your solved levels stay solved across runs, and your
-identity persists through `.solana/offender.json`.
+Pass `--track solana` and use the same `watch-levels solana` loop: every save
+replays the current level against the persistent chain, with the same banners
+and stop-at-first-unsolved gate. Progress is the chain state itself — your
+solved levels stay solved across runs, and your identity persists through
+`.solana/offender.json`.
 
 Progression is Ackee 1-5 in order. Levels 3-5 end in revealing a secret: once
 you have extracted it, save it as plain text in
