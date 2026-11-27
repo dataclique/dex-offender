@@ -26,7 +26,14 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        foundry-pkg = foundry.defaultPackage.${system};
+        # The prebuilt foundry binaries link libudev on Linux, which
+        # foundry-bin's autoPatchelf search path does not provide; supply
+        # it so the package builds on Linux runners.
+        foundry-pkg = (foundry.defaultPackage.${system}).overrideAttrs (old: {
+          buildInputs =
+            (old.buildInputs or [ ])
+            ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.systemdMinimal ];
+        });
         forge = "${foundry-pkg}/bin/forge";
         channel = fenix.packages.${system}.stable;
 
