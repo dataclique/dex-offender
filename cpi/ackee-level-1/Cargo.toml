@@ -14,7 +14,5 @@ anchor-debug = []
 idl-build = ["anchor-lang/idl-build"]
 
 [dependencies]
-anchor-gen = "0.4.1"
-anchor-lang = "0.31.1"
-# Anchor 0.31's generated IDL helpers use the pre-2.3 AccountInfo API.
-solana-account-info = "=2.2.1"
+anchor-gen = { git = "https://github.com/dataclique/anchor-gen", rev = "e42910d18fd27df3b2d48d4374db17f18db3a4f1" }
+anchor-lang = "1.2.2"
