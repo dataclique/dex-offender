@@ -74,7 +74,7 @@ jobs:
       # development — no toolchain actions, no registry refs, no version
       # divergence.
       - name: Check Solidity formatting
-        run: nix --accept-flake-config develop --impure -c forge fmt --check
+        run: nix --accept-flake-config develop --impure -L -c forge fmt --check
 
       - name: Build attack helper contracts
         run: nix --accept-flake-config develop --impure -c forge build
